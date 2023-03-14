@@ -1,0 +1,32 @@
+#tab2 {
+    background-color: #fff;
+    border: 1px solid #dfdfdf;
+}
+
+#tab5 input {
+    width: 100%;
+}
+
+#tab2 .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#tab2 .buttons p {
+    width: 47%;
+    background: #0dcaf0;
+    color: #fff;
+    padding: 5px 5px;
+    margin-bottom: 10px !important;
+    font: 1em;
+    text-align: center;
+}
+
+#tab2 .buttons p.ellipse {
+    border-radius: 5px;
+}
+
+#tab2 .buttons p.round {
+    border-radius: 10px !important;
+}
