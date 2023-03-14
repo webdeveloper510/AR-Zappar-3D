@@ -3,8 +3,14 @@ import './target.css';
 import { API } from "../../../src/config/api"
 import axios from "axios"; 
 import ModelAr from "../../test";
+import Col from 'react-bootstrap/Col';
+import Nav from 'react-bootstrap/Nav';
+import Row from 'react-bootstrap/Row';
+import Tab from 'react-bootstrap/Tab';
+import Accordion from 'react-bootstrap/Accordion';
   
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHandPointUp, faT, faImage, faVideo, faCube, faImagePortrait, faGear } from '@fortawesome/free-solid-svg-icons';
 
 const Target =()=>{
 
@@ -82,147 +88,165 @@ useEffect(() => {
 
 
     <div className="container-fluid target-page">
-        <div className="row">
+        <div className="row justify-content-between">
 
-            <div className="col-md-1 p-0 m-0 bg-light" >
-              <div className="d-flex flex-column flex-shrink-0 pt-3 ">
-                  <ul className="nav nav-pills flex-column mb-auto " id="target-tabs-nav">
-                    <li className="nav-item text-center">
-                      <i className="bi bi-hand-index-thumb p-0 m-0"></i>
-                      <a href="#tab1" className="nav-link p-0 m-0 fw-bold link-dark">Button</a>
-                    </li>
-                    <div className="ps-4 pe-4 pb-0 pt-0 fw-bolder"></div>
-                    <li className="nav-item text-center">
-                      <i className="bi bi-fonts p-0 m-0"></i>
-                      <a href="#tab2" className="nav-link p-0 m-0 fw-bold link-dark" >Text</a>
-                    </li>
-                    <div className="ps-4 pe-4 pb-0 pt-0 fw-bolder"></div>
-                    <li className="nav-item text-center">
-                      <i className="bi bi-image p-0 m-0"></i>
-                      <a href="#tab3" className="nav-link p-0 m-0 fw-bold link-dark" >Image</a>
-                    </li>
-                    <div className="ps-4 pe-4 pb-0 pt-0 fw-bolder"></div>
-                    <li className="nav-item text-center">
-                      <i className="bi bi-play-btn p-0 m-0"></i>
+            <div className="col-md-4 p-0 m-0 bg-light" >
+              <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+                  <Row className="justify-content-between tab-list">
+                      <Col lg={3} className="side-tab mb-5 mb-md-0">
+                        <Nav variant="pills" className="flex-column side-main bg-light py-4 px-2">
+                          <Nav.Item>
+                              <Nav.Link eventKey="first">
+                                <FontAwesomeIcon icon={faHandPointUp} style={{ color: "rgb(113 123 131)", width: "20px", height: "20px", marginRight: 4 }} />
+                                <a href="#tab1" className="nav-link p-0 m-0 fw-bold link-dark">Button</a>
+                              </Nav.Link>
+                          </Nav.Item>
 
-<form className="form" enctype="multipart/form-data">
+                          <Nav.Item>
+                              <Nav.Link eventKey="second">
+                                <FontAwesomeIcon icon={faT} style={{ color: "rgb(113 123 131)", width: "20px", height: "20px", marginRight: 4 }} />
+                                <a href="#tab2" className="nav-link p-0 m-0 fw-bold link-dark" >Text</a>
+                              </Nav.Link>
+                          </Nav.Item>
 
-                      <input  type="file" id="video-upload"  className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2" onChange={handleInputChange} />
-                      </form>
-                      <video src= {newpath} crossorigin="anonymous" id="uploaded-video" hidden/>
+                          <Nav.Item>
+                              <Nav.Link eventKey="third">
+                                <FontAwesomeIcon icon={faImage} style={{ color: "rgb(113 123 131)", width: "20px", height: "20px", marginRight: 4 }} />
+                                <a href="#tab3" className="nav-link p-0 m-0 fw-bold link-dark" >Image</a>
+                              </Nav.Link>
+                          </Nav.Item>
 
+                          <Nav.Item>
+                              <Nav.Link eventKey="fourth">
+                                <FontAwesomeIcon icon={faVideo} style={{ color: "rgb(113 123 131)", width: "20px", height: "20px", marginRight: 4 }} />
 
-                      <a href="#tab4" className="nav-link p-0 m-0 fw-bold link-dark" >Video</a>
-                    </li>
-                    <div className="ps-4 pe-4 pb-0 pt-0 fw-bolder"></div>
-                    <li className="nav-item text-center">
-                      <i className="bi bi-box p-0 m-0"></i>
-                      <input id="3dmodel" type="file" className="nav-link p-0 m-0 fw-bold link-dark" />3D
-                    </li>
-                    
-                  </ul>
-                  <div className="position-absolute bottom-0 pb-4 bottom-icon">
-                    <i className="bi bi-stack p-0 m-0"></i>
-                  </div>
-              </div>
-          
+                                <form className="form" enctype="multipart/form-data">
+                                  <input  type="file" id="video-upload"  className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2" onChange={handleInputChange} />
+                                </form>
 
+                                <video src= {newpath} crossorigin="anonymous" id="uploaded-video" hidden/>
+                                <a href="#tab4" className="nav-link p-0 m-0 fw-bold link-dark" >Video</a>
+                              </Nav.Link>
+                          </Nav.Item>
 
-          <div id="target-tabs-content" className="target-tabs-content">
+                          <Nav.Item>
+                              <Nav.Link eventKey="fifth">
+                                <FontAwesomeIcon icon={faCube} style={{ color: "rgb(113 123 131)", width: "20px", height: "20px", marginRight: 4 }} />
+                                <input id="3dmodel" type="file" className="nav-link p-0 m-0 fw-bold link-dark" />3D
+                              </Nav.Link>
+                          </Nav.Item>
 
-              <div id="tab1" className="tab-content button-cl">
-                <h2>Buttons</h2>
-                <h6 className="mt-3">Basic buttons</h6>
-                <hr/>
-                <div className="mb-3" >
-                  <button className="btn btn-info border-1 border-info pt-2 pe-5 ps-5 pb-2 text-white rounded-0">Abc</button>
-                  <button className="btn text-info border-1 border-info pt-2 pe-5 ps-5 pb-2 rounded-0">Abc</button>
+                          <Nav.Item>
+                              <Nav.Link eventKey="sixth">
+                                <FontAwesomeIcon icon={faImage} style={{ color: "rgb(113 123 131)", width: "20px", height: "20px", marginRight: 4 }} />
+                                <a href="#tab3" className="nav-link p-0 m-0 fw-bold link-dark" >Image</a>
+                              </Nav.Link>
+                          </Nav.Item>
+                        </Nav>
+                      </Col>
+
+                      <Col lg={9} className="tab-main">
+                        <Tab.Content>
+                          <Tab.Pane eventKey="first" className='bg-light p-4 tab-content'>
+                            <h2>Buttons</h2>
+                            <h6 className="mt-3">Basic buttons</h6>
+                            <hr/>
+                            <div className="mb-3" >
+                              <button className="btn btn-info border-1 border-info pt-2 me-3 pe-5 ps-5 pb-2 text-white rounded-0">Abc</button>
+                              <button className="btn text-info border-1 border-info pt-2 pe-5 ps-5 pb-2 rounded-0">Abc</button>
+                            </div>
+
+                            <div className="mb-3" >
+                              <button className="btn btn-info border-1 border-info me-3 pt-2 pe-5 ps-5 pb-2 text-white rounded-3">Abc</button>
+                              <button className="btn text-info border-1 border-info pt-2 pe-5 ps-5 pb-2 rounded-3">Abc</button>
+                            </div>
+
+                            <div className="mb-3" >
+                              <button className="btn btn-info border-1 border-info me-3 pt-2 pe-5 ps-5 pb-2 text-white rounded-5">Abc</button>
+                              <button className="btn text-info border-1 border-info pt-2 pe-5 ps-5 pb-2 rounded-5">Abc</button>
+                            </div>
+
+                            <h6 className="mt-5">Social buttons</h6>
+                            <hr/>
+                            <div className="mb-3" >
+                              <i className="bi bi-facebook p-2 m-3"></i>
+                              <i className="bi bi-twitter p-2 m-3"></i>
+                              <i className="bi bi-instagram p-2 m-3"></i>
+                              <i className="bi bi-linkedin p-2 m-3"></i>
+                              <i className="bi bi-tiktok p-2 m-3"></i>
+                              <i className="bi bi-youtube p-2 m-3"></i>
+                              <i className="bi bi-tiktok p-2 m-3"></i>
+                              <i className="bi bi-youtube p-2 m-3"></i>
+                            </div>
+
+                            <div className="mb-3" >
+                              <a className="btn btn-info me-3 pt-2 pe-4 ps-4 pb-2 text-white rounded-0 mt-2"><i className="bi bi-facebook pe-2"></i>Facebook</a>
+                              <a className="btn btn-info pt-2 pe-4 ps-4 pb-2 text-white rounded-0 mt-2"><i className="bi bi-twitch pe-2"></i>Twitter</a>
+                              <a className="btn btn-info me-3 pt-2 pe-4 ps-4 pb-2 text-white rounded-0 mt-2"><i className="bi bi-instagram pe-2"></i>Instagram</a>
+                              <a className="btn btn-info pt-2 pe-4 ps-4 pb-2 text-white rounded-0 mt-2"><i className="bi bi-linkedin pe-2"></i>Linkedin</a>
+                              <a className="btn btn-info me-3 pt-2 pe-4 ps-4 pb-2 text-white rounded-0 mt-2"><i className="bi bi-tiktok pe-2"></i>Tik Tok</a>
+                              <a className="btn btn-info pt-2 pe-4 ps-4 pb-2 text-white rounded-0 mt-2"><i className="bi bi-youtube pe-2"></i>YouTube</a>  
+                            </div>
+                          </Tab.Pane>
+
+                          <Tab.Pane eventKey="second" className='bg-light p-4 tab-content'>
+                          <p className="m-0">Text</p>
+                            <p className="m-0 pt-2">Text Hierarchy</p>
+                            <hr/>
+                            <p className="m-0 fs-1">Add a heading</p>
+                            <p className="m-0 fs-4">Add a subheading</p>
+                            <p className="m-0 fs-6">Add a paragraph </p>
+
+                            <p className="m-0 pt-4">Themed text</p>
+                            <hr/>
+                            <div className="buttons">
+                              <p className="m-0 fs-6 square">Lorem ipsum</p>
+                              <p className="m-0 fs-6 square">Lorem ipsum</p>
+                              <p className="m-0 fs-6 ellipse">Lorem ipsum</p>
+                              <p className="m-0 fs-6 ellipse">Lorem ipsum</p>
+                              <p className="m-0 fs-6 round">Lorem ipsum</p>
+                              <p className="m-0 fs-6 round">Lorem ipsum</p>
+                            </div>
+                          </Tab.Pane>
+
+                          <Tab.Pane eventKey="third" className='bg-light p-4 tab-content'>
+                            <p className="m-0 fs-4 fw-semibold ">Image <i className="bi bi-question-circle text-muted fs-6"></i></p>
+                              <div className="mt-3" >
+                                <button className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2" type="file" >                
+                                  Browse media library
+                                </button>
+                                <button className="btn text-dark border-1 border-dark rounded-2"><i className="bi bi-upload"></i></button>
+                              </div>
+                          </Tab.Pane>
+
+                          <Tab.Pane eventKey="fourth" className='bg-light p-4 tab-content'>
+                            <p className="m-0 fs-4 fw-semibold">Videos <i className="bi bi-question-circle text-muted fs-6"></i></p>
+                              <div className="mt-3" >
+                                <button className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2">Browse media library</button>
+                                <button className="btn text-dark border-1 border-dark rounded-2"><i className="bi bi-upload"></i></button>
+                              </div>
+                          </Tab.Pane>
+
+                          <Tab.Pane eventKey="fifth" className='bg-light p-4 tab-content'>
+                            <p className="m-0 fs-4 fw-semibold">3D <i className="bi bi-question-circle text-muted fs-6"></i></p>
+                              <div className="mt-3" >
+                                <input type="file" id="img-upload"  className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2" />
+                                {/* >Browse media library</button> */}
+                                <button className="btn text-dark border-1 border-dark rounded-2"><i className="bi bi-upload"></i></button>
+                              </div>
+                          </Tab.Pane>
+                        </Tab.Content>
+                      </Col>
+                  </Row>
+              </Tab.Container>
+                <div className="d-flex flex-column flex-shrink-0 pt-3 ">
+                    <div className="position-absolute bottom-0 pb-4 bottom-icon">
+                      <i className="bi bi-stack p-0 m-0"></i>
+                    </div>
                 </div>
+            </div>  
 
-                <div className="mb-3" >
-                  <button className="btn btn-info border-1 border-info pt-2 pe-5 ps-5 pb-2 text-white rounded-3">Abc</button>
-                  <button className="btn text-info border-1 border-info pt-2 pe-5 ps-5 pb-2 rounded-3">Abc</button>
-                </div>
-
-                <div className="mb-3" >
-                  <button className="btn btn-info border-1 border-info pt-2 pe-5 ps-5 pb-2 text-white rounded-5">Abc</button>
-                  <button className="btn text-info border-1 border-info pt-2 pe-5 ps-5 pb-2 rounded-5">Abc</button>
-                </div>
-
-                <h6 className="mt-5">Social buttons</h6>
-                <hr/>
-                <div className="mb-3" >
-                  <i className="bi bi-facebook p-2 m-3"></i>
-                  <i className="bi bi-twitter p-2 m-3"></i>
-                  <i className="bi bi-instagram p-2 m-3"></i>
-                  <i className="bi bi-linkedin p-2 m-3"></i>
-                  <i className="bi bi-tiktok p-2 m-3"></i>
-                  <i className="bi bi-youtube p-2 m-3"></i>
-                  <i className="bi bi-tiktok p-2 m-3"></i>
-                  <i className="bi bi-youtube p-2 m-3"></i>
-                </div>
-
-                <div className="mb-3" >
-                  <a className="btn btn-info pt-2 pe-4 ps-4 pb-2 text-white rounded-0 mt-2"><i className="bi bi-facebook pe-2"></i>Facebook</a>
-                  <a className="btn btn-info pt-2 pe-4 ps-4 pb-2 text-white rounded-0 mt-2"><i className="bi bi-twitch pe-2"></i>Twitter</a>
-                  <a className="btn btn-info pt-2 pe-4 ps-4 pb-2 text-white rounded-0 mt-2"><i className="bi bi-instagram pe-2"></i>Instagram</a>
-                  <a className="btn btn-info pt-2 pe-4 ps-4 pb-2 text-white rounded-0 mt-2"><i className="bi bi-linkedin pe-2"></i>Linkedin</a>
-                  <a className="btn btn-info pt-2 pe-4 ps-4 pb-2 text-white rounded-0 mt-2"><i className="bi bi-tiktok pe-2"></i>Tik Tok</a>
-                  <a className="btn btn-info pt-2 pe-4 ps-4 pb-2 text-white rounded-0 mt-2"><i className="bi bi-youtube pe-2"></i>YouTube</a>  
-                </div>
-                
-              </div>
-              
-              <div id="tab2" className="tab-content">
-                <p className="m-0">Text</p>
-                <p className="m-0 pt-2">Text Hierarchy</p>
-                <hr/>
-                <p className="m-0 fs-1">Add a heading</p>
-                <p className="m-0 fs-4">Add a subheading</p>
-                <p className="m-0 fs-6">Add a paragraph </p>
-
-                <p className="m-0 pt-4">Themed text</p>
-                <hr/>
-                <div className="buttons">
-                  <p className="m-0 fs-6 square">Lorem ipsum</p>
-                  <p className="m-0 fs-6 square">Lorem ipsum</p>
-                  <p className="m-0 fs-6 ellipse">Lorem ipsum</p>
-                  <p className="m-0 fs-6 ellipse">Lorem ipsum</p>
-                  <p className="m-0 fs-6 round">Lorem ipsum</p>
-                  <p className="m-0 fs-6 round">Lorem ipsum</p>
-                </div>
-
-              </div>
-              <div id="tab3" className="tab-content">
-                <p className="m-0 fs-4 fw-semibold ">Image <i className="bi bi-question-circle text-muted fs-6"></i></p>
-                <div className="mt-3" >
-                   <button className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2" type="file" >                
- Browse media library
-                  </button>
-                  <button className="btn text-dark border-1 border-dark rounded-2"><i className="bi bi-upload"></i></button>
-                </div>
-                
-              </div>
-              <div id="tab4" className="tab-content">
-                <p className="m-0 fs-4 fw-semibold">Videos <i className="bi bi-question-circle text-muted fs-6"></i></p>
-                <div className="mt-3" >
-                  <button className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2">Browse media library</button>
-                  <button className="btn text-dark border-1 border-dark rounded-2"><i className="bi bi-upload"></i></button>
-                </div>
-              </div>
-              <div id="tab5" className="tab-content">
-                <p className="m-0 fs-4 fw-semibold">3D <i className="bi bi-question-circle text-muted fs-6"></i></p>
-                <div className="mt-3" >
-                  <input type="file" id="img-upload"  className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2" />
-                  {/* >Browse media library</button> */}
-                  <button className="btn text-dark border-1 border-dark rounded-2"><i className="bi bi-upload"></i></button>
-                </div>
-              </div>
-          </div> 
-
-        </div>  
-
-            <div className="col-md-9 p-0 m-0"  id="tracker">
+            <div className="col-md-5 p-0 m-0"  id="tracker">
 
                {/* <Canvas >
                 <Suspense> */}
@@ -230,22 +254,103 @@ useEffect(() => {
                 {/* </Suspense>
                </Canvas> */}
 
-              </div>
+            </div>
    
-             <div className="col-md-2 p-0 m-0 float-end">
+             <div className="col-md-1 p-0 m-0 float-end">
 
-              <div className="mb-3 pt-2 ps-2">
-                <i className="bi bi-facebook ps-2"></i> Scene / <i className="bi bi-twitch ps-2"></i> Project
-              </div>
-              <p className="mb-3 pt-2 ps-4">Target Image</p>
+              <Tab.Container id="right-tabs-example" defaultActiveKey="first">
+                    <Row className="flex-column justify-content-between tab-list right-tabs">
+                        <Col className="side-tab mb-5 mb-md-0">
+                          <Nav variant="pills" className="side-main bg-light py-4 px-2">
+                            <Nav.Item>
+                                <Nav.Link eventKey="first">
+                                  <FontAwesomeIcon icon={faImagePortrait} style={{ color: "rgb(113 123 131)", width: "10px", height: "10px", marginRight: 4 }} />
+                                  <a href="#tab1" className="nav-link p-0 m-0 fw-bold link-dark">Scene /</a>
+                                </Nav.Link>
+                            </Nav.Item>
 
-              <input className="btn btn-info mb-3 ms-4 text-light bg-dark border-0" type="button" value="http://sayehbaz.ir/#/target" onClick={handleChange} />Upload target image
-              <div className="right-side-down mb-3 pt-2 ps-4">
-                2D <div className="form-check form-switch">
-                    <input className="form-check-input" type="checkbox" role="switch"   /> 3D 
-                </div>
-                <p>| <span>99%</span></p>
-              </div>
+                            <Nav.Item>
+                                <Nav.Link eventKey="second">
+                                  <FontAwesomeIcon icon={faGear} style={{ color: "rgb(113 123 131)", width: "10px", height: "10px", marginRight: 4 }} />
+                                  <a href="#tab2" className="nav-link p-0 m-0 fw-bold link-dark" >Project</a>
+                                </Nav.Link>
+                            </Nav.Item>
+                          </Nav>
+                        </Col>
+
+                        <Col className="tab-main">
+                          <Tab.Content>
+                            <Tab.Pane eventKey="first" className='bg-light py-4 tab-content'>
+                            
+                            </Tab.Pane>
+
+                            <Tab.Pane eventKey="second" className='bg-light py-4 tab-content'>
+                            <Accordion defaultActiveKey="0">
+                              <Accordion.Item eventKey="0">
+                                <Accordion.Header>Target Image</Accordion.Header>
+                                <Accordion.Body>
+                                <div className="upload-img p-3">
+                                  <input className="btn btn-info mb-3 ms-4 text-light bg-dark border-0" type="button" value="Upload Target Image" onClick={handleChange} />
+                                </div>
+                                <div className="orientation mt-3">
+                                  <p>Orientation</p>
+                                  <div className="orientation-list d-flex justify-content-between">
+                                    <span>Upright</span>
+                                    <span>Flat</span>
+                                  </div>
+                                </div>
+                                </Accordion.Body>
+                              </Accordion.Item>
+                              <Accordion.Item eventKey="1">
+                                <Accordion.Header>AR Web Embed</Accordion.Header>
+                                <Accordion.Body>
+                                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                  minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                  aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                                  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                                  culpa qui officia deserunt mollit anim id est laborum.
+                                </Accordion.Body>
+                              </Accordion.Item>
+                              <Accordion.Item eventKey="2">
+                                <Accordion.Header>background Sound</Accordion.Header>
+                                <Accordion.Body>
+                                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                  minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                  aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                                  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                                  culpa qui officia deserunt mollit anim id est laborum.
+                                </Accordion.Body>
+                              </Accordion.Item>
+                              <Accordion.Item eventKey="3">
+                                <Accordion.Header>Analytics</Accordion.Header>
+                                <Accordion.Body>
+                                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                  minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                  aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                                  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                                  culpa qui officia deserunt mollit anim id est laborum.
+                                </Accordion.Body>
+                              </Accordion.Item>
+                            </Accordion>
+
+                            
+                            <div className="right-side-down mb-3 pt-2 ps-4">
+                              2D <div className="form-check form-switch">
+                                  <input className="form-check-input" type="checkbox" role="switch"   /> 3D 
+                              </div>
+                              <p>| <span>99%</span></p>
+                            </div>
+                            </Tab.Pane>
+                          </Tab.Content>
+                        </Col>
+                    </Row>
+              </Tab.Container>
              </div>
 
         </div>

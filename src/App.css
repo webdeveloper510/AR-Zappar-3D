@@ -372,9 +372,60 @@ form.user-pg-form {
     padding: 5px;
     overflow: auto;
   }
-  ul#target-tabs-nav li {
-    padding: 8px 10px;
+
+  .nav-item {
+    width: 100%;
+  }
+
+  .nav-item a {
+    padding: 0;
+  }
+
+  .nav-item a[role="tab"]{
+    padding: 20px 10px;
     cursor: pointer;
+    position: relative;
+    width: 100%;
+  }
+
+  .nav-item a[role="tab"]:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 70%;
+    display: flex;
+    margin: auto;
+    background: #b5b5b5;
+    height: 1px;
+  }
+
+  .nav-item:last-child a[role="tab"]:after {
+    content: none;
+  }
+
+  .nav-item a.nav-link.active a {
+    color: #fff !important;
+  }
+
+  .nav-item:nth-child(4) form {
+    opacity: 0;
+    margin-bottom: -20px !important;
+    position: relative;
+    z-index: 4;
+    cursor: pointer;
+  }
+
+  .nav-item input {
+    opacity: 0;
+    margin-bottom: -20px !important;
+    position: relative;
+    z-index: 4;
+    cursor: pointer;
+    padding: 0 !important;
+  }
+
+  .nav-item:nth-child(4) input {
+    margin-bottom: 0 !important;
   }
  
   #target-tabs-nav li a {
@@ -408,8 +459,7 @@ form.user-pg-form {
     margin-left: 20px;
 }
 
-.target-page .col-md-1.p-0.m-0.bg-light {
-    width: 80px !important;
+.target-page .side-tab {
     border-right: 1px solid #bababa;
 }
 
@@ -427,10 +477,92 @@ form.user-pg-form {
     overflow: hidden !important;
 }
 
-  
-  /* Just for CodePen styling - don't include if you copy paste */
-  
-/*target-page css end*/
+.target-page .float-end {
+    border-left: 1px solid #bababa;
+    padding: 0 1rem !important;
+    width: 20% !important;
+}
+
+.target-page .float-end input.btn {
+    margin-left: 0 !important;
+    width: 100%;
+}
+
+.tab-content .tab-pane input.btn {
+    width: 100%;
+}
+
+.nav-item a[role="tab"] {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-item a[role="tab"] svg {
+    margin-bottom: 7px;
+}
+
+.nav-pills .nav-link.active svg {
+    color: #fff !important;
+}
+
+.target-page .right-tabs .side-tab {
+    border: none;
+}
+
+.target-page .right-tabs .side-tab .side-main {
+    display: flex;
+}
+
+.target-page .right-tabs .side-tab .side-main .nav-item {
+    width: 45%;
+}
+
+.target-page .right-tabs .side-tab .side-main .nav-item a[role="tab"]:after {
+    content: none;
+}
+
+.target-page .right-tabs .side-tab .side-main .nav-item a[role="tab"] {
+    padding: 10px;
+}
+
+.tab-pane .accordion .accordion-item .accordion-collapse input {
+    font-size: 14px;
+}
+
+.tab-pane .accordion .accordion-item {
+    border: none;
+    border-bottom: 1px solid #cacaca;
+}
+
+.tab-pane .accordion .accordion-item h2 button {
+    background: none;
+    color: #000;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    font-size: 14px;
+    padding: 12px;
+}
+
+.tab-pane .accordion .accordion-item .upload-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    width: 100%;
+    border: 1px solid #000;
+}
+
+.tab-pane .accordion .accordion-item .orientation .orientation-list span {
+    color: #959595;
+}
+
+.tab-pane .accordion .accordion-item .accordion-collapse .accordion-body {
+    display: flex;
+    flex-direction: column;
+}
 
 
 /************ CUSTOM CSS *************/
@@ -446,9 +578,9 @@ form.user-pg-form {
 canvas {
     position: absolute;
     top: 8%;
-    right: 19%;
+    right: 26%;
     background: none;
-    width: 45% !important;
+    width: 40% !important;
     height: 88vh !IMPORTANT;
 }
 py-3{
