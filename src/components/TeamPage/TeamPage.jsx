@@ -33,7 +33,7 @@ const TeamPage =()=>{
                         <a href="#" className="nav-link active b1-bg-color"><i className="bi bi-grid pe-3"></i>Project</a>
                       </li>
                       <li>
-                        <a href="#" className="nav-link link-dark"><i className="bi bi-people-fill pe-3"></i>Team</a>
+                        <a href="/#/team" className="nav-link link-dark"><i className="bi bi-people-fill pe-3"></i>Team</a>
                       </li>
                     </ul>
                 </div>

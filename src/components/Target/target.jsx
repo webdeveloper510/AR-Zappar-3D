@@ -11,6 +11,7 @@ import Accordion from 'react-bootstrap/Accordion';
   
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandPointUp, faT, faImage, faVideo, faCube, faImagePortrait, faGear } from '@fortawesome/free-solid-svg-icons';
+import { Button } from "bootstrap";
 
 const Target =()=>{
 
@@ -120,11 +121,10 @@ useEffect(() => {
                               <Nav.Link eventKey="fourth">
                                 <FontAwesomeIcon icon={faVideo} style={{ color: "rgb(113 123 131)", width: "20px", height: "20px", marginRight: 4 }} />
 
-                                <form className="form" enctype="multipart/form-data">
-                                  <input  type="file" id="video-upload"  className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2" onChange={handleInputChange} />
-                                </form>
+                               
+                                  {/* <Button  type="file" id="video-upload"  className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2" onChange={handleInputChange} /> */}
 
-                                <video src= {newpath} crossorigin="anonymous" id="uploaded-video" hidden/>
+                                <video src= {newpath} crossOrigin="anonymous" id="uploaded-video" hidden/>
                                 <a href="#tab4" className="nav-link p-0 m-0 fw-bold link-dark" >Video</a>
                               </Nav.Link>
                           </Nav.Item>
@@ -212,30 +212,32 @@ useEffect(() => {
                           <Tab.Pane eventKey="third" className='bg-light p-4 tab-content'>
                             <p className="m-0 fs-4 fw-semibold ">Image <i className="bi bi-question-circle text-muted fs-6"></i></p>
                               <div className="mt-3" >
-                                <button className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2" type="file" >                
-                                  Browse media library
-                                </button>
-                                <button className="btn text-dark border-1 border-dark rounded-2"><i className="bi bi-upload"></i></button>
+                              <input type="file" id="img-upload"  className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2" />
+                                {/* >Browse media library</button> */}
+                                {/* <button className="btn text-dark border-1 border-dark rounded-2"><i className="bi bi-upload"></i></button> */}
                               </div>
                           </Tab.Pane>
 
                           <Tab.Pane eventKey="fourth" className='bg-light p-4 tab-content'>
                             <p className="m-0 fs-4 fw-semibold">Videos <i className="bi bi-question-circle text-muted fs-6"></i></p>
                               <div className="mt-3" >
-                                <button className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2">Browse media library</button>
-                                <button className="btn text-dark border-1 border-dark rounded-2"><i className="bi bi-upload"></i></button>
+                              <form className="form" encType="multipart/form-data">
+                              <input type="file" id="video-upload"  className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2" onChange={handleInputChange} />
+                              </form>
+                                {/* >Browse media library</button> */}
+                                {/* <button className="btn text-dark border-1 border-dark rounded-2"><i className="bi bi-upload"></i></button> */}
                               </div>
                           </Tab.Pane>
 
                           <Tab.Pane eventKey="fifth" className='bg-light p-4 tab-content'>
                             <p className="m-0 fs-4 fw-semibold">3D <i className="bi bi-question-circle text-muted fs-6"></i></p>
                               <div className="mt-3" >
-                                <input type="file" id="img-upload"  className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2" />
-                                {/* >Browse media library</button> */}
-                                <button className="btn text-dark border-1 border-dark rounded-2"><i className="bi bi-upload"></i></button>
+                              <input type="file" id="3D-upload"  className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2" />
+                                {/* >Browse media library</button> */}              
+                                {/* <button className="btn text-dark border-1 border-dark rounded-2"><i className="bi bi-upload"></i></button> */}
                               </div>
                           </Tab.Pane>
-                        </Tab.Content>
+                        </Tab.Content>  
                       </Col>
                   </Row>
               </Tab.Container>
@@ -247,13 +249,7 @@ useEffect(() => {
             </div>  
 
             <div className="col-md-5 p-0 m-0"  id="tracker">
-
-               {/* <Canvas >
-                <Suspense> */}
                   <ModelAr />
-                {/* </Suspense>
-               </Canvas> */}
-
             </div>
    
              <div className="col-md-1 p-0 m-0 float-end">
@@ -355,7 +351,7 @@ useEffect(() => {
 
         </div>
     </div>
-</div>
+</div>  
     )
 }
 export default Target;

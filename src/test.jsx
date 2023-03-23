@@ -10,7 +10,7 @@ const ModelAr =()=> {
         const boxModal = () => {
 
 let cameraPersp, cameraOrtho, currentCamera;
-let scene, renderer, control, orbit;
+let scene, renderer, control, orbit , control2 ,control3 , control4;
 
 init();
 render();
@@ -61,8 +61,8 @@ function init() {
         orbit.enabled = ! event.value;
 
     } );
-
     const mesh = new THREE.Mesh( geometry, material );
+
     scene.add( mesh );
 
     control.attach( mesh );
@@ -167,6 +167,7 @@ function init() {
                     var reader = new FileReader();
                     reader.onloadend = (onload)=> {
                         console.log('RESULT', reader.result)
+
                         new THREE.TextureLoader().load(reader.result ,function onLoad(texture){
 
                                 var material = [
@@ -185,6 +186,15 @@ function init() {
                                 mesh.material = material;
                                 texture.needsUpdate = false;
                                 material.map= texture
+                                control2 = new TransformControls( currentCamera, renderer.domElement );
+                                control2.addEventListener( 'change', render );
+                            
+                                control2.addEventListener( 'dragging-changed', function ( event ) {
+                            
+                                    orbit.enabled = ! event.value;
+                            
+                                } );
+                                control2.attach(mesh)
                         })
 
                     }
@@ -194,18 +204,43 @@ function init() {
 
 
 
-    const loader = new GLTFLoader();
-    console.log( loader)
-    const downloadUrl = new URL('./assets/scene_sphere.gltf', import.meta.url);
-        loader.load( downloadUrl+"",function ( gltf ) {
-            gltf.scene.position.set(1,2,0   )
-            scene.add(gltf.scene);
-            console.log( gltf.scene)
-            control.attach( gltf.scene );
-    
-        })
-     
 
+    // const loader = new GLTFLoader();
+    // console.log( loader)
+    // const downloadUrl = new URL('./assets/scene_sphere.gltf', import.meta.url);
+    //     loader.load( downloadUrl+"",function ( gltf ) {
+    //         gltf.scene.position.set(1,2,0   )
+    //         scene.add(gltf.scene);
+    //         console.log( gltf.scene)
+    //         control.attach( gltf.scene );
+    
+    //     })
+    const ModelUp = document.getElementById('3D-upload')
+        ModelUp.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.addEventListener('load', (event) => {
+              const gltfContent = event.target.result;
+              const loader = new GLTFLoader();
+              loader.load(gltfContent, (gltf) => {
+                gltf.scene.position.set(1, 2, 0);
+                scene.add(gltf.scene);
+                gltf.scene.needsUpdate = true
+
+
+                control3 = new TransformControls( currentCamera, renderer.domElement );
+                control3.addEventListener( 'change', render );
+            
+                control3.addEventListener( 'dragging-changed', function ( event ) {
+            
+                    orbit.enabled = ! event.value;
+            
+                } );
+                control3.attach(gltf.scene)
+              });
+            });
+            reader.readAsDataURL(file);
+          });
 
 
 
@@ -216,7 +251,7 @@ function init() {
     video.loop = true;
     video.muted = true;
     console.log(video)
-    const Videotexture = new THREE.VideoTexture(video)
+    const Videotexture = new THREE.VideoTexture(video )
         var Videomaterial = [
             new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
             new THREE.MeshBasicMaterial({ transparent: false , color :0x3d3d3d}),
@@ -239,8 +274,15 @@ function init() {
     const Videomesh = new THREE.Mesh(Videogeometry, Videomaterial);
     
     scene.add(Videomesh);
-    control.attach(Videomesh);
+    control4 = new TransformControls( currentCamera, renderer.domElement );
+    control4.addEventListener( 'change', render );
 
+    control4.addEventListener( 'dragging-changed', function ( event ) {
+
+        orbit.enabled = ! event.value;
+
+    } );
+    control4.attach(Videomesh)
     window.addEventListener( 'keyup', function ( event ) {
 
         switch ( event.keyCode ) {
@@ -287,3 +329,38 @@ setTimeout(boxModal, 1000)
 }
 export default ModelAr;
 
+// import React from 'react';
+// import { Canvas } from 'react-three-fiber';
+// import { editable as e, configure } from 'react-three-editable';
+
+// // Import your previously exported state
+// import editableState from './editableState.json';
+
+// const bind = configure({
+//   // Enables persistence in development so your edits aren't discarded when you close the browser window
+//   enablePersistence: true,
+//   // Useful if you use r3e in multiple projects
+//   localStorageNamespace: 'Example',
+// });
+
+// const ModelAr=()=> {
+//   return (
+//     <Canvas onCreated={bind({ state: editableState })}>
+//       <ambientLight intensity={0.5} />
+//       {/* Mark objects as editable. */}
+//       {/* Properties in the code are used as initial values and reset points in the editor. */}
+//       <e.spotLight
+//         position={[10, 10, 10]}
+//         angle={0.15}
+//         penumbra={1}
+//         uniqueName="Spotlight"
+//       />
+//       <e.pointLight uniqueName="PointLight" />
+//       <e.mesh uniqueName="Box">
+//         <boxBufferGeometry />
+//         <meshStandardMaterial color="orange" />
+//       </e.mesh>
+//     </Canvas>
+//   );
+// }
+// export default ModelAr;
