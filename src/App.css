@@ -3,6 +3,46 @@ body{
     padding: 0px;
 }
 
+input {
+    outline: none;
+}
+
+/* Main Page CSS */
+.navbar {
+    background-color: #624F82;
+}
+
+.main-page-content .project-pg {
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* .main-page-content .project-side {
+    border-right: 1px solid #eaeaea;
+} */
+
+.main-page-content .project-side .project-main {
+    padding: 20px 0 !important;
+}
+
+.main-page-content .project-side ul li a.nav-link {
+    padding: 10px;
+    color: #000;
+}
+
+.main-page-content .project-side ul li a.nav-link.active {
+    color: #fff;
+}
+
+.main-page-content .side-main .side-container {
+    border-bottom: 1px solid #eaeaea
+}
+
+.main-page-content #projectStart {
+    cursor: pointer;
+}
+
+
 /* login page css start */
 .login-page-bg {
     background-image: url(../src/assets/images/login-bg.png);
@@ -13,7 +53,6 @@ body{
 .login-pg-form {
     width: 100%;
     text-align: left;
-    padding: 0px 20%;
 }
 .login-pg-form .btn-sign-in {
     background: #726182;
@@ -39,10 +78,12 @@ body{
     background-repeat: no-repeat;
     height: 100vh;
 }
+.sign-up-pg-container, .login-up-pg-container {
+    padding: 0px 20%;
+}
 .sign-up-pg-form {
     width: 100%;
     text-align: left;
-    padding: 0px 20%;
 }
 .sign-up-pg-form .btn-sign-in {
     background: #726182;
@@ -110,6 +151,7 @@ body{
     position: absolute;
     top: 8px;
     left: 8px;
+    margin: 0;
 }
 /* Project page css end */
 
@@ -166,7 +208,6 @@ form.user-pg-form {
     list-style: none;
     margin: 0;
     padding: 5px;
-    overflow: auto;
   }
   ul#tabs-nav li {
     float: left;
@@ -177,6 +218,7 @@ form.user-pg-form {
     /*border: 1px solid #d5d5de;
     border-bottom: none;*/
     cursor: pointer;
+    width: 100%;
   }
   ul#tabs-nav li:hover a,
   ul#tabs-nav li.active a {
@@ -192,22 +234,34 @@ form.user-pg-form {
 
 /*project page css start*/
 
-.projetc-page .sec-1 {
-    width: 80%;
-    background: white;
-    margin: 40px auto;
-    border-radius: 5px;
-    border: 1px solid #f1f1f1;
-    box-shadow: 0px 0px 6px rgb(0 0 0 / 25%);
+
+.project-page .project-page-upper, .project-page .project-bottom-content {
+    box-shadow: 0 0 6px rgba(0, 0, 0, .25);
+    border-radius: 10px;
 }
 
-.projetc-page .sec-2 {
+.project-page .project-bottom-content,
+.project-page .project-bottom-title{
+    width: 100% !important;
+}
+
+.project-page .project-bottom-content .project-bottom-left {
+    border-right: 1px solid #e3e3e3;
+}
+
+
+.project-page .sec-1 {
+    background: white;
+    border-radius: 5px;
+}
+
+.project-page .sec-2 {
     width: 80%;
-    margin: 60px auto -40px;
+    margin: 20px auto 0;
     
 }
 
-.projetc-page .btn-1 {
+.project-page .btn-1 {
     margin-top: 60px;
     margin-bottom: 10px;
     background: #624f82;
@@ -217,7 +271,7 @@ form.user-pg-form {
     border: none;
 }
 
-.projetc-page .btn-1:hover {
+.project-page .btn-1:hover {
     margin-top: 60px;
     margin-bottom: 10px;
     background: #624f82;
@@ -227,10 +281,9 @@ form.user-pg-form {
     border: none;
 }
 
-.projetc-page ul#tabs-nav li:hover a, .projetc-page ul#tabs-nav li.active a {
+.project-page ul#tabs-nav li:hover a, .project-page ul#tabs-nav li.active a {
     color: #ffffff;
     background: #624F82;
-    padding: 5px 70px;
     border-radius: 2px;
     font-size: 16px;
     font-weight: 500;
@@ -238,10 +291,12 @@ form.user-pg-form {
     text-decoration: none;
 }
 
-.projetc-page ul#tabs-nav li a, .projetc-page ul#tabs-nav li a {
-    color: #000000;
+.project-page ul#tabs-nav li a, .project-page ul#tabs-nav li a {
+    color: #343434;
     background: #624f8200;
-    padding: 5px 70px;
+    display: flex;
+    width: 100%;
+    padding: 5px 0px;
     border-radius: 2px;
     font-size: 16px;
     font-weight: 500;
@@ -258,11 +313,15 @@ form.user-pg-form {
 }
 
 .project-pg .tab-content {
-    border: 1px solid #f3f3f3;
+    border: none !important;
     background-color: #FFF;
     width: 100%;
-
 }
+
+.project-pg #tab1 {
+    border-bottom: 1px solid #e3e3e3 !important;
+}
+
 /*project page css end*/
 
 
@@ -460,7 +519,7 @@ form.user-pg-form {
 }
 
 .target-page .side-tab {
-    border-right: 1px solid #bababa;
+    width: 100%;
 }
 
 .target-page .col-md-1.p-0.m-0.bg-light .d-flex.flex-column.flex-shrink-0.pt-3 {
@@ -480,7 +539,7 @@ form.user-pg-form {
 .target-page .float-end {
     border-left: 1px solid #bababa;
     padding: 0 1rem !important;
-    width: 20% !important;
+    width: 15% !important;
 }
 
 .target-page .float-end input.btn {
@@ -516,7 +575,7 @@ form.user-pg-form {
 }
 
 .target-page .right-tabs .side-tab .side-main .nav-item {
-    width: 45%;
+    width: 40%;
 }
 
 .target-page .right-tabs .side-tab .side-main .nav-item a[role="tab"]:after {
@@ -578,9 +637,9 @@ form.user-pg-form {
 canvas {
     position: absolute;
     top: 8%;
-    right: 26%;
+    right: 20%;
     background: none;
-    width: 40% !important;
+    width: 70% !important;
     height: 88vh !IMPORTANT;
 }
 py-3{
@@ -604,19 +663,6 @@ a.nav-link.p-0.m-0.fw-bold.link-dark {
     width: 20%;
 }
 
-a.d-flex.align-items-center.col-lg-4.mb-2.mb-lg-0.link-dark.text-decoration-none {
-    border: 1px solid #ef0e0e;
-    background: #eb720b;
-    width: 176px;
-    padding: 8px 8px;
-    font-weight: bold;
-    color: #ebebeb;
-    transition: 0.9s;
-}
-a.d-flex.align-items-center.col-lg-4.mb-2.mb-lg-0.link-dark.text-decoration-none:hover{
-background: #fff;
-border: 1px solid;
-}
 input#projName {
     border: none;
     margin: 80px 0 0 0;
@@ -628,11 +674,12 @@ input#projName {
     cursor: pointer;
     transition: 1s;
     background: #3d3d3d;
+    position: relative;
 }
+
 
 input[type="file"] {
     width: 100%;
-    margin-top: -25px;
     height: 100%;
     display: flex;
     opacity: 0;
@@ -658,6 +705,9 @@ span {
     padding: 2px 2px 2px 5px;
     font-size: 14px;
     transition: 1s;
+    position: absolute;
+    top: 8px;
+    left: 10px;
 }
 .overview-cover-image:hover{
     background: #ccbdf9;
@@ -670,4 +720,72 @@ span {
 }
 .overview-cover-image:hover span{
     border-bottom: 1px solid #3F3B6C;
+}
+
+.bottom-icon {
+    left: 18px;
+    right: 0;
+    display: flex;
+    margin: auto;
+}
+.tab-list {
+    position: relative;
+}
+.target-left .tab-list .tab-content.tab-pane {
+    transform: translate(-150%, 0%);
+    transition: 1s ease-in-out;
+    min-width: 340px;
+    position: absolute;
+    z-index: 9;
+}
+
+.target-left .tab-list .tab-content.tab-pane.active {
+    transform: translate(27%, 0%);
+}
+
+.target-left input[type="file"] {
+    opacity: 1;
+}
+
+.threeD {
+    position: relative;
+}
+
+.threeD label {
+    color: #000;
+}
+
+.nav-pills .nav-link.active .threeD label {
+    color: #fff;
+}
+
+.threeD input[type="file"] {
+    position: absolute;
+    width: 62px;
+    left: -22px;
+    bottom: 15px;
+    opacity: 0;
+    z-index: 5;
+}
+
+#left-tabs-example-tab-fifth {
+    padding-bottom: 10px;
+}
+
+.base-img {
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    border-radius: 10px;
+    height: 191px;
+}
+
+@media only screen and (min-width: 768px) {
+    .target-page .target-left {
+        border-right: 1px solid #c3c4c6;
+    }
+
+    .projectDetail .project-page {
+        border-left: 1px solid #eaeaea;
+    }
 }

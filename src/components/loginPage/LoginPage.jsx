@@ -65,7 +65,7 @@ const handleLogin = ()=>{
             <div class="row p-0 m-0 align-items-center">
                 <div class="col-md-7 p-0 m-0 login-page-bg"></div>
                 <div class="col-md-5 p-0 m-0">
-                    <div class="text-center pt-5">
+                    <div class="text-center pt-5 login-up-pg-container">
                         <h2 class="logo-here">Logo </h2>
 
                         <form class="login-pg-form">
