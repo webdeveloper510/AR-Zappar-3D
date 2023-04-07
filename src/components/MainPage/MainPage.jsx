@@ -1,6 +1,6 @@
 import React, { useEffect , useState } from "react";
 import "../../App.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams ,Link} from "react-router-dom";
 import Pro1 from '../../assets/images/pro-1.jpg'
 import Pro from '../../assets/images/pro.jpg'
 import axios from "axios";
@@ -8,32 +8,36 @@ import { API } from "../../config/api";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus, faGripHorizontal, faList, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 /* eslint-disable react/jsx-props-no-spreading */
-
 const MainPage =()=>{
   const [proInfo,setProInfo ] = useState([])
   const val = localStorage.getItem('id');
+  
   const navigate = useNavigate()
   const handleCreate =()=>{
     navigate('/project')
   }
     
   useEffect(() => {
-    axios.get(API.BASE_URL+'projects/'+val )
+    axios.get(API.BASE_URL+'projects/'+val+'/' )
     .then(function(response){
       console.log(response)
       setProInfo(response.data)
-
     }).catch(function(error){
       console.log(error)
     })
   }, [])
 
-// ProTitle: "dsagyer"
-// id:2
-// imagePro:"image/WoodFlooring061_Flat_jLLquJL.jpg"
-// projectIcon:""
-// projectTitle:""
-// projectUser_id: 4
+  
+ 
+
+// const  openProject=(value) => {
+//   console.log("       " , value.id)
+//   axios.get(`${API.BASE_URL}project-list/${value.id}/`)
+//   .then(function(response) {
+//     console.log(" " , response)
+//     navigate('/project')
+//   })
+// }
     return(
       <div className="hello">
         
@@ -114,15 +118,17 @@ const MainPage =()=>{
                 </div>
                 <div class="row p-5">
                   
-                    {proInfo.map((proData, i) => {
+                    {proInfo?.map((proData, i) => {
                       return(
-                        <div class="card project-card-placeholder col-md-3 mb-4 mx-2">
+                        <div class="card project-card-placeholder col-md-3 mb-4 mx-2 p-0 link-body">
+                          {/* <button className="button-project" onClick={() => openProject(proData)} ></button> */}
                           <span class="badge text-bg-light">Designer</span>
                           <img src={proData.imagePro} class="card-img-top" alt="..."/>
-                          <div class="card-body">
+                          <div class="card-body ">
                               <img src={Pro1} class="rounded-circle" width="50" height="50" alt="..."/>
                             <h5 class="card-title">{proData.ProTitle}</h5>
-                            <p class="card-text"><small class="text-muted">Created 31 Oct 22 | Unpublished</small></p>
+                            <p class="card-text"><small class="text-muted">Created {proData.created_at} | Unpublished</small></p>
+                            <Link className="link-tag" to={'/target/'+proData.id} />
                           </div>
                       </div>
                       )

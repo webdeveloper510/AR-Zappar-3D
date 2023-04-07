@@ -1,4 +1,4 @@
-import React , {useState} from "react";
+import React , {useEffect, useState} from "react";
 import "../../App.css"
 import axios from "axios";
 import { API } from "../../config/api";
@@ -40,22 +40,20 @@ const handleLogin = ()=>{
             console.log(response)
             console.log('Login SuccessFully', response);
             console.log(response.data)
-            localStorage.setItem('id',response.data.data[0].id)
-            localStorage.setItem('FirstName',response.data.data[0].firstname)
-            localStorage.setItem('lastname',response.data.data[0].lastname)
-            localStorage.setItem('email',response.data.data[0].email)
-            localStorage.setItem('proffession',response.data[0].data.proffession)
-            
-            // uploadProImg(response.data.imagePro? response.data.imagePro : "")
-            
+            localStorage.setItem('token',response.data.token.access)
+            localStorage.setItem('id',response.data.data.id)         
           })
           .catch(function(err) {
             console.error('Error uploading file', err);
           });
-        
-    // }
 }
-
+var token = localStorage.getItem('token');
+useEffect(()=>{
+    if (token){
+        navigate('/home')
+    }
+},
+[])
 
     return(
 

@@ -3,286 +3,417 @@ import { useEffect } from 'react';
 import {OrbitControls } from "../node_modules/three/examples/jsm/controls/OrbitControls.js"
 import { TransformControls} from '../node_modules/three/examples/jsm/controls/TransformControls'
 import { GLTFLoader } from '../node_modules/three/examples/jsm/loaders/GLTFLoader.js';
+import {TextGeometry} from '../node_modules/three/examples/jsm/geometries/TextGeometry';
+import { GUI } from 'dat.gui';
+
+
+
+
+
+
+
 
 
 const ModelAr =()=> {
         useEffect(() => {
         const boxModal = () => {
 
-let cameraPersp, cameraOrtho, currentCamera;
-let scene, renderer, control, orbit , control2 ,control3 , control4;
+            let cameraPersp, cameraOrtho, currentCamera;
+            let scene, renderer, control, orbit , control2 , control3 , control4
 
-init();
-render();
+            init();
+            render();
 
-function init() {
+    function init() {
 
-    renderer = new THREE.WebGLRenderer();
-    renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    document.body.appendChild( renderer.domElement );
+        renderer = new THREE.WebGLRenderer();
+        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        document.body.appendChild( renderer.domElement );
 
-    const aspect = window.innerWidth / window.innerHeight;
+        const aspect = window.innerWidth / window.innerHeight;
 
-    cameraPersp = new THREE.PerspectiveCamera( 75, aspect, 0.11, 3000 );
-    cameraOrtho = new THREE.OrthographicCamera( - 600 * aspect, 600 * aspect, 600, - 600, 0.01, 3000 );
-    currentCamera = cameraPersp;
+        cameraPersp = new THREE.PerspectiveCamera( 75, aspect, 0.11, 3000 );
+        cameraOrtho = new THREE.OrthographicCamera( - 600 * aspect, 600 * aspect, 600, - 600, 0.01, 3000 );
+        currentCamera = cameraPersp;
 
-    currentCamera.position.set(  100, 250, 10 );
-    currentCamera.lookAt( 200,0 ,0 );
+        currentCamera.position.set(  100, 250, 10 );
+        currentCamera.lookAt( 200,0 ,0 );
 
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color( 0xffffff );
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color( 0xffffff );
 
-    const grid =  new THREE.GridHelper( 200, 10, 0x000000, 0x000000 ) ;
-    grid.position.set( 1,0,0)
-    grid.rotation.set(-Math.PI / 2, 0,0 );
-    scene.add( grid );
+        const grid =  new THREE.GridHelper( 200, 10, 0x000000, 0x000000 ) ;
+        grid.position.set( 1,0,0)
+        grid.rotation.set(-Math.PI / 2, 0,0 );
+        scene.add( grid );
 
-    const light = new THREE.DirectionalLight( 0xffffff, 5 );
-    light.position.set( 1, 1, 1 );
-    scene.add( light );
+        const light = new THREE.DirectionalLight( 0xffffff, 5 );
+        light.position.set( 1, 1, 1 );
+        scene.add( light );
 
-    const texture = new THREE.TextureLoader().load( 'textures/crate.gif', render );
-    texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        const texture = new THREE.TextureLoader().load( 'textures/crate.gif', render );
+        texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
-    const geometry = new THREE.BoxGeometry( 80, 80, 1 );
-    const material = new THREE.MeshLambertMaterial( { map: texture, transparent: true } );
+        const geometry = new THREE.BoxGeometry( 80, 80, 1 );
+        const material = new THREE.MeshLambertMaterial( { map: texture, transparent: true } );
 
-    orbit = new OrbitControls( currentCamera, renderer.domElement );
-    orbit.update();
-    orbit.addEventListener( 'change', render );
+        orbit = new OrbitControls( currentCamera, renderer.domElement );
+        orbit.update();
+        orbit.addEventListener( 'change', render );
 
-    control = new TransformControls( currentCamera, renderer.domElement );
-    control.addEventListener( 'change', render );
+        control = new TransformControls( currentCamera, renderer.domElement );
+        control2 = new TransformControls( currentCamera, renderer.domElement );
+        control3 = new TransformControls( currentCamera, renderer.domElement );
+        control4 = new TransformControls( currentCamera, renderer.domElement );
 
-    control.addEventListener( 'dragging-changed', function ( event ) {
+        control.addEventListener( 'change', render );
 
-        orbit.enabled = ! event.value;
+        control.addEventListener( 'dragging-changed', function ( event ) {
 
-    } );
-    const mesh = new THREE.Mesh( geometry, material );
+            orbit.enabled = ! event.value;
 
-    scene.add( mesh );
+        } );
 
-    control.attach( mesh );
-    scene.add( control );
+        const mesh = new THREE.Mesh( geometry, material );
 
-    window.addEventListener( 'resize', onWindowResize );
+            scene.add( mesh );
 
-    window.addEventListener( 'keydown', function ( event ) {
+            scene.add( control , control2 , control3 , control4 );
 
-        switch ( event.keydown ) {
+    /// ADDING WINDOWS RESIZE CONTROL
 
-            case 81: // Q
-                control.setSpace( control.space === 'local' ? 'world' : 'local' );
-                break;
+                    window.addEventListener( 'resize', onWindowResize );
 
-            case 16: // Shift
-                control.setTranslationSnap( 100 );
-                control.setRotationSnap( THREE.MathUtils.degToRad( 100 ) );
-                control.setScaleSnap( 0.25 );
-                break;
+                    window.addEventListener( 'keydown', function ( event ) {
 
-            case 87: // W
-                control.setMode( 'translate' );
-                break;
+                        switch ( event.keydown ) {
 
-            case 69: // E
-                control.setMode( 'rotate' );
-                break;
+                            case 81: // Q
+                                control.setSpace( control.space === 'local' ? 'world' : 'local' );
+                                break;
 
-            case 82: // R
-                control.setMode( 'scale' );
-                break;
+                            case 16: // Shift
+                                control.setTranslationSnap( 100 );
+                                control.setRotationSnap( THREE.MathUtils.degToRad( 100 ) );
+                                control.setScaleSnap( 0.25 );
+                                break;
 
-            case 67: // C
-                const position = currentCamera.position.clone();
+                            case 87: // W
+                                control.setMode( 'translate' );
+                                break;
 
-                currentCamera = currentCamera.isPerspectiveCamera ? cameraOrtho : cameraPersp;
-                currentCamera.position.copy( position );
+                            case 69: // E
+                                control.setMode( 'rotate' );
+                                break;
 
-                orbit.object = currentCamera;
-                control.camera = currentCamera;
+                            case 82: // R
+                                control.setMode( 'scale' );
+                                break;
 
-                currentCamera.lookAt( orbit.target.x, orbit.target.y, orbit.target.z );
-                onWindowResize();
-                break;
+                            case 67: // C
+                                const position = currentCamera.position.clone();
 
-            case 86: // V
-                const randomFoV = Math.random() + 0.1;
-                const randomZoom = Math.random() + 0.1;
+                                currentCamera = currentCamera.isPerspectiveCamera ? cameraOrtho : cameraPersp;
+                                currentCamera.position.copy( position );
 
-                cameraPersp.fov = randomFoV * 160;
-                cameraOrtho.bottom = - randomFoV * 500;
-                cameraOrtho.top = randomFoV * 500;
+                                orbit.object = currentCamera;
+                                control.camera = currentCamera;
 
-                cameraPersp.zoom = randomZoom * 5;
-                cameraOrtho.zoom = randomZoom * 5;
-                onWindowResize();
-                break;
+                                currentCamera.lookAt( orbit.target.x, orbit.target.y, orbit.target.z );
+                                onWindowResize();
+                                break;
 
-            case 187:
-            case 107: // +, =, num+
-                control.setSize( control.size + 0.1 );
-                break;
+                            case 86: // V
+                                const randomFoV = Math.random() + 0.1;
+                                const randomZoom = Math.random() + 0.1;
 
-            case 189:
-            case 109: // -, _, num-
-                control.setSize( Math.max( control.size - 0.1, 0.1 ) );
-                break;
+                                cameraPersp.fov = randomFoV * 160;
+                                cameraOrtho.bottom = - randomFoV * 500;
+                                cameraOrtho.top = randomFoV * 500;
 
-            case 88: // X
-                control.showX = ! control.showX;
-                break;
+                                cameraPersp.zoom = randomZoom * 5;
+                                cameraOrtho.zoom = randomZoom * 5;
+                                onWindowResize();
+                                break;
 
-            case 89: // Y
-                control.showY = ! control.showY;
-                break;
+                            case 187:
+                            case 107: // +, =, num+
+                                control.setSize( control.size + 0.1 );
+                                break;
 
-            case 90: // Z
-                control.showZ = ! control.showZ;
-                break;
+                            case 189:
+                            case 109: // -, _, num-
+                                control.setSize( Math.max( control.size - 0.1, 0.1 ) );
+                                break;
 
-            case 32: // Spacebar
-                control.enabled = ! control.enabled;
-                break;
+                            case 88: // X
+                                control.showX = ! control.showX;
+                                break;
 
-            case 27: // Esc
-                control.reset();
-                break;
+                            case 89: // Y
+                                control.showY = ! control.showY;
+                                break;
 
-        }
+                            case 90: // Z
+                                control.showZ = ! control.showZ;
+                                break;
 
-    } );
+                            case 32: // Spacebar
+                                control.enabled = ! control.enabled;
+                                break;
 
+                            case 27: // Esc
+                                control.reset();
+                                break;
 
-            // Iamge Upload Section
-            var input = document.getElementById('img-upload');
-                input.addEventListener('change', function(e) {
-                    console.log(e);
-                    var file = e.target.files[0];
-                    console.log(file);
-                    
-                    var reader = new FileReader();
-                    reader.onloadend = (onload)=> {
-                        console.log('RESULT', reader.result)
+                        }
 
-                        new THREE.TextureLoader().load(reader.result ,function onLoad(texture){
-
-                                var material = [
-                                    new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
-                                    new THREE.MeshBasicMaterial({ transparent: false , color :0x3d3d3d}),
-                                    new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
-                                    new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
-                                    new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
-                                    new THREE.MeshBasicMaterial({map:texture,transparent:false} ),
-                                ]
-
-                                console.log(material)
-                                console.log(mesh)
-                                material.needsUpdate = false
-                                // material.depthtset = false;
-                                mesh.material = material;
-                                texture.needsUpdate = false;
-                                material.map= texture
-                                control2 = new TransformControls( currentCamera, renderer.domElement );
-                                control2.addEventListener( 'change', render );
-                            
-                                control2.addEventListener( 'dragging-changed', function ( event ) {
-                            
-                                    orbit.enabled = ! event.value;
-                            
-                                } );
-                                control2.attach(mesh)
-                        })
-
-                    }
-                    reader.readAsDataURL(file);
-                    
-                });
+                    } );
+            
 
 
+// ADDING IMAGE CONTROL FUNCTION TO MODEL...
 
+    var currentmesh = null
+    // Iamge Upload Section
+    var input = document.getElementById('img-upload');
+        input.addEventListener('change', function(e) { 
+            console.log(e);
+            var file = e.target.files[0];
+            console.log(file);
+            var reader = new FileReader();
+            reader.onloadend = (onload)=> {
+                console.log('RESULT', reader.result)
+                new THREE.TextureLoader().load(reader.result ,function onLoad(texture){
+                        var material = [
+                            new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
+                            new THREE.MeshBasicMaterial({ transparent: false , color :0x3d3d3d}),
+                            new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
+                            new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
+                            new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
+                            new THREE.MeshBasicMaterial({map:texture,transparent:false} ),
+                        ]
+                        if (currentmesh !== null){
+                            scene.remove(currentmesh)
+                        }
+                        console.log(material)
+                        console.log(mesh)
+                        material.needsUpdate = false
+                        // material.depthtset = false;
+                        mesh.material = material;
+                        texture.needsUpdate = false;
+                        material.map= texture
+                        currentmesh = mesh
+                        control.attach(mesh)
+                })
+            }
+            reader.readAsDataURL(file);
+        });
 
-    // const loader = new GLTFLoader();
-    // console.log( loader)
-    // const downloadUrl = new URL('./assets/scene_sphere.gltf', import.meta.url);
-    //     loader.load( downloadUrl+"",function ( gltf ) {
-    //         gltf.scene.position.set(1,2,0   )
-    //         scene.add(gltf.scene);
-    //         console.log( gltf.scene)
-    //         control.attach( gltf.scene );
-    
-    //     })
+// ADDING 3D MODEL UPLOAD CONTROLER FUNCTION TO MODEL...
+
     const ModelUp = document.getElementById('3D-upload')
         ModelUp.addEventListener('change', (event) => {
             const file = event.target.files[0];
             const reader = new FileReader();
             reader.addEventListener('load', (event) => {
-              const gltfContent = event.target.result;
-              const loader = new GLTFLoader();
-              loader.load(gltfContent, (gltf) => {
-                gltf.scene.position.set(1, 2, 0);
-                scene.add(gltf.scene);
-                gltf.scene.needsUpdate = true
-
-
-                control3 = new TransformControls( currentCamera, renderer.domElement );
-                control3.addEventListener( 'change', render );
-            
-                control3.addEventListener( 'dragging-changed', function ( event ) {
-            
-                    orbit.enabled = ! event.value;
-            
-                } );
-                control3.attach(gltf.scene)
-              });
+                const gltfContent = event.target.result;
+                const loader = new GLTFLoader();
+                loader.load(gltfContent, (gltf) => {
+                    gltf.scene.position.set(1, 2, 0);
+                    scene.add(gltf.scene);
+                    gltf.scene.needsUpdate = true
+                });
             });
             reader.readAsDataURL(file);
-          });
+        });
 
 
 
-    const video = document.getElementById('uploaded-video');
-    console.log( video.src)
 
-    video.autoplay = true;
-    video.loop = true;
-    video.muted = true;
-    console.log(video)
-    const Videotexture = new THREE.VideoTexture(video )
-        var Videomaterial = [
-            new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
-            new THREE.MeshBasicMaterial({ transparent: false , color :0x3d3d3d}),
-            new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
-            new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
-            new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
-            new THREE.MeshBasicMaterial({map:Videotexture,transparent:false} ),
+// ADDING VIDEO CONTROL FUNCTION TO MODEL...
+
+
+        const video = document.getElementById('uploaded-video');
+            video.autoplay = true;
+            video.loop = true;
+            video.muted = true;
+            console.log(video)
+            const Videotexture = new THREE.VideoTexture(video )
+            var Videomaterial = [
+                new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
+                new THREE.MeshBasicMaterial({ transparent: false , color :0x3d3d3d}),
+                new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
+                new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
+                new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
+                new THREE.MeshBasicMaterial({map:Videotexture,transparent:false} ),
         ]
-
-
-    Videotexture.minFilter = THREE.LinearFilter;
-    Videotexture.magFilter = THREE.LinearFilter;
-    Videotexture.format = THREE.RGBAFormat;
+        Videotexture.minFilter = THREE.LinearFilter;
+        Videotexture.magFilter = THREE.LinearFilter;
+        Videotexture.format = THREE.RGBAFormat;
+        video.addEventListener('canplaythrough', () => {
+             video.play();
+        },
+        false);
+        
+        const Videogeometry = new THREE.BoxGeometry(80,80,1);
+        const Videomesh = new THREE.Mesh(Videogeometry, Videomaterial);
+        scene.add(Videomesh);
+        control3.attach(Videomesh);
     
-    video.addEventListener('canplaythrough', () => {
-        video.play();
-      }, false);
-    
-    const Videogeometry = new THREE.BoxGeometry(80,80,1);
-    const Videomesh = new THREE.Mesh(Videogeometry, Videomaterial);
-    
-    scene.add(Videomesh);
-    control4 = new TransformControls( currentCamera, renderer.domElement );
-    control4.addEventListener( 'change', render );
 
-    control4.addEventListener( 'dragging-changed', function ( event ) {
 
-        orbit.enabled = ! event.value;
+// ADDING TEXT CONTRUL TO THE MODEK
 
-    } );
-    control4.attach(Videomesh)
+            const textGeometry = new TextGeometry("Hello World", {
+            size: 10,
+            height: 0.5,
+            });
+
+            // Create material for the text
+            const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+            // Create mesh
+            const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+
+            // Set position
+            textMesh.position.set(0, 0, 0);
+
+            // Add mesh to the scene
+            scene.add(textMesh);
+
+
+
+// IMAGE DRAG AND DROP FUNCTION 
+
+    const TextureImage = document.querySelector('.Grid--1NhFW')
+        TextureImage.addEventListener('click', (e) =>{
+            const TexturePath = e.target.dataset.texture
+            var img2 = document.getElementById("social-icon")
+            img2.src = TexturePath
+            const confirm = document.getElementById('submitTexture')
+            confirm.addEventListener("click", () =>{
+                    console.log(TexturePath)
+                    const ImageGet = new THREE.TextureLoader()
+                    const Rtexture = ImageGet.load(TexturePath)
+                    const ImageGeo = new THREE.BoxGeometry(80,80,1)
+                    const Imagematerial =[
+                        new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
+                        new THREE.MeshBasicMaterial({ transparent: false , color :0x3d3d3d}),
+                        new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
+                        new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
+                        new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
+                        new THREE.MeshBasicMaterial({map:Rtexture,transparent:false} ),
+                    ]
+                    const ImageSocial = new THREE.Mesh(ImageGeo , Imagematerial)
+                    const previousMesh = scene.getObjectByName('ImageSocial')
+                    if (previousMesh !== undefined) {
+                      scene.remove(previousMesh)
+                    }
+                    ImageSocial.name = 'ImageSocial'
+                    scene.add(ImageSocial)
+                    control4.attach(ImageSocial)
+            })
+        })
+
+        const TextureImage2 = document.querySelector('.Grid--r1Nnn')
+        TextureImage2.addEventListener('click', (e) =>{
+            console.log(e.target.dataset.texture)
+            const TexturePath = e.target.dataset.texture
+            var img2 = document.getElementById("social-icon")
+            img2.src = TexturePath
+            const confirm = document.getElementById('submitTexture')
+            confirm.addEventListener("click", () =>{
+                    console.log(TexturePath)
+                    const ImageGet = new THREE.TextureLoader()
+                    const Rtexture = ImageGet.load(TexturePath)
+                    const ImageGeo = new THREE.BoxGeometry(80,80,1)
+                    const Imagematerial =[
+                        new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
+                        new THREE.MeshBasicMaterial({ transparent: false , color :0x3d3d3d}),
+                        new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
+                        new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
+                        new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
+                        new THREE.MeshBasicMaterial({map:Rtexture,transparent:false} ),
+                    ]
+                    const ImageSocial = new THREE.Mesh(ImageGeo , Imagematerial)
+                    scene.add(ImageSocial)
+                    control4.attach(ImageSocial)
+                    // REMOVE BUTTON
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.textContent = 'Remove';
+                    ImageSocial.add(removeBtn)
+                    removeBtn.style.position = 'absolute';
+                    removeBtn.style.top = '10px';
+                    removeBtn.style.left = '10px';
+                    document.body.appendChild(removeBtn);
+
+                    // Add event listener to remove button
+                    removeBtn.addEventListener('click', () => {
+                    scene.remove(ImageSocial);
+                    control4.detach(ImageSocial);
+                    document.body.removeChild(removeBtn);
+                    });
+
+            })
+        })
+
+
+// TEXT FEATURE 
+const TextureImage3 = document.querySelector('.Grid--v4HT5')
+TextureImage3.addEventListener('click', (e) => {
+  if (e.target.tagName === 'DIV') {
+    const div = e.target;
+    const style = window.getComputedStyle(div);
+    const backgroundImage = style.getPropertyValue('background-image');
+    console.log(backgroundImage);
+    const textureUrl = backgroundImage.slice(4, -1).replace(/"/g, "");
+    const imageLoader = new THREE.TextureLoader();
+    const texture = imageLoader.load(textureUrl);
+    const geometry = new THREE.BoxGeometry(80, 40, 1);
+    const materials = [
+      new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
+      new THREE.MeshBasicMaterial({ transparent: false, color: 0x3d3d3d }),
+      new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
+      new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
+      new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
+      new THREE.MeshBasicMaterial({ map: texture, transparent: false }),
+    ];
+    const mesh = new THREE.Mesh(geometry, materials);
+    scene.add(mesh);
+    control4.attach(mesh);
+  }
+});
+
+      // create a remove button
+    //   const removeBtn = document.createElement('div')
+    //   removeBtn.textContent = 'Remove'
+    //   removeBtn.style.width = '100px'
+    //   removeBtn.style.height = '36px'
+    //   removeBtn.style.color = 'white'
+    //   removeBtn.style.display = 'flex'
+    //   removeBtn.style.alignItems = 'center'
+    //   removeBtn.style.justifyContent = 'center'
+    //   removeBtn.style.cursor = 'pointer'
+    //   removeBtn.style.backgroundColor = 'rgb(150, 191, 239)'
+    //   removeBtn.addEventListener('click', () => {
+    //     scene.remove(ImageSocial)
+    //     control4.detach(ImageSocial)
+    //     ImageGet.dispose()
+    //     Rtexture.dispose()
+    //   })
+    //   document.body.appendChild(removeBtn)
+    // })
+//   }
+// })
+
+
+
+
+
+
     window.addEventListener( 'keyup', function ( event ) {
 
         switch ( event.keyCode ) {
@@ -328,39 +459,3 @@ setTimeout(boxModal, 1000)
 
 }
 export default ModelAr;
-
-// import React from 'react';
-// import { Canvas } from 'react-three-fiber';
-// import { editable as e, configure } from 'react-three-editable';
-
-// // Import your previously exported state
-// import editableState from './editableState.json';
-
-// const bind = configure({
-//   // Enables persistence in development so your edits aren't discarded when you close the browser window
-//   enablePersistence: true,
-//   // Useful if you use r3e in multiple projects
-//   localStorageNamespace: 'Example',
-// });
-
-// const ModelAr=()=> {
-//   return (
-//     <Canvas onCreated={bind({ state: editableState })}>
-//       <ambientLight intensity={0.5} />
-//       {/* Mark objects as editable. */}
-//       {/* Properties in the code are used as initial values and reset points in the editor. */}
-//       <e.spotLight
-//         position={[10, 10, 10]}
-//         angle={0.15}
-//         penumbra={1}
-//         uniqueName="Spotlight"
-//       />
-//       <e.pointLight uniqueName="PointLight" />
-//       <e.mesh uniqueName="Box">
-//         <boxBufferGeometry />
-//         <meshStandardMaterial color="orange" />
-//       </e.mesh>
-//     </Canvas>
-//   );
-// }
-// export default ModelAr;

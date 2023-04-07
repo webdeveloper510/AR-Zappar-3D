@@ -30,3 +30,187 @@
 #tab2 .buttons p.round {
     border-radius: 10px !important;
 }
+img#social-icon {
+    width: 40px;
+    margin-right: 115px;
+}
+
+.InspectorMenu--1PeA4 {
+    width: 272px;
+    height: calc(100vh - 60px);
+    padding: 10px 20px 10px 20px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    right: 0;
+    top: 60px;
+    z-index: 997;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.1607843137);
+    background-color: #fff;
+}
+.OuterContainer--pMxMG {
+    position: absolute;
+    left: 60px;
+    top: 68px;
+    z-index: 3;
+    width: calc(100% - 272px - 60px);
+    height: fit-content;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    pointer-events: none;
+}
+.InspectorMenu--1PeA4 .ShelfContainer--1Ad4O {
+    height: calc(100% - 68px);
+    width: calc(100% + 16px);
+    overflow-y: scroll;
+    padding: 0 13px 30px 13px;
+    margin-right: -13px;
+    margin-left: -13px;
+}
+.DrawerBtn--bdcva.Open--EFZA8 {
+    margin-bottom: 8px
+}
+.TitleContainer--2xD-b {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    font-size: 16;
+    font-weight: 700;
+}
+* {
+    user-select: none;
+    box-sizing: border-box;
+    color: #344b60;
+    font-family: "Lato",sans-serif;
+}
+.DrawerBtn--bdcva {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 0;
+}
+button {
+    font-size: 14px;
+    font-family: lato,sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+}
+.Content--15Wyt.Open--EFZA8 {
+    height: auto;
+    transition: max-height .25s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 16px;
+}
+.PreviewContainer--3uAi9 {
+    border: 1px solid #b2c4d7;
+    height: 160px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    margin-top: 0px;
+    position: relative;
+}
+
+.PreviewContainer--3uAi9 img {
+    max-height: 100%;
+    max-width: 100%;
+}
+img {
+    outline: none;
+}
+.PreviewContainer--3uAi9 .HoverDiv--jI34Q {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(115,180,255,.2);
+    position: absolute;
+    z-index: 1;
+    user-select: none;
+    border-radius: 5px;
+    background-color: rgba(74,144,226,.2);
+    border: solid 1px #4a90e2;
+    box-shadow: 0px 0px 0px 2px #ecf6ff;
+    -webkit-box-shadow: 0px 0px 0px 2px #ecf6ff;
+    -moz-box-shadow: 0px 0px 0px 2px #ecf6ff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1ch;
+    opacity: 0;
+}
+button {
+    font-size: 14px;
+    font-family: lato,sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+}
+.PreviewContainer--3uAi9 .HoverDiv--jI34Q .TrkImgUploadButton--3e-ZC {
+    width: 108px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid #4a90e2;
+    color: #fff;
+}
+.SubBtn--26RUV {
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    background-color: #4a90e2;
+    color: #fff;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+input {
+    outline: none;
+}
+
+
+.PreviewContainer--3uAi9 .HoverDiv--jI34Q {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(115,180,255,.2);
+    position: absolute;
+    z-index: 1;
+    user-select: none;
+    border-radius: 5px;
+    background-color: rgba(74,144,226,.2);
+    border: solid 1px #4a90e2;
+    box-shadow: 0px 0px 0px 2px #ecf6ff;
+    -webkit-box-shadow: 0px 0px 0px 2px #ecf6ff;
+    -moz-box-shadow: 0px 0px 0px 2px #ecf6ff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1ch;
+    opacity: 0;
+}
+.PreviewContainer--3uAi9 .HoverDiv--jI34Q .TrkImgUploadButton--3e-ZC {
+    width: 108px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid #4a90e2;
+    color: #fff;
+}
+.PropertiesContainer--3om6o {
+}
