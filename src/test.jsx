@@ -4,22 +4,15 @@ import {OrbitControls } from "../node_modules/three/examples/jsm/controls/OrbitC
 import { TransformControls} from '../node_modules/three/examples/jsm/controls/TransformControls'
 import { GLTFLoader } from '../node_modules/three/examples/jsm/loaders/GLTFLoader.js';
 import {TextGeometry} from '../node_modules/three/examples/jsm/geometries/TextGeometry';
-import { GUI } from 'dat.gui';
-
-
-
-
-
-
-
-
+import { controllers, GUI } from '../node_modules/dat.gui/build/dat.gui.module.js';
 
 const ModelAr =()=> {
         useEffect(() => {
         const boxModal = () => {
 
             let cameraPersp, cameraOrtho, currentCamera;
-            let scene, renderer, control, orbit , control2 , control3 , control4
+            let scene, renderer, control, orbit , control2 , control3 , control4 
+            var ModelsArray = []
 
             init();
             render();
@@ -78,7 +71,7 @@ const ModelAr =()=> {
         const mesh = new THREE.Mesh( geometry, material );
 
             scene.add( mesh );
-
+            mesh.position.set(0, 0, 0);
             scene.add( control , control2 , control3 , control4 );
 
     /// ADDING WINDOWS RESIZE CONTROL
@@ -192,7 +185,7 @@ const ModelAr =()=> {
                             new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
                             new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
                             new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
-                            new THREE.MeshBasicMaterial({map:texture,transparent:false} ),
+                            new THREE.MeshBasicMaterial({map:texture,transparent:false}),
                         ]
                         if (currentmesh !== null){
                             scene.remove(currentmesh)
@@ -204,8 +197,11 @@ const ModelAr =()=> {
                         mesh.material = material;
                         texture.needsUpdate = false;
                         material.map= texture
-                        currentmesh = mesh
-                        control.attach(mesh)
+                        mesh.callback = function() {attactControls()}
+                        // ModelsArray.push(mesh)/
+                        // console.log(ModelsArray)
+                        // currentmesh = mesh
+                        // control.attach(mesh)
                 })
             }
             reader.readAsDataURL(file);
@@ -224,6 +220,8 @@ const ModelAr =()=> {
                     gltf.scene.position.set(1, 2, 0);
                     scene.add(gltf.scene);
                     gltf.scene.needsUpdate = true
+                    ModelsArray.push(gltf.scene)
+                    console.log(ModelsArray)
                 });
             });
             reader.readAsDataURL(file);
@@ -260,7 +258,8 @@ const ModelAr =()=> {
         const Videogeometry = new THREE.BoxGeometry(80,80,1);
         const Videomesh = new THREE.Mesh(Videogeometry, Videomaterial);
         scene.add(Videomesh);
-        control3.attach(Videomesh);
+        ModelsArray.push(Videomesh)
+        // control3.attach(Videomesh);
     
 
 
@@ -313,7 +312,9 @@ const ModelAr =()=> {
                     }
                     ImageSocial.name = 'ImageSocial'
                     scene.add(ImageSocial)
-                    control4.attach(ImageSocial)
+                    // control4.attach(ImageSocial)
+                    ModelsArray.push(ImageSocial)
+                    console.log(ModelsArray)
             })
         })
 
@@ -339,23 +340,25 @@ const ModelAr =()=> {
                     ]
                     const ImageSocial = new THREE.Mesh(ImageGeo , Imagematerial)
                     scene.add(ImageSocial)
-                    control4.attach(ImageSocial)
+                    ModelsArray.push(ImageSocial)
+
+                    // control4.attach(ImageSocial)
                     // REMOVE BUTTON
 
-                    const removeBtn = document.createElement('button');
-                    removeBtn.textContent = 'Remove';
-                    ImageSocial.add(removeBtn)
-                    removeBtn.style.position = 'absolute';
-                    removeBtn.style.top = '10px';
-                    removeBtn.style.left = '10px';
-                    document.body.appendChild(removeBtn);
+                    // const removeBtn = document.createElement('button');
+                    // removeBtn.textContent = 'Remove';
+                    // ImageSocial.add(removeBtn)
+                    // removeBtn.style.position = 'absolute';
+                    // removeBtn.style.top = '10px';
+                    // removeBtn.style.left = '10px';
+                    // document.body.appendChild(removeBtn);
 
-                    // Add event listener to remove button
-                    removeBtn.addEventListener('click', () => {
-                    scene.remove(ImageSocial);
-                    control4.detach(ImageSocial);
-                    document.body.removeChild(removeBtn);
-                    });
+                    // // Add event listener to remove button
+                    // removeBtn.addEventListener('click', () => {
+                    // scene.remove(ImageSocial);
+                    // control4.detach(ImageSocial);
+                    // document.body.removeChild(removeBtn);
+                    // });
 
             })
         })
@@ -383,31 +386,74 @@ TextureImage3.addEventListener('click', (e) => {
     ];
     const mesh = new THREE.Mesh(geometry, materials);
     scene.add(mesh);
-    control4.attach(mesh);
+    ModelsArray.push(mesh)
+
+    // control4.attach(mesh);
   }
 });
 
-      // create a remove button
-    //   const removeBtn = document.createElement('div')
-    //   removeBtn.textContent = 'Remove'
-    //   removeBtn.style.width = '100px'
-    //   removeBtn.style.height = '36px'
-    //   removeBtn.style.color = 'white'
-    //   removeBtn.style.display = 'flex'
-    //   removeBtn.style.alignItems = 'center'
-    //   removeBtn.style.justifyContent = 'center'
-    //   removeBtn.style.cursor = 'pointer'
-    //   removeBtn.style.backgroundColor = 'rgb(150, 191, 239)'
-    //   removeBtn.addEventListener('click', () => {
-    //     scene.remove(ImageSocial)
-    //     control4.detach(ImageSocial)
-    //     ImageGet.dispose()
-    //     Rtexture.dispose()
-    //   })
-    //   document.body.appendChild(removeBtn)
-    // })
-//   }
-// })
+
+console.log(ModelsArray)
+
+// Assuming you have an array of 3D models called 'models'
+ModelsArray.forEach(function(model) {
+    model.addEventListener("click", (event)=> {
+      // First, remove the transform controls from any previously selected model
+      console.log(event)
+    //   if (control.object !== undefined) {
+    //     control.detach();
+    //   }
+  
+      // Then, attach the transform controls to the clicked model
+      control.attach(model);
+    });
+  });
+  
+
+var getWidth = document.getElementById('GetWidth') 
+getWidth.addEventListener("change" , (event) =>{
+    mesh.scale.x = event.target.value
+})
+var getLength = document.getElementById('GetLength')
+getLength.addEventListener("change" , (event) =>{
+    mesh.scale.y = event.target.value
+})
+var getHeight = document.getElementById('GetHeight')
+getHeight.addEventListener("change" , (event) =>{
+    mesh.scale.z = event.target.value
+})
+
+
+let raycaster , INTERSECTED ;
+let theta =0;
+
+const mouse = new THREE.Vector2();
+const radius = 500;
+const frustumSize = 1000;
+
+raycaster = new THREE.Raycaster()
+window.addEventListener('dblclick', onDocumentMouseDown, false);
+function onDocumentMouseDown( event ) {
+    event.preventDefault();
+    mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+    mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+    raycaster.setFromCamera( mouse, cameraPersp );
+    console.log(scene.children);
+    var intersects = raycaster.intersectObjects( scene.children );
+    console.log("selected")
+    control.attach(intersects[1])
+    console.log(intersects[1]);
+    if ( intersects.length > 0 ) {
+        intersects[1].object.callback();
+    }}
+
+function attactControls(e){
+    console.log("selected")
+    control.attach(e)
+}
+
+
+
 
 
 

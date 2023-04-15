@@ -487,7 +487,6 @@ console.log('===>' , id)}
         <div style={{width: "100%"}}>
 <button data-testid="ShelfDrawerBtn" class="DrawerBtn--bdcva Open--EFZA8 ">
 <div class="TitleContainer--2xD-b">Transforms</div>
-{/* <svg class="RotatedArrow--23Tkz Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" /> */}
 
 {/* <title></title><path d="M0.333/421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
 </button><div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Open--EFZA8" style={{overflow: "visible"}}><div data-testid="Transforms"><div class="RowTitle--21qhU RowTitle--3Xq7s">Size (mm)
@@ -495,18 +494,25 @@ console.log('===>' , id)}
 {/* <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Unlock aspect ratio</title><g id="Aspect-Ratio-Locked-20-x-20" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><path d="M10.8994949,-0.100505063 C12.5563492,-0.100505063 13.8994949,1.24264069 13.8994949,2.89949494 L13.8994949,5.89949494 C13.8994949,7.55634919 12.5563492,8.89949494 10.8994949,8.89949494 L10.3994949,8.89949494 L10.3994949,10.8994949 L10.8994949,10.8994949 C12.5563492,10.8994949 13.8994949,12.2426407 13.8994949,13.8994949 L13.8994949,16.8994949 C13.8994949,18.5563492 12.5563492,19.8994949 10.8994949,19.8994949 L8.89949494,19.8994949 C7.24264069,19.8994949 5.89949494,18.5563492 5.89949494,16.8994949 L5.89949494,13.8994949 C5.89949494,12.2426407 7.24264069,10.8994949 8.89949494,10.8994949 L9.39949494,10.8994949 L9.39949494,8.89949494 L8.89949494,8.89949494 C7.24264069,8.89949494 5.89949494,7.55634919 5.89949494,5.89949494 L5.89949494,2.89949494 C5.89949494,1.24264069 7.24264069,-0.100505063 8.89949494,-0.100505063 L10.8994949,-0.100505063 Z M10.8994949,11.8994949 L10.3994949,11.8994949 L10.3994949,13.8994949 C10.3994949,14.1756373 10.1756373,14.3994949 9.89949494,14.3994949 C9.65403505,14.3994949 9.44988657,14.2226198 9.40755061,13.9893706 L9.39949494,13.8994949 L9.39949494,11.8994949 L8.89949494,11.8994949 C7.84513314,11.8994949 6.98132981,12.7153727 6.90498067,13.7502326 L6.89949494,13.8994949 L6.89949494,16.8994949 C6.89949494,17.9538567 7.71537273,18.8176601 8.75023259,18.8940092 L8.89949494,18.8994949 L10.8994949,18.8994949 C11.9538567,18.8994949 12.8176601,18.0836171 12.8940092,17.0487573 L12.8994949,16.8994949 L12.8994949,13.8994949 C12.8994949,12.7949254 12.0040644,11.8994949 10.8994949,11.8994949 Z M10.8994949,0.899494937 L8.89949494,0.899494937 C7.84513314,0.899494937 6.98132981,1.71537273 6.90498067,2.75023259 L6.89949494,2.89949494 L6.89949494,5.89949494 C6.89949494,6.95385673 7.71537273,7.81766006 8.75023259,7.8940092 L8.89949494,7.89949494 L9.39949494,7.89949494 L9.39949494,5.89949494 C9.39949494,5.62335256 9.62335256,5.39949494 9.89949494,5.39949494 C10.1449548,5.39949494 10.3491033,5.5763701 10.3914393,5.8096193 L10.3994949,5.89949494 L10.3994949,7.89949494 L10.8994949,7.89949494 C11.9538567,7.89949494 12.8176601,7.08361715 12.8940092,6.04875728 L12.8994949,5.89949494 L12.8994949,2.89949494 C12.8994949,1.79492544 12.0040644,0.899494937 10.8994949,0.899494937 Z" id="Combined-Shape" fill="#4A90E2" fill-rule="nonzero" transform="translate(9.899495, 9.899495) rotate(-315.000000) translate(-9.899495, -9.899495) "></path></g></svg> */}
 </button></div>
 <div class="InputRow--1kdSn InputRow--2M9c1">
+
 <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj false">
-<input type="text" data-testid="NumericalInput" placeholder="multi" value="50" />
+<input type="text" data-testid="NumericalInput" id="GetWidth"  />
 <label data-testid="NumericalInputLabel" style={{color: "grey"}}>W</label></div>
-<div style={{borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "23px"}}>
-</div><div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj false">
-<input type="text" data-testid="NumericalInput" placeholder="multi" value="50" />
+
+<div style={{borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "23px"}}></div>
+
+<div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj false">
+<input type="text" data-testid="NumericalInput" id="GetHeight"  />
 <label data-testid="NumericalInputLabel" style={{color: "grey"}}>H</label></div>
+
+
 <div style={{borderLeft: "1px solid rgb(178, 196, 215)" , width: "auto", height: "23px"}}></div>
+
 <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj Disabled--2q2TU">
-<input type="text" data-testid="NumericalInput" placeholder="multi" disabled="" value="0" />
+<input type="text" data-testid="NumericalInput" id="GetLength"  />
 <label data-testid="NumericalInputLabel" style={{color: "grey"}}>D</label>
-</div></div>
+</div>
+</div>
 
 <div class="RowTitle--3Kekp RowTitle--3Xq7s">Position (mm)</div>
 <div class="InputRow--VLm0n InputRow--2M9c1"><div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false">
