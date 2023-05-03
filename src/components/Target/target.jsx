@@ -50,10 +50,17 @@ sweepImage2,
 tiktokImage2,
 youTubeImage2,
   ]
-  const handleDragStart = (event, id) => {
-    event.dataTransfer.setData("text/plain", id);
-  };
 
+  const [targetImage , selectedTargetImage] = useState(null)
+  const  TargetImage = (e) =>{
+    var file = e.target.files[0];
+    var reader = new FileReader();
+        reader.onloadend = (onload)=> {
+          selectedTargetImage(reader.result)
+        }
+        reader.readAsDataURL(file);
+  }
+  localStorage.setItem("targetImage" , targetImage)
 
 
   const userId = localStorage.getItem('id')
@@ -449,7 +456,7 @@ console.log('===>' , id)}
                         culpa qui officia deserunt mollit anim id est laborum.
                       </Accordion.Body>
                     </Accordion.Item>
-                  </Accordion>
+                  </Accordion>*/}
 
                   
                   <div className="right-side-down mb-3 pt-2 ps-4">
@@ -458,7 +465,7 @@ console.log('===>' , id)}
                     </div>
                     <p>| <span>99%</span></p>
                   </div>
-                  </Tab.Pane> */}
+                  {/* </Tab.Pane>  */}
         <div class="InspectorMenu--1PeA4" data-testid="InspectorMenu">
           
           <div class="ShelfContainer--1Ad4O">
@@ -471,8 +478,8 @@ console.log('===>' , id)}
               <div>
                 <div class="Title--fDSi1 Title--36gWd">Image</div>
                 <div class="PreviewDiv--WjPlt PreviewDiv--1AHiO " style={{width: "100%", height: "170px"}}>
-                  <img src="https://d1sonmy4sf0d9y.cloudfront.net/image/347586-c5a3ade2f5d3405ea20654dbec3188f4/img" style={{width: '100%', height: '100%', display: 'flex', objectFit: 'cover'}} />
-                  <div class="HoverDiv--jI34Q "><button style={{width: "100%" , height: "100%"}}><div class="SubBtn--26RUV TrkImgUploadButton--3e-ZC">Replace</div></button><input type="file" accept="image/jpeg,image/png,.jpeg,.jpg,.png" style={{display: "none"}} /></div>
+                  <img src={targetImage} style={{width: '100%', height: '100%', display: 'flex', objectFit: 'cover'}} />
+                  <div class="HoverDiv--jI34Q "><button style={{width: "100%" , height: "100%"}}><div class="SubBtn--26RUV TrkImgUploadButton--3e-ZC" >Replace</div></button><input type="file" accept="image/jpeg,image/png,.jpeg,.jpg,.png" onChange={TargetImage} style={{'margin': '-60px 0 0 0 ', 'position': 'relative', 'z-index': '3'}} /></div>
                     <div class="HoverDiv--2gksf ">
                       <button class="ActionBtn--1x70k">
                         <div class="EntityReplaceBtn--V4byk">Replace</div>
@@ -619,11 +626,21 @@ console.log('===>' , id)}
                       
                       <div style={{borderTop: "1px solid rgb(178, 196, 215)", height: "auto", width: "100%"}}></div></div></div>
                       
-                      <div class="OuterContainer--1AGzZ"><div class="Switcher2d3d--1SCbh Disabled--fqu6h" data-testid="Switcher2d3d">
-                        
-                        <button class="Inactive--945so" data-testid="ToggleOffButton">2D</button>
-                        
-                        <label class="switch--1ZKOu"><input type="checkbox" data-testid="ToggleState" /><span class="slider--y3Xl-"></span></label><button class="Active--3YQI9" data-testid="ToggleOnButton">3D</button></div><div style={{borderLeft: "1px solid rgb(178, 196, 215)"  ,width: "auto", height: "20px"}}></div><div class="ViewMenu--2ejhM"><span>27%</span></div></div></div>
+                        <div class="OuterContainer--1AGzZ">
+                          
+                              <div class="Switcher2d3d--1SCbh Disabled--fqu6h" data-testid="Switcher2d3d">
+                          
+                                    <button class="Inactive--945so" data-testid="ToggleOffButton" />2D
+                                    
+                                    <label class="switch--1ZKOu"><input type="checkbox" data-testid="ToggleState" /><span class="slider--y3Xl-"></span></label>
+                                    
+                                    <button class="Active--3YQI9" data-testid="ToggleOnButton" />3D
+                                    
+                                    </div>
+                                    
+                            <div style={{borderLeft: "1px solid rgb(178, 196, 215)"  ,width: "auto", height: "20px"}}></div><div class="ViewMenu--2ejhM"><span>27%</span></div>
+                        </div>
+                      </div>
                 </Tab.Content>
               </Col>
           </Row>

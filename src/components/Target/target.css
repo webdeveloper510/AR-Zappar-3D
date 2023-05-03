@@ -212,5 +212,79 @@ input {
     border: 1px solid #4a90e2;
     color: #fff;
 }
-.PropertiesContainer--3om6o {
+.OuterContainer--1AGzZ {
+  display: flex;
+  align-items: center;
 }
+
+.Switcher2d3d--1SCbh {
+  display: flex;
+  align-items: center;
+}
+
+button {
+  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: transparent;
+  color: #333;
+  cursor: pointer;
+}
+
+.Inactive--945so {
+  margin-right: -2px;
+}
+
+.switch--1ZKOu {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  margin: 0 10px;
+}
+
+.switch--1ZKOu input {
+  display: none;
+}
+
+.slider--y3Xl- {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: -30px;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: .4s;
+}
+
+.slider--y3Xl-::before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: .4s;
+}
+
+.switch--1ZKOu input:checked + .slider--y3Xl- {
+  background-color: #336ded;
+}
+
+.switch--1ZKOu input:focus + .slider--y3Xl- {
+  box-shadow: 0 0 1px #4CAF50;
+}
+
+.switch--1ZKOu input:checked + .slider--y3Xl-::before {
+  transform: translateX(26px);
+}
+
+.Active--3YQI9 {
+  margin-left: -2px;
+}
+
