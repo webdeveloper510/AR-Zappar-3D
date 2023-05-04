@@ -51,30 +51,40 @@ input {
 .main-page-content #projectStart {
     cursor: pointer;
 }
-
-
-/* login page css start */
-.login-page-bg {
-    background-image: url(../src/assets/images/login-bg.png);
+.login-bgg {
     background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
 }
+
+/* login page css start */
+/* .login-page-bg {
+    background-image: url(../src/assets/images/login-bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+} */
+h2.top-logo {
+    text-align: center;
+}
 .login-pg-form {
     width: 100%;
     text-align: left;
+    /* background: #fff;
+    padding: 35px;
+    padding-top: 18px;
+    margin: 0 auto;
+    box-shadow: 0 0 20px 0 rgb(0 0 0 / 20%), 0 5px 5px 0 rgb(0 0 0 / 24%);
+    border-radius: 10px; */
 }
+
 .login-pg-form .btn-sign-in {
     background: #726182;
     color: white;
     padding: 10px 0px;
     font-weight: 600;
 }
-.login-pg-form .btn-sign-in-google {
-    border: 1px solid #646464;
-    padding: 10px 0px;
-    font-weight: 600;
-}
+
 .logo-here {
     position: absolute;
     top: 40px;
@@ -82,8 +92,7 @@ input {
 /* login page css end */
 
 /* Sign up page css start */
-.sign-up-page-bg {
-    background-image: url(../src/assets/images/sign-up-bg.png);
+.sign-up-bgg {
     background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
@@ -91,9 +100,15 @@ input {
 .sign-up-pg-container, .login-up-pg-container {
     padding: 0px 20%;
 }
-.sign-up-pg-form {
-    width: 100%;
+form.sign-up-pg-form {
+    width: 70%;
     text-align: left;
+    background: #fff;
+    padding: 35px;
+    padding-top: 18px;
+    margin: 0 auto;
+    box-shadow: 0 0 20px 0 rgb(0 0 0 / 20%), 0 5px 5px 0 rgb(0 0 0 / 24%);
+    border-radius: 10px;
 }
 .sign-up-pg-form .btn-sign-in {
     background: #726182;
@@ -111,8 +126,10 @@ input {
     top: 40px;
 }
 .sign-up-pg-form .form-control, .form-select {
-    font-size: 12px;
     border-radius: 4px;
+}
+p.already-account {
+    margin-top: 20px;
 }
 .eight h4 {
     display: grid;
@@ -864,4 +881,113 @@ ul.dropdown-menu.text-small.shadow.show a {
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     line-height: 20px;
+}
+a.btn.btn-sign-in {
+    background: #5186C8;
+    border-radius: 45px;
+    padding: 15px;
+    font-size: 16px;
+
+}
+form.login-pg-form input {
+    padding: 14px;
+    border-radius: 100px;
+}
+img.login-pic {
+    width: 80%;
+}
+.login-up-pg-container-right {
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+.login-up-pg-container-left {
+    float: left;
+    width: 50%;
+    padding: 40px;
+    
+}
+form.login-pg-form input {
+    background: #5089c714;
+    border-color: #ebf4fb;
+} 
+form.login-pg-form input:focus {
+    outline: none;
+    box-shadow: none;
+}
+div#login-page {
+    background: #32527A;
+}
+.col-md-12.p-0.m-0.login-outer {
+    background: #fff;
+    width: 70%;
+    padding: 50px;
+    margin: 40px auto !important;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+}
+.login-page-bg {
+    text-align: center;
+}
+.login-pg-form .btn-sign-in-google {
+    border: 2px solid #5186C8;
+    border-radius: 45px;
+    padding: 15px;
+    font-size: 16px;
+    color: #5186C8;
+    font-weight: 600;
+}
+.login-account {
+    color: #5186C8;
+    font-weight: 500;
+}
+form.login-pg-form label, form.sign-up-pg-form label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+}
+form.login-pg-form input, form.sign-up-pg-form input {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+}
+form.login-pg-form button, form.sign-up-pg-form button {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+}
+form.login-pg-form p, h6, form.sign-up-pg-form a, p, h6, option {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+}
+select.form-select {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+}
+.login-sign-up {
+    color: #5186C8;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+}
+button.btn.btn-sign-in-google:hover {
+    border-color: #5186C8;
+}
+.dob h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+}
+.btn-register{
+    background: #3896f0 !important;
+}
+h2.top-logo {
+    font-size: 60px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 45px;
+    color: #5186C8;
+    text-shadow: 5px 3px 7px #ccccccd4
 }

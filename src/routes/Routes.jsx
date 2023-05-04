@@ -18,10 +18,10 @@ function Routing(){
 
             
                 <>
-                <Route path="/login" element={<LoginPage/>} />
-                <Route path="/" element={<RegisterPage/>} />
+                <Route path="/" element={<LoginPage/>} />
+                <Route path="/register" element={<RegisterPage/>} />
                
-           
+                
                
                 <Route path="/home" element={<MainPage/>} />
                 <Route path="/team" element={<TeamPage/>} />

@@ -3,6 +3,10 @@ import axios from "axios";
 import { API } from "../../config/api";
 import "../../App.css"
 import { useNavigate } from "react-router-dom";
+import logoImage from '../../assets/images/sayehbaz.png';
+import mysvg from '../../assets/images/clipart.svg';
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from 'react-datepicker';
 
 const RegisterPage =()=>{
     const navigate = useNavigate();
@@ -49,7 +53,12 @@ const RegisterPage =()=>{
     }
     // console.log("Proffession----------->" , Proffession)
 
+// Date picker
+const [selectedDate, setSelectedDate] = useState("");
 
+const handleDateChange = (event) => {
+  setSelectedDate(event.target.value);
+};
     // Year Select
     const [Year , selectYear] = useState(null)
 
@@ -121,12 +130,13 @@ const RegisterPage =()=>{
     return(
     <div class="sign-up-page" id="sign-up-page">
         <div class="container-fluid p-0 m-0">
-            <div class="row p-0 m-0 align-items-center">
-                <div class="col-md-5 p-0 m-0">
-                    <div class="text-center pt-5 sign-up-pg-container">
-                        <h2 class="logo-here">Sayehbaz</h2>
+            <div class="row p-0 m-0 align-items-center sign-up-bgg" style={{ backgroundImage: `url(${mysvg})` }}>
+                <div class="col-md-12 p-0 m-0">
+                    <div class="text-center pt-5 pb-5 sign-up-pg-container">
+                   
 
                         <form class="sign-up-pg-form">
+                        <h2 class="top-logo"><img src={logoImage} /></h2>
                             <div class="row mb-2">
                                 <div class="col-6">
                                     <label class="form-label fw-semibold">First Name</label>
@@ -147,11 +157,20 @@ const RegisterPage =()=>{
                                 <input type="password" class="form-control" placeholder="Password" value={password} onChange={handlePassword}/>
                             </div>
 
-                            <div class="mb-2 text-center eight">
+                            <div class="mb-2 dob">
                                 <h4>Date of Birth</h4>
                             </div>
 
-                            <div class="row mb-2">
+                            <input 
+                             type="date" 
+                             id="birthday" 
+                             name="birthday" 
+                             className="form-control"
+                             value={selectedDate} 
+                             onChange={handleDateChange} 
+                             />
+
+                            {/* <div class="row mb-2">
                                 <div class="col-4">
                                     <label class="form-label fw-semibold">Year</label>
                                     <select class="form-select" onChange={handleYear}>
@@ -173,7 +192,7 @@ const RegisterPage =()=>{
                                         <option value="1">11</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div class="mb-2">
                                 <label class="form-label fw-semibold">Role</label>
@@ -190,18 +209,19 @@ const RegisterPage =()=>{
                             </div>
 
                             <div class="d-grid gap-2 mt-2">
-                                <a class="btn btn-sign-in pt-1 pb-1" type="button"
+                                <a class="btn btn-sign-in pt-2 pb-2" type="button"
                                     onClick={handleRegister}>Sign up</a>
                             </div>
-                            Already have an account.
+                            <p class="already-account fw-bolder">
+                            Already have an account?</p>
                             <div class="d-grid gap-2 mt-2 login">
-                                <a class="btn btn-sign-in pt-1 pb-1" type="button"
-                                    href="/#/login">Login</a>
+                                <a class="btn-register btn btn-sign-in pt-2 pb-2" type="button"
+                                    href="/login">Login</a>
                             </div>
                         </form>
                     </div>
                 </div>
-                <div class="col-md-7 p-0 m-0 sign-up-page-bg"></div>
+                {/* <div class="col-md-7 p-0 m-0 sign-up-page-bg"></div> */}
 
             </div>
         </div>
