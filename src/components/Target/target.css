@@ -35,7 +35,7 @@ img#social-icon {
     margin-right: 115px;
 }
 
-.InspectorMenu--1PeA4 {
+/* .InspectorMenu--1PeA4 {
     width: 272px;
     height: calc(100vh - 60px);
     padding: 10px 20px 10px 20px;
@@ -48,7 +48,7 @@ img#social-icon {
     z-index: 997;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.1607843137);
     background-color: #fff;
-}
+} */
 .OuterContainer--pMxMG {
     position: absolute;
     left: 60px;
@@ -92,19 +92,7 @@ img#social-icon {
     width: 100%;
     padding: 10px 0;
 }
-button {
-    font-size: 14px;
-    font-family: lato,sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-}
+
 .Content--15Wyt.Open--EFZA8 {
     height: auto;
     transition: max-height .25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -149,19 +137,7 @@ img {
     gap: 1ch;
     opacity: 0;
 }
-button {
-    font-size: 14px;
-    font-family: lato,sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-}
+
 .PreviewContainer--3uAi9 .HoverDiv--jI34Q .TrkImgUploadButton--3e-ZC {
     width: 108px;
     height: 32px;
@@ -222,16 +198,6 @@ input {
   align-items: center;
 }
 
-button {
-  font-size: 18px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  background-color: transparent;
-  color: #333;
-  cursor: pointer;
-}
-
 .Inactive--945so {
   margin-right: -2px;
 }
@@ -287,4 +253,150 @@ button {
 .Active--3YQI9 {
   margin-left: -2px;
 }
+/*************5-may-2023********************/
+.target-heading {
+    color: #fff;
+    font-size: 14px;
+    text-transform: capitalize;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+}
+.taget-navbar {
+    box-shadow: 0px 2px 4px 0px rgb(0 0 0 / 16%);
+}
+.target-heading svg path {
+    color: #fff;
+    fill: #fff;
+}
+.target-btn button {
+    font-size: 14px;
+    letter-spacing: 0px;
+    font-family: 'Montserrat', sans-serif ;
+}
+.target-btn {
+    float: left;
+}
+.target-inner .dropdown {
+    float: left;
+}
+.target-inner {
+    float: left;
+    align-items: self-end;
+    display: flex;
+}
+.target-pills .active svg path {
+    fill: #fff;
+}
+.target-pills .active {
+    background: #625181 !important;
+    border: none !important;
+    border-radius: 4px;
+    padding: 12px !important;
+}
+.right-tabs {
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 16%);
+}
+.InspectorMenu--1PeA4 {
+    height: calc(100vh - 60px);
+    padding: 0;
+}
+.right-tabs .nav-item .active svg path {
+    fill: #fff;
+}
+.right-tabs .nav-item .active {
+    background: #625181;
+}
+.btn-upload .TitleContainer--2xD-b {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    width: 100%;
+    display: block;
+    font-family: 'Montserrat', sans-serif !important;
 
+}
+.btn-upload {
+    border: 0px;
+    background: #625280;
+    color: #000;
+    border-radius: 26px;
+    padding: 10px;
+    text-align: center;
+}
+.InspectorMenu--1PeA4 .ShelfContainer--1Ad4O {
+    --scrollbarBG: #fff;
+    --thumbBG: #fff;
+  }
+  .InspectorMenu--1PeA4 .ShelfContainer--1Ad4O::-webkit-scrollbar {
+    width: 10px;
+  }
+  .InspectorMenu--1PeA4 .ShelfContainer--1Ad4O {
+    scrollbar-width: thin;
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+  }
+  .InspectorMenu--1PeA4 .ShelfContainer--1Ad4O::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+  }
+  .InspectorMenu--1PeA4 .ShelfContainer--1Ad4O::-webkit-scrollbar-thumb {
+    background-color: #625280 ;
+    border-radius: 6px;
+    border: 3px solid var(--scrollbarBG);
+  }
+  .right-tabs .nav-item .active {
+    background: #625181 !important;
+}
+.target-image-content-inner {
+    border: 1px solid #62537f;
+    border-radius: 3px;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 8px;
+    box-shadow: none;
+}
+.ShelfContainer--1Ad4O input {
+    border: 1px solid #625280;
+    border-radius: 3px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 4px;
+}
+.btn-transform {
+    background: #fff;
+    border: 0;
+    border-bottom: 3px solid #625280;
+    line-height: 14px;
+}
+.btn-transform .TitleContainer--2xD-b {
+    letter-spacing: 0px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif ;
+}
+.title-position, .title-content, .title-rotation {
+    letter-spacing: 0px;
+    font-weight: 500;
+    background: #fff;
+    border: 0;
+    border-bottom: 3px solid #625280;
+    line-height: 35px;
+    font-family: 'Montserrat', sans-serif ;
+    margin-bottom: 10px;
+}
+.btn-appearence, .btn-actions {
+    background: #fff;
+    border: 0;
+    border-bottom: 3px solid #625280;
+    line-height: 14px;
+}
+.btn-appearence .TitleContainer--2xD-b, .btn-transition-effect .TitleContainer--2xD-b, .btn-actions .TitleContainer--2xD-b {
+    letter-spacing: 0px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif ;
+}
+.btn-transition-effect {
+    background: #fff;
+    border: 0;
+    border-bottom: 3px solid #625280;
+    line-height: 14px;
+}

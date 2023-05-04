@@ -188,14 +188,17 @@ console.log('===>' , id)}
 
     return(
     <div className="targetPage">
-        <div className="navbar">
+        <div className="navbar taget-navbar">
           <div className="container-fluid">
-            <div className="d-flex align-items-center justify-content-between w-100">
-              <div className="w-100 text-white">
-                <h4 className="d-flex align-items-center mb-0">
+            <div className="d-flex align-items-center justify-content-between w-100 navbar-top">
+              <div className="text-white target-text">
+                <h4 className="d-flex align-items-center mb-0 target-heading">
                   <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#fff", width: "15px", height: "15px", marginRight: 8 }} />{ProjectTitle}</h4>
               </div>
       
+
+             <div className="target-drop-down-outer">
+              <div className="target-inner">
               <div className="dropdown">
                 <a href="#" className="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" className="rounded-circle"/>
@@ -207,21 +210,24 @@ console.log('===>' , id)}
                   <li><a className="dropdown-item" href="#"><i className="bi bi-box-arrow-right pe-1"></i>Log out</a></li>
                 </ul>
               </div>
-
+              <div className="target-btn">
               <button className="btn btn-1 text-light">Preview</button>
               <button className="btn btn-2 text-light">Publish</button>
             </div>
+            </div>
+            </div>
+          </div>
           </div>
         </div>
 
 
     <div className="container-fluid target-page">
-      <div className="row justify-content-between">
+      <div className="row col-md-12 justify-content-between">
         <div className="col-md-1 p-0 m-0 bg-light target-left">
           <Tab.Container id="left-tabs-example">
               <Row className="justify-content-between tab-list flex-nowrap">
                   <Col lg={3} className="side-tab mb-5 mb-md-0">
-                    <Nav variant="pills" className="flex-column side-main bg-light py-4 px-2">
+                    <Nav variant="pills" className="flex-column side-main bg-light py-4 px-2 target-pills">
                       <Nav.Item>
                           <Nav.Link eventKey="first">
                             <FontAwesomeIcon icon={faHandPointUp} style={{ color: "rgb(113 123 131)", width: "20px", height: "20px", marginRight: 4 }} />
@@ -366,15 +372,15 @@ console.log('===>' , id)}
                 </div>
             </div>
         </div>  
-        <div className="col-md-9 p-0 m-0"  id="tracker">
+        <div className="col-md-9 p-0 m-0 target-center"  id="tracker">
               <ModelAr />
         </div>
-        <div className="col-md-1 p-0 m-0 float-end">
+        <div className="col-md-2 p-0 m-0 target-right">
 
         <Tab.Container id="right-tabs-example" defaultActiveKey="first">
           <Row className="flex-column justify-content-between tab-list right-tabs">
               <Col className="side-tab mb-5 mb-md-0 p-0">
-                <Nav variant="pills" className="side-main bg-light py-4 px-2">
+                <Nav variant="pills" className="side-main py-4 px-2">
                   <Nav.Item>
                       <Nav.Link eventKey="first">
                         <FontAwesomeIcon icon={faImagePortrait} style={{ color: "rgb(113 123 131)", width: "15px", height: "15px", marginRight: 4 }} />
@@ -388,12 +394,12 @@ console.log('===>' , id)}
                         <a href="#tab2" className="nav-link p-0 m-0 fw-bold link-dark" >Project</a>
                       </Nav.Link>
                   </Nav.Item>
-                  <Nav.Item>
+                  {/* <Nav.Item>
                       <Nav.Link eventKey="first">
                         <FontAwesomeIcon icon={faImagePortrait} style={{ color: "rgb(113 123 131)", width: "15px", height: "15px", marginRight: 4  , margin: "10px , 0 ,0 ,0"}} />
                         <a id="handle" className="nav-link p-0 m-0 fw-bold link-dark" >Save Model</a>
                       </Nav.Link>
-                  </Nav.Item>
+                  </Nav.Item> */}
                 </Nav>
               </Col>
 
@@ -459,25 +465,25 @@ console.log('===>' , id)}
                   </Accordion>*/}
 
                   
-                  <div className="right-side-down mb-3 pt-2 ps-4">
+                  {/* <div className="right-side-down mb-3 pt-2 ps-4">
                     2D <div className="form-check form-switch">
                         <input className="form-check-input" type="checkbox" role="switch"   /> 3D 
                     </div>
                     <p>| <span>99%</span></p>
-                  </div>
+                  </div> */}
                   {/* </Tab.Pane>  */}
         <div class="InspectorMenu--1PeA4" data-testid="InspectorMenu">
           
           <div class="ShelfContainer--1Ad4O">
             <div style={{width: "100%"}}>
-              <button data-testid="ShelfDrawerBtn" class="DrawerBtn--bdcva Open--EFZA8 "><div class="TitleContainer--2xD-b">Target Image</div></button>
-                <div class="TitleContainer--2xD-b">Content</div>
+              <button data-testid="ShelfDrawerBtn" class="btn-upload DrawerBtn--bdcva Open--EFZA8 "><div class="TitleContainer--2xD-b">Upload Target Image</div></button>
+                <div class="TitleContainer--2xD-b title-content">Content</div>
 
 
-            <div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Open--EFZA8" style={{overflow: "visible"}}>
+            <div data-testid="ShelfDrawerBtnContent" class="target-image-content Content--15Wyt Open--EFZA8" style={{overflow: "visible"}}>
               <div>
                 <div class="Title--fDSi1 Title--36gWd">Image</div>
-                <div class="PreviewDiv--WjPlt PreviewDiv--1AHiO " style={{width: "100%", height: "170px"}}>
+                <div class="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO " style={{width: "100%", height: "170px"}}>
                   <img src={targetImage} style={{width: '100%', height: '100%', display: 'flex', objectFit: 'cover'}} />
                   <div class="HoverDiv--jI34Q "><button style={{width: "100%" , height: "100%"}}><div class="SubBtn--26RUV TrkImgUploadButton--3e-ZC" >Replace</div></button><input type="file" accept="image/jpeg,image/png,.jpeg,.jpg,.png" onChange={TargetImage} style={{'margin': '-60px 0 0 0 ', 'position': 'relative', 'z-index': '3'}} /></div>
                     <div class="HoverDiv--2gksf ">
@@ -492,7 +498,7 @@ console.log('===>' , id)}
       <div style={{borderTop: "1px solid rgb(178, 196, 215)", height: "auto", width: "100%"}}></div>
       </div>
         <div style={{width: "100%"}}>
-<button data-testid="ShelfDrawerBtn" class="DrawerBtn--bdcva Open--EFZA8 ">
+<button data-testid="ShelfDrawerBtn" class="btn-transform DrawerBtn--bdcva Open--EFZA8 ">
 <div class="TitleContainer--2xD-b">Transforms</div>
 
 {/* <title></title><path d="M0.333/421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
@@ -521,7 +527,7 @@ console.log('===>' , id)}
 </div>
 </div>
 
-<div class="RowTitle--3Kekp RowTitle--3Xq7s">Position (mm)</div>
+<div class="RowTitle--3Kekp RowTitle--3Xq7s title-position">Position (mm)</div>
 <div class="InputRow--VLm0n InputRow--2M9c1"><div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false">
 <input type="text" data-testid="NumericalInput" placeholder="multi" value="101" />
 <label data-testid="NumericalInputLabel" style={{color: "red"}}>X</label></div>
@@ -542,7 +548,7 @@ console.log('===>' , id)}
 
 <label data-testid="NumericalInputLabel" style={{color:"blue"}}>Z</label></div></div>
 
-<div class="RowTitle--1O1Ao RowTitle--3Xq7s">Rotation (deg)</div><div class="InputRow--J8Q4c InputRow--2M9c1">
+<div class="RowTitle--1O1Ao RowTitle--3Xq7s title-rotation">Rotation (deg)</div><div class="InputRow--J8Q4c InputRow--2M9c1">
 
 <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--2C1wH TransformInput--6Bbsj false">
 
@@ -597,7 +603,7 @@ console.log('===>' , id)}
                 
                 <div style={{borderTop: "1px solid rgb(178, 196, 215)" ,height: "auto", width: "100%"}}></div></div><div style={{width: "100%"}}>
                   
-                  <button data-testid="ShelfDrawerBtn" class="DrawerBtn--bdcva  "><div class="TitleContainer--2xD-b">Appearance</div>
+                  <button data-testid="ShelfDrawerBtn" class="btn-appearence DrawerBtn--bdcva  "><div class="TitleContainer--2xD-b">Appearance</div>
                 
                 {/* <svg class="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
                 
@@ -607,7 +613,7 @@ console.log('===>' , id)}
                   
                   div style={{borderTop: "1px solid rgb(178, 196, 215)" , height: "auto" ,width: "100%"}}></div></div><div style={{width: "100%"}}>
                   
-                  <button data-testid="ShelfDrawerBtn" class="DrawerBtn--bdcva  ">
+                  <button data-testid="ShelfDrawerBtn" class="btn-actions DrawerBtn--bdcva  ">
                     
                     <div class="TitleContainer--2xD-b">Actions</div>
                     
@@ -617,7 +623,7 @@ console.log('===>' , id)}
                     
                     <div style={{borderTop: "1px solid rgb(178, 196, 215)", height: "auto", width: "100%"}}></div></div><div style={{width: "100%"}}>
                       
-                      <button data-testid="ShelfDrawerBtn" class="DrawerBtn--bdcva  "><div class="TitleContainer--2xD-b">Transition Effects</div>
+                      <button data-testid="ShelfDrawerBtn" class="btn-transition-effect DrawerBtn--bdcva  "><div class="TitleContainer--2xD-b">Transition Effects</div>
                       
                       {/* <svg class="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
                       
