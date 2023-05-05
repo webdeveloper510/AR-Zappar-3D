@@ -26,10 +26,23 @@ const MainPage =()=>{
   /********** Start----Model State *************/
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () =>{
+    setShow(false);
+  } 
   const handleShow = () => setShow(true);
 
   /********** End----Model State *************/
+
+    /********** Start----SecondModel State *************/
+    const [secondShow, setSecondShow] = useState(false);
+
+    const handleSecondClose = () => setSecondShow(false);
+    const handleSecondShow = () =>{
+      handleClose();
+      setSecondShow(true);
+    }
+  
+    /********** End----Model State *************/
 
   const [proInfo,setProInfo ] = useState([])
   const val = localStorage.getItem('id');
@@ -155,7 +168,7 @@ const MainPage =()=>{
                         <input type="search" class="form-control" placeholder="Search..." aria-label="Search"/>
                       </form>
               
-                      <div class="flex-shrink-0 dropdown">
+                      <div class="flex-shrink-0 dropdown sort-bar">
                         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                           <i class="bi bi-filter-left pe-1"></i>Sort
                         </a>
@@ -181,8 +194,10 @@ const MainPage =()=>{
                       return(
                         <div class="card project-card-placeholder col-md-3 mb-4 mx-2 p-0 link-body" onClick={() => {handleProject(proData.id)}}>
                           {/* <button className="button-project" onClick={() => openProject(proData)} ></button> */}
+                          <div class="card-img-outer">
                           <span class="badge text-bg-light">Designer</span>
                           <img src={proData.imagePro} class="card-img-top" alt="..."/>
+                          </div>
                           <div class="card-body ">
                               <img src={Pro1} class="rounded-circle" width="50" height="50" alt="..."/>
                             <h5 class="card-title">{proData.ProTitle}</h5>
@@ -207,14 +222,81 @@ const MainPage =()=>{
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
-        className="slectTrigger"
+        className="slectTrigger" id="first-popup"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Modal title</Modal.Title>
+          <Modal.Title>Select a project type</Modal.Title>
          </Modal.Header>
+        <Modal.Body  onClick={handleSecondShow}>
+		    <div className="step-content show">
+            <div className="p4">
+               
+                {/* <p className="fs16 mb16"><b>Last used</b></p> */}
+                
+                <div className="card card-horizontal studio-card" data-step="triggers" data-tool="studio">
+                    <div className="image top-popup-img">
+                        <img src={StudioImage} alt="tool" />
+                        <div className="overlay dark">
+                            Select tool
+                        </div>
+                    </div>
+                    <div className="text-content">
+                        <div className="fs28 mt20 mb20 fw300 studio-text">Studio</div>
+                        <p className="fs14">Create 2D and 3D experience with our powerful AR-first engine.</p>
+                        <div className="mta mla">
+                          <button type="button" className="btn btn-primary btn-medium">Select &amp; continue</button></div>
+                    </div>
+                </div>
+                <p className="fs16 mb16 mt32"><b class="create-ar">More ways to create AR</b></p>
+                <table plain="" className="plain first-popup-table" hydrated="" onClick={handleOpenFeatures}>
+                    
+                    
+                    <table-tr data-step="triggers" data-tool="designer-2" className="" hydrated="">
+                      
+                        <table-td-img status="Ready" url={DesignersLogo} label="Designer" preview="Select tool" className="" hydrated="">
+                            <div className="imagePreview" data-title="Select tool" style={{ backgroundImage: `url(${DesignersLogo})`}}></div>
+                            <div className="imageAvatar"><div className="iconImage" style={{backgroundImage: `url(${DesignersLogo})`}}></div>
+                        <span>Designer</span></div>
+                        </table-td-img>
+                        <table-td align-left="" word-break="" className="f2 word-break" hydrated="">Create world &amp; image tracked 3D projects with our drag &amp; drop editor.</table-td>
+                    </table-tr>
+                    <table-tr data-step="sdk" data-tool="uar" className="" hydrated="">
+                        <table-td-img status="Ready" url={UniversalAR} label="Universal AR" preview="Select tool" className="" hydrated="">
+                            <div className="imagePreview" data-title="Select tool" style={{backgroundImage: `url(${UniversalAR})`}}></div>
+                            <div className="imageAvatar"><div className="iconImage" style={{backgroundImage: `url(${UniversalAR})`}}></div>
+                        <span>Universal AR</span></div>
+                        </table-td-img>
+                        <table-td align-left="" word-break="" className="f2 word-break" hydrated="">Power up your frameworks and engines with our AR SDKs.</table-td>
+                    </table-tr>
+                    
+                    
+                </table>
+                
+            </div>
+        </div>
+          
+        </Modal.Body>
+
+        {/* <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary">Understood</Button>
+        </Modal.Footer> */}
+
+      </Modal>
+      {/* End---model data */}
+
+
+       {/* Start-----SecondModel  */}
+       <Modal show={secondShow} onHide={handleSecondClose} id="second-modal-popup">
+        <Modal.Header closeButton>
+          {/* <Modal.Title>Modal heading</Modal.Title> */}
+        </Modal.Header>
         <Modal.Body>
-          <div className="step-content show">
-                <div className="p40">
+
+        <div className="step-content show">
+                <div className="p4">
                   <div className="flex acenter">
                     <button type="button" className="btn btn-ghost" data-back="trigger">
                         <div className="mt8">
@@ -226,14 +308,14 @@ const MainPage =()=>{
                             </svg>
                         </div>
                   </button>
-                    <h3 className="ml12 mb0">Select a trigger</h3>
+                    <h3 className="ml12 mb0 trigger-select">Select a trigger</h3>
                   </div>
                   <p className="mb16 mt16 ml32 fs14 mw509">A trigger is an entry point that will allow end users to launch your AR experience.
                       Projects may have multiple triggers for the same experience.
                       <a className="fs14" href="https://docs.zap.works/general/project-triggers/" target="_blank">Learn more</a>.</p>
-                  <p className="fs16 mb16 mt32"><b>Triggers</b></p>
+                  <p className="fs16 mb16 mt32"><b class="triggers-text">Triggers</b></p>
 
-              <div className="table-container" onClick={selectFeatureOption} >
+              <div className="table-container popup-table-container" onClick={selectFeatureOption} >
                     <table plain="" className="plain" hydrated="">
                       <table-tr data-trigger="3" className="" hydrated="" >
                           <table-td align-left="" className="" hydrated="">
@@ -271,90 +353,10 @@ const MainPage =()=>{
 
           </div>
       </div>
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary">Understood</Button>
-        </Modal.Footer>
-
+        </Modal.Body>    
       </Modal>
 
-
-      {/* End---model data */}
-  
-{/* First Popup */}
-{ProjectType && (
-    <>
-    <div className="step-content show">
-            <div className="p40">
-                <h3 className="mb32">Select a project type</h3>
-                <p className="fs16 mb16"><b>Last used</b></p>
-                
-                <div className="card card-horizontal" data-step="triggers" data-tool="studio">
-                    <div className="image">
-                        <img src={StudioImage} alt="tool" />
-                        <div className="overlay dark">
-                            Select tool
-                        </div>
-                    </div>
-                    <div className="text-content">
-                        <div className="fs28 mt20 mb20 fw300">Studio</div>
-                        <p className="fs14">Create 2D and 3D experience with our powerful AR-first engine.</p>
-                        <div className="mta mla"><button type="button" className="btn btn-primary btn-medium">Select &amp; continue</button></div>
-                    </div>
-                </div>
-                <p className="fs16 mb16 mt32"><b>More ways to create AR</b></p>
-                <table plain="" className="plain" hydrated="" onClick={handleOpenFeatures}>
-                    
-                    
-                    <table-tr data-step="triggers" data-tool="designer-2" className="" hydrated="">
-                      
-                        <table-td-img status="Ready" url={DesignersLogo} label="Designer" preview="Select tool" className="" hydrated="">
-                            <div className="imagePreview" data-title="Select tool" style={{ backgroundImage: `url(${DesignersLogo})`}}></div>
-                            <div className="imageAvatar"><div className="iconImage" style={{backgroundImage: `url(${DesignersLogo})`}}></div>
-                        <span>Designer</span></div>
-                        </table-td-img>
-                        <table-td align-left="" word-break="" className="f2 word-break" hydrated="">Create world &amp; image tracked 3D projects with our drag &amp; drop editor.</table-td>
-                    </table-tr>
-                    
-                    
-                    
-                    
-                    
-                    <table-tr data-step="sdk" data-tool="uar" className="" hydrated="">
-                        <table-td-img status="Ready" url={UniversalAR} label="Universal AR" preview="Select tool" className="" hydrated="">
-                            <div className="imagePreview" data-title="Select tool" style={{backgroundImage: `url(${UniversalAR})`}}></div>
-                            <div className="imageAvatar"><div className="iconImage" style={{backgroundImage: `url(${UniversalAR})`}}></div>
-                        <span>Universal AR</span></div>
-                        </table-td-img>
-                        <table-td align-left="" word-break="" className="f2 word-break" hydrated="">Power up your frameworks and engines with our AR SDKs.</table-td>
-                    </table-tr>
-                    
-                    
-                </table>
-                
-            </div>
-        </div>
-
-    </>
-)}
-       
-
-
-
-
-
-
-
-
-
-
-
-
-{/* second Popup */}
+      {/* End---- SecondModel  */}
 
 
    

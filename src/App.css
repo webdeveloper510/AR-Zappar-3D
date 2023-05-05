@@ -1104,7 +1104,6 @@ form#search-form input {
     font-size: 14px;
     font-weight: 500;
     font-family: 'Montserrat', sans-serif;
-    border: 1px solid #5089c75e;
 }
 .main-page-left-bar {
     box-shadow: 0 0 4px 0 rgb(52 75 96 / 35%);
@@ -1128,6 +1127,85 @@ form#search-form input {
     font-size: 16px;
     font-weight: 500;
     font-family: 'Montserrat', sans-serif;
+}
+div#first-popup {
+    width: 100%;
+    max-width: 75%;
+}
+.iconImage {
+    background-size: contain;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.first-popup-table table-tr {
+    padding: 6px;
+}
+
+.studio-card {
+    box-shadow: 0 1px 5px 0 rgb(0 0 0 / 10%);
+    border: 1px solid #cccccc36 !important;
+    background: #fff;
+    padding: 10px;
+}
+table-td {
+    font-size: 15px;
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+}
+table-tr:hover {
+    background-color: #ecf6ff;
+    cursor: pointer;
+}
+b.create-ar {
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+}
+.modal-title.h4 {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+}
+.studio-text {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+}
+.second-modal-popup {
+    width: 75%;
+    margin: 0 auto;
+}
+div#second-modal-popup {
+    width: 75%;
+    max-width: 75%;
+}
+h3.ml12.mb0.trigger-select {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+}
+b.triggers-text {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    padding-left: 5px;
+}
+.sort-bar a {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    padding-left: 5px;
+}
+form#search-form input:focus {
+    outline: none;
+    box-shadow: none;
+}
+form#search-form input {
+    background: #5089c714;
+    border-radius: 100px;
+    padding: 10px 20px;
+    border: 1px solid #5089c70a;
 }
 /**********5may2023*end***************/
 /*    */
