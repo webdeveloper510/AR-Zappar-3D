@@ -58,7 +58,7 @@ const Project =()=>{
 
   const handleSubmit = () => {
     if (id){
-      axios.get(API.BASE_URL + 'create-project')
+      axios.get(API.BASE_URL + 'create-project/')
       .then(function (response) {
         console.log(response)
 

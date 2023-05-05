@@ -3,15 +3,15 @@ import axios from "axios";
 import { API } from "../../config/api";
 import "../../App.css"
 import { useNavigate } from "react-router-dom";
-// <<<<<<< Updated upstream
+//  
 import logoImage from '../../assets/images/sayehbazf.png';
 import "react-datepicker/dist/react-datepicker.css";
 import loginright from '../../assets/images/login-right.png';
 import DatePicker from 'react-datepicker';
 
-// =======
+//   
 import { toast } from "react-toastify"
-// >>>>>>> Stashed changes
+//    
 
 const RegisterPage =()=>{
 

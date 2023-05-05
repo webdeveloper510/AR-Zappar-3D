@@ -2,10 +2,10 @@ import React , {useEffect, useState} from "react";
 import "../../App.css"
 import axios from "axios";
 import { API } from "../../config/api";
-// <<<<<<< Updated upstream
-// =======
+//  
+//   
 import {toast} from 'react-toastify'
-// >>>>>>> Stashed changes
+//    
 import { useNavigate } from 'react-router-dom';
 import loginright from '../../assets/images/login-right.png';
 

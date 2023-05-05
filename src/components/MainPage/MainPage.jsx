@@ -8,12 +8,18 @@ import { faCirclePlus, faGripHorizontal, faList, faUserGroup } from '@fortawesom
 import { toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
+ 
 import logoImage from '../../assets/images/sayehbazf.png';
 import { faGears } from '@fortawesome/free-solid-svg-icons';
 import { faPhotoFilm } from '@fortawesome/free-solid-svg-icons';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+  
+import DesignersLogo from "../../assets/images/designerslogo.png"
+import UniversalAR from "../../assets/images/UniversalAR.jpg"
+import StudioImage from "../../assets/images/studio.jpg"
+   
 
 const MainPage =()=>{
   const navigate = useNavigate()
@@ -55,11 +61,12 @@ const MainPage =()=>{
       console.log(error)
     })
   }
+  const [ ProjectType , selectProjectType ] = useState(false);
   const [FeaturedTrackerOption , selectFeaturedTracker] = useState(false)
 
 
   const handleCreate =()=>{
-    selectFeaturedTracker(true)
+    selectProjectType(true)
   }
     
   const selectFeatureOption = (e) => {
@@ -74,6 +81,9 @@ const MainPage =()=>{
       }
     `;
     document.head.appendChild(style);
+  };
+  const  handleOpenFeatures = ()=>{
+    selectFeaturedTracker(true)
   };
   
     return(
@@ -190,6 +200,7 @@ const MainPage =()=>{
         </div>
 
 
+ 
           {/* Start---model data */}
       <Modal
         show={show}
@@ -273,6 +284,80 @@ const MainPage =()=>{
 
 
       {/* End---model data */}
+  
+{/* First Popup */}
+{ProjectType && (
+    <>
+    <div className="step-content show">
+            <div className="p40">
+                <h3 className="mb32">Select a project type</h3>
+                <p className="fs16 mb16"><b>Last used</b></p>
+                
+                <div className="card card-horizontal" data-step="triggers" data-tool="studio">
+                    <div className="image">
+                        <img src={StudioImage} alt="tool" />
+                        <div className="overlay dark">
+                            Select tool
+                        </div>
+                    </div>
+                    <div className="text-content">
+                        <div className="fs28 mt20 mb20 fw300">Studio</div>
+                        <p className="fs14">Create 2D and 3D experience with our powerful AR-first engine.</p>
+                        <div className="mta mla"><button type="button" className="btn btn-primary btn-medium">Select &amp; continue</button></div>
+                    </div>
+                </div>
+                <p className="fs16 mb16 mt32"><b>More ways to create AR</b></p>
+                <table plain="" className="plain" hydrated="" onClick={handleOpenFeatures}>
+                    
+                    
+                    <table-tr data-step="triggers" data-tool="designer-2" className="" hydrated="">
+                      
+                        <table-td-img status="Ready" url={DesignersLogo} label="Designer" preview="Select tool" className="" hydrated="">
+                            <div className="imagePreview" data-title="Select tool" style={{ backgroundImage: `url(${DesignersLogo})`}}></div>
+                            <div className="imageAvatar"><div className="iconImage" style={{backgroundImage: `url(${DesignersLogo})`}}></div>
+                        <span>Designer</span></div>
+                        </table-td-img>
+                        <table-td align-left="" word-break="" className="f2 word-break" hydrated="">Create world &amp; image tracked 3D projects with our drag &amp; drop editor.</table-td>
+                    </table-tr>
+                    
+                    
+                    
+                    
+                    
+                    <table-tr data-step="sdk" data-tool="uar" className="" hydrated="">
+                        <table-td-img status="Ready" url={UniversalAR} label="Universal AR" preview="Select tool" className="" hydrated="">
+                            <div className="imagePreview" data-title="Select tool" style={{backgroundImage: `url(${UniversalAR})`}}></div>
+                            <div className="imageAvatar"><div className="iconImage" style={{backgroundImage: `url(${UniversalAR})`}}></div>
+                        <span>Universal AR</span></div>
+                        </table-td-img>
+                        <table-td align-left="" word-break="" className="f2 word-break" hydrated="">Power up your frameworks and engines with our AR SDKs.</table-td>
+                    </table-tr>
+                    
+                    
+                </table>
+                
+            </div>
+        </div>
+
+    </>
+)}
+       
+
+
+
+
+
+
+
+
+
+
+
+
+{/* second Popup */}
+
+
+   
         {FeaturedTrackerOption && (
           <>
             <div className="step-content show">
