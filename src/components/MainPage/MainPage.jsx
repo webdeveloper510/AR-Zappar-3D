@@ -256,7 +256,7 @@ const MainPage =()=>{
                         <table-td-img status="Ready" url={DesignersLogo} label="Designer" preview="Select tool" className="" hydrated="">
                             <div className="imagePreview" data-title="Select tool" style={{ backgroundImage: `url(${DesignersLogo})`}}></div>
                             <div className="imageAvatar"><div className="iconImage" style={{backgroundImage: `url(${DesignersLogo})`}}></div>
-                        <span>Designer</span></div>
+                        <span class="designer-text">Designer</span></div>
                         </table-td-img>
                         <table-td align-left="" word-break="" className="f2 word-break" hydrated="">Create world &amp; image tracked 3D projects with our drag &amp; drop editor.</table-td>
                     </table-tr>
@@ -264,7 +264,7 @@ const MainPage =()=>{
                         <table-td-img status="Ready" url={UniversalAR} label="Universal AR" preview="Select tool" className="" hydrated="">
                             <div className="imagePreview" data-title="Select tool" style={{backgroundImage: `url(${UniversalAR})`}}></div>
                             <div className="imageAvatar"><div className="iconImage" style={{backgroundImage: `url(${UniversalAR})`}}></div>
-                        <span>Universal AR</span></div>
+                        <span class="designer-text">Universal AR</span></div>
                         </table-td-img>
                         <table-td align-left="" word-break="" className="f2 word-break" hydrated="">Power up your frameworks and engines with our AR SDKs.</table-td>
                     </table-tr>

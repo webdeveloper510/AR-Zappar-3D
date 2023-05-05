@@ -10,12 +10,22 @@ import { toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import WorldTracking from '../../assets/images/worldtracking.jpg'
 import faceTracking from '../../assets/images/facetracking.png'
-import ImageTracking from '../../assets/images/imagetracking.png'
+import ImageTracking from '../../assets/images/imagetracking.png';
+import Modal from 'react-bootstrap/Modal';
 
 const Project =()=>{
 
 
   const navigate = useNavigate()
+  /********** Start----Model State *************/
+  const [show, setShow] = useState(false);
+
+  const handleClose = () =>{
+    setShow(false);
+  } 
+  const handleShow = () => setShow(true);
+    
+  /********** End----Model State *************/
   const  projectUserId = localStorage.getItem("id");
 
   const [imgProject , ProImg] = useState(null)
@@ -127,7 +137,19 @@ const handleLogout = ()=>{
   }
 
 
-
+  const handleSelectTarget =(e)=>{
+    console.log(e.target)
+    e.target.classList.add("selected");
+  
+    // Add a CSS rule to activate the hover effect
+    const style = document.createElement("style");
+    style.innerHTML = `
+      .selected:active {
+        background-color: rgb(32 157 225);
+      }
+    `;
+    document.head.appendChild(style);
+  }
 
 
 
@@ -202,7 +224,7 @@ return(
                     <div class="col-md-4 p-4">
                       <a href="#" class="link-dark text-decoration-none text-end d-block"> Create by: Lorem ipsum | 30 Oct 2022 </a>
                       
-                      <button id="open-design" type="submit" class="btn btn-info d-block float-end btn-1" onClick={handleSubmit2} >Open Designer</button>
+                      <button id="open-design" type="submit" class="btn btn-info d-block float-end btn-1"   onClick={handleShow} > Open Designer</button>
                     </div>
                   </div>
                   
@@ -276,6 +298,136 @@ return(
           </div>
         </div>
 
+
+
+ {/* Start---model data */}
+ <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        className="slectTrigger" id="ope-design-popup"
+      >
+        <Modal.Header closeButton>
+          {/* <Modal.Title>Select a project type</Modal.Title> */}
+         </Modal.Header>
+        <Modal.Body>
+		    <>
+        <div className="Wrap--2qKdL">
+          <div className="zmdlCloseBtn--1BzUi">
+        
+          </div>
+            
+            <div className="zmdlInnerContainer--23NbO FitContent--3uY7j" id="three-pic-popup">
+              <div className="Container--2-6Wm FitContent--S4X8V">
+                <div className="InnerContainer--2LcdQ">
+            <div className="Content--9GnI_">
+              <div className="TextContent--2darF">
+                <h1 class="new-scene">Select a tracking type for your new scene</h1>
+                <div className="CardList--3AV_R" style={{height: "auto"}} onClick={handleSelectTarget}>
+                  <div className="Card--3peyC" style={{height: "298px", width: "230px"}}>
+                    <div className="Image--1W5q9" style={{backgroundImage: `url(${WorldTracking})`}}>
+                      </div><div className="Content--7Vw1W">
+                <div className="TitleIconRow--18dmO">
+                  <div className="IconContainer--2LR3O">
+                    
+                  <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="21"
+                      viewBox="0 0 20 21"
+                    >
+                      <path
+                        fill="#B4BBC3"
+                        fillRule="nonzero"
+                        stroke="none"
+                        strokeWidth="1"
+                        d="M19.5 14.58a.5.5 0 01.492.413l.008.09v4.47a.502.502 0 01-.41.494l-.09.009h-4a.502.502 0 01-.09-.997l.09-.009H19v-3.967c0-.277.224-.502.5-.502zm-19 0a.5.5 0 01.492.413l.008.09v3.967h3.5a.502.502 0 01.09.997l-.09.009h-4a.501.501 0 01-.5-.503v-4.47c0-.277.224-.502.5-.502zM10 4.023c3.314 0 6 2.701 6 6.034 0 3.332-2.686 6.033-6 6.033s-6-2.701-6-6.033c0-3.333 2.686-6.034 6-6.034zm-.5 6.533H7.015c.14 2.296 1.227 4.074 2.486 4.453L9.5 10.555zm1 0v4.453c1.259-.38 2.345-2.157 2.485-4.452l-2.485-.001zm4.476 0l-.99.001c-.074 1.36-.447 2.592-1.02 3.547a5.028 5.028 0 002.01-3.547zm-8.962.001h-.99a5.028 5.028 0 001.818 3.398l.191.149-.138-.244c-.494-.917-.814-2.056-.881-3.303zm1.02-4.548l-.116.088a5.028 5.028 0 00-1.894 3.46h.99c.074-1.361.447-2.593 1.02-3.548zM9.5 5.103c-1.26.38-2.346 2.157-2.486 4.452H9.5V5.103zm1 0L10.5 9.555h2.485c-.14-2.294-1.226-4.072-2.485-4.452zm2.465.905l.024.04c.56.95.923 2.166.996 3.507h.99a5.028 5.028 0 00-1.818-3.398l-.192-.15zM19.5.056a.5.5 0 01.492.412l.008.09v4.47a.5.5 0 01-.992.09L19 5.028V1.06h-3.5a.502.502 0 01-.09-.997l.09-.008h4zm-15 0a.502.502 0 01.09.997l-.09.008H1v3.967a.5.5 0 01-.992.09L0 5.028V.558C0 .281.224.056.5.056h4z"
+                      ></path>
+                    </svg>
+                    
+                    </div>
+                    <h3>World tracking</h3>
+                    </div><p>Place content on flat surfaces, like the ground or tabletop.</p></div>
+                    </div>
+                    <div className="Card--3peyC" style={{height: "298px" ,width: "230px"}}>
+                      <div className="Image--1W5q9" style={{backgroundImage: `url(${ImageTracking})`}}></div>
+                      <div className="Content--7Vw1W"><div className="TitleIconRow--18dmO">
+                        <div className="IconContainer--2LR3O">
+                        <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="21"
+                              viewBox="0 0 20 21"
+                            >
+                              <path
+                                fill="#B4BBC3"
+                                fillRule="nonzero"
+                                stroke="none"
+                                strokeWidth="1"
+                                d="M19.5 14.596c.278 0 .503.224.503.5v4.356a.5.5 0 01-.492.6H15.49l-.09-.007a.5.5 0 01.09-.992h3.508v-3.957l.008-.09a.502.502 0 01.495-.41zm-19 0c.247 0 .452.177.495.41l.008.09-.001 3.957h3.51a.5.5 0 01.09.992l-.09.008H.488a.501.501 0 01-.492-.602v-4.355c0-.276.225-.5.503-.5zm15.564-9.568c.151.02.264.137.27.276v9.503c-.008.15-.14.27-.305.276H3.304c-.165-.006-.297-.126-.304-.276V5.304c.007-.15.14-.27.304-.276zM12 9.736c-1.192 0-2.716.55-3.559 2.05l.057.04c.273.198 1.345 1.053 1.489 2.631l5.731.06-.053-2.514C14.867 10.355 13.26 9.736 12 9.736zm-6 1.89a3.37 3.37 0 00-2.332.905v1.927h5.649c-.147-1.225-.925-2.017-1.662-2.417A3.637 3.637 0 006 11.627zm9.67-5.97H3.668v6.046A4.297 4.297 0 016 10.995c.815 0 1.47.234 1.885.447.778-1.394 2.377-2.331 4.115-2.331 1.798 0 3.063.945 3.67 1.683V5.656zm-9.337.943C7.253 6.599 8 7.302 8 8.17s-.746 1.571-1.667 1.571c-.92 0-1.666-.703-1.666-1.57 0-.869.746-1.572 1.666-1.572zm0 .628c-.552 0-1 .422-1 .943 0 .52.448.943 1 .943.553 0 1-.422 1-.943 0-.52-.447-.943-1-.943zM19.511.058a.501.501 0 01.493.601l-.001 4.356a.502.502 0 01-.997.09l-.009-.09V1.058h-3.508a.5.5 0 01-.09-.992l.09-.008h4.022zm-15 0l.09.008a.5.5 0 01-.09.992H1.002v3.957l-.007.09a.502.502 0 01-.998-.09V.66a.5.5 0 01.492-.6H4.51z"
+                              ></path>
+                            </svg>
+                          
+                      </div><h3>Image tracking</h3></div><p>Content will anchor to images. Great for posters and cards.</p></div>
+                      </div><div className="Card--3peyC" style={{height: "298px" ,width: "230px"}}><div className="Image--1W5q9" style={{backgroundImage: `url(${faceTracking})`}}></div>
+                <div className="Content--7Vw1W"><div className="TitleIconRow--18dmO"><div className="IconContainer--2LR3O">
+                  
+                <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="21"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill="#B4BBC3"
+                        d="M15.6 11.62a.4.4 0 01.394.33l.006.072v3.576a.402.402 0 01-.328.395L15.6 16h-3.2a.402.402 0 01-.072-.798l.072-.007h2.8v-3.173c0-.222.18-.402.4-.402zm-15.2 0a.4.4 0 01.394.33l.006.072v3.173h2.8c.22 0 .4.18.4.403a.402.402 0 01-.328.395L3.6 16H.4c-.22 0-.4-.18-.4-.402v-3.576c0-.222.18-.402.4-.402zM15.6 0a.4.4 0 01.394.33L16 .402v3.576a.4.4 0 01-.794.072l-.006-.072V.804h-2.8a.402.402 0 01-.072-.798L12.4 0h3.2zm-12 0a.402.402 0 01.072.798L3.6.804H.8v3.174a.4.4 0 01-.794.072L0 3.978V.402C0 .18.18 0 .4 0h3.2z"
+                      ></path>
+                      <path
+                        fill="#B4BBC3"
+                        d="M15.6 11.62a.4.4 0 01.394.33l.006.072v3.576a.402.402 0 01-.328.395L15.6 16h-3.2a.402.402 0 01-.072-.798l.072-.007h2.8v-3.173c0-.222.18-.402.4-.402zm-15.2 0a.4.4 0 01.394.33l.006.072v3.173h2.8c.22 0 .4.18.4.403a.402.402 0 01-.328.395L3.6 16H.4c-.22 0-.4-.18-.4-.402v-3.576c0-.222.18-.402.4-.402zM15.6 0a.4.4 0 01.394.33L16 .402v3.576a.4.4 0 01-.794.072l-.006-.072V.804h-2.8a.402.402 0 01-.072-.798L12.4 0h3.2zm-12 0a.402.402 0 01.072.798L3.6.804H.8v3.174a.4.4 0 01-.794.072L0 3.978V.402C0 .18.18 0 .4 0h3.2zM8 3.2a4.8 4.8 0 110 9.6 4.8 4.8 0 010-9.6zM8 4C5.644 4 4 5.644 4 8s1.644 4 4 4 4-1.644 4-4-1.644-4-4-4z"
+                      ></path>
+                      <path
+                        fill="#B4BBC3"
+                        d="M8 3.2a4.8 4.8 0 110 9.6 4.8 4.8 0 010-9.6zM8 4C5.644 4 4 5.644 4 8s1.644 4 4 4 4-1.644 4-4-1.644-4-4-4z"
+                      ></path>
+                      <path
+                        fill="#B4BBC3"
+                        fillRule="evenodd"
+                        d="M6.445 9.319a.4.4 0 01.566-.003c.275.272.648.284.93.284.283 0 .656-.012.931-.284a.4.4 0 01.563.568c-.522.517-1.2.516-1.477.516h-.034c-.277 0-.954 0-1.476-.516a.4.4 0 01-.003-.565z"
+                        clipRule="evenodd"
+                      ></path>
+                      <ellipse cx="5.518" cy="7.2" fill="#B4BBC3" rx="0.808" ry="0.8"></ellipse>
+                      <ellipse
+                        cx="10.366"
+                        cy="7.2"
+                        fill="#B4BBC3"
+                        rx="0.808"
+                        ry="0.8"
+                      ></ellipse>
+                    </svg>
+                  
+                  </div><h3>Face tracking</h3></div><p>Attach content to anchor points on parts of the face.</p></div></div></div>
+                  
+                  <div className="Footer--2f8R2">
+                    
+                    <button className="ActionBtn--1x70k " disabled="" style={{padding: "10px 16px"}}>Create scene</button></div></div>
+                    </div></div></div></div>
+                    </div>
+       
+        </>
+          
+        </Modal.Body>
+
+        {/* <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary">Understood</Button>
+        </Modal.Footer> */}
+
+      </Modal>
+      {/* End---model data */}
 
       {SceneType && (
         <>
@@ -385,8 +537,9 @@ return(
                   <div className="Footer--2f8R2">
                     
                     <button className="ActionBtn--1x70k " disabled="" style={{padding: "10px 16px"}}>Create scene</button></div></div>
-                    </div></div></div></div></div>
-        
+                    </div></div></div></div>
+                    </div>
+       
         </>
       )}
 

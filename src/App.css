@@ -1088,6 +1088,11 @@ h5.card-title {
     margin-bottom: 0;
     color: #5186C8;
 }
+h1.new-scene {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+}
 p.card-text small {
     font-size: 12px;
     font-weight: 500;
@@ -1134,9 +1139,13 @@ div#first-popup {
 }
 .iconImage {
     background-size: contain;
-    height: 100vh;
+    height: 50px;
     background-repeat: no-repeat;
     background-position: center;
+}
+span.designer-text {
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
 }
 .first-popup-table table-tr {
     padding: 6px;
@@ -1191,6 +1200,22 @@ b.triggers-text {
     font-family: 'Montserrat', sans-serif;
     padding-left: 5px;
 }
+div#three-pic-popup h3, p {
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+}
+div#three-pic-popup p {
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+}
+.CardList--3AV_R .Card--3peyC:hover {
+    box-shadow: 0px 3px 8px 0px rgb(0 0 0 / 60%);
+}
+.sign-up-pg-container-right img {
+    width: 83%;
+}
 .sort-bar a {
     font-size: 16px;
     font-weight: 500;
@@ -1206,6 +1231,16 @@ form#search-form input {
     border-radius: 100px;
     padding: 10px 20px;
     border: 1px solid #5089c70a;
+}
+div#ope-design-popup {
+    width: 75%;
+    max-width: 75%;
+}
+div#three-pic-popup {
+    width: 100%;
+    display: block;
+    float: left;
+    overflow-y: hidden;
 }
 /**********5may2023*end***************/
 /*    */
@@ -1407,7 +1442,6 @@ button, .btn {
 .btn, .btn-mini.btn-dline, .btn.btn-info {
     font-weight: 500;
     border-radius: 10px;
-    font-family: "Lato",Helvetica,sans-serif;
     font-size: 14px;
     line-height: 17px;
     user-select: none;
@@ -1680,7 +1714,7 @@ table table-tr table-td-img {
     color: #344b60;
     font-family: "Lato",sans-serif;
 }
-.Wrap--2qKdL .zmdlCloseBtn--1BzUi {
+/* .Wrap--2qKdL .zmdlCloseBtn--1BzUi {
     z-index: 1001;
     width: 32px;
     height: 32px;
@@ -1693,7 +1727,7 @@ table table-tr table-td-img {
     justify-content: center;
     background-color: #f2f2f2;
     pointer-events: all;
-}
+} */
 .Wrap--2qKdL .zmdlCloseBtn--1BzUi>svg {
     pointer-events: none;
 }
@@ -1742,17 +1776,11 @@ table table-tr table-td-img {
 .Container--2-6Wm>.InnerContainer--2LcdQ .Content--9GnI_ .TextContent--2darF {
     margin: 24px 40px 0 40px;
 }
-.Container--2-6Wm>.InnerContainer--2LcdQ .Content--9GnI_ .TextContent--2darF h1 {
-    font-size: 28px;
-    font-weight: 300;
-    margin: 0;
-}
 .CardList--3AV_R {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
-    overflow-y: scroll;
     flex-wrap: wrap;
     margin: 24px 0px;
 }
@@ -1830,16 +1858,3 @@ table table-tr table-td-img {
     cursor: pointer;
 }
 
-button {
-    font-size: 14px;
-    font-family: lato,sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-}
