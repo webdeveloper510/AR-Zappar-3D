@@ -33,6 +33,7 @@
     "react-three-editable": "^0.8.1",
     "react-three-editor": "^2.2.1",
     "react-three-fiber": "^6.0.13",
+    "react-toastify": "^9.1.2",
     "react-web-ar": "^1.0.0-beta0",
     "three": "^0.146.0",
     "three-gltf-loader": "^1.111.0",

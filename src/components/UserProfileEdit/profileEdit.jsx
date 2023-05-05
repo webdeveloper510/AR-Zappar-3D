@@ -1,6 +1,16 @@
 import React from "react";
+import { toast } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 
 const UserProfile =()=>{
+  const navigate = useNavigate()
+
+  const handleLogout = ()=>{  
+    localStorage.clear()
+    toast.success('Log Out Successfully !');
+    navigate('/');
+  }
     return(
     <div className="userProfile">
         <div class="container-fluid">
@@ -17,7 +27,7 @@ const UserProfile =()=>{
                 <li><a class="dropdown-item" href="file:///C:/Users/USER/Downloads/Compressed/web-ar/user.html#"><i class="bi bi-gear-fill pe-1"></i>User Setting</a></li>
                 <li><a class="dropdown-item" href="file:///C:/Users/USER/Downloads/Compressed/web-ar/media-library.html#"><i class="bi bi-collection-play pe-1"></i>Media Library</a></li>
                 <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="file:///C:/Users/USER/Downloads/Compressed/web-ar/login.html"><i class="bi bi-box-arrow-right pe-1"></i>Log out</a></li>
+                <li><a class="dropdown-item" onClick={handleLogout}><i class="bi bi-box-arrow-right pe-1"></i>Log out</a></li>
               </ul>
             </div>
           </div>

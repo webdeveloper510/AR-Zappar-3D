@@ -29,7 +29,8 @@ function Routing(){
                 <Route path="/emailconfirm" element={<EmailConfirm/>} />
                 <Route path="/design" element={<DesignOpen/>} />
                 <Route path="/projectList" element={<ProjectList/>} />
-                <Route path="/project" element={<Project/>} />
+                <Route path="/project/" element={<Project/>} />
+                <Route path="/project/:id" element={<Project/>} />
                 <Route path="/target/:id" element={<Target/>} />
                 <Route path="/user" element={<UserProfile/>} />
                 </>

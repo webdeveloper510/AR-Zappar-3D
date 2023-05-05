@@ -3,12 +3,18 @@ import axios from "axios";
 import { API } from "../../config/api";
 import "../../App.css"
 import { useNavigate } from "react-router-dom";
+// <<<<<<< Updated upstream
 import logoImage from '../../assets/images/sayehbaz.png';
 import mysvg from '../../assets/images/clipart.svg';
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from 'react-datepicker';
 
+// =======
+import { toast } from "react-toastify"
+// >>>>>>> Stashed changes
+
 const RegisterPage =()=>{
+
     const navigate = useNavigate();
 
     //  First Name 
@@ -95,7 +101,9 @@ const handleDateChange = (event) => {
     }
     // console.log("MyDataObject----------->" , MyDataObject)
 
-
+    const handelLogin =()=>{
+        navigate('/')
+    }
     const handleRegister = ()=>{
         if (MyDataObject){
             const formData = new FormData();
@@ -116,7 +124,8 @@ const handleDateChange = (event) => {
               .then(function (response) {
                 console.log(response)
                 console.log('Registerd SuccessFully', response);
-                navigate('/login')
+                navigate('/')
+                toast.success('Registerd Successfully !')
                 // uploadProImg(response.data.imagePro? response.data.imagePro : "")
                 
               })
@@ -216,7 +225,7 @@ const handleDateChange = (event) => {
                             Already have an account?</p>
                             <div class="d-grid gap-2 mt-2 login">
                                 <a class="btn-register btn btn-sign-in pt-2 pb-2" type="button"
-                                    href="/login">Login</a>
+                                    onClick={handelLogin}>Login</a>
                             </div>
                         </form>
                     </div>

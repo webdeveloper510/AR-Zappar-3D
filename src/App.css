@@ -882,6 +882,7 @@ ul.dropdown-menu.text-small.shadow.show a {
     font-size: 14px;
     line-height: 20px;
 }
+/* <<<<<<< Updated upstream */
 a.btn.btn-sign-in {
     background: #5186C8;
     border-radius: 45px;
@@ -991,3 +992,218 @@ h2.top-logo {
     color: #5186C8;
     text-shadow: 5px 3px 7px #ccccccd4
 }
+/* ======= */
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.p40 {
+    padding: 40px;
+}
+.flex.acenter {
+    align-items: center;
+}
+.btn.btn-ghost {
+    display: flex;
+    align-items: center;
+    text-transform: none;
+    background: none;
+    border: 0 none;
+    fill: #344B60;
+    color: #344b60;
+    padding: 0 8px 0 0;
+    font-size: 14px;
+    min-width: 0;
+    transition: initial;
+}
+.mt8 {
+    margin-top: 8px;
+}
+.btn.btn-ghost svg {
+    fill: #344B60;
+}
+.btn.btn-ghost svg {
+    margin-right: 0;
+}
+.mb0 {
+    margin-bottom: 0;
+}
+.ml12 {
+    margin-left: 12px;
+}
+h3 {
+   margin-top: 2px;
+}
+.mb16 {
+    margin-bottom: 16px;
+}
+.ml32 {
+    margin-left: 32px;
+}
+.mt16 {
+    margin-top: 16px;
+}
+.fs14 {
+    line-height: 21px;
+}
+.fs14 {
+    font-size: 14px;
+}
+.mw509 {
+    max-width: 509px;
+}
+modal.small a.fs14, modal.large a.fs14 {
+    font-size: 14px;
+}
+.small a:not(.btn) {
+    font-weight: bold;
+    font-size: 12px;
+}
+.fs14 {
+    line-height: 21px;
+}
+a {
+    text-decoration: none;
+    color: #4A90E2;
+    cursor: pointer;
+}
+.mt32 {
+    margin-top: 32px;
+}
+.mb16 {
+    margin-bottom: 16px;
+}
+.fs16 {
+    font-size: 16px;
+}
+
+p {
+    overflow-wrap: break-word;
+}
+p {
+    font-weight: 400;
+    line-height: 24px;
+}
+step-modal[step-id=triggers] .step-content .table-container {
+    max-height: 504px;
+    overflow-y: auto;
+}
+table.plain, .table.plain {
+    box-shadow: none;
+    border-radius: 0px;
+}
+[hydrated] {
+    visibility: inherit;
+}
+table {
+    display: flex;
+    width: 100%;
+    vertical-align: middle;
+}
+table, .table {
+    flex-direction: column;
+    background: white;
+}
+
+table, .table {
+
+    flex-direction: column;
+    background: white;
+}
+[hydrated] {
+    visibility: inherit;
+}
+table table-tr{
+    display: flex;
+    width: 100%;
+    height: 72px;
+    padding: 0px 18px;
+}
+table table-tr {
+    align-items: center;
+    border-bottom: 1px solid #b2c4d7;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+multistep-modal table-tr {
+    cursor: pointer;
+}
+table table-tr table-td:first-child{
+    margin-right: 0px;
+}
+[hydrated] {
+    visibility: inherit;
+}
+table table-tr table-td{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    margin-left: 0;
+    margin-right: 26px
+px
+;
+    position: relative;
+    height: 100%;
+    word-break: break-all;
+}
+
+.flex.acenter {
+    align-items: center;
+}
+.flex {
+    display: flex;
+}
+.btn.btn-link {
+    cursor: pointer;
+    border-color: transparent;
+    background: transparent;
+    border-radius: 0;
+    color: #4A90E2;
+    font-size: 14px;
+    line-height: 19px;
+    padding: 0;
+    min-width: 0;
+}
+
+.btn {
+    font-family: "Lato", sans-serif;
+    text-align: center;
+    font-weight: 500;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 0 none;
+    line-height: normal;
+    cursor: pointer;
+    transition: background-color 0.1s linear;
+    position: relative;
+}
+
+button, .btn {
+    cursor: pointer;
+}
+.ml16 {
+    margin-left: 16px;
+}
+.btn, .btn-mini.btn-dline, .btn.btn-info {
+    font-weight: 500;
+    border-radius: 10px;
+    font-family: "Lato",Helvetica,sans-serif;
+    font-size: 14px;
+    line-height: 17px;
+    user-select: none;
+    background-color: #fff;
+    border: 1px solid #344b60;
+    color: #344b60;
+}
+table table-tr table-td-action[word-break], table table-tr table-td[word-break], table table-tr table-td-img[word-break], table imgrec-collection-tr table-td-action[word-break], table imgrec-collection-tr table-td[word-break], table imgrec-collection-tr table-td-img[word-break], table imgrec-img-tr table-td-action[word-break], table imgrec-img-tr table-td[word-break], table imgrec-img-tr table-td-img[word-break] {
+    word-break: normal;
+}
+/* .selected:hover.active {
+    background-color: rgb(204, 209, 209);
+  }
+   */
+/* >>>>>>> Stashed changes */

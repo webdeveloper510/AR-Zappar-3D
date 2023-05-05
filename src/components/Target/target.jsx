@@ -8,8 +8,9 @@ import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import { useParams } from "react-router-dom";
-import Accordion from 'react-bootstrap/Accordion';
-  
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandPointUp, faT, faImage, faVideo, faCube, faImagePortrait, faGear, faChevronLeft, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { Button } from "bootstrap";
@@ -50,7 +51,7 @@ sweepImage2,
 tiktokImage2,
 youTubeImage2,
   ]
-
+const navigate = useNavigate()
   const [targetImage , selectedTargetImage] = useState(null)
   const  TargetImage = (e) =>{
     var file = e.target.files[0];
@@ -120,59 +121,6 @@ console.log('===>' , id)}
 
 
 
-// // IMAGE UPLOAD HANDLER FUNCTION
-
-// const [image , imagepath] = useState('')
-// const handleImage = (e)=>{
-//   imagepath(e.target.files[0])
-// }
-// console.log("image--------->" , image.name)
-
-
-
-
-// // 3D MODEL UPLOAD HANDLER FUNCTION
-
-
-// const [gltfModel , ModelUplaod] = useState('')
-// const handleGltfModel = (e)=>{
-//   ModelUplaod(e.target.files[0])
-// }
-// console.log("model--------->" , gltfModel)
-
-
-// const videoId = localStorage.getItem('videoId')
-// const projectId = localStorage.getItem('projectId')
-// console.log("user--------->" , userId)
-// console.log("projectId--------->" , projectId)
-// console.log("videoId--------->" , videoId)
-// // FORMDATA UPLOAD TO DATABASE FUNCTION
-
-// const handleSaveModel = ()=>{
-//       const formData = new FormData()
-//       formData.append("Image3D" , image)
-//       formData.append("model3D" , gltfModel)
-//       formData.append("project_id" ,projectId )
-//       formData.append("userId_id" , userId)
-//       formData.append("videoid_id" , videoId)
-//       axios.post(API.BASE_URL + 'project-started/', formData, {
-//         headers: {
-//           'accept': 'application/json',
-//               'content-type': 'multipart/form-data'
-//         },
-//       })
-//       .then(function (response) {
-//         console.log(response)
-//       })
-//       .catch(function(err) {
-//         console.error('Error uploading file', err);
-//       });
-// }
-
-
-
-
-
   const [Url , setUrl] = useState('');
   // Update the URL state when the user enters a new URL
   const handleChange = (event) => {
@@ -183,8 +131,17 @@ console.log('===>' , id)}
  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(Url)}&size=200x200`;
  console.log(qrCodeUrl);
 
- 
-  
+  const handleBack = (event) => {
+    navigate('/home')
+    window.location.reload();
+  };
+
+  const handleLogout = ()=>{  
+    localStorage.clear()
+    toast.success('Log Out Successfully !');
+    navigate('/');
+    window.location.reload();
+  }
 
     return(
     <div className="targetPage">
@@ -193,7 +150,7 @@ console.log('===>' , id)}
             <div className="d-flex align-items-center justify-content-between w-100 navbar-top">
               <div className="text-white target-text">
                 <h4 className="d-flex align-items-center mb-0 target-heading">
-                  <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#fff", width: "15px", height: "15px", marginRight: 8 }} />{ProjectTitle}</h4>
+                  <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#fff", width: "15px", height: "15px", marginRight: 8 , cursor: "pointer" }} onClick={handleBack}/>{ProjectTitle}</h4>
               </div>
       
 
@@ -207,7 +164,7 @@ console.log('===>' , id)}
                   <li><a className="dropdown-item" href="#"><i className="bi bi-gear-fill pe-1"></i>User Setting</a></li>
                   <li><a className="dropdown-item" href="#"><i className="bi bi-collection-play pe-1"></i>Media Library</a></li>
                   <li><hr className="dropdown-divider"/></li>
-                  <li><a className="dropdown-item" href="#"><i className="bi bi-box-arrow-right pe-1"></i>Log out</a></li>
+                  <li><a className="dropdown-item" onClick={handleLogout}><i className="bi bi-box-arrow-right pe-1"></i>Log out</a></li>
                 </ul>
               </div>
               <div className="target-btn">

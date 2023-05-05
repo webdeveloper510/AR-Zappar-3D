@@ -3,9 +3,12 @@ import Mob1 from "../../assets/images/mobi-1.png";
 import Mob2 from "../../assets/images/mobi-2.png";
 import { API } from "../../../src/config/api"
 import axios from "axios"; 
-import { useNavigate } from "react-router-dom";
+import { useNavigate , useParams } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBarcode, faGripHorizontal, faQrcode, faArrowDown, faUserGroup } from '@fortawesome/free-solid-svg-icons';
+import { toast } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
+
 const Project =()=>{
 
 
@@ -16,7 +19,21 @@ const Project =()=>{
   const [proImg , uploadProImg] = useState(null)
   const [titlePro , addTitle] = useState(null)
   const [imageBase64, setImageBase64] = useState('');
-
+  const {id} = useParams()
+  console.log('---------------->',id)
+ useEffect  (() => {
+  if(id?.length > 0){
+  axios.get(API.BASE_URL+'project-list/'+id+'/')
+    .then(function(response){
+      console.log(response)
+      addTitle(response.data.ProTitle)
+      setImageBase64(response.data.imagePro.toString())
+    })
+    .catch(function(error){
+      console.log(error)
+    })
+  }
+ })
 
 
   const handleUntitle = (e) =>{
@@ -26,9 +43,6 @@ const Project =()=>{
 
 
 
-  const uploadProjectImg = (event) => {
-    ProImg(event.target.files[0])
-  }
   console.log("Image",imgProject)
 
   const handleImageChange = (event) => {
@@ -43,6 +57,20 @@ const Project =()=>{
 
 
   const handleSubmit = () => {
+    if (id){
+      axios.get(API.BASE_URL + 'create-project')
+      .then(function (response) {
+        console.log(response)
+
+        console.log('File uploaded successfully', response);
+        console.log('/target/'+id)
+  
+        navigate('/target/'+id)
+      })
+      .catch(function(err) {
+        console.error('Error uploading file', err);
+      });
+    }
   if(imgProject){
     console.log("ok")
     const formData = new FormData();
@@ -81,7 +109,14 @@ useEffect(() => {
   }
 }, [])
 
-    return(
+
+const handleLogout = ()=>{  
+  localStorage.clear()
+  toast.success('Log Out Successfully !');
+  navigate('/');
+}
+
+return(
       <div className="projectDetail">
         <div className="navbar">
           <div className="container-fluid">
@@ -98,7 +133,7 @@ useEffect(() => {
                   <li><a className="dropdown-item" href="#"><i className="bi bi-gear-fill pe-1"></i>User Setting</a></li>
                   <li><a className="dropdown-item" href="#"><i className="bi bi-collection-play pe-1"></i>Media Library</a></li>
                   <li><hr className="dropdown-divider"/></li>
-                  <li><a className="dropdown-item" href="#"><i className="bi bi-box-arrow-right pe-1"></i>Log out</a></li>
+                  <li><a className="dropdown-item" onClick={handleLogout}><i className="bi bi-box-arrow-right pe-1"></i>Log out</a></li>
                 </ul>
               </div>
             </div>
@@ -131,6 +166,7 @@ useEffect(() => {
                   <div className="project-page-upper d-md-flex justify-content-between align-items-center p-0">
                     <div class="col-md-4 m-0 p-0 d-flex">
                       <div class="overview-cover-image" style={{backgroundImage:`url(${imageBase64 != null ? imageBase64 : ""})` , backgroundSize: "100% 100%" , border: "none", outline: "none" ,    borderRadius: "10px"}}>
+                      
                         <div class="tag">Designer</div>
                           <input type="file" className="base-img" onChange={handleImageChange} />
                           <button id="svgporj" >
@@ -140,7 +176,7 @@ useEffect(() => {
                         </div>
                     </div>
                     <div class="col-md-4 align-self-center p-4">
-                      <input id="projName" className="mt-md-0" type="text" placeholder="Untitled Project" onChange={handleUntitle} />  
+                      <input id="projName" className="mt-md-0" type="text" placeholder="Untitled Project" onChange={handleUntitle} value={titlePro} />  
                     </div>
                     <div class="col-md-4 p-4">
                       <a href="#" class="link-dark text-decoration-none text-end d-block"> Create by: Lorem ipsum | 30 Oct 2022 </a>
