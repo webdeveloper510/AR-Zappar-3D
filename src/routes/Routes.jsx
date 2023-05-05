@@ -10,19 +10,17 @@ import ProjectList from '../components/ProjectList/ProjectList';
 import Project from '../components/Projects/project';
 import Target from '../components/Target/target';
 import UserProfile from '../components/UserProfileEdit/profileEdit';
-var token = localStorage.getItem('token');
+
 function Routing(){
+    const token = localStorage.getItem('token');
+    // if 
     return(
         <div className="routes">
         <Routes>
-
-            
-                <>
-                <Route path="/" element={<LoginPage/>} />
-                <Route path="/register" element={<RegisterPage/>} />
-               
-                
-               
+                {/* <>
+                {token ? ( */}
+                    <>
+                <Route path="/register" element={<RegisterPage/>} />             
                 <Route path="/home" element={<MainPage/>} />
                 <Route path="/team" element={<TeamPage/>} />
                 <Route path="/lib" element={<Library/>} />
@@ -33,6 +31,12 @@ function Routing(){
                 <Route path="/project/:id" element={<Project/>} />
                 <Route path="/target/:id" element={<Target/>} />
                 <Route path="/user" element={<UserProfile/>} />
+                {/* </> */}
+                {/* )  */}
+                <Route path="/" element={<LoginPage/>} />
+                {/* } */}
+                
+                
                 </>
             
             

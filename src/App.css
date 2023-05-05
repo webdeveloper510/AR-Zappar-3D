@@ -1669,3 +1669,177 @@ table table-tr table-td-img {
     padding-left: 18px;
     margin-right: 0px;
 }
+.Wrap--2qKdL {
+    position: relative;
+    z-index: 1000;
+}
+
+* {
+    user-select: none;
+    box-sizing: border-box;
+    color: #344b60;
+    font-family: "Lato",sans-serif;
+}
+.Wrap--2qKdL .zmdlCloseBtn--1BzUi {
+    z-index: 1001;
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    position: absolute;
+    top: -16px;
+    left: calc(100% - 16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f2f2f2;
+    pointer-events: all;
+}
+.Wrap--2qKdL .zmdlCloseBtn--1BzUi>svg {
+    pointer-events: none;
+}
+.Wrap--2qKdL .zmdlInnerContainer--23NbO {
+    position: relative;
+    border-radius: 12px;
+    background-color: #fff;
+    pointer-events: auto;
+}
+
+
+.FitContent--3uY7j {
+    width: fit-content;
+    height: fit-content;
+    overflow: auto;
+    max-height: calc(100vh - 40px);
+    max-width: calc(100vw - 40px);
+}
+.Container--2-6Wm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.FitContent--S4X8V {
+    height: fit-content;
+    width: fit-content;
+    padding-bottom: 24px;
+}
+.Container--2-6Wm>.InnerContainer--2LcdQ {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    background-color: #fff;
+    z-index: 1000;
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+}
+.Container--2-6Wm>.InnerContainer--2LcdQ .Content--9GnI_ {
+    display: flex;
+    flex-direction: column;
+}
+.Container--2-6Wm>.InnerContainer--2LcdQ .Content--9GnI_ .TextContent--2darF {
+    margin: 24px 40px 0 40px;
+}
+.Container--2-6Wm>.InnerContainer--2LcdQ .Content--9GnI_ .TextContent--2darF h1 {
+    font-size: 28px;
+    font-weight: 300;
+    margin: 0;
+}
+.CardList--3AV_R {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow-y: scroll;
+    flex-wrap: wrap;
+    margin: 24px 0px;
+}
+.Card--3peyC:first-child {
+    margin: 8px 8px 8px 0;
+}
+
+.Card--3peyC {
+    position: relative;
+    border-radius: 8px;
+    border: 1px solid rgba(32,32,32,.05);
+    background-color: #fff;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    box-shadow: 0 1px 5px 0 rgba(0,0,0,.1);
+    transition: box-shadow .2s ease-out,transform .2s ease-out;
+    transition-delay: .1s;
+    text-align: left;
+    cursor: pointer;
+    pointer-events: all;
+    margin: 8px;
+}
+.Card--3peyC .Image--1W5q9 {
+    height: 212px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+.Card--3peyC .Content--7Vw1W {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px 20px 20px;
+    flex-grow: 1;
+}
+.Card--3peyC .TitleIconRow--18dmO {
+    display: flex;
+    align-items: center;
+    margin: 24px 0 12px 0;
+}
+.Card--3peyC .TitleIconRow--18dmO .IconContainer--2LR3O {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 100%;
+    padding-top: 4px;
+}
+.Card--3peyC .TitleIconRow--18dmO svg {
+    margin-right: 8px;
+}
+.Container--2-6Wm>.InnerContainer--2LcdQ .Content--9GnI_ .TextContent--2darF h3 {
+    font-weight: 400;
+}
+
+.Container--2-6Wm>.InnerContainer--2LcdQ .Content--9GnI_ .Footer--2f8R2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+.Card--3peyC .Content--7Vw1W p {
+    margin: 0;
+}
+.ActionBtn--1x70k:disabled {
+    opacity: .5;
+    cursor: default;
+}
+.ActionBtn--1x70k {
+    border-radius: 8px;
+    background-color: #4a90e2;
+    color: #fff;
+    cursor: pointer;
+}
+
+button {
+    font-size: 14px;
+    font-family: lato,sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+}

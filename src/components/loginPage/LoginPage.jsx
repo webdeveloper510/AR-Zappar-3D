@@ -51,6 +51,7 @@ const handleLogin = ()=>{
           })
           .catch(function(err) {
             console.error('Error uploading file', err);
+            toast.error("Invalid login credentials !")
           });
 }
 var token = localStorage.getItem('token');
