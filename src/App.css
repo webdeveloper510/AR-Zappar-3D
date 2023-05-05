@@ -77,7 +77,16 @@ h2.top-logo {
     box-shadow: 0 0 20px 0 rgb(0 0 0 / 20%), 0 5px 5px 0 rgb(0 0 0 / 24%);
     border-radius: 10px; */
 }
-
+.sign-up-outer{
+    background: #fff;
+    width: 70% !important;
+    margin: 40px auto !important;
+    border-radius: 20px;
+    display: flex;
+    margin-bottom: 0 !important;
+    align-items: center;
+    margin-top: 0 !important;
+}
 .login-pg-form .btn-sign-in {
     background: #726182;
     color: white;
@@ -101,14 +110,15 @@ h2.top-logo {
     padding: 0px 20%;
 }
 form.sign-up-pg-form {
-    width: 70%;
+    width: 100%;
     text-align: left;
-    background: #fff;
+    padding-left: 30px;
+    /* background: #fff;
     padding: 35px;
     padding-top: 18px;
     margin: 0 auto;
     box-shadow: 0 0 20px 0 rgb(0 0 0 / 20%), 0 5px 5px 0 rgb(0 0 0 / 24%);
-    border-radius: 10px;
+    border-radius: 10px; */
 }
 .sign-up-pg-form .btn-sign-in {
     background: #726182;
@@ -129,7 +139,8 @@ form.sign-up-pg-form {
     border-radius: 4px;
 }
 p.already-account {
-    margin-top: 20px;
+    margin-top: 13px;
+    text-align: center;
 }
 .eight h4 {
     display: grid;
@@ -923,7 +934,7 @@ div#login-page {
     background: #fff;
     width: 70%;
     padding: 50px;
-    margin: 40px auto !important;
+    margin: 25px auto !important;
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -992,6 +1003,133 @@ h2.top-logo {
     color: #5186C8;
     text-shadow: 5px 3px 7px #ccccccd4
 }
+
+
+
+/**********5may2023****************/
+div#sign-up-page {
+    background: #32527A;
+}
+.sign-up-pg-container-left, .sign-up-pg-container-right {
+    float: left;
+    width: 50%;
+}
+form.sign-up-pg-form h2 {
+    margin-bottom: 0;
+}
+form.sign-up-pg-form input:focus {
+    outline: none;
+    box-shadow: none;
+}
+form.sign-up-pg-form input {
+    background: #5089c714;
+    border-color: #ebf4fb;
+    padding: 8px;
+    border-radius: 100px !important;
+}
+form.sign-up-pg-form select {
+    background: #5089c714;
+    border-color: #ebf4fb;
+    padding: 8px;
+    border-radius: 100px !important;
+}
+form.sign-up-pg-form option {
+    background: #5089c714;
+    border-color: #ebf4fb;
+    padding: 8px;
+    border-radius: 100px !important;
+}
+.sign-up-pg-container-right {
+    text-align: center;
+}
+.btn-register {
+    background: transparent !important;
+    color: #5089c7 !important;
+    padding: 0 !important;
+    margin-left: 5px;
+    margin-top: -1px;
+}
+.main-page-nav {
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 16%);
+    background-color: #fff;
+}
+.custom-drop-down ul.dropdown-menu.text-small.shadow.show {
+    right: 0 !important;
+    left: auto;
+    box-shadow: 0 2px 4px 0 rgb(52 75 96 / 10%), 0 1px 3px 0 rgb(52 75 96 / 20%) !important;
+    border-radius: 8px;
+    border: 1px solid #ccc0;
+}
+.custom-drop-down ul.dropdown-menu.text-small.shadow.show li a svg {
+    padding-right: 10px;
+    font-size: 15px;
+}
+.custom-drop-down ul.dropdown-menu.text-small.shadow.show li a {
+    font-size: 13px;
+    padding-left: 10px;
+}
+img.card-img-top {
+    height: 135px;
+    object-fit: fill;
+}
+.card.project-card-placeholder.col-md-3.mb-4.mx-2.p-0.link-body {
+    flex-direction: column;
+    box-shadow: 0 1px 5px 0 rgb(0 0 0 / 10%);
+    transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+    transition-delay: 0.1s;
+    text-align: left;
+    height: fit-content;
+    border: 1px solid #cccccc45;
+}
+h5.card-title {
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 0;
+    color: #5186C8;
+}
+p.card-text small {
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 0;
+    color: #5186C8;
+}
+a#projectStart {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+}
+form#search-form input {
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    border: 1px solid #5089c75e;
+}
+.main-page-left-bar {
+    box-shadow: 0 0 4px 0 rgb(52 75 96 / 35%);
+    font-size: 14px;
+    background: #fff;
+}
+.main-page-content .project-side ul li a.nav-link.active {
+    color: #000;
+    background: #5089c71c;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+}
+.main-page-left-bar ul li a {
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+}
+.list-bar a {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+}
+/**********5may2023*end***************/
 /* ======= */
 
 * {

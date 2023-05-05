@@ -4,9 +4,9 @@ import { API } from "../../config/api";
 import "../../App.css"
 import { useNavigate } from "react-router-dom";
 // <<<<<<< Updated upstream
-import logoImage from '../../assets/images/sayehbaz.png';
-import mysvg from '../../assets/images/clipart.svg';
+import logoImage from '../../assets/images/sayehbazf.png';
 import "react-datepicker/dist/react-datepicker.css";
+import loginright from '../../assets/images/login-right.png';
 import DatePicker from 'react-datepicker';
 
 // =======
@@ -139,9 +139,9 @@ const handleDateChange = (event) => {
     return(
     <div class="sign-up-page" id="sign-up-page">
         <div class="container-fluid p-0 m-0">
-            <div class="row p-0 m-0 align-items-center sign-up-bgg" style={{ backgroundImage: `url(${mysvg})` }}>
-                <div class="col-md-12 p-0 m-0">
-                    <div class="text-center pt-5 pb-5 sign-up-pg-container">
+            <div class="row p-0 m-0 align-items-center sign-up-bgg">
+                <div class="col-md-12 sign-up-outer">
+                    <div class="text-center pb-2 sign-up-pg-container-left">
                    
 
                         <form class="sign-up-pg-form">
@@ -222,13 +222,15 @@ const handleDateChange = (event) => {
                                     onClick={handleRegister}>Sign up</a>
                             </div>
                             <p class="already-account fw-bolder">
-                            Already have an account?</p>
-                            <div class="d-grid gap-2 mt-2 login">
-                                <a class="btn-register btn btn-sign-in pt-2 pb-2" type="button"
-                                    onClick={handelLogin}>Login</a>
-                            </div>
+                            Already have an account ?<a class="btn-register btn btn-sign-in pt-2 pb-2" type="button"
+                                    onClick={handelLogin}> Login</a></p>
+                            
                         </form>
                     </div>
+
+                    <div class="sign-up-pg-container-right">
+                <img class="login-pic" src={loginright} />
+                </div>
                 </div>
                 {/* <div class="col-md-7 p-0 m-0 sign-up-page-bg"></div> */}
 
