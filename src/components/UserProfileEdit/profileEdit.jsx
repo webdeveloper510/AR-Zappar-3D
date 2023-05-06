@@ -2,6 +2,8 @@ import React from "react";
 import { toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
+import NavBar from "../Navbar/navbar";
+import SideBar from "../SideBar/sidebar";
 
 const UserProfile =()=>{
   const navigate = useNavigate()
@@ -13,7 +15,7 @@ const UserProfile =()=>{
   }
     return(
     <div className="userProfile">
-        <div class="container-fluid">
+        {/* <div class="container-fluid">
           <div class="d-flex align-items-center">
             <div class="w-100 text-white">
               <h4>Logo</h4>
@@ -31,12 +33,12 @@ const UserProfile =()=>{
               </ul>
             </div>
           </div>
-        </div>
-
+        </div> */}
+        <NavBar />
 
     <div class="container-fluid project-pg">
         <div class="row">
-            <div class="col-md-2 p-0 m-0 bg-light">
+            {/* <div class="col-md-2 p-0 m-0 bg-light">
                 <div class="d-flex flex-column flex-shrink-0 p-3 ">
                     <ul class="nav nav-pills flex-column mb-auto">
                       <li class="nav-item">
@@ -47,8 +49,8 @@ const UserProfile =()=>{
                       </li>
                     </ul>
                 </div>
-            </div>
-
+            </div> */}
+              <SideBar />
             <div class="col-md-10 p-0 m-0 ">
                 <div class="row m-0 p-0">
                     <h4 class="text-center pt-5">User Settings</h4>

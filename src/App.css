@@ -65,11 +65,15 @@ input {
     height: 100vh;
 } */
 h2.top-logo {
-    text-align: center;
+    text-align:left;
+    float: left;
+    width: 100%;
+    margin-bottom: 40px;
 }
 .login-pg-form {
     width: 100%;
     text-align: left;
+    padding-left: 30px;
     /* background: #fff;
     padding: 35px;
     padding-top: 18px;
@@ -78,6 +82,7 @@ h2.top-logo {
     border-radius: 10px; */
 }
 .sign-up-outer{
+    padding-right: 0 !important;
     background: #fff;
     width: 70% !important;
     margin: 40px auto !important;
@@ -85,7 +90,7 @@ h2.top-logo {
     display: flex;
     margin-bottom: 0 !important;
     align-items: center;
-    margin-top: 0 !important;
+    margin-top: 3px !important;
 }
 .login-pg-form .btn-sign-in {
     background: #726182;
@@ -112,7 +117,10 @@ h2.top-logo {
 form.sign-up-pg-form {
     width: 100%;
     text-align: left;
-    padding-left: 30px;
+    padding-left: 50px;
+    margin-top: 0px;
+    float: left;
+
     /* background: #fff;
     padding: 35px;
     padding-top: 18px;
@@ -138,9 +146,16 @@ form.sign-up-pg-form {
 .sign-up-pg-form .form-control, .form-select {
     border-radius: 4px;
 }
+a#signup-btn {
+    margin-top: 19px;
+}
 p.already-account {
-    margin-top: 13px;
     text-align: center;
+    margin-bottom: 0;
+    margin-top:0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
 }
 .eight h4 {
     display: grid;
@@ -742,7 +757,6 @@ button#svgporj {
 }
 span {
     color: #fff;
-    margin: 0 0 0 2pc;
     transition: 1s;
 }
 .tag {
@@ -895,18 +909,62 @@ ul.dropdown-menu.text-small.shadow.show a {
 }
 /*   */
 a.btn.btn-sign-in {
-    background: #5186C8;
+    background: #5a94d2;
     border-radius: 45px;
-    padding: 15px;
-    font-size: 16px;
+    padding: 11px;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0;
 
 }
+.login-bgg {
+    background: #233744;
+}
+h3.creat-account {
+    font-size: 24px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0;
+    text-align: center;
+    margin-bottom: 20px;
+    float: left;
+    width: 100%;
+    color: #5a97d1;
+    padding-left: 43px;
+}
+p.get-started {
+    text-align: center;
+}
+.first-popup-design .first-div img {
+    border-radius: 6px;
+}
+.first-popup-design .first-div {
+    width: 30%;
+    float: left;
+    margin: 10px;
+    box-shadow: 0px 2px 9px 2px #cccccc8c;
+    border: 1px solid #ccc0;
+    padding: 7px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+a.login-forgot {
+    color: #000;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    padding-left: 0px;
+}
 form.login-pg-form input {
-    padding: 14px;
+    padding: 12px;
     border-radius: 100px;
 }
 img.login-pic {
     width: 80%;
+    float: right;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 .login-up-pg-container-right {
     float: left;
@@ -916,19 +974,16 @@ img.login-pic {
 .login-up-pg-container-left {
     float: left;
     width: 50%;
-    padding: 40px;
+    padding-left: 40px;
+    padding-top: 15px;
     
 }
 form.login-pg-form input {
-    background: #5089c714;
-    border-color: #ebf4fb;
+    border: 1px solid #cccccc80;
 } 
 form.login-pg-form input:focus {
     outline: none;
     box-shadow: none;
-}
-div#login-page {
-    background: #32527A;
 }
 .col-md-12.p-0.m-0.login-outer {
     background: #fff;
@@ -936,27 +991,57 @@ div#login-page {
     padding: 50px;
     margin: 25px auto !important;
     border-radius: 20px;
-    display: flex;
     align-items: center;
+    display: flex;
 }
 .login-page-bg {
     text-align: center;
 }
 .login-pg-form .btn-sign-in-google {
-    border: 2px solid #5186C8;
+    border: 1px solid #cccccc80;
     border-radius: 45px;
-    padding: 15px;
+    padding: 12px;
     font-size: 16px;
-    color: #5186C8;
+    color: #000000c7;
     font-weight: 600;
+    width: 100%;
+}
+.or-text::before {
+    content: "";
+    position: absolute;
+    border: 0.1px solid #cccccc59;
+    width: 150px;
+    top: 23px;
+    left: 23px;
+    border-width: 1px;
+}
+.or-text::after {
+    content: "";
+    position: absolute;
+    border: 0.1px solid #cccccc59;
+    width: 150px;
+    top: 23px;
+    right: 23px;
+    border-width: 1px;
+}
+.or-text {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    padding-top: 10px;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    float: left;
 }
 .login-account {
-    color: #5186C8;
+    color: #000;
     font-weight: 500;
+    text-align: left;
+    padding-left: 13px;
 }
 form.login-pg-form label, form.sign-up-pg-form label {
     font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
 }
 form.login-pg-form input, form.sign-up-pg-form input {
     font-family: 'Montserrat', sans-serif;
@@ -978,11 +1063,13 @@ select.form-select {
     font-size: 14px;
     font-weight: 500;
 }
+form.login-pg-form label {
+    color: #000;
+}
 .login-sign-up {
-    color: #5186C8;
+    color: #000;
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
-    font-weight: 500;
 }
 button.btn.btn-sign-in-google:hover {
     border-color: #5186C8;
@@ -995,20 +1082,15 @@ button.btn.btn-sign-in-google:hover {
 .btn-register{
     background: #3896f0 !important;
 }
-h2.top-logo {
-    font-size: 60px;
-    font-weight: bold;
-    font-family: 'Montserrat', sans-serif;
-    margin-bottom: 45px;
-    color: #5186C8;
-    text-shadow: 5px 3px 7px #ccccccd4
+img.googlw-img {
+    width: 25px;
+    margin-right: 15px;
 }
-
 
 
 /**********5may2023****************/
 div#sign-up-page {
-    background: #32527A;
+    background: #233744;
 }
 .sign-up-pg-container-left, .sign-up-pg-container-right {
     float: left;
@@ -1022,19 +1104,21 @@ form.sign-up-pg-form input:focus {
     box-shadow: none;
 }
 form.sign-up-pg-form input {
-    background: #5089c714;
     border-color: #ebf4fb;
     padding: 8px;
     border-radius: 100px !important;
+    border: 1px solid #cccccc80;
+}
+form.sign-up-pg-form input::placeholder {
+    font-size: 12px;
 }
 form.sign-up-pg-form select {
-    background: #5089c714;
-    border-color: #ebf4fb;
     padding: 8px;
+    border: 1px solid #cccccc80;
     border-radius: 100px !important;
+   
 }
 form.sign-up-pg-form option {
-    background: #5089c714;
     border-color: #ebf4fb;
     padding: 8px;
     border-radius: 100px !important;
@@ -1135,7 +1219,8 @@ form#search-form input {
 }
 div#first-popup {
     width: 100%;
-    max-width: 75%;
+    max-width: 50%;
+    margin-top: 10%;
 }
 .iconImage {
     background-size: contain;
@@ -1144,13 +1229,37 @@ div#first-popup {
     background-position: center;
 }
 span.designer-text {
-    color: #000;
+    color: #344b60;
     font-family: 'Montserrat', sans-serif;
+    margin-top: 10px;
+    float: left;
+    font-weight: 500;
+    width: 100%;
+    margin-bottom: 4px;
+    font-size: 15px;
+}
+.image-outer {
+    height: 125px;
+}
+.first-popup-design p {
+    line-height: 21px;
+    font-size: 14px;
+}
+.imageAvatar.custom-img {
+    float: left;
+    width: 20%;
 }
 .first-popup-table table-tr {
     padding: 6px;
 }
-
+.custom-table table-tr {
+    height: auto;
+    padding: 10px 10px;
+}
+.image.top-popup-img img {
+    border-radius: 14px;
+    width: 100%;
+}
 .studio-card {
     box-shadow: 0 1px 5px 0 rgb(0 0 0 / 10%);
     border: 1px solid #cccccc36 !important;
@@ -1172,30 +1281,177 @@ b.create-ar {
     font-family: 'Montserrat', sans-serif;
 }
 .modal-title.h4 {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
+    color: #3E6799;
     font-family: 'Montserrat', sans-serif;
+}
+span.qr-code {
+    float: left;
+    width: 100%;
+    text-align: left;
+    margin-top: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    color: #344b60;
+}
+div#second-modal-popup .modal-body {
+    padding-left: 40px;
+}
+.qr-div {
+    float: left;
+    border-bottom: 1px solid #cccccc8c;
+    width: 100%;
+    padding-bottom: 17px;
+    padding-top: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+}
+.deep-link-div {
+    float: left;
+    width: 100%;
+    margin-top: 24px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+}
+.deep-link-div .qr-img {
+    text-align: center;
+}
+
+p.trigger-paragraph a {
+    margin-top: 6px;
+    font-weight: 400;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    margin-left: 5px;
+}
+button.btn.btn-ghost.trigger-btn {
+    padding-right: 0;
+}
+svg.svg-inline--fa.fa-arrow-left {
+    font-size: 17px;
+    margin-top: 0px;
+}
+h3.trigger-select {
+    padding-top: 4px;
+    font-weight: 600;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    color: #3E6799;
+    margin-left: 10px;
+}
+p.trigger-paragraph {
+    margin-top: 6px;
+    font-weight: 400;
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+button.btn-close {
+    font-size: 12px;
+}
+button.btn-close:focus {
+    outline: none;
+    box-shadow: none;
+}
+.qr-outer {
+    float: left;
+    width: 100%;
+}
+.qr-outer .qr-text {
+    float: left;
+    width: 85%;
+}
+.qr-outer .qr-img {
+    float: left;
+    width: 15%;
+    text-align: left;
+    padding-left: 10px;
+}
+.qr-text p {
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 22px;
 }
 .studio-text {
     font-size: 20px;
     font-weight: 600;
     font-family: 'Montserrat', sans-serif;
 }
+.designer-content h3 {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    float: left;
+    width: 100%;
+    margin-top: 13px;
+}
+.designer-content p {
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+    float: left;
+    width: 100%;
+    margin-top: 0;
+}
 .second-modal-popup {
     width: 75%;
     margin: 0 auto;
 }
 div#second-modal-popup {
-    width: 75%;
-    max-width: 75%;
+    width: 50%;
+    max-width: 50%;
+    margin-top: 10%;
 }
 h3.ml12.mb0.trigger-select {
     font-size: 20px;
     font-weight: 600;
     font-family: 'Montserrat', sans-serif;
 }
+button.btn-scene {
+    float: right;
+    border-radius: 100px;
+    background: #3E6799;
+    color: #fff;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 10px;
+}
+.open-designer-popup {
+    float: left;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.designer-content {
+    padding: 10px;
+}
+.designer-image {
+    height: 235px;
+    float: left;
+    width: 100%;
+}
+.designer-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.three-image-designer {
+    float: left;
+    width: 32%;
+    border: 1px solid #cccccc4f;
+    border-radius: 8px;
+    padding: 0px;
+    box-shadow: 6px 0px 38px 7px #cccccc69;
+}
 b.triggers-text {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     font-family: 'Montserrat', sans-serif;
     padding-left: 5px;
@@ -1214,7 +1470,7 @@ div#three-pic-popup p {
     box-shadow: 0px 3px 8px 0px rgb(0 0 0 / 60%);
 }
 .sign-up-pg-container-right img {
-    width: 83%;
+    width: 81%;
 }
 .sort-bar a {
     font-size: 16px;
@@ -1233,8 +1489,9 @@ form#search-form input {
     border: 1px solid #5089c70a;
 }
 div#ope-design-popup {
-    width: 75%;
-    max-width: 75%;
+    width: 60%;
+    max-width: 60%;
+    margin-top: 5%;
 }
 div#three-pic-popup {
     width: 100%;

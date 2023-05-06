@@ -6,10 +6,9 @@ import { useNavigate } from "react-router-dom";
 //  
 import logoImage from '../../assets/images/sayehbazf.png';
 import "react-datepicker/dist/react-datepicker.css";
-import loginright from '../../assets/images/login-right.png';
+import loginright from '../../assets/images/login-banner.png';
 import DatePicker from 'react-datepicker';
 
-//   
 import { toast } from "react-toastify"
 //    
 
@@ -142,10 +141,11 @@ const handleDateChange = (event) => {
             <div class="row p-0 m-0 align-items-center sign-up-bgg">
                 <div class="col-md-12 sign-up-outer">
                     <div class="text-center pb-2 sign-up-pg-container-left">
-                   
+                    <h3 class="creat-account"> Sign up</h3>
 
                         <form class="sign-up-pg-form">
-                        <h2 class="top-logo"><img src={logoImage} /></h2>
+                           
+                     
                             <div class="row mb-2">
                                 <div class="col-6">
                                     <label class="form-label fw-semibold">First Name</label>
@@ -167,9 +167,7 @@ const handleDateChange = (event) => {
                             </div>
 
                             <div class="mb-2 dob">
-                                <h4>Date of Birth</h4>
-                            </div>
-
+                            <label class="form-label fw-semibold date-of-birth">Date of Birth</label>
                             <input 
                              type="date" 
                              id="birthday" 
@@ -178,6 +176,9 @@ const handleDateChange = (event) => {
                              value={selectedDate} 
                              onChange={handleDateChange} 
                              />
+                            </div>
+
+                           
 
                             {/* <div class="row mb-2">
                                 <div class="col-4">
@@ -204,7 +205,7 @@ const handleDateChange = (event) => {
                             </div> */}
 
                             <div class="mb-2">
-                                <label class="form-label fw-semibold">Role</label>
+                                <label class="form-label fw-semibold role">Role</label>
                                 <select class="form-select" onChange={handleSelect}>
                                     <option selected>Select Role</option>
                                     <option value={Proffession}>I am a Designer.</option>
@@ -219,10 +220,10 @@ const handleDateChange = (event) => {
 
                             <div class="d-grid gap-2 mt-2">
                                 <a class="btn btn-sign-in pt-2 pb-2" type="button"
-                                    onClick={handleRegister}>Sign up</a>
+                                    onClick={handleRegister} id="signup-btn">Sign up</a>
                             </div>
-                            <p class="already-account fw-bolder">
-                            Already have an account ?<a class="btn-register btn btn-sign-in pt-2 pb-2" type="button"
+                            <p class="already-account">
+                            Already have an account ?<a class="fw-bolder btn-register btn btn-sign-in pt-2 pb-2" type="button"
                                     onClick={handelLogin}> Login</a></p>
                             
                         </form>

@@ -2,20 +2,22 @@ import React from "react";
 import { toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
+import NavBar from "../Navbar/navbar";
+import SideBar from "../SideBar/sidebar";
 
 const TeamPage =()=>{
   const navigate = useNavigate()
 
-  const handleLogout = ()=>{  
-    localStorage.clear()
-    toast.success('Log Out Successfully !');
-    navigate('/');
-  }
+  // const handleLogout = ()=>{  
+  //   localStorage.clear()
+  //   toast.success('Log Out Successfully !');
+  //   navigate('/');
+  // }
 
 return(
 <div className="mainpage">
 
-        <div className="container-fluid">
+        {/* <div className="container-fluid">
           <div className="d-flex align-items-center">
             <div className="w-100 text-white">
               <h4>Logo</h4>
@@ -33,11 +35,12 @@ return(
               </ul>
             </div>
           </div>
-        </div>
+        </div> */}
+        <NavBar />
 
     <div className="container-fluid project-pg">
         <div className="row">
-            <div className="col-md-2 p-0 m-0 bg-light" >
+            {/* <div className="col-md-2 p-0 m-0 bg-light" >
                 <div className="d-flex flex-column flex-shrink-0 p-3 ">
                     <ul className="nav nav-pills flex-column mb-auto">
                       <li className="nav-item">
@@ -48,7 +51,8 @@ return(
                       </li>
                     </ul>
                 </div>
-            </div>
+            </div> */}
+            <SideBar />
 
             <div className="col-md-10 p-0 m-0 team-page">
               <h4 className="text-center m-3">The Lorem Team</h4>
