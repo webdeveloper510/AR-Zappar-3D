@@ -2162,6 +2162,8 @@ span.status-icon {
     font-family: 'Montserrat', sans-serif !important;
     font-weight: 600;
     color: #000;
+    border-bottom: 0;
+
 }
 .team-page table.table tr th {
     width: 33%;
@@ -2169,9 +2171,17 @@ span.status-icon {
     font-size: 16px;
     font-family: 'Montserrat', sans-serif !important;
     font-weight: 600;
+    border-bottom: 0;
 }
 .team-head{
     font-size: 22px;
     font-family: 'Montserrat', sans-serif !important;
     font-weight: 600;
+}
+.team-page table tr {
+    width: 100%;
+    float: left;
+    border-bottom: 1px solid #ccc;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
