@@ -4,7 +4,7 @@ import {  faGripHorizontal,  faUserGroup } from '@fortawesome/free-solid-svg-ico
 
 const SideBar =()=>{
     return(
-        <div class="col-md-2 p-0 m-0 bg-light project-side main-page-left-bar">
+        <div class="col-md-2 p-0 m-0 project-side main-page-left-bar">
         <div className="container">
           <div class="d-flex flex-column flex-shrink-0 p-3 project-main">
               <ul class="nav nav-pills flex-column mb-auto">

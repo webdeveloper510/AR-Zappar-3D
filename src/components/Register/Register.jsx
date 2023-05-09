@@ -8,7 +8,6 @@ import logoImage from '../../assets/images/sayehbazf.png';
 import "react-datepicker/dist/react-datepicker.css";
 import loginright from '../../assets/images/login-banner.png';
 import DatePicker from 'react-datepicker';
-
 import { toast } from "react-toastify"
 //    
 

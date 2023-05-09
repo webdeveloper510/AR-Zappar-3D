@@ -323,17 +323,16 @@ form.user-pg-form {
     padding: 6px 20px 10px 20px;
     border: none;
 }
-
-.project-page .btn-1:hover {
-    margin-top: 60px;
-    margin-bottom: 10px;
-    background: #624f82;
-    color: white;
-    font-weight: 600;
-    padding: 6px 20px 10px 20px;
-    border: none;
+button#open-design {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    background: #5089c7;
+    color: #fff;
+    border: 0px;
+    padding: 10px;
+    border-radius: 100px;
 }
-
 .project-page ul#tabs-nav li:hover a, .project-page ul#tabs-nav li.active a {
     color: #ffffff;
     background: #624F82;
@@ -729,59 +728,63 @@ a.nav-link.p-0.m-0.fw-bold.link-dark {
 input#projName {
     border: none;
     margin: 80px 0 0 0;
-    border-bottom: 1px solid;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
 }
 .overview-cover-image {
-    border: 1px dotted;
+    border: 4.5px dotted white;
     height: 12pc;
     cursor: pointer;
     transition: 1s;
     background: #3d3d3d;
     position: relative;
+    width: 100%;
+    padding: 10px;
+    margin: 20px;
 }
 
-
-input[type="file"] {
+ input[type="file"] {
     width: 100%;
-    height: 100%;
     display: flex;
     opacity: 0;
-}
+} 
 button#svgporj {
-    margin: -10pc 0 0 112px;
-    display: flex;
+    margin-top: 10px;
     outline: navajowhite;
     border: navajowhite;
-    background: #3d3d3d;
+    background: transparent;
     transition: 1s;
+    border: 0px;
+    margin-right: 10px;
+}
+button#svgporj svg path {
+    fill: #fff;
 }
 span {
     color: #fff;
     transition: 1s;
 }
 .tag {
-    color: #fff;
-    border: 0.7px solid;
-    width: 72px;
-    border-radius: 9px;
-    padding: 2px 2px 2px 5px;
-    font-size: 14px;
+    background: #e5ebf4;
+    color: #4f8cc6;
+    border: 0px;
+    width: fit-content;
+    border-radius: 5px;
+    padding: 2px 7px 3px 7px;
     transition: 1s;
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600;
     position: absolute;
     top: 8px;
     left: 10px;
 }
-.overview-cover-image:hover{
-    background: #ccbdf9;
-}
-.overview-cover-image:hover button#svgporj{
-    background: #ccbdf9;
-}
-.overview-cover-image:hover .tag{
-    border: none;
-}
-.overview-cover-image:hover span{
-    border-bottom: 1px solid #3F3B6C;
+
+.overview-cover-image span{
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 500;
 }
 
 .bottom-icon {
@@ -834,13 +837,13 @@ span {
     padding-bottom: 10px;
 }
 
-.base-img {
+/* .base-img {
     width: 100%;
     position: absolute;
     top: 0px;
     border-radius: 10px;
     height: 191px;
-}
+} */
 
 @media only screen and (min-width: 768px) {
     .target-page .target-left {
@@ -1166,6 +1169,7 @@ img.card-img-top {
     border: 1px solid #cccccc45;
 }
 h5.card-title {
+    text-transform: capitalize;
     font-size: 15px;
     font-weight: 500;
     font-family: 'Montserrat', sans-serif;
@@ -2115,3 +2119,59 @@ table table-tr table-td-img {
     cursor: pointer;
 }
 
+/***********8***may***2023*********************/
+div#card-project-outer {
+    justify-content: space-evenly;
+    background-size: 100% 100%;
+}
+.card.project-card-placeholder.col-md-3.mb-4.mx-2.p-0.link-body {
+    width: 23%;
+    cursor: pointer;
+}
+.side-main.side-pic-container {
+    background-size: 100% 100%;
+}
+.project-pg .card span.badge {
+    color: #5089c7 !important;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    background: #e5ebf4 !important;
+}
+.team-page {
+    background-size: 100% 100%;
+}
+.created-text-design a {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+}
+span.status-icon {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #4f8cc6;
+    display: inline-block;
+    margin-right: 6px;
+    margin-top: 10px;
+}
+.team-page table.table tr td {
+    width: 33%;
+    float: left;
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600;
+    color: #000;
+}
+.team-page table.table tr th {
+    width: 33%;
+    float: left;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600;
+}
+.team-head{
+    font-size: 22px;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600;
+}

@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import NavBar from "../Navbar/navbar";
 import SideBar from "../SideBar/sidebar";
-
+import mainbg from '../../assets/images/main-bg.jpg';
 const TeamPage =()=>{
   const navigate = useNavigate()
 
@@ -16,50 +16,18 @@ const TeamPage =()=>{
 
 return(
 <div className="mainpage">
-
-        {/* <div className="container-fluid">
-          <div className="d-flex align-items-center">
-            <div className="w-100 text-white">
-              <h4>Logo</h4>
-            </div>
-    
-            <div className="dropdown">
-              <a href="#" className="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" className="rounded-circle" />
-              </a>
-              <ul className="dropdown-menu text-small shadow">
-                <li><a className="dropdown-item" href="file:///C:/Users/USER/Downloads/Compressed/web-ar/user.html#"><i className="bi bi-gear-fill pe-1"></i>User Setting</a></li>
-                <li><a className="dropdown-item" href="file:///C:/Users/USER/Downloads/Compressed/web-ar/media-library.html#"><i className="bi bi-collection-play pe-1"></i>Media Library</a></li>
-                <li><hr className="dropdown-divider" /></li>
-                <li><a className="dropdown-item" onClick={handleLogout}><i className="bi bi-box-arrow-right pe-1"></i>Log out</a></li>
-              </ul>
-            </div>
-          </div>
-        </div> */}
         <NavBar />
 
-    <div className="container-fluid project-pg">
-        <div className="row">
-            {/* <div className="col-md-2 p-0 m-0 bg-light" >
-                <div className="d-flex flex-column flex-shrink-0 p-3 ">
-                    <ul className="nav nav-pills flex-column mb-auto">
-                      <li className="nav-item">
-                        <a href="#" className="nav-link active b1-bg-color"><i className="bi bi-grid pe-3"></i>Project</a>
-                      </li>
-                      <li>
-                        <a href="/#/team" className="nav-link link-dark"><i className="bi bi-people-fill pe-3"></i>Team</a>
-                      </li>
-                    </ul>
-                </div>
-            </div> */}
+    <div className="main-page-content project-pg team-page">
+        <div className="row project-pg">
             <SideBar />
 
-            <div className="col-md-10 p-0 m-0 team-page">
-              <h4 className="text-center m-3">The Lorem Team</h4>
+            <div className="col-md-10 p-0 m-0 team-page" style={{ backgroundImage:`url(${mainbg})` }}>
+              <h4 className="text-center m-3 team-head">The Lorem Team</h4>
               
-                <div className="row sec-2 ">
+                {/* <div className="row sec-2 ">
                     <h4 className="mb-3">Lorem <a type="button" href="" data-bs-toggle="modal" data-bs-target="#exampleModal"><i className="bi bi-plus-circle-fill pe-3"></i></a></h4>
-                </div>
+                </div> */}
                 
                 <div className="row sec-1 ">
                   <table className="table">
