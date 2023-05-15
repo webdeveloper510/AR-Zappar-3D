@@ -13,7 +13,7 @@ import { toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandPointUp, faT, faImage, faVideo, faCube, faImagePortrait, faGear, faChevronLeft, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
-import { Button } from "bootstrap";
+
 
 const Target =()=>{
   const fbImage = 'data:image/jpeg;base64,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'
@@ -158,7 +158,7 @@ console.log('===>' , id)}
             <div className="d-flex align-items-center justify-content-between w-100 navbar-top">
               <div className="text-white target-text">
                 <h4 className="d-flex align-items-center mb-0 target-heading">
-                  <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#fff", width: "15px", height: "15px", marginRight: 8 , cursor: "pointer" }} onClick={handleBack}/>{ProjectTitle}</h4>
+                  <FontAwesomeIcon icon={faChevronLeft} style={{ color: "#5186C8", width: "15px", height: "15px", marginRight: 8 , cursor: "pointer" }} onClick={handleBack}/>{ProjectTitle}</h4>
               </div>
       
 
@@ -176,8 +176,9 @@ console.log('===>' , id)}
                 </ul>
               </div>
               <div className="target-btn">
-              <button className="btn btn-1 text-light">Preview</button>
-              <button className="btn btn-2 text-light">Publish</button>
+              <button className="btn btn-1 preview-btn">Preview</button>
+              <button className="btn btn-2 publish-btn">Publish</button>
+
             </div>
             </div>
             </div>
@@ -188,11 +189,11 @@ console.log('===>' , id)}
 
     <div className="container-fluid target-page">
       <div className="row col-md-12 justify-content-between">
-        <div className="col-md-1 p-0 m-0 bg-light target-left">
+        <div className="col-md-1 p-0 m-0 target-left">
           <Tab.Container id="left-tabs-example">
-              <Row className="justify-content-between tab-list flex-nowrap">
+              <Row className="justify-content-between tab-list flex-nowrap target-left-sidebar">
                   <Col lg={3} className="side-tab mb-5 mb-md-0">
-                    <Nav variant="pills" className="flex-column side-main bg-light py-4 px-2 target-pills">
+                    <Nav variant="pills" className="flex-column side-main target-pills">
                       <Nav.Item>
                           <Nav.Link eventKey="first">
                             <FontAwesomeIcon icon={faHandPointUp} style={{ color: "rgb(113 123 131)", width: "20px", height: "20px", marginRight: 4 }} />
@@ -236,12 +237,12 @@ console.log('===>' , id)}
                           </Nav.Link>
                       </Nav.Item>
 
-                      <Nav.Item>
+                      {/* <Nav.Item>
                           <Nav.Link eventKey="sixth">
                             <FontAwesomeIcon icon={faImage} style={{ color: "rgb(113 123 131)", width: "20px", height: "20px", marginRight: 4 }} />
                             <a href="#tab3" className="nav-link p-0 m-0 fw-bold link-dark" >Image</a>
                           </Nav.Link>
-                      </Nav.Item>
+                      </Nav.Item> */}
                     </Nav>
                   </Col>
 

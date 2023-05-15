@@ -5,7 +5,12 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../Navbar/navbar";
 import SideBar from "../SideBar/sidebar";
 import "../../App.css";
-
+import mainbg from '../../assets/images/main-bg.jpg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUpload  } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan  } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare  } from '@fortawesome/free-solid-svg-icons';
+import google from '../../assets/images/google.png'
 const UserProfile =()=>{
   const navigate = useNavigate()
 
@@ -37,11 +42,11 @@ const UserProfile =()=>{
         </div> */}
         <NavBar />
 
-    <div class="container-fluid project-pg">
+    <div class="main-page-content project-pg">
     <div className="row project-pg">
         <SideBar />
       
-        <div class="row">
+        <div class="row col-md-10 p-0 m-0 user-profile-page-outer" style={{ backgroundImage:`url(${mainbg})` }}>
             {/* <div class="col-md-2 p-0 m-0 bg-light">
                 <div class="d-flex flex-column flex-shrink-0 p-3 ">
                     <ul class="nav nav-pills flex-column mb-auto">
@@ -54,19 +59,22 @@ const UserProfile =()=>{
                     </ul>
                 </div>
             </div> */}
-            <div class="col-md-10 p-0 m-0 ">
+            <div class="user-profile-page-inner">
                 <div class="row m-0 p-0">
-                    <h4 class="text-center pt-5">User Settings</h4>
+                  
                     <form class="user-pg-form">
+                    <h4 class="text-center user-settings">User Settings</h4>
                       <div class="row mb-2">
-                          <div class="col-2">
-                            <img src="https://github.com/mdo.png" alt="mdo" width="55" height="55" class="rounded-circle" />
+                          <div class="col-md-2">
+                            <img src="https://github.com/mdo.png" alt="mdo" width="60" height="60" class="rounded-circle" />
                           </div>
-                          <div class="col-10">
-                            <i class="bi bi-upload"></i>
-                            <a href="#" class="text-decoration-none text-dark">Upload</a><br/>
-                            <i class="bi bi-trash"></i>
-                            <a href="#" class="text-decoration-none text-dark">Remove</a>
+                          <div class="col-md-10">
+                           <div class="upload-btn">
+                            <a href="#" class="text-decoration-none text-dark"><FontAwesomeIcon icon={faUpload} />Upload</a><br/>
+                            </div>
+                            <div class="remove-btn">
+                            <a href="#" class="text-decoration-none text-dark"><FontAwesomeIcon icon={faTrashCan} />Remove</a>
+                            </div>
                           </div>
                       </div> 
                       <div class="row mb-2">
@@ -89,14 +97,14 @@ const UserProfile =()=>{
                             <input type="text" class="form-control" placeholder="I'm Designer"/>
                         </div>
                       </div>    
-                      <hr/>
-                      <div class="row">
+                     
+                      <div class="row" id="password-field">
                         <div class="col-10">
                             <label class="form-label fw-semibold">Password</label>
                             <input type="password" class="form-control border-0" placeholder="**************************" />
                         </div>
-                        <div class="col-2 mt-4">
-                            <i class="bi bi-pencil-square"></i>
+                        <div class="col-2 edit-btn">
+                        <FontAwesomeIcon icon={faPenToSquare} />
                             <a href="#" class="text-decoration-none text-dark">Edit</a>
                         </div>
                       </div>
@@ -107,24 +115,24 @@ const UserProfile =()=>{
                             <label class="form-label">For incresed in security. We recommend 2FA to protect your account.</label>
                         </div>
                         <div class="col-4 mt-4">
-                          <button class="btn-1 pt-1 pb-1" type="button">Enable</button>
+                          <button class="btn-1 pt-1 pb-1" id="btn-anabled" type="button">Enable</button>
                         </div>
                       </div>
                       <hr/>
                       <div class="row">
                         <div class="col-8">
                             <label class="form-label fw-semibold">Google</label><br/>
-                            <label class="form-label">Login With Google</label>
+                            <label class="form-label google-user"><img class="googlw-img" src={google}></img>Login With Google</label>
                         </div>
                         <div class="col-4 mt-4">
-                          <button class="btn-1 pt-1 pb-1" type="button">Enable</button>
+                          <button class="btn-1 pt-1 pb-1" id="google-btn-enabled" type="button">Enable</button>
                         </div>
                       </div>
                       
 
                       
-                      <div class="d-grid gap-2 mt-2">
-                          <button class="btn btn-sign-in pt-1 pb-1" type="button">Save</button>
+                      <div class="d-grid gap-2 mt-2 saved-outer">
+                          <button class="btn btn-sign-in pt-1 pb-1" id="user-saved-in" type="button">Save</button>
                       </div>
                   </form>
                 </div>

@@ -239,7 +239,7 @@ const MainPage =()=>{
                      <p> Create 2D and 3D experience with our powerful AR-first engine.</p>
                     </div>
                 </div>
-                <div className="first-div" onClick={event => handleSelectProjectType( event , "Drsigner")}>
+                <div className="first-div" onClick={event => handleSelectProjectType( event , "Designer")}>
                 <div className="inner-img">
                 <div className="image-outer">
                      <img src={DesignersLogo}></img>
@@ -279,8 +279,8 @@ const MainPage =()=>{
 
                         {/* <h3 className="trigger-select">Back to Project Type</h3> */}
                 <div className="p4">
-
-                <p className="fs16 mb0"><b className="triggers-text">Select a Trigger</b></p>
+                <h3 className="trigger-select">Select a Trigger</h3>
+                {/* <p className="fs16 mb0 trigger-heading"><b className="triggers-text">Select a Trigger</b></p> */}
                 <p className="trigger-paragraph">A trigger is an entry point that will allow end users to launch your AR experience.
                       Projects may have multiple triggers for the same experience.
                       <a className="fs14" href="https://docs.zap.works/general/project-triggers/" target="_blank">Learn more</a>.</p>

@@ -254,19 +254,33 @@ input {
   margin-left: -2px;
 }
 /*************5-may-2023********************/
+
+.navbar.taget-navbar {
+    z-index: 9;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 16%);
+    background-color: #fff;
+}
+.preview-btn {
+    border: 1px solid #5596d5 !important;
+    color: #5596d5 !important;
+    font-weight: 500 !important;
+}
+.publish-btn {
+    background: #5186C8 !important;
+    color: #fff !important;
+    margin-left: 11px !important;
+
+}
 .target-heading {
-    color: #fff;
+    color: #5186C8;
     font-size: 14px;
     text-transform: capitalize;
     font-weight: 500;
     font-family: 'Montserrat', sans-serif;
 }
-.taget-navbar {
-    box-shadow: 0px 2px 4px 0px rgb(0 0 0 / 16%);
-}
 .target-heading svg path {
-    color: #fff;
-    fill: #fff;
+    color: #5186C8;
+    fill: #5186C8;
 }
 .target-btn button {
     font-size: 14px;
@@ -399,4 +413,16 @@ input {
     border: 0;
     border-bottom: 3px solid #625280;
     line-height: 14px;
+}
+.target-left .nav-item a {
+    padding-left: 0;
+    padding-right: 0;
+    cursor: pointer;
+}
+.target-left-sidebar {
+    background: #fff;
+    width: 90px;
+    height: 100%;
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 16%);
 }
