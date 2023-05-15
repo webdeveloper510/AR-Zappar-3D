@@ -2177,7 +2177,6 @@ table table-tr table-td-img {
 
 /***********8***may***2023*********************/
 div#card-project-outer {
-    justify-content: space-evenly;
     background-size: 100% 100%;
 }
 .card.project-card-placeholder.col-md-3.mb-4.mx-2.p-0.link-body {
