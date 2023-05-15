@@ -62,7 +62,10 @@ const [selectedDate, setSelectedDate] = useState("");
 
 const handleDateChange = (event) => {
   setSelectedDate(event.target.value);
+        console.log("Date----------->" , event.target.value)
+
 };
+
     // Year Select
     const [Year , selectYear] = useState(null)
 
@@ -85,6 +88,7 @@ const handleDateChange = (event) => {
     const [Date , selectDate] = useState(null)
     
     const handleDate =(e)=>{
+        // console.log("Date----------->" , e.target.value)
         selectDate(e.target.value)
     }
     // console.log("Date----------->" , Date)
@@ -95,7 +99,7 @@ const handleDateChange = (event) => {
         "email" : email,
         "password" : password,
         "proffession": Proffession,
-        "dateofbirth" : Year+"-"+Month+"-"+Date,
+        "dateofbirth" : selectedDate,
     }
     // console.log("MyDataObject----------->" , MyDataObject)
 
@@ -110,7 +114,7 @@ const handleDateChange = (event) => {
             formData.append("email" , email,)
             formData.append("password" , password,)
             formData.append("proffession", Proffession,)
-            formData.append("dateofbirth" , Year+"-"+Month+"-"+Date,)
+            formData.append("dateofbirth" , selectedDate)
             console.log("MyDataObject----------->" , formData)
 
             axios.post(API.BASE_URL + 'signup/', formData, {

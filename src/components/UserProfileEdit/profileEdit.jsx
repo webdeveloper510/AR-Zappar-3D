@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import NavBar from "../Navbar/navbar";
 import SideBar from "../SideBar/sidebar";
+import "../../App.css";
 
 const UserProfile =()=>{
   const navigate = useNavigate()
@@ -37,6 +38,9 @@ const UserProfile =()=>{
         <NavBar />
 
     <div class="container-fluid project-pg">
+    <div className="row project-pg">
+        <SideBar />
+      
         <div class="row">
             {/* <div class="col-md-2 p-0 m-0 bg-light">
                 <div class="d-flex flex-column flex-shrink-0 p-3 ">
@@ -50,7 +54,6 @@ const UserProfile =()=>{
                     </ul>
                 </div>
             </div> */}
-              <SideBar />
             <div class="col-md-10 p-0 m-0 ">
                 <div class="row m-0 p-0">
                     <h4 class="text-center pt-5">User Settings</h4>
@@ -126,6 +129,7 @@ const UserProfile =()=>{
                   </form>
                 </div>
                 
+            </div>
             </div>
 
             

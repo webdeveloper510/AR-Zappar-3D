@@ -747,6 +747,7 @@ input#projName {
  input[type="file"] {
     width: 100%;
     display: flex;
+    height: 100%;
     opacity: 0;
 } 
 button#svgporj {
@@ -942,10 +943,32 @@ p.get-started {
 .first-popup-design .first-div img {
     border-radius: 6px;
 }
+.first-popup-design {
+    display: flex;
+    justify-content: space-between;
+}
+div#first-popup .modal-header {
+    padding-left: 30px;
+}
+div#first-popup .modal-body {
+    padding: 30px;
+}
+.modal-header {
+    border: none !important;
+    align-items: flex-start !important;
+}
+span.triggers {
+    color: #344b60;
+    font-size: 18px;
+    font-weight: 200;
+    transition: 0s;
+}
+p.fs16.mb0 {
+    margin-left: 40px;
+    margin-bottom: 6px;
+}
 .first-popup-design .first-div {
-    width: 30%;
-    float: left;
-    margin: 10px;
+    width: 32%;
     box-shadow: 0px 2px 9px 2px #cccccc8c;
     border: 1px solid #ccc0;
     padding: 7px;
@@ -1235,15 +1258,23 @@ div#first-popup {
 span.designer-text {
     color: #344b60;
     font-family: 'Montserrat', sans-serif;
-    margin-top: 10px;
+    margin-top: 20px;
     float: left;
     font-weight: 500;
     width: 100%;
-    margin-bottom: 4px;
+    margin-bottom: 11px;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: 0.9s;
     font-size: 15px;
 }
-.image-outer {
-    height: 125px;
+span.designer-text:hover{
+    color: #096ae0;
+}
+.image-outer img {
+    max-height: 125px;
+    width: 100%;
+    min-height: 160px;
 }
 .first-popup-design p {
     line-height: 21px;
@@ -1301,7 +1332,12 @@ span.qr-code {
     color: #344b60;
 }
 div#second-modal-popup .modal-body {
-    padding-left: 40px;
+    padding: 20px 40px 20px 40px;
+    margin: 0 14px 0 14px;
+}
+button.btn.btn-ghost.trigger-btn{
+    display: flex;
+    height: fit-content;
 }
 .qr-div {
     float: left;
@@ -1349,10 +1385,11 @@ h3.trigger-select {
     margin-left: 10px;
 }
 p.trigger-paragraph {
-    margin-top: 6px;
-    font-weight: 400;
-    font-size: 15px;
+    margin: 0px 0 0 40px;
+    font-size: 13px;
     font-family: 'Montserrat', sans-serif;
+    text-align: left;
+    padding-right: 21pc;
 }
 button.btn-close {
     font-size: 12px;
@@ -1363,6 +1400,7 @@ button.btn-close:focus {
 }
 .qr-outer {
     float: left;
+    margin-top: 15px;
     width: 100%;
 }
 .qr-outer .qr-text {
@@ -1455,7 +1493,7 @@ button.btn-scene {
     box-shadow: 6px 0px 38px 7px #cccccc69;
 }
 b.triggers-text {
-    font-size: 18px;
+    font-size: 28px;
     font-weight: 600;
     font-family: 'Montserrat', sans-serif;
     padding-left: 5px;
@@ -2185,3 +2223,27 @@ span.status-icon {
     padding-top: 8px;
     padding-bottom: 8px;
 }
+/* .card.project-card-placeholder.col-md-3.mb-4.mx-2.p-0.link-body:hover{
+    background: #f0f0f0;
+}
+button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled) {
+    cursor: pointer;
+    background-color: #fff;
+    opacity: 0;
+    transition: all 0.2s ease;
+}
+.dropdown-menu-svg {
+    position: relative;
+    display: block;
+    line-height: 0;
+}
+.dropdown-menu-svg button.btn.btn-dots {
+    padding: 0;
+    border-radius: 50%;
+    line-height: 0;
+    min-width: 0;
+}
+.dropdown-menu-svg button.btn.btn-dots:hover{
+    background-color: #4A90E2;
+    opacity: 1;
+} */

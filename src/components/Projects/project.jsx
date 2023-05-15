@@ -25,7 +25,21 @@ const Project =()=>{
   const handleClose = () =>{
     setShow(false);
   } 
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    if (id){
+      axios.get(API.BASE_URL + 'create-project/')
+      .then(function (response) {
+        console.log(response)
+
+        console.log('File uploaded successfully', response);
+        console.log('/target/'+id)
+        navigate('/target/'+id)
+      })
+      .catch(function(err) {
+        console.error('Error uploading file', err);
+      });
+    }
+    else{setShow(true);}}
     
   /********** End----Model State *************/
   const  projectUserId = localStorage.getItem("id");
@@ -79,7 +93,6 @@ const Project =()=>{
 
         console.log('File uploaded successfully', response);
         console.log('/target/'+id)
-  
         navigate('/target/'+id)
       })
       .catch(function(err) {
@@ -88,10 +101,17 @@ const Project =()=>{
     }
   if(imgProject){
     console.log("ok")
+    const ProjectType = localStorage.getItem('selectedProjectType')
+    const TriggerType = localStorage.getItem('selectedTriggerType')
+    console.log(ProjectType , TriggerType)
     const formData = new FormData();
     formData.append('imagePro' , imgProject)
     formData.append('ProTitle' , titlePro)
     formData.append('projectUser' , projectUserId)
+    formData.append('projectType' , ProjectType)
+    formData.append('triggerType' , TriggerType)
+    formData.append('FeaturedtrackerOption' , SceneType)
+    
     console.log(imgProject , titlePro)
 
     axios.post(API.BASE_URL + 'create-project/', formData, {
@@ -106,8 +126,9 @@ const Project =()=>{
       uploadProImg(response.data.imagePro? response.data.imagePro : "")
       localStorage.setItem('projectId', response.data.id)
       console.log('/target/'+response.data.id)
-
       navigate('/target/'+response.data.id)
+      localStorage.removeItem('selectedProjectType')
+      localStorage.removeItem('selectedTriggerType')
     })
     .catch(function(err) {
       console.error('Error uploading file', err);
@@ -132,27 +153,17 @@ const handleLogout = ()=>{
 }
 
 
-  const [SceneType , selectSceneType] = useState(false);
+  const [SceneType , selectSceneType] = useState(null);
 
-  const handleSubmit2 = ()=>{
-    selectSceneType(true)
+  // const handleSubmit2 = ()=>{
+  //   selectSceneType(true)
+  // }
+
+
+  const handleSelectTarget =(event , type)=>{
+    selectSceneType(type)
   }
-
-
-  const handleSelectTarget =(e)=>{
-    console.log(e.target)
-    e.target.classList.add("selected");
-  
-    // Add a CSS rule to activate the hover effect
-    const style = document.createElement("style");
-    style.innerHTML = `
-      .selected:active {
-        background-color: rgb(32 157 225);
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
+  console.log(SceneType)
 
 
 
@@ -279,8 +290,8 @@ return(
         <Modal.Body>
 
 
-          <div class="open-designer-popup" onClick={handleSelectTarget}>
-            <div class="three-image-designer">
+          <div class="open-designer-popup" >
+            <div class="three-image-designer" onClick={event => handleSelectTarget(event , "WorldTracking")}>
             <div class="designer-image">
             <img src={WorldTracking}></img>
             </div>
@@ -290,7 +301,7 @@ return(
             </div>
             </div>
 
-            <div class="three-image-designer">
+            <div class="three-image-designer" onClick={event => handleSelectTarget(event , "ImageTracking")}>
             <div class="designer-image">
             <img src={ImageTracking}></img>
             </div>
@@ -300,7 +311,7 @@ return(
             </div>
             </div>
 
-            <div class="three-image-designer">
+            <div class="three-image-designer" onClick={event => handleSelectTarget(event , "FaceTracking")}>
             <div class="designer-image">
             <img src={faceTracking}></img>
             </div>
@@ -313,7 +324,7 @@ return(
            
           </div>
           <div class="scene-outer">
-            <button className="btn-scene" disabled="" style={{padding: "10px 16px"}}>Create scene</button>
+            <button className="btn-scene" disabled="" style={{padding: "10px 16px"}} onClick={handleSubmit}>Create scene</button>
             </div>
 		    <>
        

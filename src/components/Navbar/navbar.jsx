@@ -14,7 +14,9 @@ const NavBar =()=>{
     toast.success('Log Out Successfully !');
     navigate('/');
   }
-
+  const handleUserProfile = ()=>{  
+    navigate('/user');
+  }
     return(
 
 
@@ -30,7 +32,7 @@ const NavBar =()=>{
         <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" className="rounded-circle"/>
       </a>
       <ul className="dropdown-menu text-small shadow">
-        <li><a className="dropdown-item" href="#"> 
+        <li><a className="dropdown-item" onClick={handleUserProfile}> 
         <FontAwesomeIcon icon={faGears} />
           User Setting</a></li>
         <li><a className="dropdown-item" href="#">
