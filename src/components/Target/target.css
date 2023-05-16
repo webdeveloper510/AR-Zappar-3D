@@ -283,9 +283,10 @@ input {
     fill: #5186C8;
 }
 .target-btn button {
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 0px;
     font-family: 'Montserrat', sans-serif ;
+    padding: 6px 20px 5px 20px;
 }
 .target-btn {
     float: left;
@@ -302,10 +303,15 @@ input {
     fill: #fff;
 }
 .target-pills .active {
-    background: #625181 !important;
+    background: #fff !important;
     border: none !important;
     border-radius: 4px;
-    padding: 12px !important;
+}
+.target-left-sidebar .nav-item .active a {
+    color: #5089c7 !important;
+}
+.target-pills .active svg path {
+    fill: #5089c7;
 }
 .right-tabs {
     background: #fff;
@@ -425,4 +431,68 @@ input {
     height: 100%;
     background: #fff;
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 16%);
+}
+
+.target-left .tab-content {
+    background: #fff !important;
+    box-shadow: 2px 3px 4px 4px #cccccc2b;
+    height: 500px;
+    overflow-y: scroll;
+    margin-top: 3px;
+    border-bottom: 1px solid #cccccc6e;
+}
+
+.target-left .tab-content {
+    --scrollbarBG: #fff;
+    --thumbBG: #fff;
+  }
+  .target-left .tab-content::-webkit-scrollbar {
+    width: 10px;
+  }
+  .target-left .tab-content {
+    scrollbar-width: thin;
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+  }
+  .target-left .tab-content::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+  }
+  .target-left .tab-content::-webkit-scrollbar-thumb {
+    background-color: #5089c7 ;
+    border-radius: 6px;
+    border: 3px solid var(--scrollbarBG);
+  }
+  h2.buttons-head {
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+}
+.first-head {
+    font-size: 36px;
+    line-height: 45px;
+}
+p.m-0.third-head {
+    float: left;
+    font-size: 18px;
+    margin-top: 16px;
+    width: fit-content;
+    line-height: 45px;
+}
+.second-head {
+    float: left;
+    font-size: 28px;
+    margin-top: 16px;
+    width: fit-content;
+    line-height: 45px;
+}
+.buttons.text-side-btn {
+    float: left;
+    width: 100%;
+}
+hr {
+
+    float: left;
+    width: 100%;
+}
+div#left-tabs-example-tabpane-first .Grid--v4HT5 {
+    float: left;
+    width: 100%;
 }

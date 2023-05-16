@@ -195,10 +195,20 @@ p.already-account {
 
 
 /* Project page css Start */
-
-.project-pg .card-body img {
-    margin-top: -55px;
+div#card-project-outer .project-card-placeholder .card-body {
+    position: relative;
 }
+div#card-project-outer .project-card-placeholder .card-body img {
+    margin-top: 0;
+    z-index: 1;
+    position: absolute;
+    top: -20px;
+}
+/* .project-pg .card-body img {
+    margin-top: -55px;
+    z-index: 1;
+    position: relative;
+} */
 
 .project-pg .card span.badge {
     position: absolute;
@@ -532,9 +542,9 @@ h5.project-webar-head {
     content: none;
   }
 
-  .nav-item a.nav-link.active a {
+  /* .nav-item a.nav-link.active a {
     color: #fff !important;
-  }
+  } */
 
   .nav-item:nth-child(4) form {
     opacity: 0;
@@ -784,15 +794,22 @@ span {
     color: #fff;
     transition: 1s;
 }
+p.project-triggers-head {
+    font-weight: 600;
+    font-size: 20px;
+}
+p.project-triggers-head svg {
+    margin-right: 7px;
+}
 .tag {
-    background: #e5ebf4;
+    background: #fff;
     color: #4f8cc6;
     border: 0px;
     width: fit-content;
     border-radius: 5px;
     padding: 2px 7px 3px 7px;
     transition: 1s;
-    font-size: 13px;
+    font-size: 12px;
     font-family: 'Montserrat', sans-serif !important;
     font-weight: 600;
     position: absolute;
@@ -1193,9 +1210,21 @@ form.sign-up-pg-form option {
     font-size: 13px;
     padding-left: 10px;
 }
-img.card-img-top {
+.card-img-outer {
     height: 135px;
-    object-fit: fill;
+    float: left;
+    width: 100%;
+    position: relative;
+}
+img.card-img-top {
+    min-height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    object-fit: cover;
+    object-position: center;
 }
 .card.project-card-placeholder.col-md-3.mb-4.mx-2.p-0.link-body {
     flex-direction: column;
@@ -1208,11 +1237,12 @@ img.card-img-top {
 }
 h5.card-title {
     text-transform: capitalize;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 0;
     color: #5186C8;
+    margin-top: 8px;
 }
 h1.new-scene {
     font-size: 16px;
@@ -1220,14 +1250,14 @@ h1.new-scene {
     font-family: 'Montserrat', sans-serif;
 }
 p.card-text small {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 0;
     color: #5186C8;
 }
 a#projectStart {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 500;
     font-family: 'Montserrat', sans-serif;
 }
@@ -1364,6 +1394,7 @@ button.btn.btn-ghost.trigger-btn{
     display: flex;
     justify-content: center;
     align-items: baseline;
+    cursor: pointer;
 }
 .deep-link-div {
     float: left;
@@ -1373,6 +1404,7 @@ button.btn.btn-ghost.trigger-btn{
     display: flex;
     justify-content: center;
     align-items: baseline;
+    cursor: pointer;
 }
 .deep-link-div .qr-img {
     text-align: center;
@@ -1835,9 +1867,26 @@ img {
 .card .image .overlay.dark {
     background-color: rgba(0, 0, 0, 0.3);
 }
-.card .overlay.dark {
-    font-size: 16px;
-    font-weight: normal;
+.card-img-outer:hover .overlay {
+    opacity: 1 !important;
+}
+.card-img-outer .overlay.dark {
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 100%;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
 }
 .card .image .overlay {
     width: 100%;
@@ -2189,9 +2238,10 @@ div#card-project-outer {
 .project-pg .card span.badge {
     color: #5089c7 !important;
     font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
-    background: #e5ebf4 !important;
+    z-index: 1;
+    background: #fff !important;
 }
 .team-page {
     background-size: 100% 100%;
@@ -2354,20 +2404,21 @@ button#png-btn-download {
     font-size: 16px;
     font-weight: 500;
     font-family: 'Montserrat', sans-serif;
-    border: 1px solid #ccc;
-    border-radius: 100px;
+    border: 1px solid #cccccc40;
     margin-left: 10px;
     padding: 24px 24px 20px 20px;
+    border-radius: 5px;
 }
 button#svg-btn-download {
-    background: #317ac2;
-    color: #fff;
+    background: #fff;
+    color: #317ac2;
     font-size: 16px;
     font-weight: 500;
     font-family: 'Montserrat', sans-serif;
-    border: 1px solid #ccc;
-    border-radius: 100px;
-    padding: 18px 24px 10px 24px;
+    border: 1px solid #cccccc40;
+    margin-left: 10px;
+    padding: 24px 24px 20px 20px;
+    border-radius: 5px;
 }
 
 /* .card.project-card-placeholder.col-md-3.mb-4.mx-2.p-0.link-body:hover{

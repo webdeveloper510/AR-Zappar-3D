@@ -134,14 +134,14 @@ const MainPage =()=>{
                       className="d-flex align-items-center mb-2 mb-lg-0 link-dark text-decoration-none 
                       ">
                       Create New Project
-                      <FontAwesomeIcon icon={faCirclePlus} style={{ color: "rgb(120 120 120)", width: "20px", height: "20px", marginLeft: 8 }} />
+                      <FontAwesomeIcon icon={faCirclePlus} style={{ color: "rgb(120 120 120)", width: "37px", height: "37px", marginLeft: 8 }} />
                     </a>
                     </div>
               
                     <div className="d-flex align-items-center col-md-8">
                       <form className="w-100 me-3" role="search" id="search-form">
                      
-                        <input type="search" className="form-control" placeholder="Search..." aria-label="Search"/>
+                        <input type="search" className="form-control" placeholder="Search projects" aria-label="Search"/>
                       </form>
               
                       <div className="flex-shrink-0 dropdown sort-bar">
@@ -191,10 +191,12 @@ const MainPage =()=>{
                             </div> */}
                           <div className="card-img-outer">
                           <span className="badge text-bg-light">{proData.projectType}</span>
+                         
                           <img src={proData.imagePro} className="card-img-top" alt="..."/>
+                          <div class="overlay dark">Open project</div>
                           </div>
                           <div className="card-body ">
-                              <img src={Pro1} className="rounded-circle" width="50" height="50" alt="..."/>
+                              <img src={Pro1} className="rounded-circle" width="36" height="36" alt="..."/>
                             <h5 className="card-title">{proData.ProTitle}</h5>
                             <p className="card-text"><small className="text-muted">Created {proData.created_at} | Unpublished</small></p>
                           </div>  
