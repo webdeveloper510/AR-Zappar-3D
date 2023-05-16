@@ -202,6 +202,25 @@ console.log('===>' , id)}
     }
   }
 
+  const [MobileSize , SelectedSizeMobile] = useState(null);
+
+  const handleSelectMobileOption=(event , type)=>{
+    console.log("selected Mobile Size" , type)
+    SelectedSizeMobile(type);
+
+  }
+  const selectedClass = "selected";
+  const unselectedClass = "unselected";
+
+  const selectedStyle = {
+    border: "1px solid #4a90e2",
+    borderRadius: "4px"
+  };
+  
+  const unselectedStyle = {
+    border: "none",
+    // color: "white",
+  };
     return(
     <div className="targetPage"  ref={containerRef}>
         <div className="navbar taget-navbar">
@@ -470,7 +489,7 @@ console.log('===>' , id)}
   <div className="DropdownContainer--2I9aL" data-testid="Dropdown" style={{width: "100%", height: "36px"}}>
     <div data-testid="DropdownButton" className="DropDown--yH8Yv Active--1VSAT undefined" style={{width: "100%", height: "36px", borderRadius: "5px"}}>
       <div className="SelectedOptionContainer--1dj6q">
-        <span className="Text--oPx6O" title="iPad">iPad</span>
+        <span className="Text--oPx6O" title="iPad">{MobileSize? MobileSize : "iPad"}</span>
       </div>
       <div className="RightSideDiv--1kVJp">4:3
           <svg
@@ -490,48 +509,48 @@ console.log('===>' , id)}
     </div>
         <div className="OptionsContainer--1Ch3R DropdownMenu--Q6jts " style={{width: "100%", top: "calc(40px)"}}>
             <div className=" " data-testid="MenuList">
-              <div className="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="iPhone 12">
+              <div className="Option--31oUF HasNoIcon--3C9vr" style={MobileSize === "iPhone 12" ? selectedStyle : unselectedStyle} data-testid="Option" title="iPhone 12" onClick={event => handleSelectMobileOption(event , "iPhone 12")}>
                 <div className="Container--Mc1y-">
                   <span>iPhone 12</span>
                 </div>
                 <div className="RightSideDiv--2PR1_">9:19.5
                 </div>
               </div>
-            <div className="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="iPhone 8">
+            <div className="Option--31oUF HasNoIcon--3C9vr"   style={MobileSize === "iPhone 8" ? selectedStyle : unselectedStyle} data-testid="Option" title="iPhone 8" onClick={event => handleSelectMobileOption(event , "iPhone 8")}>
               <div className="Container--Mc1y-">
                 <span>iPhone 8</span>
               </div>
               <div className="RightSideDiv--2PR1_">9:16
               </div>
             </div>
-          <div className="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="Pixel 6a">
+          <div className="Option--31oUF HasNoIcon--3C9vr" style={MobileSize === "Pixel 6a" ? selectedStyle : unselectedStyle} data-testid="Option" title="Pixel 6a" onClick={event => handleSelectMobileOption(event , "Pixel 6a")}>
             <div className="Container--Mc1y-">
               <span>Pixel 6a</span>
             </div>
             <div className="RightSideDiv--2PR1_">9:20
             </div>
           </div>
-          <div className="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="Galaxy S7">
+          <div className="Option--31oUF HasNoIcon--3C9vr" style={MobileSize === "Galaxy S7" ? selectedStyle : unselectedStyle} data-testid="Option" title="Galaxy S7" onClick={event => handleSelectMobileOption(event , "Galaxy S7")}>
             <div className="Container--Mc1y-">
               <span>Galaxy S7</span>
             </div>
             <div className="RightSideDiv--2PR1_">9:16
             </div>
           </div>
-          <div className="Option--31oUF Active--37WPC HasNoIcon--3C9vr" data-testid="Option" title="iPad">
+          <div className="Option--31oUF Active--37WPC HasNoIcon--3C9vr" style={MobileSize === "iPad" ? selectedStyle : unselectedStyle} data-testid="Option" title="iPad" onClick={event => handleSelectMobileOption(event , "iPad")}>
             <div className="Container--Mc1y-">
               <span>iPad</span>
             </div>
             <div className="RightSideDiv--2PR1_">4:3
             </div>
           </div>
-          <div className="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="Horizontal">
+          <div className="Option--31oUF HasNoIcon--3C9vr" style={MobileSize === "Horizontal" ? selectedStyle : unselectedStyle} data-testid="Option" title="Horizontal" onClick={event => handleSelectMobileOption(event , "Horizontal")}>
             <div className="Container--Mc1y-">
               <span>Horizontal</span>
             </div><div className="RightSideDiv--2PR1_">16:9
             </div>
           </div>
-          <div className="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="Custom">
+          <div className="Option--31oUF HasNoIcon--3C9vr" style={MobileSize === "Custom" ? selectedStyle : unselectedStyle} data-testid="Option" title="Custom" onClick={event => handleSelectMobileOption(event , "Custom")}>
             <div className="Container--Mc1y-">
               <span>Custom</span>
             </div>
@@ -544,7 +563,7 @@ console.log('===>' , id)}
 // {/* Mobile Otions CLose On Click AR View */}
 
 // {/* Mobile View  */}
-<div className="Content--1RcMl">
+<div className={`Content--1RcMl ${MobileSize}`}>
   <div className="MobilePhoneDivContainer--3othZ" style={{width: "460px",height: "303.75px"}}>
     <div className="ClipBox--36pEZ">
       <div className="TopSection--3U6Vx">
