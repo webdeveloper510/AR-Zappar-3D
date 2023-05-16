@@ -191,6 +191,17 @@ console.log('===>' , id)}
     window.location.reload();
   }
 
+
+  const [MobileFunctions , ShowMobileFunctions] = useState(false);
+
+  const handleSelectOption=(event , type)=>{
+    console.log("Selected Option" ,type)
+    if (type ==="Mobile View"){
+      console.log("Here is this!")
+      ShowMobileFunctions(true);
+    }
+  }
+
     return(
     <div className="targetPage"  ref={containerRef}>
         <div className="navbar taget-navbar">
@@ -236,7 +247,8 @@ console.log('===>' , id)}
 
         <div className="OuterContainer--pMxMG">
           <div className="ContextMenu--LKriV">
-            <button className="ContextMenuButton--12X9C ContextMenuButton--p-6XR" title="Move (W)">
+
+            <button className="ContextMenuButton--12X9C ContextMenuButton--p-6XR" title="Move (W)" onClick={event  => handleSelectOption(event , "Move")}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -250,7 +262,8 @@ console.log('===>' , id)}
                 </g>
               </svg>
             </button>
-            <button className="ContextMenuButton--12X9C ContextMenuButton--p-6XR" title="Scale (E)">
+
+            <button className="ContextMenuButton--12X9C ContextMenuButton--p-6XR" title="Scale (E)" onClick={event  => handleSelectOption(event , "Scale")}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -267,7 +280,7 @@ console.log('===>' , id)}
                 </g>
               </svg>
             </button>
-            <button className="ContextMenuButton--12X9C ContextMenuButton--p-6XR" title="Rotate (R)">
+            <button className="ContextMenuButton--12X9C ContextMenuButton--p-6XR" title="Rotate (R)" onClick={event  => handleSelectOption(event , "Rotate")}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="21"
@@ -286,7 +299,7 @@ console.log('===>' , id)}
               <div style={{borderLeft: "1px solid rgb(178, 196, 215)" ,  width: "auto" , height: "12px"}}>
               </div>
             </div>
-            <button className="ContextMenuButton--3ysdL ContextMenuButton--p-6XR" title="Duplicate">
+            <button className="ContextMenuButton--3ysdL ContextMenuButton--p-6XR" title="Duplicate" onClick={event  => handleSelectOption(event , "Duplicate")}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="19"
@@ -302,7 +315,7 @@ console.log('===>' , id)}
                 </g>
               </svg>
             </button>
-            <button className="ContextMenuButton--3ysdL ContextMenuButton--p-6XR" title="Lock">
+            <button className="ContextMenuButton--3ysdL ContextMenuButton--p-6XR" title="Lock" onClick={event  => handleSelectOption(event , "Lock")}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="14"
@@ -319,7 +332,7 @@ console.log('===>' , id)}
                 </g>
               </svg>
             </button>
-            <button className="ContextMenuButton--3ysdL ContextMenuButton--p-6XR" title="Delete">
+            <button className="ContextMenuButton--3ysdL ContextMenuButton--p-6XR" title="Delete" onClick={event  => handleSelectOption(event , "Delete")}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -343,7 +356,7 @@ console.log('===>' , id)}
           </div>
         </div>
 
-        <button className="ContextMenuButton--1aPih ContextMenuButton--p-6XR" title="Recenter">
+        <button className="ContextMenuButton--1aPih ContextMenuButton--p-6XR" title="Recenter" onClick={event  => handleSelectOption(event , "Recenter")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="40"
@@ -357,7 +370,7 @@ console.log('===>' , id)}
             ></path>
           </svg>
         </button>
-        <button className="ContextMenuButton--1aPih ContextMenuButton--p-6XR" title="Snap to surface">
+        <button className="ContextMenuButton--1aPih ContextMenuButton--p-6XR" title="Snap to surface" onClick={event  => handleSelectOption(event , "Snap to surface")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -380,7 +393,7 @@ console.log('===>' , id)}
           <div style={{borderLeft: "1px solid rgb(178, 196, 215)" ,  width: "auto" ,  height: "12px"}}>
           </div>
         </div>
-        <button className="ContextMenuButton--1ztuK ContextMenuButton--p-6XR" title="Undo">
+        <button className="ContextMenuButton--1ztuK ContextMenuButton--p-6XR" title="Undo" onClick={event  => handleSelectOption(event , "Undo")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="23"
@@ -393,7 +406,7 @@ console.log('===>' , id)}
             ></path>
           </svg>
         </button>
-        <button className="ContextMenuButton--1ztuK ContextMenuButton--p-6XR" title="Redo">
+        <button className="ContextMenuButton--1ztuK ContextMenuButton--p-6XR" title="Redo" onClick={event  => handleSelectOption(event , "Redo")}>
           <svg className="RedoIcon--2FRCL"
             xmlns="http://www.w3.org/2000/svg"
             width="23"
@@ -411,7 +424,7 @@ console.log('===>' , id)}
           <div style={{borderLeft: "1px solid rgb(178, 196, 215)" , width: "auto" , height: "12px" , marginRight: "8px"}}>
           </div>
         </div>
-        <button className="ArTextDiv--3yOiG ContextMenuItem--3DIyN">
+        <button className="ArTextDiv--3yOiG ContextMenuItem--3DIyN" onClick={event  => handleSelectOption(event , "AR")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -428,7 +441,7 @@ console.log('===>' , id)}
           <div style={{borderLeft: "1px solid rgb(178, 196, 215)" ,  width: "auto",  height: "12px", transform: "rotate(20deg)"}}>
           </div>
         </div>
-        <button className="ContextMenuButton--2arUa ContextMenuButton--p-6XR">
+        <button className="ContextMenuButton--2arUa ContextMenuButton--p-6XR" onClick={event  => handleSelectOption(event , "Mobile View")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -451,7 +464,9 @@ console.log('===>' , id)}
 
 
 {/* Mobile O[tions On Click Mobile View */}
-<div className="ResizeDropdownContainer--C_OBP">
+ {MobileFunctions && (
+  <>
+  <div className="ResizeDropdownContainer--C_OBP">
   <div className="DropdownContainer--2I9aL" data-testid="Dropdown" style={{width: "100%", height: "36px"}}>
     <div data-testid="DropdownButton" className="DropDown--yH8Yv Active--1VSAT undefined" style={{width: "100%", height: "36px", borderRadius: "5px"}}>
       <div className="SelectedOptionContainer--1dj6q">
@@ -526,9 +541,9 @@ console.log('===>' , id)}
         <div className="OutsideClickDiv--2WPRX"></div>
       </div>
     </div>
-{/* Mobile Otions CLose On Click AR View */}
+// {/* Mobile Otions CLose On Click AR View */}
 
-{/* Mobile View  */}
+// {/* Mobile View  */}
 <div className="Content--1RcMl">
   <div className="MobilePhoneDivContainer--3othZ" style={{width: "460px",height: "303.75px"}}>
     <div className="ClipBox--36pEZ">
@@ -594,6 +609,8 @@ console.log('===>' , id)}
     </div>
   </div>
 </div>
+</>
+)} 
 {/* Mobile View Close  */}
 
 
