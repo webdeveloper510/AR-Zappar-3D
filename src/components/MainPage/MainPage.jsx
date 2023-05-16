@@ -113,8 +113,13 @@ const MainPage =()=>{
     console.log('Open')
   };
 
-
-  
+  const [onHoverSelect , OnHoverShow] = useState(false)
+  const handleMouseOver = ()=>{
+    OnHoverShow(true)
+  }
+  const handleMouseOut =()=>{
+    OnHoverShow(false)
+  }
     return(
       <div className="hello">
         
@@ -164,12 +169,14 @@ const MainPage =()=>{
                     </div>
                   </div>
                 </div>
-                <div className="row col-md-12 p-5" id="card-project-outer">
+                <div className="row col-md-12 p-5" id="card-project-outer" >
                   {proInfo?.length>0?(
                      proInfo?.map((proData, i) => {
                       return(
-                        <div className="card project-card-placeholder col-md-3 mb-4 mx-2 p-0 link-body" onClick={() => {handleProject(proData.id)}}>
-                          {/* <div className="dropdown-menu-svg" direction="bottom-left">
+                        <div className="card project-card-placeholder col-md-3 mb-4 mx-2 p-0 link-body" onClick={() => {handleProject(proData.id)}} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                        
+                      {/* { onHoverSelect && ( 
+                        <div className="dropdown-menu-svg" direction="bottom-left">
                           <button class="btn btn-dots" slot="toggle">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -188,7 +195,8 @@ const MainPage =()=>{
                             <li class="disabled">Unpublish</li>
                             <li class="danger">Delete</li>
                             </ul>
-                            </div> */}
+                          </div>
+                        )}     */}
                           <div className="card-img-outer">
                           <span className="badge text-bg-light">{proData.projectType}</span>
                          
@@ -204,8 +212,7 @@ const MainPage =()=>{
                       )
                     })
                   ):<h3> To Start Create a New Project </h3>}
-                   
-                      
+                                    
                   
                 </div>
                 </div>

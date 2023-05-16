@@ -200,6 +200,9 @@ console.log('===>' , id)}
       console.log("Here is this!")
       ShowMobileFunctions(true);
     }
+    else {
+      ShowMobileFunctions(false)
+    }
   }
 
   const [MobileSize , SelectedSizeMobile] = useState(null);
@@ -209,8 +212,7 @@ console.log('===>' , id)}
     SelectedSizeMobile(type);
 
   }
-  const selectedClass = "selected";
-  const unselectedClass = "unselected";
+
 
   const selectedStyle = {
     border: "1px solid #4a90e2",
@@ -563,8 +565,8 @@ console.log('===>' , id)}
 // {/* Mobile Otions CLose On Click AR View */}
 
 // {/* Mobile View  */}
-<div className={`Content--1RcMl ${MobileSize}`}>
-  <div className="MobilePhoneDivContainer--3othZ" style={{width: "460px",height: "303.75px"}}>
+<div className="Content--1RcMl">
+  <div className={`MobilePhoneDivContainer--3othZ ${MobileSize}`}>
     <div className="ClipBox--36pEZ">
       <div className="TopSection--3U6Vx">
         <div className="Time--3LFMp">1:05 PM</div>
