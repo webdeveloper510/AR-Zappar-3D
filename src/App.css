@@ -791,7 +791,7 @@ button#svgporj svg path {
     fill: #fff;
 }
 span {
-    color: #fff;
+    color:  inherit;;
     transition: 1s;
 }
 p.project-triggers-head {

@@ -228,7 +228,377 @@ console.log('===>' , id)}
         </div>
 
 
+
     <div className="container-fluid target-page" ref={containerRef}>
+
+
+        {/*  The Editors Controls  */}
+
+        <div className="OuterContainer--pMxMG">
+          <div className="ContextMenu--LKriV">
+            <button className="ContextMenuButton--12X9C ContextMenuButton--p-6XR" title="Move (W)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+              >
+                <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                  <g fill="#4A90E2" fillRule="nonzero">
+                    <path d="M9.584.223a.5.5 0 01.832 0l1.999 3.002.041.072c.245.504-.451.968-.822.548l-.051-.066-.136-.201c-.09-.13-.177-.253-.26-.367l-.242-.319a9.39 9.39 0 00-.113-.14l-.21-.246a5.05 5.05 0 00-.128-.137l.001 7.127h7.127a5.112 5.112 0 00-.128-.118l-.245-.21a9.39 9.39 0 00-.141-.113l-.319-.241c-.114-.084-.236-.17-.367-.26l-.201-.137-.066-.05c-.42-.372.044-1.068.548-.823l.072.041 3.002 1.999a.5.5 0 010 .832l-3.002 1.999c-.554.369-1.108-.461-.555-.831.277-.186.522-.36.734-.522l.294-.232c.148-.122.274-.233.378-.333l-7.131-.001.001 7.133c.04-.041.083-.086.126-.135l.21-.245a9.39 9.39 0 00.113-.141l.241-.319c.084-.114.17-.236.26-.367l.137-.201.05-.066c.372-.42 1.068.044.823.548l-.041.072-1.999 3.002a.5.5 0 01-.832 0l-1.999-3.002c-.369-.554.461-1.108.831-.555.186.277.36.522.522.734l.232.294c.12.145.228.269.327.371l-.001-7.123H2.374c.07.067.148.14.237.215l.14.119.295.232c.212.161.457.336.734.522.553.37 0 1.2-.555.83L.223 10.417a.5.5 0 010-.832l3.002-1.999.072-.041c.504-.245.968.451.548.822l-.066.051-.201.136c-.13.09-.253.177-.367.26l-.319.242a9.39 9.39 0 00-.14.113l-.246.21c-.046.04-.088.08-.128.119l7.118-.001V2.383a5.706 5.706 0 00-.207.228l-.119.14-.232.295c-.161.212-.336.457-.522.734-.37.553-1.2 0-.83-.555z"></path>
+                  </g>
+                </g>
+              </svg>
+            </button>
+            <button className="ContextMenuButton--12X9C ContextMenuButton--p-6XR" title="Scale (E)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+              >
+                <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                  <path
+                    fill="#344B60"
+                    fillRule="nonzero"
+                    d="M29 10a1 1 0 011 1v15a1 1 0 01-1 1H19v2a1 1 0 01-.883.993L18 30h-7a1 1 0 01-1-1v-7a1 1 0 011-1h3V11a1 1 0 01.883-.993L15 10h14zM18 22h-7v7h7v-7zm7.561-7.997l-.05-.003c.068 0 .133.014.192.04.149.062.26.19.289.343l.008.084v2.566c0 .258-.224.467-.5.467a.492.492 0 01-.492-.383L25 17.033v-1.327l-6.034 6.035a.996.996 0 01.027.142L19 22v4h10V11H15v10h3c.09 0 .176.012.259.034L24.292 15h-1.303a.495.495 0 01-.489-.5c0-.245.173-.45.401-.492l.088-.008h2.535l.018.002.014.001h.005z"
+                    transform="translate(-10 -10)"
+                  ></path>
+                </g>
+              </svg>
+            </button>
+            <button className="ContextMenuButton--12X9C ContextMenuButton--p-6XR" title="Rotate (R)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="21"
+                height="20"
+                fill="none"
+                viewBox="0 0 21 20"
+              >
+                <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                  <g fill="#344B60" fillRule="nonzero">
+                    <path d="M10.422.09l.114.058 5.266 3.138c.283.168.469.458.507.78l.007.123v3.93C18.558 9.166 20 10.772 20 12.625c0 3.152-5.2 5.703-10.786 5.784.143.19.35.42.62.678.454.437-.097 1.131-.608.849l-.072-.048L7.05 18.31a.527.527 0 01-.076-.773l.076-.069 2.104-1.579c.528-.396 1.156.344.68.801a6.194 6.194 0 00-.614.668l-.279.002c5.18 0 10.006-2.322 10.006-4.734 0-1.273-1.001-2.462-2.63-3.33l-.001.758c0 .302-.13.588-.354.787l-.102.08-5.266 3.623a1.053 1.053 0 01-1.083.067l-.111-.067-5.26-3.624a1.052 1.052 0 01-.448-.738l-.008-.128v-.758c-1.63.868-2.631 2.057-2.631 3.33a.526.526 0 01-1.053 0c0-1.853 1.441-3.46 3.685-4.506v-3.93c0-.329.153-.637.411-.834l.101-.07L9.457.15c.296-.176.656-.196.965-.06zM4.736 4.822v5.23l4.737 3.264V7.663L4.737 4.822zm10.527.368l-4.737 2.49v5.631l4.737-3.258V5.19zM9.997 1.052L5.233 3.893l4.78 2.867 5.005-2.63.085-.036-5.106-3.042z"></path>
+                  </g>
+                </g>
+              </svg>
+            </button>
+            <div className="ContextMenuItem--3DIyN">
+              <div style={{borderLeft: "1px solid rgb(178, 196, 215)" ,  width: "auto" , height: "12px"}}>
+              </div>
+            </div>
+            <button className="ContextMenuButton--3ysdL ContextMenuButton--p-6XR" title="Duplicate">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="19"
+                height="20"
+                viewBox="0 0 19 20"
+              >
+                <g
+                  fill="#344B60"
+                  fillRule="nonzero"
+                  transform="translate(-715 -202) translate(472 191) translate(232) matrix(1 0 0 -1 11 31)"
+                >
+                  <path d="M13.684 5.271V3.164C13.684 1.266 12.1 0 10.526 0H3.164C1.56 0 0 1.292 0 3.164v8.426c0 1.82 1.54 3.147 3.164 3.147h2.103v2.103c0 1.93 1.622 3.16 3.154 3.16h7.365c1.575 0 3.161-1.247 3.161-3.16.008-4.572.012-7.375.012-8.41 0-1.554-1.234-3.167-3.173-3.167l-2.102.008zm-10.53 8.413c-1.255 0-2.103-1.034-2.103-2.107V3.156c0-1.205.988-2.105 2.104-2.105h7.371c1.305 0 2.108 1.075 2.108 2.105v2.107H8.421a3.161 3.161 0 00-3.158 3.162v5.26H3.155zm14.744 3.158c0 1.04-.797 2.117-2.109 2.117H8.421c-1.06 0-2.105-.88-2.105-2.117v-8.41c0-1.273 1.035-2.116 2.105-2.116h7.368c1.007 0 2.109.792 2.109 2.115v8.411zm-5.769-7.368c.272 0 .493.224.493.495v2.136h2.146c.273 0 .495.223.495.502v.05a.5.5 0 01-.495.5H12.62l.001 2.137c0 .274-.22.495-.493.495h-.048a.496.496 0 01-.492-.495v-2.136H9.442a.498.498 0 01-.496-.502v-.05a.5.5 0 01.496-.5l2.145-.001V9.969c0-.273.22-.495.493-.495h.048z"></path>
+                </g>
+              </svg>
+            </button>
+            <button className="ContextMenuButton--3ysdL ContextMenuButton--p-6XR" title="Lock">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="18"
+                viewBox="0 0 14 18"
+              >
+                <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                  <path
+                    fill="#344B60"
+                    fillRule="nonzero"
+                    d="M19.74 11.006a4.984 4.984 0 015.212 4.503H23.95a3.994 3.994 0 00-4.21-3.467 3.993 3.993 0 00-3.746 3.961v2.878h9.205a1.912 1.912 0 011.8 1.923V27.2A1.798 1.798 0 0125.2 29H14.801a1.8 1.8 0 01-1.8-1.799v-6.397a1.912 1.912 0 011.8-1.923h.202v-2.878a4.983 4.983 0 014.738-4.997zm5.37 9H14.912a.799.799 0 00-.799.798V27.2c0 .441.358.798.8.798h10.195a.799.799 0 00.8-.798v-6.397a.799.799 0 00-.8-.798zM20 23.008a.495.495 0 01.495.494v2.001a.495.495 0 01-.99 0v-2c0-.274.222-.495.495-.495z"
+                    transform="translate(-13 -11)"
+                  ></path>
+                </g>
+              </svg>
+            </button>
+            <button className="ContextMenuButton--3ysdL ContextMenuButton--p-6XR" title="Delete">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="20"
+                viewBox="0 0 18 20"
+              >
+                <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                  <path
+                    fill="#344B60"
+                    fillRule="nonzero"
+                    d="M21.714 10c1.263 0 2.286.895 2.286 2v1h4.526c.262 0 .474.224.474.5 0 .245-.168.45-.389.492l-.085.008h-1.581l-.672 12.235C26.157 28.349 24.523 30 22.546 30h-5.092c-1.977 0-3.611-1.65-3.727-3.765L13.055 14h-1.581a.487.487 0 01-.474-.5c0-.245.168-.45.389-.492l.085-.008H16v-1c0-1.105 1.023-2 2.286-2h3.428zm4.296 4H13.99l.668 12.176c.084 1.527 1.224 2.732 2.632 2.819l.164.005h5.092c1.428 0 2.617-1.148 2.781-2.65l.015-.174L26.01 14zm-8.51 4a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L17 24.5v-6a.5.5 0 01.5-.5zm5 0a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L22 24.5v-6a.5.5 0 01.5-.5zm-.7-7h-3.6c-.615 0-1.123.386-1.192.883L17 12v1h6v-1c0-.513-.463-.936-1.06-.993L21.8 11z"
+                    transform="translate(-11 -10)"
+                  ></path>
+                </g>
+              </svg>
+            </button>
+
+
+        <div className="ContextMenuItem--3DIyN">
+          <div style={{borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "12px"}}>
+          </div>
+        </div>
+
+        <button className="ContextMenuButton--1aPih ContextMenuButton--p-6XR" title="Recenter">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="40"
+            height="40"
+            viewBox="6 6 26 26"
+          >
+            <path
+              fill="#344B60"
+              fillRule="evenodd"
+              d="M23.5 23l.034.003.039-.003h5.854c.307 0 .573.224.573.5l-.01.088c-.048.229-.282.412-.563.412H24.79l5.047 5.047a.556.556 0 01-.708.85l-.077-.064L24 24.78v4.646c0 .276-.181.52-.419.565L23.5 30l-.088-.01c-.229-.048-.412-.282-.412-.563v-5.854l.001-.042L23 23.5l.01-.088a.484.484 0 01.14-.247.47.47 0 01.35-.165zm-7 0c.136 0 .259.064.349.166a.477.477 0 01.142.246L17 23.5l-.001.031.001.042v5.854c0 .281-.183.515-.412.564L16.5 30c-.276 0-.5-.266-.5-.573V24.78l-5.052 5.053-.077.064a.556.556 0 01-.708-.85L15.209 24h-4.636c-.281 0-.515-.183-.564-.412L10 23.5c0-.276.266-.5.573-.5h5.854l.038.003L16.5 23zm3.5-4a1 1 0 110 2 1 1 0 010-2zm3.5-9c.276 0 .5.266.5.573v4.641l5.052-5.051.077-.065a.556.556 0 01.708.85L24.784 16h4.643c.281 0 .515.183.564.412L30 16.5c0 .276-.266.5-.573.5h-5.854l-.039-.004L23.5 17a.467.467 0 01-.349-.166.477.477 0 01-.142-.246L23 16.5l.001-.031a.631.631 0 01-.001-.042v-5.854c0-.281.183-.515.412-.564L23.5 10zm-7 0l.088.01c.229.048.412.282.412.563v5.854l-.001.042.001.031-.01.088a.484.484 0 01-.14.247.47.47 0 01-.35.165l-.035-.004-.038.004h-5.854c-.307 0-.573-.224-.573-.5l.01-.088c.048-.229.282-.412.563-.412h4.642l-5.052-5.052a.556.556 0 01.708-.85l.077.065L16 15.215v-4.642c0-.276.181-.52.419-.565L16.5 10z"
+            ></path>
+          </svg>
+        </button>
+        <button className="ContextMenuButton--1aPih ContextMenuButton--p-6XR" title="Snap to surface">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill="#344B60"
+              fillRule="evenodd"
+              d="M11.707 9.908l7.056 3.321L10 17.87l-8.763-4.64 6.834-3.216-.534-.854L.81 12.324a1 1 0 00-.042 1.789l8.763 4.64a1 1 0 00.936 0l8.763-4.64a1 1 0 00-.042-1.789l-7.008-3.298-.474.882z"
+              clipRule="evenodd"
+            ></path>
+            <path
+              fill="#344B60"
+              d="M10.457 13.456a.7.7 0 01-1.21 0L6.096 8.053A.7.7 0 016.7 7l1.154.001L7.852 1.7a.7.7 0 01.605-.694L8.552 1h2.6a.7.7 0 01.7.7V7h1.152a.7.7 0 01.693.604l.007.095a.7.7 0 01-.096.353l-3.151 5.403zm-.604-.948L12.482 8h-1.63V2h-2v6h-1.63l2.63 4.508z"
+            ></path>
+          </svg>
+        </button>
+        <div className="ContextMenuItem--3DIyN">
+          <div style={{borderLeft: "1px solid rgb(178, 196, 215)" ,  width: "auto" ,  height: "12px"}}>
+          </div>
+        </div>
+        <button className="ContextMenuButton--1ztuK ContextMenuButton--p-6XR" title="Undo">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="23"
+            height="21"
+            viewBox="0 0 23 21"
+          >
+            <path
+              fill="#344B60"
+              d="M15.563 4.648c4.238 0 7.178 3.439 7.178 7.963 0 4.513-2.933 7.908-7.178 7.908a.5.5 0 110-1c3.658 0 6.178-2.917 6.178-6.908 0-4.004-2.53-6.963-6.178-6.963H1.825l3.726 3.726a.513.513 0 01.063.646l-.057.068a.506.506 0 01-.713-.006L.319 5.557a.499.499 0 01-.126-.485.496.496 0 01.07-.154L.32 4.85 4.844.326a.513.513 0 01.645-.063l.068.056a.506.506 0 01-.006.714L1.935 4.648h13.628z"
+            ></path>
+          </svg>
+        </button>
+        <button className="ContextMenuButton--1ztuK ContextMenuButton--p-6XR" title="Redo">
+          <svg className="RedoIcon--2FRCL"
+            xmlns="http://www.w3.org/2000/svg"
+            width="23"
+            height="21"
+            viewBox="0 0 23 21"
+          >
+            <path
+              fill="#B4BBC3"
+              d="M15.563 4.648c4.238 0 7.178 3.439 7.178 7.963 0 4.513-2.933 7.908-7.178 7.908a.5.5 0 110-1c3.658 0 6.178-2.917 6.178-6.908 0-4.004-2.53-6.963-6.178-6.963H1.825l3.726 3.726a.513.513 0 01.063.646l-.057.068a.506.506 0 01-.713-.006L.319 5.557a.499.499 0 01-.126-.485.496.496 0 01.07-.154L.32 4.85 4.844.326a.513.513 0 01.645-.063l.068.056a.506.506 0 01-.006.714L1.935 4.648h13.628z"
+            ></path>
+          </svg>
+        </button>
+                      
+        <div className="ContextMenuItem--3DIyN">
+          <div style={{borderLeft: "1px solid rgb(178, 196, 215)" , width: "auto" , height: "12px" , marginRight: "8px"}}>
+          </div>
+        </div>
+        <button className="ArTextDiv--3yOiG ContextMenuItem--3DIyN">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill="#4A90E2"
+              d="M10.223 15H9.098a.484.484 0 01-.315-.098.6.6 0 01-.18-.247L7.598 12.06H2.776L1.77 14.655a.586.586 0 01-.18.24.48.48 0 01-.315.105H.15L4.448 4.253h1.478L10.223 15zm-7.042-3.99h4.012L5.506 6.638a8.172 8.172 0 01-.323-1.013 14.054 14.054 0 01-.315 1.02L3.181 11.01zM13.174 10.515V15h-1.448V4.253h3.037c.68 0 1.268.07 1.763.21.495.135.902.332 1.223.592.325.26.565.575.72.945.154.365.232.775.232 1.23 0 .38-.06.735-.18 1.065-.12.33-.295.627-.525.893-.225.26-.502.482-.832.667a4.064 4.064 0 01-1.11.42c.18.105.34.258.48.457L19.669 15h-1.29c-.266 0-.46-.102-.585-.307l-2.79-3.84a.775.775 0 00-.278-.255c-.1-.056-.25-.083-.45-.083h-1.102zm0-1.058h1.522c.425 0 .797-.05 1.117-.15.325-.104.595-.25.81-.434.22-.19.386-.415.495-.675.11-.26.166-.548.166-.863 0-.64-.213-1.122-.638-1.447-.42-.325-1.048-.488-1.883-.488h-1.59v4.057z"
+            ></path>
+          </svg>
+        </button>
+        <div className="ContextMenuItem--nAxyh ContextMenuItem--3DIyN" style={{width: "10px" , marginRight: "4px"}}>
+          <div style={{borderLeft: "1px solid rgb(178, 196, 215)" ,  width: "auto",  height: "12px", transform: "rotate(20deg)"}}>
+          </div>
+        </div>
+        <button className="ContextMenuButton--2arUa ContextMenuButton--p-6XR">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill="#344B60"
+              fillRule="evenodd"
+              d="M7 3h6a1 1 0 011 1v12a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1zM5 4a2 2 0 012-2h6a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V4zm5 12a1 1 0 100-2 1 1 0 000 2z"
+              clipRule="evenodd"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+        {/* The Editors Controls Close */}
+
+
+
+{/* Mobile O[tions On Click Mobile View */}
+<div className="ResizeDropdownContainer--C_OBP">
+  <div className="DropdownContainer--2I9aL" data-testid="Dropdown" style={{width: "100%", height: "36px"}}>
+    <div data-testid="DropdownButton" className="DropDown--yH8Yv Active--1VSAT undefined" style={{width: "100%", height: "36px", borderRadius: "5px"}}>
+      <div className="SelectedOptionContainer--1dj6q">
+        <span className="Text--oPx6O" title="iPad">iPad</span>
+      </div>
+      <div className="RightSideDiv--1kVJp">4:3
+          <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="7"
+          height="7"
+          className="Arrow--1v0f0 RotatedArrow--2YfqZ"
+          viewBox="0 0 7 7"
+        >
+          <path
+            fill="#344B60"
+            fillRule="evenodd"
+            d="M4.677 3.093l.015.017.043.049c.139.191.129.456-.046.637L1.907 6.677a.504.504 0 01-.636.066l-.069-.055a.494.494 0 01-.014-.706l2.433-2.519-2.52-2.433a.504.504 0 01-.065-.637L1.09.325A.494.494 0 011.796.31l2.881 2.782z"
+          ></path>
+    </svg>
+      </div>
+    </div>
+        <div className="OptionsContainer--1Ch3R DropdownMenu--Q6jts " style={{width: "100%", top: "calc(40px)"}}>
+            <div className=" " data-testid="MenuList">
+              <div className="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="iPhone 12">
+                <div className="Container--Mc1y-">
+                  <span>iPhone 12</span>
+                </div>
+                <div className="RightSideDiv--2PR1_">9:19.5
+                </div>
+              </div>
+            <div className="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="iPhone 8">
+              <div className="Container--Mc1y-">
+                <span>iPhone 8</span>
+              </div>
+              <div className="RightSideDiv--2PR1_">9:16
+              </div>
+            </div>
+          <div className="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="Pixel 6a">
+            <div className="Container--Mc1y-">
+              <span>Pixel 6a</span>
+            </div>
+            <div className="RightSideDiv--2PR1_">9:20
+            </div>
+          </div>
+          <div className="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="Galaxy S7">
+            <div className="Container--Mc1y-">
+              <span>Galaxy S7</span>
+            </div>
+            <div className="RightSideDiv--2PR1_">9:16
+            </div>
+          </div>
+          <div className="Option--31oUF Active--37WPC HasNoIcon--3C9vr" data-testid="Option" title="iPad">
+            <div className="Container--Mc1y-">
+              <span>iPad</span>
+            </div>
+            <div className="RightSideDiv--2PR1_">4:3
+            </div>
+          </div>
+          <div className="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="Horizontal">
+            <div className="Container--Mc1y-">
+              <span>Horizontal</span>
+            </div><div className="RightSideDiv--2PR1_">16:9
+            </div>
+          </div>
+          <div className="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="Custom">
+            <div className="Container--Mc1y-">
+              <span>Custom</span>
+            </div>
+          </div>
+          </div>
+      </div>
+        <div className="OutsideClickDiv--2WPRX"></div>
+      </div>
+    </div>
+{/* Mobile Otions CLose On Click AR View */}
+
+{/* Mobile View  */}
+<div className="Content--1RcMl">
+  <div className="MobilePhoneDivContainer--3othZ" style={{width: "460px",height: "303.75px"}}>
+    <div className="ClipBox--36pEZ">
+      <div className="TopSection--3U6Vx">
+        <div className="Time--3LFMp">1:05 PM</div>
+        <div className="Icons--3So6B">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="45"
+            height="16"
+            viewBox="0 0 45 16"
+          >
+            <path
+              fillRule="evenodd"
+              d="M9.5 4.7a.5.5 0 00-.5.5v5a.5.5 0 00.5.5h1a.5.5 0 00.5-.5v-5a.5.5 0 00-.5-.5h-1zm-3 1a.5.5 0 00-.5.5v4a.5.5 0 00.5.5h1a.5.5 0 00.5-.5v-4a.5.5 0 00-.5-.5h-1zM3 8.2a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v2a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-2zm-2.5.5a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h1a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5h-1zM24.842 5.871c.208.182.207.5.012.696l-.336.336a.533.533 0 01-.72.016 5.889 5.889 0 00-3.799-1.392 5.878 5.878 0 00-3.798 1.392.533.533 0 01-.72-.016l-.336-.336a.476.476 0 01.012-.696 7.363 7.363 0 014.842-1.82 7.348 7.348 0 014.843 1.82zm-1.9 1.906c.215.174.213.493.018.689l-.288.288c-.195.196-.51.192-.732.028a3.278 3.278 0 00-3.196-.387 3.276 3.276 0 00-.686.387c-.222.164-.536.168-.731-.028l-.288-.288c-.195-.196-.197-.515.018-.689a4.684 4.684 0 012.942-1.042 4.676 4.676 0 012.943 1.042zm-1.67 2.099c.085.07.084.197.006.276l-1.137 1.14a.2.2 0 01-.283 0l-1.137-1.14c-.079-.079-.08-.206.006-.276a2.007 2.007 0 012.544 0z"
+              clipRule="evenodd"
+            ></path>
+            <path d="M30.199 6.2a1 1 0 011-1h10a1 1 0 011 1v3a1 1 0 01-1 1h-10a1 1 0 01-1-1v-3z"></path>
+            <path
+              fill="#fff"
+              fillRule="evenodd"
+              d="M31.199 4.6h10a1.6 1.6 0 011.6 1.6v3a1.6 1.6 0 01-1.6 1.6h-10a1.6 1.6 0 01-1.6-1.6v-3a1.6 1.6 0 011.6-1.6zm0 .6a1 1 0 00-1 1v3a1 1 0 001 1h10a1 1 0 001-1v-3a1 1 0 00-1-1h-10z"
+              clipRule="evenodd"
+            ></path>
+            <path
+              fill="#D2D2D2"
+              fillRule="evenodd"
+              d="M31.199 4h10a2.2 2.2 0 012.2 2.2v3a2.2 2.2 0 01-2.2 2.2h-10a2.2 2.2 0 01-2.2-2.2v-3a2.2 2.2 0 012.2-2.2zm-1.6 2.2a1.6 1.6 0 011.6-1.6h10a1.6 1.6 0 011.6 1.6v3a1.6 1.6 0 01-1.6 1.6h-10a1.6 1.6 0 01-1.6-1.6v-3z"
+              clipRule="evenodd"
+            ></path>
+            <path
+              fill="#D2D2D2"
+              d="M43.999 6.2a1 1 0 011 1v1a1 1 0 01-1 1v-3z"
+            ></path>
+          </svg>
+        </div>
+        <div className="UrlBar--3Htvk">
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill="#344B60"
+                fillRule="evenodd"
+                d="M11.84 5.44v.813a1.44 1.44 0 011.44 1.44v5.76a1.44 1.44 0 01-1.44 1.44H4.16a1.44 1.44 0 01-1.44-1.44v-5.76a1.44 1.44 0 011.44-1.44V5.44a3.84 3.84 0 117.68 0zm-6.72 0v.813h5.76V5.44a2.88 2.88 0 10-5.76 0zm2.882 2.962a1.2 1.2 0 011.2 1.2v1.6a1.2 1.2 0 01-2.4 0v-1.6a1.2 1.2 0 011.2-1.2z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+            example.com 
+          </span>
+        </div>
+      </div>
+    </div>
+    <div className="CanvasContainer--3HSnI" style={{pointerEvents: "auto"}}>
+      <div style={{height: "100%", width: "100%"}}>
+        <div id="screenRelativeCanvas" style={{position: "relative", width: "100%", height: "100%", overflow: "hidden", pointerEvents: "auto", touchAction: "none"}}>
+          <canvas width="430" height="208" style={{display: "block", width: "430px", height: "208.75px", cursor: "default"}}></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{/* Mobile View Close  */}
+
+
+    <div className="container-fluid target-page">
+
       <div className="row col-md-12 justify-content-between">
         <div className="col-md-1 p-0 m-0 target-left">
 
@@ -403,12 +773,7 @@ console.log('===>' , id)}
                         <a href="#tab2" className="nav-link p-0 m-0 fw-bold link-dark" >Project</a>
                       </Nav.Link>
                   </Nav.Item>
-                  {/* <Nav.Item>
-                      <Nav.Link eventKey="first">
-                        <FontAwesomeIcon icon={faImagePortrait} style={{ color: "rgb(113 123 131)", width: "15px", height: "15px", marginRight: 4  , margin: "10px , 0 ,0 ,0"}} />
-                        <a id="handle" className="nav-link p-0 m-0 fw-bold link-dark" >Save Model</a>
-                      </Nav.Link>
-                  </Nav.Item> */}
+      
                 </Nav>
               </Col>
 
@@ -417,70 +782,7 @@ console.log('===>' , id)}
                   <Tab.Pane eventKey="first" className='bg-light py-4 tab-content'>
                   
                   </Tab.Pane>
-{/* 
-                  <Tab.Pane eventKey="second" className='bg-light py-4 tab-content'>
-                  <Accordion defaultActiveKey="0">
-                    <Accordion.Item eventKey="0">
-                      <Accordion.Header>Target Image</Accordion.Header>
-                      <Accordion.Body>
-                      <div className="upload-img p-3">
-                        <input className="btn btn-info mb-3 ms-4 text-light bg-dark border-0" type="button" value="Upload Target Image" onClick={handleChange} />
-                      </div>
-                      <div className="orientation mt-3">
-                        <p>Orientation</p>
-                        <div className="orientation-list d-flex justify-content-between">
-                          <span>Upright</span>
-                          <span>Flat</span>
-                        </div>
-                      </div>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="1">
-                      <Accordion.Header>AR Web Embed</Accordion.Header>
-                      <Accordion.Body>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                        aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui officia deserunt mollit anim id est laborum.
-                      </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="2">
-                      <Accordion.Header>background Sound</Accordion.Header>
-                      <Accordion.Body>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                        aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui officia deserunt mollit anim id est laborum.
-                      </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="3">
-                      <Accordion.Header>Analytics</Accordion.Header>
-                      <Accordion.Body>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                        aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui officia deserunt mollit anim id est laborum.
-                      </Accordion.Body>
-                    </Accordion.Item>
-                  </Accordion>*/}
 
-                  
-                  {/* <div className="right-side-down mb-3 pt-2 ps-4">
-                    2D <div className="form-check form-switch">
-                        <input className="form-check-input" type="checkbox" role="switch"   /> 3D 
-                    </div>
-                    <p>| <span>99%</span></p>
-                  </div> */}
-                  {/* </Tab.Pane>  */}
         <div class="InspectorMenu--1PeA4" data-testid="InspectorMenu">
           
           <div class="ShelfContainer--1Ad4O">
@@ -665,6 +967,7 @@ console.log('===>' , id)}
         </div>
         </div>
     </div>
+</div>  
 </div>  
     )
 }

@@ -132,7 +132,7 @@ const handleDateChange = (event) => {
                 
               })
               .catch(function(err) {
-                console.error('Error uploading file', err);
+                console.error('Error Registrations !', err);
               });
             
         }
