@@ -562,9 +562,9 @@ console.log('===>' , id)}
         <div className="OutsideClickDiv--2WPRX"></div>
       </div>
     </div>
-// {/* Mobile Otions CLose On Click AR View */}
+ {/* Mobile Otions CLose On Click AR View */}
 
-// {/* Mobile View  */}
+ {/* Mobile View  */}
 <div className="Content--1RcMl">
   <div className={`MobilePhoneDivContainer--3othZ ${MobileSize}`}>
     <div className="ClipBox--36pEZ">

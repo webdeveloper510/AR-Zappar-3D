@@ -113,13 +113,23 @@ const MainPage =()=>{
     console.log('Open')
   };
 
-  const [onHoverSelect , OnHoverShow] = useState(false)
-  const handleMouseOver = ()=>{
-    OnHoverShow(true)
+  // const [onHoverSelect , OnHoverShow] = useState(false)
+  // const handleMouseOver = ()=>{
+  //   OnHoverShow(true)
+  // }
+  // const handleMouseOut =()=>{
+  //   OnHoverShow(false)
+  //   ButtonShow(false)
+
+  // }
+
+  const [ToggleButton , ButtonShow] = useState(false)
+  const ToggleButtonShow =() =>{
+    ButtonShow(!ToggleButton)
   }
-  const handleMouseOut =()=>{
-    OnHoverShow(false)
-  }
+
+
+
     return(
       <div className="hello">
         
@@ -173,11 +183,11 @@ const MainPage =()=>{
                   {proInfo?.length>0?(
                      proInfo?.map((proData, i) => {
                       return(
-                        <div className="card project-card-placeholder col-md-3 mb-4 mx-2 p-0 link-body" onClick={() => {handleProject(proData.id)}} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                        <div className="card project-card-placeholder col-md-3 mb-4 mx-2 p-0 link-body" onClick={() => {handleProject(proData.id)}} >
                         
-                      {/* { onHoverSelect && ( 
+                      
                         <div className="dropdown-menu-svg" direction="bottom-left">
-                          <button class="btn btn-dots" slot="toggle">
+                          <button class="btn btn-dots" slot="toggle" onClick={ToggleButtonShow}>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="40"
@@ -190,13 +200,16 @@ const MainPage =()=>{
                             ></path>
                           </svg>
                            </button>
-                           <ul slot="body" class="">
-                            <li>Edit cover image</li>
-                            <li class="disabled">Unpublish</li>
-                            <li class="danger">Delete</li>
+                          { ToggleButton && ( 
+                            <ul slot="body" class="">
+                              <li>Edit cover image</li>
+                              <li class="disabled">Unpublish</li>
+                              <li class="danger">Delete</li>
                             </ul>
+                            )}
                           </div>
-                        )}     */}
+                    
+
                           <div className="card-img-outer">
                           <span className="badge text-bg-light">{proData.projectType}</span>
                          
