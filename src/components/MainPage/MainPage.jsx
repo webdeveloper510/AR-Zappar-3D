@@ -17,9 +17,11 @@ import StudioImage from "../../assets/images/studio.jpg"
 import NavBar from "../Navbar/navbar";
 import SideBar from "../SideBar/sidebar";
 import { Dropdown } from "bootstrap";
+import Button from 'react-bootstrap/Button';
 
 const MainPage =()=>{
   const navigate = useNavigate()
+
   /********** Start----Model State *************/
   const [show, setShow] = useState(false);
 
@@ -40,6 +42,20 @@ const MainPage =()=>{
     }
   
     /********** End----Model State *************/
+
+    /********** Start----Model Delete State *************/
+    const [showDelete, setShowDelete] = useState(false);
+
+    const handleDeleteClose = () => setShowDelete(false);
+    const handleDeleteShow = () => setShowDelete(true);
+
+     /********** End----Model Delete State *************/
+
+
+
+
+
+
 
   const [proInfo,setProInfo ] = useState([])
   const val = localStorage.getItem('id');
@@ -113,15 +129,6 @@ const MainPage =()=>{
     console.log('Open')
   };
 
-  // const [onHoverSelect , OnHoverShow] = useState(false)
-  // const handleMouseOver = ()=>{
-  //   OnHoverShow(true)
-  // }
-  // const handleMouseOut =()=>{
-  //   OnHoverShow(false)
-  //   ButtonShow(false)
-
-  // }
 
   const [ToggleButton , ButtonShow] = useState(false)
   const ToggleButtonShow =() =>{
@@ -183,11 +190,18 @@ const MainPage =()=>{
                   {proInfo?.length>0?(
                      proInfo?.map((proData, i) => {
                       return(
-                        <div className="card project-card-placeholder col-md-3 mb-4 mx-2 p-0 link-body" onClick={() => {handleProject(proData.id)}} >
+                        <div className="card project-card-placeholder col-md-3 mb-4 mx-2 p-0 link-body"
+                           onClick={() => {handleProject(proData.id)}} >
                         
                       
-                        <div className="dropdown-menu-svg" direction="bottom-left">
-                          <button class="btn btn-dots" slot="toggle" onClick={ToggleButtonShow}>
+
+                          <div className="card-img-outer">
+                          <span className="badge text-bg-light">{proData.projectType}</span>
+                         
+                          <img src={proData.imagePro} className="card-img-top" alt="..."/>
+                          <div class="overlay dark">Open project</div>
+                          <div className="dropdown-menu-svg" direction="bottom-left">
+                          <button class="btn btn-dots" id="profile-dots" slot="toggle" onClick={ToggleButtonShow}>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="40"
@@ -201,20 +215,15 @@ const MainPage =()=>{
                           </svg>
                            </button>
                           { ToggleButton && ( 
-                            <ul slot="body" class="">
-                              <li>Edit cover image</li>
+                            <ul slot="body" class="profile-list">
+                              <li class="edit-cover">Edit cover image</li>
                               <li class="disabled">Unpublish</li>
-                              <li class="danger">Delete</li>
+                              <li class="danger"  onClick={handleDeleteShow}>
+                                 Delete
+                                </li>
                             </ul>
                             )}
                           </div>
-                    
-
-                          <div className="card-img-outer">
-                          <span className="badge text-bg-light">{proData.projectType}</span>
-                         
-                          <img src={proData.imagePro} className="card-img-top" alt="..."/>
-                          <div class="overlay dark">Open project</div>
                           </div>
                           <div className="card-body ">
                               <img src={Pro1} className="rounded-circle" width="36" height="36" alt="..."/>
@@ -232,6 +241,28 @@ const MainPage =()=>{
             </div>
           </div>
         </div>
+
+     
+     {/* Start Delete Model  */}
+      <Modal id="delete-project-popup" show={showDelete} onHide={handleDeleteClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Are you sure you want to delete "Untitled project"?</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>All experience content and analytics data associated with this project will be lost.</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" class="btn-cancel-popup" onClick={handleDeleteClose}>
+             Cancel
+            </Button>
+            <Button variant="primary" class="btn-delete-popup" onClick={handleClose}>
+              Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+
+     {/* End Delete Model  */}
+
+
 
 
  

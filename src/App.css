@@ -761,11 +761,11 @@ input#projName {
     font-weight: 500;
 }
 .overview-cover-image {
-    border: 4.5px dotted white;
+    border: 1.5px dashed #4A90E2;
     height: 12pc;
     cursor: pointer;
     transition: 1s;
-    background: #3d3d3d;
+    background: #ecf2f9;
     position: relative;
     width: 100%;
     padding: 10px;
@@ -807,20 +807,23 @@ p.project-triggers-head svg {
     border: 0px;
     width: fit-content;
     border-radius: 5px;
-    padding: 2px 7px 3px 7px;
+    padding: 1px 5px 1px 5px;
     transition: 1s;
-    font-size: 12px;
+    font-size: 11px;
     font-family: 'Montserrat', sans-serif !important;
-    font-weight: 600;
+    font-weight: 500;
     position: absolute;
     top: 8px;
     left: 10px;
 }
 
 .overview-cover-image span{
-    font-size: 14px;
+    font-size: 13px;
     font-family: 'Montserrat', sans-serif !important;
-    font-weight: 500;
+    font-weight: 400;
+    margin-top: 13px;
+    float: left;
+    width: 100%;
 }
 
 .bottom-icon {
@@ -2420,7 +2423,168 @@ button#svg-btn-download {
     padding: 24px 24px 20px 20px;
     border-radius: 5px;
 }
+.pointer-div {
+    float: left;
+    width: 100%;
+    cursor: pointer;
+    height: 100%;
+    position: relative;
+}
+input.base-img {
+    cursor: pointer;
+}
+.tag.designer-tag-text {
+    cursor: pointer;
+    z-index: 1;
+}
+button#svgporj svg path {
+    fill: red;
+}
+button#svgporj {
+    text-align: center;
+    float: left;
+    width: 100%;
+}
+.upload-file-btn {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+}
+span.upload-cover-img {
+    opacity: 0;
+}
+.pointer-div:hover span.upload-cover-img {
+    opacity: 1;
+}
 
+.dropdown-menu-svg {
+    display: none;
+}
+.card.project-card-placeholder:hover .dropdown-menu-svg {
+    display: block;
+}
+
+.card.project-card-placeholder:hover .dropdown-menu-svg svg {
+    background: #fff;
+    border-radius: 100px;
+}
+.card.project-card-placeholder:hover .dropdown-menu-svg {
+    display: block;
+    position: absolute;
+    z-index: 9;
+    top: 0;
+    right: 0;
+}
+button#profile-dots{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+li.edit-cover:hover {
+    background: #EBF6FE;
+    color: #4A90E2;
+    border-color: #4A90E2;
+    border-left: 3px solid #4A90E2;
+}
+ul.profile-list li {
+    list-style-type: none;
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 28px;
+    border-left: 3px solid transparent;
+    padding: 7px 24px 7px 21px;
+}
+li.danger:hover {
+    border-color: #CE3923;
+    background: #FAEBE9;
+    color: #CE3923;
+}
+li.disabled:hover {
+    opacity: 0.33;
+    cursor: not-allowed;
+    background: #EBF6FE;
+    color: #4A90E2;
+    border-color: #4A90E2;
+    border-left: 3px solid #4A90E2;
+}
+ul.profile-list {
+    box-shadow: 0 2px 4px 0 rgb(52 75 96 / 10%), 0 1px 3px 0 rgb(52 75 96 / 20%);
+    border-radius: 8px;
+    min-width: 200px;
+    background: #fff;
+    line-height: normal;
+    margin-bottom: 13px;
+    padding-bottom: 14px;
+    padding-top: 10px;
+    margin-top: 60px;
+    padding-left: 0px;
+}
+#delete-project-popup {
+    width: 50%;
+    max-width: 50%;
+    top: 8rem;
+}
+#delete-project-popup .modal-body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+button.btn-cancel-popup {
+    box-shadow: 0 0 0 1px #344b60;
+    background-color: #FFF;
+    color: #344B60;
+    padding: 8px 15px 10px 15px;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+button.btn-delete-popup {
+    background-color: red;
+    color: #fff;
+    padding: 10px 15px 10px 15px;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+.custom-pills .nav-link{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+.custom-pills .nav-link.active {
+    background: #b6d0e92e !important;
+    color: #000;
+}
+.custom-pills .nav-item a {
+    flex-direction: inherit;
+    padding-top: 8px;
+    justify-content: space-evenly;
+    padding-bottom: 1px;
+    border-bottom: 0px;
+    padding-left: 0;
+    padding-right: 0;
+}
+.custom-pills .nav-item a::after {
+    display: none;
+}
+.custom-pills .nav-item a p {
+    font-size: 14px;
+}
+.open-designer-tab-section .col-sm-3 {
+    box-shadow: 2px 0px 5px rgb(178 179 180 / 30%);
+    padding-right: 0;
+}
+
+.triggers-tab-content .bottom-content {
+    justify-content: space-around !important;
+    align-items: center;
+}
+section.open-designer-tab-section {
+    box-shadow: 0 0 4px 0 rgb(52 75 96 / 12%);
+    border-radius: 8px;
+    border: 1px solid #cccccc57;
+}
 /* .card.project-card-placeholder.col-md-3.mb-4.mx-2.p-0.link-body:hover{
     background: #f0f0f0;
 }

@@ -10,6 +10,10 @@ import ProjectList from '../components/ProjectList/ProjectList';
 import Project from '../components/Projects/project';
 import Target from '../components/Target/target';
 import UserProfile from '../components/UserProfileEdit/profileEdit';
+import MainTab from '../components/Projects/mainTab';
+import FirstTab from '../components/Projects/firsttTab';
+import SecondTab from '../components/Projects/secondTab';
+
 
 function Routing(){
     const token = localStorage.getItem('token');
@@ -31,6 +35,9 @@ function Routing(){
                 <Route path="/project/:id" element={<Project/>} />
                 <Route path="/target/:id" element={<Target/>} />
                 <Route path="/user" element={<UserProfile/>} />
+                <Route path='/MainTab' element={<MainTab />} />
+                <Route path='/FirstTab' element={<FirstTab />} />
+
                 {/* </> */}
                 {/* )  */}
                 <Route path="/" element={<LoginPage/>} />
