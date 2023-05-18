@@ -2435,7 +2435,6 @@ input.base-img {
 }
 .tag.designer-tag-text {
     cursor: pointer;
-    z-index: 1;
 }
 button#svgporj svg path {
     fill: red;
@@ -2585,6 +2584,7 @@ section.open-designer-tab-section {
     border-radius: 8px;
     border: 1px solid #cccccc57;
 }
+
 /* .card.project-card-placeholder.col-md-3.mb-4.mx-2.p-0.link-body:hover{
     background: #f0f0f0;
 }

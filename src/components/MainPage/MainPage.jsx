@@ -190,8 +190,8 @@ const MainPage =()=>{
                   {proInfo?.length>0?(
                      proInfo?.map((proData, i) => {
                       return(
-                        <div className="card project-card-placeholder col-md-3 mb-4 mx-2 p-0 link-body"
-                           onClick={() => {handleProject(proData.id)}} >
+                        <div className="card project-card-placeholder col-md-3 mb-4 mx-2 p-0 link-body">
+                           {/* onClick={() => {handleProject(proData.id)}}  */}
                         
                       
 

@@ -90,7 +90,6 @@ img#social-icon {
     align-content: center;
     justify-content: space-between;
     width: 100%;
-    padding: 10px 0;
 }
 
 .Content--15Wyt.Open--EFZA8 {
@@ -360,15 +359,24 @@ input {
     background: var(--scrollbarBG);
   }
   .InspectorMenu--1PeA4 .ShelfContainer--1Ad4O::-webkit-scrollbar-thumb {
-    background-color: #625280 ;
+    background-color: #5089c7 ;
     border-radius: 6px;
-    border: 3px solid var(--scrollbarBG);
+    border: 4px solid var(--scrollbarBG);
   }
   .right-tabs .nav-item .active {
-    background: #625181 !important;
+    background: transparent !important;
+}
+.right-tabs .nav-item .active a {
+    color: #5089c7 !important;
+}
+.target-page .right-tabs .side-tab .side-main .nav-item a {
+    display: -webkit-box;
+}
+.right-tabs .nav-item .active svg path {
+    fill: #5089c7;
 }
 .target-image-content-inner {
-    border: 1px solid #62537f;
+    border: 1px solid #5089c7;
     border-radius: 3px;
     width: 100%;
     overflow: hidden;
@@ -376,7 +384,6 @@ input {
     box-shadow: none;
 }
 .ShelfContainer--1Ad4O input {
-    border: 1px solid #625280;
     border-radius: 3px;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -385,7 +392,6 @@ input {
 .btn-transform {
     background: #fff;
     border: 0;
-    border-bottom: 3px solid #625280;
     line-height: 14px;
 }
 .btn-transform .TitleContainer--2xD-b {
@@ -398,7 +404,6 @@ input {
     font-weight: 500;
     background: #fff;
     border: 0;
-    border-bottom: 3px solid #625280;
     line-height: 35px;
     font-family: 'Montserrat', sans-serif ;
     margin-bottom: 10px;
@@ -406,7 +411,6 @@ input {
 .btn-appearence, .btn-actions {
     background: #fff;
     border: 0;
-    border-bottom: 3px solid #625280;
     line-height: 14px;
 }
 .btn-appearence .TitleContainer--2xD-b, .btn-transition-effect .TitleContainer--2xD-b, .btn-actions .TitleContainer--2xD-b {
@@ -417,7 +421,6 @@ input {
 .btn-transition-effect {
     background: #fff;
     border: 0;
-    border-bottom: 3px solid #625280;
     line-height: 14px;
 }
 
@@ -879,4 +882,38 @@ button {
     position: absolute;
     bottom: 15px;
     left: 15px;
+}
+
+.target-accordian button.accordion-button.collapsed {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    padding-left: 0;
+    padding-bottom: 0;
+}
+.target-accordian .accordion-item {
+    border: 0px;
+}
+.target-accordian button.accordion-button:focus {
+    outline: none;
+    box-shadow: none;
+}
+.target-accordian button.accordion-button {
+    padding-left: 0;
+    background: transparent !important;
+}
+.target-accordian button.accordion-button {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+.title-content.target-accordian {
+    width: 100%;
+    display: block;
+}
+.btn-target-upload {
+    padding: 4px 0px;
+    background: #5089c7;
+    font-size: 12px;
+}
+.btn-target-upload .TitleContainer--2xD-b {
+    font-size: 12px;
 }
