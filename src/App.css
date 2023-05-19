@@ -600,6 +600,8 @@ h5.project-webar-head {
 
 .target-page .side-tab {
     width: 100%;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .target-page .col-md-1.p-0.m-0.bg-light .d-flex.flex-column.flex-shrink-0.pt-3 {
@@ -777,6 +779,9 @@ input#projName {
     display: flex;
     height: 100%;
     opacity: 0;
+    cursor: pointer;
+    z-index: 9;
+    position: relative;
 } 
 button#svgporj {
     margin-top: 10px;
@@ -2609,3 +2614,93 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
     background-color: #4A90E2;
     opacity: 1;
 } */
+
+/**********edit-image-popup*********************/
+div#editcover-image-popup {
+    width: 50%;
+    max-width: 50%;
+}
+div#editcover-image-popup .card {
+    position: relative;
+    border-radius: 8px;
+    background-color: white;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    box-shadow: 0 1px 5px 0 rgb(0 0 0 / 10%);
+    transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+    transition-delay: 0.1s;
+    text-align: left;
+}
+.upload-cover-img {
+    border: 1.5px dashed #4A90E2;
+    border-radius: 8px;
+    padding: 16px;
+    cursor: pointer;
+}
+.flex.btw.image-preview {
+    float: left;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+div#editcover-image-popup .card {
+    box-shadow: 0 1px 5px 0 rgb(0 0 0 / 10%);
+    transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+    transition-delay: 0.1s;
+    text-align: left;
+    width: 45%;
+}
+.upload-cover-img {
+    border: 1.5px dashed #4A90E2;
+    border-radius: 8px;
+    padding: 16px;
+    position: relative;
+    cursor: pointer;
+    width: 45%;
+}
+div#editcover-image-popup zpr-dropzone-icon {
+    position: absolute;
+    top: 8rem;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+}
+div#editcover-image-popup zpr-dropzone-msg.help-text {
+    position: absolute;
+    top: 10rem;
+}
+.upload-outer {
+    height: 100%;
+}
+div#editcover-image-popup .card-project h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    margin-top: 10px;
+}
+div#editcover-image-popup span.status-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+}
+div#editcover-image-popup span.icon {
+    background-color: #4A90E2;
+    border: 1px solid #fff;
+    color: #fff;
+    width: 38px;
+    height: 38px;
+    padding: 2px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+div#editcover-image-popup span.status-icon {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #4f8cc6;
+    display: inline-block;
+    margin-right: 6px;
+    margin-top: 0px;
+}

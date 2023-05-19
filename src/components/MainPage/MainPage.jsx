@@ -51,6 +51,13 @@ const MainPage =()=>{
 
      /********** End----Model Delete State *************/
 
+     /********** Start----Model Coverimage State *************/
+    const [showcover, setShowCover] = useState(false);
+
+    const handleCoverClose = () => setShowCover(false);
+    const handleCoverimageShow = () => setShowCover(true);
+
+     /********** End----Model coverimage State *************/
 
 
 
@@ -216,7 +223,7 @@ const MainPage =()=>{
                            </button>
                           { ToggleButton && ( 
                             <ul slot="body" class="profile-list">
-                              <li class="edit-cover">Edit cover image</li>
+                              <li class="edit-cover"  onClick={handleCoverimageShow}>Edit cover image</li>
                               <li class="disabled">Unpublish</li>
                               <li class="danger"  onClick={handleDeleteShow}>
                                  Delete
@@ -243,6 +250,55 @@ const MainPage =()=>{
         </div>
 
      
+
+ {/* StartCoverimage Model  */}
+ <Modal id="editcover-image-popup" show={showcover} onHide={handleCoverClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit cover image for project<br></br>
+             “Untitled project”</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            
+           <div class="flex btw image-preview">
+            <div class="card">
+              <div class="card-project"><div class="tag">Designer</div><div class="image">
+                <div class="overlay dark">Delete image</div></div><div class="text-content"><span class="icon" title="Web Developer">W</span><h4>Untitled project</h4>
+           <div><span class="status-icon"></span>
+           <span class="status-text">Created 17 May 23&nbsp;&nbsp;|&nbsp;&nbsp;Unpublished</span>
+           </div></div></div>
+           </div>
+           <div class="upload-cover-img">
+           
+           <div class="dz-overlay"></div>
+         
+           <div class="upload-outer">
+           <input type="file" title=" " name="projectCover" accept="image/*" required=""/>
+            <zpr-dropzone-icon hydrated="">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16">
+              <path d="M10,0a6.008,6.008,0,0,1,3.86,1.371,5.808,5.808,0,0,1,2.033,3.5A4.887,4.887,0,0,1,18.96,6.639a4.717,4.717,0,0,1-.534,6.473,4.919,4.919,0,0,1-3.312,1.26H12.67a.448.448,0,0,1-.314-.128.43.43,0,0,1,0-.616.448.448,0,0,1,.314-.128h2.443a4.034,4.034,0,0,0,2.76-1.085A3.87,3.87,0,0,0,18.126,7,4.019,4.019,0,0,0,15.48,5.675a.448.448,0,0,1-.27-.121.433.433,0,0,1-.132-.261,4.947,4.947,0,0,0-.593-1.89,5.036,5.036,0,0,0-1.292-1.518A5.141,5.141,0,0,0,11.4.977a5.19,5.19,0,0,0-3.923.458,5.081,5.081,0,0,0-1.523,1.3A4.978,4.978,0,0,0,5.063,4.5a4.925,4.925,0,0,0-.126,1.974.428.428,0,0,1-.016.184.433.433,0,0,1-.092.161.444.444,0,0,1-.152.109.451.451,0,0,1-.184.037H4.229a3.359,3.359,0,0,0-2.353.957,3.224,3.224,0,0,0,0,4.619,3.358,3.358,0,0,0,2.353.957h3.11a.448.448,0,0,1,.314.128.43.43,0,0,1,0,.616.448.448,0,0,1-.314.128H4.229A4.247,4.247,0,0,1,1.272,13.2a4.075,4.075,0,0,1-.127-5.791,4.24,4.24,0,0,1,2.9-1.293,5.729,5.729,0,0,1,.365-2.324A5.811,5.811,0,0,1,5.685,1.8,5.937,5.937,0,0,1,7.656.463,6.029,6.029,0,0,1,10,0Z" transform="translate(0 0)" fill="#ef5332"></path>
+              <path d="M2.232,0a.359.359,0,0,1,.231.091L4.35,1.922a.394.394,0,0,1,.027.521.343.343,0,0,1-.488.023L2.574,1.19V6.957a.355.355,0,0,1-.342.366.355.355,0,0,1-.343-.366V1.19L.575,2.466a.349.349,0,0,1-.488-.023.389.389,0,0,1,.027-.521L2,.092A.289.289,0,0,1,2.232,0Z" transform="translate(7.506 8.678)" fill="#ef5332"></path></svg>
+              </zpr-dropzone-icon>
+              <zpr-dropzone-msg class="help-text" hydrated="">
+                <span>Drag your cover image here or click to upload</span>
+              </zpr-dropzone-msg>
+              </div>
+              </div>
+            
+            </div>
+            </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" class="btn-cancel-cover" onClick={handleCoverClose}>
+             Cancel
+            </Button>
+            <Button variant="primary" class="btn-save-cover" onClick={handleCoverClose}>
+              Save
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+
+     {/* End coverimage Model  */}
+
      {/* Start Delete Model  */}
       <Modal id="delete-project-popup" show={showDelete} onHide={handleDeleteClose}>
           <Modal.Header closeButton>

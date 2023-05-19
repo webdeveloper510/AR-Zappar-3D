@@ -415,7 +415,7 @@ console.log('===>' , id)}
           <div style={{borderLeft: "1px solid rgb(178, 196, 215)" ,  width: "auto" ,  height: "12px"}}>
           </div>
         </div>
-        <button className="ContextMenuButton--1ztuK ContextMenuButton--p-6XR" title="Undo" onClick={event  => handleSelectOption(event , "Undo")}>
+        <button className="ContextMenuButton--1ztuK ContextMenuButton--p-6XR undo-hover" title="Undo" onClick={event  => handleSelectOption(event , "Undo")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="23"
@@ -903,12 +903,12 @@ console.log('===>' , id)}
                                 <Accordion.Body>
 
                                   <div className="continer">
-                                    <div className="row">
+                                    {/* <div className="row">
                                       <p>Attachment points:</p>
-                                    </div>
+                                    </div> */}
 
-                                    <div className="row">
-                                      {/* start dropdown origin */}
+                                    {/* <div className="row">
+                                     
                                       <Accordion >
                                         <Accordion.Item eventKey="0">
                                           <Accordion.Header>Origin</Accordion.Header>
@@ -921,44 +921,44 @@ console.log('===>' , id)}
                                           </Accordion.Body>
                                         </Accordion.Item>
                                       </Accordion>
-                                      {/* start dropdown origin */}
-                                    </div>
+                                    
+                                    </div> */}
 
-                                    <div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Open--EFZA8" style={{ overflow: "visible" }}><div data-testid="Transforms"><div class="RowTitle--21qhU RowTitle--3Xq7s">Size (mm)
+                                    <div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Open--EFZA8" style={{ overflow: "visible" }}><div data-testid="Transforms"><div class="accor-title RowTitle--21qhU RowTitle--3Xq7s">Size (mm)
                                       <button class="PadLockBtn--1bnDi">
                                         {/* <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Unlock aspect ratio</title><g id="Aspect-Ratio-Locked-20-x-20" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><path d="M10.8994949,-0.100505063 C12.5563492,-0.100505063 13.8994949,1.24264069 13.8994949,2.89949494 L13.8994949,5.89949494 C13.8994949,7.55634919 12.5563492,8.89949494 10.8994949,8.89949494 L10.3994949,8.89949494 L10.3994949,10.8994949 L10.8994949,10.8994949 C12.5563492,10.8994949 13.8994949,12.2426407 13.8994949,13.8994949 L13.8994949,16.8994949 C13.8994949,18.5563492 12.5563492,19.8994949 10.8994949,19.8994949 L8.89949494,19.8994949 C7.24264069,19.8994949 5.89949494,18.5563492 5.89949494,16.8994949 L5.89949494,13.8994949 C5.89949494,12.2426407 7.24264069,10.8994949 8.89949494,10.8994949 L9.39949494,10.8994949 L9.39949494,8.89949494 L8.89949494,8.89949494 C7.24264069,8.89949494 5.89949494,7.55634919 5.89949494,5.89949494 L5.89949494,2.89949494 C5.89949494,1.24264069 7.24264069,-0.100505063 8.89949494,-0.100505063 L10.8994949,-0.100505063 Z M10.8994949,11.8994949 L10.3994949,11.8994949 L10.3994949,13.8994949 C10.3994949,14.1756373 10.1756373,14.3994949 9.89949494,14.3994949 C9.65403505,14.3994949 9.44988657,14.2226198 9.40755061,13.9893706 L9.39949494,13.8994949 L9.39949494,11.8994949 L8.89949494,11.8994949 C7.84513314,11.8994949 6.98132981,12.7153727 6.90498067,13.7502326 L6.89949494,13.8994949 L6.89949494,16.8994949 C6.89949494,17.9538567 7.71537273,18.8176601 8.75023259,18.8940092 L8.89949494,18.8994949 L10.8994949,18.8994949 C11.9538567,18.8994949 12.8176601,18.0836171 12.8940092,17.0487573 L12.8994949,16.8994949 L12.8994949,13.8994949 C12.8994949,12.7949254 12.0040644,11.8994949 10.8994949,11.8994949 Z M10.8994949,0.899494937 L8.89949494,0.899494937 C7.84513314,0.899494937 6.98132981,1.71537273 6.90498067,2.75023259 L6.89949494,2.89949494 L6.89949494,5.89949494 C6.89949494,6.95385673 7.71537273,7.81766006 8.75023259,7.8940092 L8.89949494,7.89949494 L9.39949494,7.89949494 L9.39949494,5.89949494 C9.39949494,5.62335256 9.62335256,5.39949494 9.89949494,5.39949494 C10.1449548,5.39949494 10.3491033,5.5763701 10.3914393,5.8096193 L10.3994949,5.89949494 L10.3994949,7.89949494 L10.8994949,7.89949494 C11.9538567,7.89949494 12.8176601,7.08361715 12.8940092,6.04875728 L12.8994949,5.89949494 L12.8994949,2.89949494 C12.8994949,1.79492544 12.0040644,0.899494937 10.8994949,0.899494937 Z" id="Combined-Shape" fill="#4A90E2" fill-rule="nonzero" transform="translate(9.899495, 9.899495) rotate(-315.000000) translate(-9.899495, -9.899495) "></path></g></svg> */}
                                       </button></div>
                                       <div class="InputRow--1kdSn InputRow--2M9c1">
 
                                         <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj false">
-                                          <input type="text" data-testid="NumericalInput" id="GetWidth" />
+                                          <input type="number" data-testid="NumericalInput" id="GetWidth" />
                                           <label data-testid="NumericalInputLabel" style={{ color: "grey" }}>W</label></div>
 
                                         <div style={{ borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "23px" }}></div>
 
                                         <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj false">
-                                          <input type="text" data-testid="NumericalInput" id="GetHeight" />
+                                          <input type="number" data-testid="NumericalInput" id="GetHeight" />
                                           <label data-testid="NumericalInputLabel" style={{ color: "grey" }}>H</label></div>
 
 
                                         <div style={{ borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "23px" }}></div>
 
                                         <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj Disabled--2q2TU">
-                                          <input type="text" data-testid="NumericalInput" id="GetLength" />
+                                          <input type="number" data-testid="NumericalInput" id="GetLength" />
                                           <label data-testid="NumericalInputLabel" style={{ color: "grey" }}>D</label>
                                         </div>
                                       </div>
 
-                                      <div class="RowTitle--3Kekp RowTitle--3Xq7s title-position">Position (mm)</div>
+                                      <div class="accor-title RowTitle--3Kekp RowTitle--3Xq7s title-position">Position (mm)</div>
                                       <div class="InputRow--VLm0n InputRow--2M9c1"><div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false">
-                                        <input type="text" data-testid="NumericalInput" placeholder="multi" value="101" />
+                                        <input type="number" data-testid="NumericalInput" placeholder="multi" value="101" />
                                         <label data-testid="NumericalInputLabel" style={{ color: "red" }}>X</label></div>
 
                                         <div style={{ borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "23px" }}></div>
 
                                         <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false">
 
-                                          <input type="text" data-testid="NumericalInput" placeholder="multi" value="3" />
+                                          <input type="number" data-testid="NumericalInput" placeholder="multi" value="3" />
 
                                           <label data-testid="NumericalInputLabel" style={{ color: "green" }}>Y</label></div>
 
@@ -966,19 +966,19 @@ console.log('===>' , id)}
 
                                         <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false">
 
-                                          <input type="text" data-testid="NumericalInput" placeholder="multi" value="14" />
+                                          <input type="number" data-testid="NumericalInput" placeholder="multi" value="14" />
 
                                           <label data-testid="NumericalInputLabel" style={{ color: "blue" }}>Z</label></div></div>
 
-                                      <div class="RowTitle--1O1Ao RowTitle--3Xq7s title-rotation">Rotation (deg)</div><div class="InputRow--J8Q4c InputRow--2M9c1">
+                                      <div class="accor-title RowTitle--1O1Ao RowTitle--3Xq7s title-rotation">Rotation (deg)</div><div class="InputRow--J8Q4c InputRow--2M9c1">
 
                                         <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--2C1wH TransformInput--6Bbsj false">
 
-                                          <input type="text" data-testid="NumericalInput" placeholder="multi" value="0" />
+                                          <input type="number" data-testid="NumericalInput" placeholder="multi" value="0" />
 
                                           <label data-testid="NumericalInputLabel" style={{ color: "red" }}>°X</label></div><div style={{ borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "23px" }}></div>
                                         <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--2C1wH TransformInput--6Bbsj false">
-                                          <input type="text" data-testid="NumericalInput" placeholder="multi" value="0" />
+                                          <input type="number" data-testid="NumericalInput" placeholder="multi" value="0" />
 
                                           <label data-testid="NumericalInputLabel" style={{ color: "green" }}>°Y</label></div>
 
@@ -986,7 +986,7 @@ console.log('===>' , id)}
 
                                         <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--2C1wH TransformInput--6Bbsj false">
 
-                                          <input type="text" data-testid="NumericalInput" placeholder="multi" value="0" />
+                                          <input type="number" data-testid="NumericalInput" placeholder="multi" value="0" />
                                           <label data-testid="NumericalInputLabel" style={{ color: "blue" }}>°Z</label></div></div>
                                       <div class="InputRow--1FGNp InputRow--2M9c1"><div class="InputRowTitle--3HdL6 InputRowTitle--DDSWz"><span>Order</span></div>
 
@@ -1161,11 +1161,11 @@ console.log('===>' , id)}
                           
                               <div class="Switcher2d3d--1SCbh Disabled--fqu6h" data-testid="Switcher2d3d">
                           
-                                    <button class="Inactive--945so" data-testid="ToggleOffButton" />2D
+                                    <button class="Inactive--945so" data-testid="ToggleOffButton">2D</button>
                                     
                                     <label class="switch--1ZKOu"><input type="checkbox" data-testid="ToggleState" /><span class="slider--y3Xl-"></span></label>
                                     
-                                    <button class="Active--3YQI9" data-testid="ToggleOnButton" />3D
+                                    <button class="Active--3YQI9" data-testid="ToggleOnButton">3D</button>
                                     
                                     </div>
                                     

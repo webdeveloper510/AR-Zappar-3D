@@ -431,7 +431,7 @@ input {
 }
 .target-left-sidebar {
     background: #fff;
-    width: 90px;
+    width: 60px;
     height: 100%;
     background: #fff;
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 16%);
@@ -604,6 +604,7 @@ button {
     align-items: center;
     justify-content: space-between;
     padding: 0 6px 0 16px;
+
 }
 .DropDown--yH8Yv .SelectedOptionContainer--1dj6q {
     display: flex;
@@ -909,6 +910,10 @@ button {
     width: 100%;
     display: block;
 }
+.accor-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
 .btn-target-upload {
     padding: 4px 0px;
     background: #5089c7;
@@ -916,4 +921,52 @@ button {
 }
 .btn-target-upload .TitleContainer--2xD-b {
     font-size: 12px;
+}
+.undo-hover svg path:hover {
+    fill: #4f8cc6;
+}
+/**************right-target-bar*****************/
+.InputRow--1kdSn.InputRow--2M9c1 {
+    margin-bottom: 16px;
+    display: flex;
+    font-size: 14px;
+    flex-direction: row;
+}
+.TransformInput--6Bbsj {
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    background-color: #eef6fe;
+    height: 23px;
+    border-radius: 3px;
+    color: #344b60;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0);
+}
+.NumericalInput--3r_8a input {
+    user-select: auto;
+    width: 100%;
+    padding: 5px;
+    font-size: 13px;
+    outline: none;
+    color: inherit;
+    border: none;
+    outline: none;
+    background-color: inherit;
+}
+.NumericalInput--3r_8a label {
+    position: absolute;
+    right: 3px;
+    align-self: center;
+    font-size: 10px;
+    font-weight: 500;
+    opacity: 1;
+    height: 11px;
+    top: -5px;
+}
+.InputRow--2M9c1 {
+    margin-bottom: 16px;
+    display: flex;
+    font-size: 14px;
+    flex-direction: row;
 }
