@@ -884,13 +884,41 @@ button {
     bottom: 15px;
     left: 15px;
 }
-
+.target-tab-content .title-content {
+    display: block;
+    background: transparent;
+    width: 100%;
+}
+.target-tab-content .title-content .accordion-item {
+    border: none;
+    background: transparent;
+}
+.target-tab-content .title-content .accordion-item .accordion-header {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    padding-left: 0;
+    padding-bottom: 0;
+}
+.target-tab-content  .tab-pane .accordion .accordion-item .accordion-collapse .accordion-body {
+    padding: 0;
+}
+input.TextInput--14pX7.Editable--3ahFV {
+    border: none;
+    height: 32px;
+    width: 100%;
+    font-weight: 500;
+    padding: 0 5px;
+    border-radius: 5px;
+    background-color: #eef6ff;
+    font-size: 14px;
+}
 .target-accordian button.accordion-button.collapsed {
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     padding-left: 0;
     padding-bottom: 0;
 }
+
 .target-accordian .accordion-item {
     border: 0px;
 }
@@ -925,6 +953,63 @@ button {
 .undo-hover svg path:hover {
     fill: #4f8cc6;
 }
+h5.opacity {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    padding-left: 0;
+    padding-bottom: 0;
+    text-align: left;
+}
+h5.orient-head {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    padding-left: 0;
+    padding-bottom: 0;
+    text-align: left;
+}
+input[type=range] {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: block;
+    height: 4px;
+}
+/* input[type=range]:focus {
+    outline: none;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: #ccc;
+    border: none
+  }
+  
+  input[type=range]::-webkit-slider-thumb {
+    border: none;
+    height: 30px;
+    width: 8px;
+    background: red;
+    -webkit-appearance: none;
+    margin-top: -7px;
+  }
+  
+ 
+  
+  input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: red;
+    border: none;
+  }
+  
+  input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 30px;
+    width: 6px;
+    background: #fff;
+  } */
 /**************right-target-bar*****************/
 .InputRow--1kdSn.InputRow--2M9c1 {
     margin-bottom: 16px;

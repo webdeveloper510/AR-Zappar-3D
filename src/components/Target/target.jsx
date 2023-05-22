@@ -14,7 +14,13 @@ import { toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandPointUp, faT, faImage, faVideo, faCube, faImagePortrait, faGear, faChevronLeft, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
+import { FaDoorOpen } from 'react-icons/fa';
+import { GiFlatPlatform, GiLoveSong } from 'react-icons/gi';
+import { RiVideoUploadLine } from 'react-icons/ri';
 
+import { BsPlayCircle } from 'react-icons/bs';
+import { AiOutlinePauseCircle } from 'react-icons/ai'
+import { Button } from "bootstrap";
 
 const Target =()=>{
 
@@ -54,6 +60,20 @@ const Target =()=>{
 
 /******************* End --- tab close state ***************** */
 
+  // start music pause to paly icons 
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handleClick = () => {
+    setIsPlaying(!isPlaying);
+  };
+  // End music pause to paly icons 
+
+  // start range counter
+  const [value, setValue] = useState(0);
+
+  const handleRangeValue = (event) => {
+    setValue(event.target.value);
+  };
 
 
 
@@ -818,308 +838,461 @@ console.log('===>' , id)}
 
               <Col className="tab-main">
                 <Tab.Content>
-                  <Tab.Pane eventKey="first" className='bg-light py-4 tab-content'>
-                  {/* Start Content show hide content */}
-                  {/* start Content show hide content  */}
-                  <div class="TitleContainer--2xD-b title-content target-accordian">
-                            <Accordion>
-                              <Accordion.Item eventKey="0">
-                                <Accordion.Header> Target Image</Accordion.Header>
-                                <Accordion.Body>
-                                <button data-testid="ShelfDrawerBtn" class="btn-upload DrawerBtn--bdcva Open--EFZA8 btn-target-upload">
-                                  <div class="TitleContainer--2xD-b">
-                                    Upload Scene Image
-                                    </div>
-                                </button>
-                                  <div data-testid="ShelfDrawerBtnContent" class="target-image-content Content--15Wyt Open--EFZA8" style={{ overflow: "visible" }}>
-                                    <div>
-                                      <div class="Title--fDSi1 Title--36gWd">Image</div>
-                                      <div class="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO " style={{ width: "100%", height: "170px" }}>
-                                        <img src={targetImage} style={{ width: '100%', height: '100%', display: 'flex', objectFit: 'cover' }} />
-                                        <div class="HoverDiv--jI34Q "><button style={{ width: "100%", height: "100%" }}><div class="SubBtn--26RUV TrkImgUploadButton--3e-ZC" >Replace</div></button><input type="file" accept="image/jpeg,image/png,.jpeg,.jpg,.png" onChange={TargetImage} style={{ 'margin': '-60px 0 0 0 ', 'position': 'relative', 'z-index': '3' }} /></div>
-                                        <div class="HoverDiv--2gksf ">
-                                          <button class="ActionBtn--1x70k">
-                                            <div class="EntityReplaceBtn--V4byk">Replace</div>
-                                          </button>
-                                          <input type="file" style={{ display: "none" }} />
-                                        </div>
+
+                {/* Start---- scene   */}
+                <Tab.Pane eventKey="first" className='bg-light py-4 tab-content target-tab-content'>
+                      <div class="InspectorMenu--1PeA4" data-testid="InspectorMenu">
+
+
+                        <Accordion>
+                          <div class="ShelfContainer--1Ad4O">
+
+                            <div style={{ width: "100%" }}>
+                              {/* start Content show hide content  */}
+                              <div class="TitleContainer--2xD-b title-content">
+                              
+                                <Accordion.Item eventKey="0">
+                                  <Accordion.Header> Name</Accordion.Header>
+                                  <Accordion.Body>
+                                    <div data-testid="ShelfDrawerBtnContent" class="target-image-content Content--15Wyt Open--EFZA8" style={{ overflow: "visible" }}>
+                                      <div>
+                                      <div class="TextInputContainer--1v9KK">
+                                        <input data-testid="TextInput" class="TextInput--14pX7  Editable--3ahFV" type="text" value=""/></div>
+                                        
                                       </div>
                                     </div>
-                                  </div>
 
-                                </Accordion.Body>
-                              </Accordion.Item>
-                            </Accordion>
+                                  </Accordion.Body>
+                                </Accordion.Item>
+                              </div>
+                              {/* End Content show hide  */}
+
+
+
+                              <div style={{ borderTop: "1px solid rgb(178, 196, 215)", height: "auto", width: "100%" }}>
+							  </div>
+                            </div>
+
+                          
+							  
+							  <div style={{ width: "100%" }}>
+
+                              <div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Closed--2YzdP" style={{ overflow: "hidden" }}>
+                                </div>
+                               
+                               
+                                </div>
+                                <div style={{ width: "100%" }}>
+                              </div>
+                              <div style={{ width: "100%" }}>
+
+
+                              <button data-testid="ShelfDrawerBtn" class="btn-transition-effect DrawerBtn--bdcva  ">
+
+                                {/* start Transition show hide content  */}
+                                <div class="TitleContainer--2xD-b title-content">
+                                  <Accordion.Item eventKey="4">
+                                    <Accordion.Header> Transition Effects</Accordion.Header>
+                                    <Accordion.Body>
+                                      <div data-testid="ShelfDrawerBtnContent" class="target-image-content Content--15Wyt Open--EFZA8" style={{ overflow: "visible" }}>
+                                        <div>
+                                        <div className="row">
+                                              <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+                                              <Col className="side-tab mb-5 mb-md-0 p-0">
+                                                <Nav variant="pills" className="side-main py-4 px-2">
+                                                  <Nav.Item>
+                                                    <Nav.Link eventKey="first">
+                                                      
+                                                      <a href="#tab1" className="nav-link p-0 m-0 fw-bold link-dark enter-text"> Enter</a>
+                                                    </Nav.Link>
+                                                  </Nav.Item>
+
+                                                  <Nav.Item>
+                                                    <Nav.Link eventKey="second">
+                                                     
+                                                      <a href="#tab2" className="nav-link p-0 m-0 fw-bold link-dark enter-text" >Exit</a>
+                                                    </Nav.Link>
+                                                  </Nav.Item>
+
+                                                </Nav>
+                                              </Col>
+                                              </Tab.Container>
+                                            </div>
+
+                                        
+                                        </div>
+                                      </div>
+
+                                    </Accordion.Body>
+                                  </Accordion.Item>
+                                </div>
+                                {/* End Transition show hide content  */}
+
+                                {/* <svg class="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
+                              </button><div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Closed--2YzdP" style={{ overflow: "hidden" }}></div>
+
+                                      {/* /**************photoUi****************/}
+                              <div style={{ borderTop: "1px solid rgb(178, 196, 215)", height: "auto", width: "100%" }}></div>
+                              </div><div style={{ width: "100%" }}>
+
+                              
+
+                              <div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Closed--2YzdP" style={{ overflow: "hidden" }}>
+                                </div>
+                               
+                               
+                                </div>
+                                <div style={{ width: "100%" }}>
+                              </div>
+                              <div style={{ width: "100%" }}>
+
+
+                              <button data-testid="ShelfDrawerBtn" class="btn-transition-effect DrawerBtn--bdcva  ">
+
+                                {/* start Transition show hide content  */}
+                                <div class="TitleContainer--2xD-b title-content">
+                                  <Accordion.Item eventKey="5">
+                                    <Accordion.Header> Photo UI</Accordion.Header>
+                                    <Accordion.Body>
+                                      <div data-testid="ShelfDrawerBtnContent" class="target-image-content Content--15Wyt Open--EFZA8" style={{ overflow: "visible" }}>
+                                        <div>
+                                        <div class="TextInputContainer--1v9KK">
+                                        <input data-testid="TextInput" class="TextInput--14pX7  Editable--3ahFV" type="text" value=""/>
+                                        
+                                      </div>
+                                        
+                                        </div>
+                                      </div>
+
+                                    </Accordion.Body>
+                                  </Accordion.Item>
+                                </div>
+                                {/* End Transition show hide content  */}
+
+                                {/* <svg class="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
+                              </button><div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Closed--2YzdP" style={{ overflow: "hidden" }}></div>
+
+                              <div style={{ borderTop: "1px solid rgb(178, 196, 215)", height: "auto", width: "100%" }}>
+                              </div>
+
+
+
+
+
+                            </div>
+                          </div>
+                               {/* /**************photoUi*end***************/}
+                        </Accordion>
+
+
+                        
+
+                        <div class="OuterContainer--1AGzZ">
+
+                          <div class="Switcher2d3d--1SCbh Disabled--fqu6h" data-testid="Switcher2d3d">
+
+                            <button class="Inactive--945so" data-testid="ToggleOffButton" />2D
+
+                            <label class="switch--1ZKOu"><input type="checkbox" data-testid="ToggleState" /><span class="slider--y3Xl-"></span></label>
+
+                            <button class="Active--3YQI9" data-testid="ToggleOnButton" />3D
 
                           </div>
-                          {/* End Content show hide  */}
-                {/* End Content show hide content */}
 
-                  </Tab.Pane>
-                  <Tab.Pane eventKey="second" className='bg-light py-4 tab-content'>
-{/* Start Content show hide content */}
-                  {/* start Content show hide content  */}
-                  <div class="TitleContainer--2xD-b title-content target-accordian">
-                            <Accordion>
-                              <Accordion.Item eventKey="0">
-                                <Accordion.Header> Target Image</Accordion.Header>
-                                <Accordion.Body>
-                                <button data-testid="ShelfDrawerBtn" class="btn-upload DrawerBtn--bdcva Open--EFZA8 btn-target-upload">
-                                  <div class="TitleContainer--2xD-b">
-                                    Upload Target Image
-                                    </div>
-                                </button>
-                                  <div data-testid="ShelfDrawerBtnContent" class="target-image-content Content--15Wyt Open--EFZA8" style={{ overflow: "visible" }}>
-                                    <div>
-                                      <div class="Title--fDSi1 Title--36gWd">Image</div>
-                                      <div class="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO " style={{ width: "100%", height: "170px" }}>
-                                        <img src={targetImage} style={{ width: '100%', height: '100%', display: 'flex', objectFit: 'cover' }} />
-                                        <div class="HoverDiv--jI34Q "><button style={{ width: "100%", height: "100%" }}><div class="SubBtn--26RUV TrkImgUploadButton--3e-ZC" >Replace</div></button><input type="file" accept="image/jpeg,image/png,.jpeg,.jpg,.png" onChange={TargetImage} style={{ 'margin': '-60px 0 0 0 ', 'position': 'relative', 'z-index': '3' }} /></div>
-                                        <div class="HoverDiv--2gksf ">
-                                          <button class="ActionBtn--1x70k">
-                                            <div class="EntityReplaceBtn--V4byk">Replace</div>
-                                          </button>
-                                          <input type="file" style={{ display: "none" }} />
+                          <div style={{ borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "20px" }}></div><div class="ViewMenu--2ejhM"><span>27%</span></div>
+                        </div>
+
+                      </div>
+                    </Tab.Pane>
+                 {/* End---- scene   */}
+
+ 
+                   {/* Start---- projects   */}
+                  <Tab.Pane eventKey="second" className='bg-light py-4 tab-content target-tab-content'>
+                      <div class="InspectorMenu--1PeA4" data-testid="InspectorMenu">
+                        <Accordion>
+                          <div class="ShelfContainer--1Ad4O">
+
+                            <div style={{ width: "100%" }}>
+
+                              <button data-testid="ShelfDrawerBtn" class="btn-transform DrawerBtn--bdcva Open--EFZA8 "></button>
+
+
+
+                              {/* <title></title><path d="M0.333/421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
+
+                              
+                                </div><div style={{ width: "100%" }}>
+
+                              <button data-testid="ShelfDrawerBtn" class="btn-appearence DrawerBtn--bdcva  ">
+
+                                {/* start Target-Image show hide content  */}
+                                <div class="TitleContainer--2xD-b title-content">
+                                  <Accordion.Item eventKey="2">
+                                    <Accordion.Header>Target Image</Accordion.Header>
+                                    <Accordion.Body>
+                                      <div data-testid="ShelfDrawerBtnContent" class="target-image-content Content--15Wyt Open--EFZA8" style={{ overflow: "visible" }}>
+                                        <div>
+                                          <div className="continer">
+                                            <div data-testid="ShelfDrawerBtnContent" class="target-image-content Content--15Wyt Open--EFZA8" style={{ overflow: "visible" }}>
+                                              <div>
+                                                <div class="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO " style={{ width: "100%", height: "170px" }}>
+                                                  <img src={targetImage} style={{ width: '100%', height: '100%', display: 'flex', objectFit: 'cover' }} />
+                                                  <div class="HoverDiv--jI34Q "><button style={{ width: "100%", height: "100%" }}><div class="SubBtn--26RUV TrkImgUploadButton--3e-ZC" >Replace</div></button><input type="file" accept="image/jpeg,image/png,.jpeg,.jpg,.png" onChange={TargetImage} style={{ 'margin': '-60px 0 0 0 ', 'position': 'relative', 'z-index': '3' }} /></div>
+                                                  <div class="HoverDiv--2gksf ">
+                                                    <button class="ActionBtn--1x70k">
+                                                      <div class="EntityReplaceBtn--V4byk">Replace</div>
+                                                    </button>
+                                                    <input type="file" style={{ display: "none" }} />
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <div className="row">
+                                              <p style={{ fontSize: "12px" }}>
+                                                Target image is shared across all the image tracking scenes in your project.
+                                              </p>
+                                            </div>
+
+                                            <div className="row">
+                                              <h5 class="opacity">Opacity</h5>
+                                              <div>
+                                                <input
+                                                  type="range"
+                                                  id="vol"
+                                                  name="vol"
+                                                  min="0"
+                                                  max="100"
+                                                  value={value}
+                                                  onChange={handleRangeValue}
+                                                />
+                                                <p>{value}</p>
+                                              </div>
+                                            </div>
+
+
+                                            <div className="row">
+                                              <h5 class="orient-head">Orientation</h5>
+                                              <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+                                              <Col className="side-tab mb-5 mb-md-0 p-0">
+                                                <Nav variant="pills" className="side-main py-4 px-2">
+                                                  <Nav.Item>
+                                                    <Nav.Link eventKey="first">
+                                                      <FaDoorOpen style={{ color: "rgb(113 123 131)", width: "15px", height: "15px", marginRight: 4 }} />
+                                                      <a href="#tab1" className="nav-link p-0 m-0 fw-bold link-dark"> Upright</a>
+                                                    </Nav.Link>
+                                                  </Nav.Item>
+
+                                                  <Nav.Item>
+                                                    <Nav.Link eventKey="second">
+                                                      <GiFlatPlatform style={{ color: "rgb(113 123 131)", width: "15px", height: "15px", marginRight: 4 }} />
+                                                      <a href="#tab2" className="nav-link p-0 m-0 fw-bold link-dark" >Flat</a>
+                                                    </Nav.Link>
+                                                  </Nav.Item>
+
+                                                </Nav>
+                                              </Col>
+                                              </Tab.Container>
+                                            </div>
+
+                                            <div className="row">
+                                              <h5>Dimensions</h5>
+                                              <div className="row">
+                                                <div className="col-2">
+                                                  <p>j</p>
+                                                </div>
+                                                <div className="col-2">
+                                                  <p>w</p>
+                                                </div>
+                                                <div className="col-2">
+                                                  <p>w</p>
+                                                </div>
+                                                <div className="col-2">
+                                                  <p> 0</p>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <div className="row">
+                                              <p>Units</p>
+                                              {/* start dropdown origin */}
+                                              <Accordion >
+                                                <Accordion.Item eventKey="0">
+                                                  <Accordion.Header>coordinates</Accordion.Header>
+                                                  <Accordion.Body>
+                                                    <p>millimetres</p>
+                                                    <p>centimetres</p>
+                                                    <p>inches</p>
+                                                    <p>feet</p>
+                                                    <p>coordinates</p>
+                                                  </Accordion.Body>
+                                                </Accordion.Item>
+                                              </Accordion>
+                                              {/* start dropdown origin */}
+                                            </div>
+
+
+                                          </div>
                                         </div>
                                       </div>
-                                    </div>
-                                  </div>
 
-                                </Accordion.Body>
-                              </Accordion.Item>
-                            </Accordion>
+                                    </Accordion.Body>
+                                  </Accordion.Item>
+                                </div>
+                                {/* End Target-Image show hide content  */}
 
-                          </div>
-                          {/* End Content show hide  */}
-                {/* End Content show hide content */}
+                                {/* <svg class="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
+                              </button>
 
+                              <div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Closed--2YzdP" style={{ overflow: "hidden" }}></div><
 
- {/* Start Transforms show hide content */}
- <button data-testid="ShelfDrawerBtn" class="btn-transform DrawerBtn--bdcva Open--EFZA8 "></button>
- <div class="TitleContainer--2xD-b title-content target-accordian">
-                            <Accordion>
-                              <Accordion.Item eventKey="0">
-                                <Accordion.Header>Transforms</Accordion.Header>
-                                <Accordion.Body>
-
-                                  <div className="continer">
-                                    {/* <div className="row">
-                                      <p>Attachment points:</p>
-                                    </div> */}
-
-                                    {/* <div className="row">
-                                     
-                                      <Accordion >
-                                        <Accordion.Item eventKey="0">
-                                          <Accordion.Header>Origin</Accordion.Header>
-                                          <Accordion.Body>
-                                            <p>Origin</p>
-                                            <p>Left eyebrow</p>
-                                            <p>Right eyebrow</p>
-                                            <p>Left ear</p>
-                                            <p>Right ear</p>
-                                          </Accordion.Body>
-                                        </Accordion.Item>
-                                      </Accordion>
-                                    
-                                    </div> */}
-
-                                    <div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Open--EFZA8" style={{ overflow: "visible" }}><div data-testid="Transforms"><div class="accor-title RowTitle--21qhU RowTitle--3Xq7s">Size (mm)
-                                      <button class="PadLockBtn--1bnDi">
-                                        {/* <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Unlock aspect ratio</title><g id="Aspect-Ratio-Locked-20-x-20" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><path d="M10.8994949,-0.100505063 C12.5563492,-0.100505063 13.8994949,1.24264069 13.8994949,2.89949494 L13.8994949,5.89949494 C13.8994949,7.55634919 12.5563492,8.89949494 10.8994949,8.89949494 L10.3994949,8.89949494 L10.3994949,10.8994949 L10.8994949,10.8994949 C12.5563492,10.8994949 13.8994949,12.2426407 13.8994949,13.8994949 L13.8994949,16.8994949 C13.8994949,18.5563492 12.5563492,19.8994949 10.8994949,19.8994949 L8.89949494,19.8994949 C7.24264069,19.8994949 5.89949494,18.5563492 5.89949494,16.8994949 L5.89949494,13.8994949 C5.89949494,12.2426407 7.24264069,10.8994949 8.89949494,10.8994949 L9.39949494,10.8994949 L9.39949494,8.89949494 L8.89949494,8.89949494 C7.24264069,8.89949494 5.89949494,7.55634919 5.89949494,5.89949494 L5.89949494,2.89949494 C5.89949494,1.24264069 7.24264069,-0.100505063 8.89949494,-0.100505063 L10.8994949,-0.100505063 Z M10.8994949,11.8994949 L10.3994949,11.8994949 L10.3994949,13.8994949 C10.3994949,14.1756373 10.1756373,14.3994949 9.89949494,14.3994949 C9.65403505,14.3994949 9.44988657,14.2226198 9.40755061,13.9893706 L9.39949494,13.8994949 L9.39949494,11.8994949 L8.89949494,11.8994949 C7.84513314,11.8994949 6.98132981,12.7153727 6.90498067,13.7502326 L6.89949494,13.8994949 L6.89949494,16.8994949 C6.89949494,17.9538567 7.71537273,18.8176601 8.75023259,18.8940092 L8.89949494,18.8994949 L10.8994949,18.8994949 C11.9538567,18.8994949 12.8176601,18.0836171 12.8940092,17.0487573 L12.8994949,16.8994949 L12.8994949,13.8994949 C12.8994949,12.7949254 12.0040644,11.8994949 10.8994949,11.8994949 Z M10.8994949,0.899494937 L8.89949494,0.899494937 C7.84513314,0.899494937 6.98132981,1.71537273 6.90498067,2.75023259 L6.89949494,2.89949494 L6.89949494,5.89949494 C6.89949494,6.95385673 7.71537273,7.81766006 8.75023259,7.8940092 L8.89949494,7.89949494 L9.39949494,7.89949494 L9.39949494,5.89949494 C9.39949494,5.62335256 9.62335256,5.39949494 9.89949494,5.39949494 C10.1449548,5.39949494 10.3491033,5.5763701 10.3914393,5.8096193 L10.3994949,5.89949494 L10.3994949,7.89949494 L10.8994949,7.89949494 C11.9538567,7.89949494 12.8176601,7.08361715 12.8940092,6.04875728 L12.8994949,5.89949494 L12.8994949,2.89949494 C12.8994949,1.79492544 12.0040644,0.899494937 10.8994949,0.899494937 Z" id="Combined-Shape" fill="#4A90E2" fill-rule="nonzero" transform="translate(9.899495, 9.899495) rotate(-315.000000) translate(-9.899495, -9.899495) "></path></g></svg> */}
-                                      </button></div>
-                                      <div class="InputRow--1kdSn InputRow--2M9c1">
-
-                                        <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj false">
-                                          <input type="number" data-testid="NumericalInput" id="GetWidth" />
-                                          <label data-testid="NumericalInputLabel" style={{ color: "grey" }}>W</label></div>
-
-                                        <div style={{ borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "23px" }}></div>
-
-                                        <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj false">
-                                          <input type="number" data-testid="NumericalInput" id="GetHeight" />
-                                          <label data-testid="NumericalInputLabel" style={{ color: "grey" }}>H</label></div>
+                                div style={{ borderTop: "1px solid rgb(178, 196, 215)", height: "auto", width: "100%" }}></div></div><div style={{ width: "100%" }}>
 
 
-                                        <div style={{ borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "23px" }}></div>
+                              <button data-testid="ShelfDrawerBtn" class="btn-actions DrawerBtn--bdcva  ">
 
-                                        <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj Disabled--2q2TU">
-                                          <input type="number" data-testid="NumericalInput" id="GetLength" />
-                                          <label data-testid="NumericalInputLabel" style={{ color: "grey" }}>D</label>
+                                {/* start Backgound-Sound show hide content  */}
+                                <div class="TitleContainer--2xD-b title-content">
+                                  <Accordion.Item eventKey="3">
+                                    <Accordion.Header>Background Sound</Accordion.Header>
+                                    <Accordion.Body>
+                                      <div className="row">
+                                        <button data-testid="ShelfDrawerBtn" class="btn-upload DrawerBtn--bdcva Open--EFZA8 ">
+                                          <div class="TitleContainer--2xD-b"> Browse media library
+                                          </div>
+                                        </button>
+                                        <div>
+
+                                          <div className="mp3">
+                                            <label for="profile_pic"><RiVideoUploadLine style={{ fontSize: "40px" }} /></label>
+                                            <input
+                                              type="file"
+                                              id="profile_pic"
+                                              name="profile_pic"
+                                              accept=".mp3, .mp4" />
+                                          </div>
                                         </div>
                                       </div>
+                                      <div className="row">
+                                        <p style={{ fontSize: "12px" }}>Looking for audio assets?</p>
 
-                                      <div class="accor-title RowTitle--3Kekp RowTitle--3Xq7s title-position">Position (mm)</div>
-                                      <div class="InputRow--VLm0n InputRow--2M9c1"><div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false">
-                                        <input type="number" data-testid="NumericalInput" placeholder="multi" value="101" />
-                                        <label data-testid="NumericalInputLabel" style={{ color: "red" }}>X</label></div>
+                                        <h5 style={{ fontSize: "11px" }}>Recent files</h5>
 
-                                        <div style={{ borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "23px" }}></div>
+                                        {/* start Recent files */}
+                                        <p style={{ fontSize: "13px" }}><GiLoveSong />Beep_2.mp3
+                                          <span onClick={handleClick} style={{ marginLeft: "50px", fontSize: "30px;" }} >
+                                            {isPlaying ? <AiOutlinePauseCircle /> : <BsPlayCircle />}
+                                          </span>
+                                        </p>
+                                        <p style={{ fontSize: "13px" }}><GiLoveSong />Beep_2.mp3
+                                          <span onClick={handleClick} style={{ marginLeft: "50px", fontSize: "30px;" }} >
+                                            {isPlaying ? <AiOutlinePauseCircle /> : <BsPlayCircle />}
+                                          </span>
+                                        </p>
+                                        <p style={{ fontSize: "13px" }}><GiLoveSong />Beep_2.mp3
+                                          <span onClick={handleClick} style={{ marginLeft: "50px", fontSize: "30px;" }} >
+                                            {isPlaying ? <AiOutlinePauseCircle /> : <BsPlayCircle />}
+                                          </span>
+                                        </p>
+                                        <p style={{ fontSize: "13px" }}><GiLoveSong />Beep_2.mp3
+                                          <span onClick={handleClick} style={{ marginLeft: "50px", fontSize: "30px;" }} >
+                                            {isPlaying ? <AiOutlinePauseCircle /> : <BsPlayCircle />}
+                                          </span>
+                                        </p>
+                                        <p style={{ fontSize: "13px" }}><GiLoveSong />Beep_2.mp3
+                                          <span onClick={handleClick} style={{ marginLeft: "50px", fontSize: "30px;" }} >
+                                            {isPlaying ? <AiOutlinePauseCircle /> : <BsPlayCircle />}
+                                          </span>
+                                        </p>    <p style={{ fontSize: "13px" }}><GiLoveSong />Beep_2.mp3
+                                          <span onClick={handleClick} style={{ marginLeft: "50px", fontSize: "30px;" }} >
+                                            {isPlaying ? <AiOutlinePauseCircle /> : <BsPlayCircle />}
+                                          </span>
+                                        </p>
 
-                                        <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false">
 
-                                          <input type="number" data-testid="NumericalInput" placeholder="multi" value="3" />
 
-                                          <label data-testid="NumericalInputLabel" style={{ color: "green" }}>Y</label></div>
 
-                                        <div style={{ borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "23px" }}></div>
+                                        {/* End Recent files */}
+                                      </div>
 
-                                        <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false">
 
-                                          <input type="number" data-testid="NumericalInput" placeholder="multi" value="14" />
+                                    </Accordion.Body>
+                                  </Accordion.Item>
+                                </div>
+                                {/* End Backgound-Sound show hide content  */}
 
-                                          <label data-testid="NumericalInputLabel" style={{ color: "blue" }}>Z</label></div></div>
+                                {/* <svg class="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
 
-                                      <div class="accor-title RowTitle--1O1Ao RowTitle--3Xq7s title-rotation">Rotation (deg)</div><div class="InputRow--J8Q4c InputRow--2M9c1">
+                              </button><div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Closed--2YzdP" style={{ overflow: "hidden" }}></div>
 
-                                        <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--2C1wH TransformInput--6Bbsj false">
+                              <div style={{ borderTop: "1px solid rgb(178, 196, 215)", height: "auto", width: "100%" }}></div></div><div style={{ width: "100%" }}>
 
-                                          <input type="number" data-testid="NumericalInput" placeholder="multi" value="0" />
 
-                                          <label data-testid="NumericalInputLabel" style={{ color: "red" }}>°X</label></div><div style={{ borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "23px" }}></div>
-                                        <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--2C1wH TransformInput--6Bbsj false">
-                                          <input type="number" data-testid="NumericalInput" placeholder="multi" value="0" />
+                              <button data-testid="ShelfDrawerBtn" class="btn-transition-effect DrawerBtn--bdcva  ">
 
-                                          <label data-testid="NumericalInputLabel" style={{ color: "green" }}>°Y</label></div>
-
-                                        <div style={{ borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "23px" }}></div>
-
-                                        <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false TransformInput--2C1wH TransformInput--6Bbsj false">
-
-                                          <input type="number" data-testid="NumericalInput" placeholder="multi" value="0" />
-                                          <label data-testid="NumericalInputLabel" style={{ color: "blue" }}>°Z</label></div></div>
-                                      <div class="InputRow--1FGNp InputRow--2M9c1"><div class="InputRowTitle--3HdL6 InputRowTitle--DDSWz"><span>Order</span></div>
-
-                                        <button data-testid="TransformsOrderMoveToFront" class="MoveForward--18DDT">
+                                {/* start Analytics show hide content  */}
+                                <div class="TitleContainer--2xD-b title-content">
+                                  <Accordion.Item eventKey="4">
+                                    <Accordion.Header>Analytics</Accordion.Header>
+                                    <Accordion.Body>
+                                      <div className="row">
+                                        <p>Track with:</p>
+                                        {/* start dropdown origin */}
+                                        <Accordion >
+                                          <Accordion.Item eventKey="0">
+                                            <Accordion.Header>Choose provider</Accordion.Header>
+                                            <Accordion.Body>
+                                              <p>Choose provider</p>
+                                              <p>Google Analytics</p>
+                                              <p>Microsoft Clarity</p>
+                                            </Accordion.Body>
+                                          </Accordion.Item>
+                                        </Accordion>
+                                        {/* start dropdown origin */}
+                                        <button data-testid="ShelfDrawerBtn" class="btn-upload DrawerBtn--bdcva Open--EFZA8 ">
+                                          <div class="TitleContainer--2xD-b"> Cancel
+                                          </div>
                                         </button>
 
-                                        <button data-testid="TransformsOrderMoveForward" class="MoveForward--18DDT">
-
-                                          {/* <svg class="" width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Move forward</title><path fill="#344B60" d="M25,6.15085414 C25.5522847,6.15085414 26,6.59856939 26,7.15085414 L26,10.1508541 C26,10.7031389 25.5522847,11.1508541 25,11.1508541 L19,11.1508541 L19,20.1508541 L20.618975,20.1508541 C20.8951174,20.1508541 21.118975,20.3747118 21.118975,20.6508541 C21.118975,20.7992441 21.0530635,20.9399679 20.9390672,21.0349648 L16.3200922,24.8841106 C16.1346692,25.0386298 15.8653308,25.0386298 15.6799078,24.8841106 L11.0609328,21.0349648 C10.8487943,20.8581827 10.8201323,20.5429004 10.9969143,20.3307619 C11.0919112,20.2167656 11.232635,20.1508541 11.381025,20.1508541 L12.999,20.1508541 L13,11.1508541 L7,11.1508541 C6.44771525,11.1508541 6,10.7031389 6,10.1508541 L6,7.15085414 C6,6.59856939 6.44771525,6.15085414 7,6.15085414 L25,6.15085414 Z M25,7.15085414 L7,7.15085414 L7,10.1508541 L14.0001111,10.1508541 L13.9988889,21.1508541 L12.763,21.1508541 L16,23.8478541 L19.236,21.1508541 L18,21.1508541 L18,10.1508541 L25,10.1508541 L25,7.15085414 Z M25.25,13.1508541 C25.6642136,13.1508541 26,13.5239502 26,13.9841875 L26,17.3175208 C26,17.7777581 25.6642136,18.1508541 25.25,18.1508541 L20,18.1508541 L20,17.1508541 L25,17.1508541 L25,14.1508541 L20,14.1508541 L20,13.1508541 L25.25,13.1508541 Z M12,13.1508541 L12,14.1508541 L7,14.1508541 L7,17.1508541 L12,17.1508541 L12,18.1508541 L6.75,18.1508541 C6.33578644,18.1508541 6,17.7777581 6,17.3175208 L6,13.9841875 C6,13.5239502 6.33578644,13.1508541 6.75,13.1508541 L12,13.1508541 Z" transform="matrix(1 0 0 -1 0 31.15)"></path></svg> */}
-
-                                        </button><button data-testid="TransformsOrderMoveBackward" disabled="" class="MoveBack--O0pO4">
-
-                                          {/* <svg class="" width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Move backward</title><path fill="#344B60" d="M25,6 C25.5522847,6 26,6.44771525 26,7 L26,10 C26,10.5522847 25.5522847,11 25,11 L19,11 L19,20 L20.618975,20 C20.8951174,20 21.118975,20.2238576 21.118975,20.5 C21.118975,20.6483899 21.0530635,20.7891137 20.9390672,20.8841106 L16.3200922,24.7332565 C16.1346692,24.8877756 15.8653308,24.8877756 15.6799078,24.7332565 L11.0609328,20.8841106 C10.8487943,20.7073286 10.8201323,20.3920462 10.9969143,20.1799078 C11.0919112,20.0659115 11.232635,20 11.381025,20 L12.999,20 L13,11 L7,11 C6.44771525,11 6,10.5522847 6,10 L6,7 C6,6.44771525 6.44771525,6 7,6 L25,6 Z M25,7 L7,7 L7,10 L14.0001111,10 L13.9988889,21 L12.763,21 L16,23.697 L19.236,21 L18,21 L18,10 L25,10 L25,7 Z M25.25,13 C25.6642136,13 26,13.373096 26,13.8333333 L26,17.1666667 C26,17.626904 25.6642136,18 25.25,18 L20,18 L20,17 L25,17 L25,14 L20,14 L20,13 L25.25,13 Z M12,13 L12,14 L7,14 L7,17 L12,17 L12,18 L7,18 C6.44771525,18 6,17.626904 6,17.1666667 L6,13.8333333 C6,13.373096 6.44771525,13 7,13 L12,13 Z"></path></svg> */}
-
-                                        </button><button data-testid="TransformsOrderMoveToBack" disabled="" class="MoveBack--O0pO4">
-
-                                          {/* <svg class="" width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Move to back</title><path fill="#344B60" d="M6.5,25 C6.22385763,25 6,24.7761424 6,24.5 C6,24.2545401 6.17687516,24.0503916 6.41012437,24.0080557 L6.5,24 L14.8,24 L11.0609328,20.8841106 C10.8487943,20.7073286 10.8201323,20.3920462 10.9969143,20.1799078 C11.0919112,20.0659115 11.232635,20 11.381025,20 L12.999,20 L13,11 L7,11 C6.44771525,11 6,10.5522847 6,10 L6,7 C6,6.44771525 6.44771525,6 7,6 L25,6 C25.5522847,6 26,6.44771525 26,7 L26,10 C26,10.5522847 25.5522847,11 25,11 L19,11 L19,20 L20.618975,20 C20.8951174,20 21.118975,20.2238576 21.118975,20.5 C21.118975,20.6483899 21.0530635,20.7891137 20.9390672,20.8841106 L17.2,24 L25.5,24 C25.7761424,24 26,24.2238576 26,24.5 C26,24.7454599 25.8231248,24.9496084 25.5898756,24.9919443 L25.5,25 L6.5,25 Z M25,7 L7,7 L7,10 L14.0001111,10 L13.9988889,21 L12.763,21 L16,23.697 L19.236,21 L18,21 L18,10 L25,10 L25,7 Z M25.25,13 C25.6642136,13 26,13.373096 26,13.8333333 L26,17.1666667 C26,17.626904 25.6642136,18 25.25,18 L20,18 L20,17 L25,17 L25,14 L20,14 L20,13 L25.25,13 Z M12,13 L12,14 L7,14 L7,17 L12,17 L12,18 L6.75,18 C6.33578644,18 6,17.626904 6,17.1666667 L6,13.8333333 C6,13.373096 6.33578644,13 6.75,13 L12,13 Z"></path></svg> */}
-
-                                        </button></div><div class="InputRow--1bROy InputRow--2M9c1"><div class="InputRowTitle--6kOLL InputRowTitle--DDSWz"><span>Mirror</span></div>
-
-                                        <button data-testid="TransformsMirrorHorizontal">
-
-                                          {/* <svg class="" width="16px" height="13px" viewBox="0 0 16 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Horizontal mirror</title><g id="XL-Work-Canvas" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="🤖-Designer-/-Workspace-/-Transform" transform="translate(-1202.000000, -171.000000)" stroke="#344B60"><g id="Atom-/-Icon-/-Mirror-H" transform="translate(1202.000000, 170.000000)"><path d="M5.5,2.27648509 L1.10892962,11.7904709 C1.07861076,11.8561618 1.06290931,11.92765 1.06290931,12 C1.06290931,12.2761424 1.28676694,12.5 1.56290931,12.5 L5,12.5 C5.27614237,12.5 5.5,12.2761424 5.5,12 L5.5,2.27648509 Z" id="Rectangle-Copy-20"></path><path d="M10.5,2.27648509 L10.5,12 C10.5,12.2761424 10.7238576,12.5 11,12.5 L14.4370907,12.5 C14.5094407,12.5 14.5809289,12.4842986 14.6466198,12.4539797 C14.8973458,12.33826 15.0067901,12.041197 14.8910704,11.7904709 L10.5,2.27648509 Z" id="Rectangle-Copy-27"></path><line x1="8" y1="1.68181818" x2="8" y2="12.6818182" id="Line-6" stroke-linecap="round"></line></g></g></g></svg> */}
-
-                                        </button><button data-testid="TransformsMirrorVertical">
-
-                                          {/* <svg class="RotatedMirror--iCT3c" width="16px" height="13px" viewBox="0 0 16 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Vertical mirror</title><g id="XL-Work-Canvas" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="🤖-Designer-/-Workspace-/-Transform" transform="translate(-1202.000000, -171.000000)" stroke="#344B60"><g id="Atom-/-Icon-/-Mirror-H" transform="translate(1202.000000, 170.000000)"><path d="M5.5,2.27648509 L1.10892962,11.7904709 C1.07861076,11.8561618 1.06290931,11.92765 1.06290931,12 C1.06290931,12.2761424 1.28676694,12.5 1.56290931,12.5 L5,12.5 C5.27614237,12.5 5.5,12.2761424 5.5,12 L5.5,2.27648509 Z" id="Rectangle-Copy-20"></path><path d="M10.5,2.27648509 L10.5,12 C10.5,12.2761424 10.7238576,12.5 11,12.5 L14.4370907,12.5 C14.5094407,12.5 14.5809289,12.4842986 14.6466198,12.4539797 C14.8973458,12.33826 15.0067901,12.041197 14.8910704,11.7904709 L10.5,2.27648509 Z" id="Rectangle-Copy-27"></path><line x1="8" y1="1.68181818" x2="8" y2="12.6818182" id="Line-6" stroke-linecap="round"></line></g></g></g></svg> */}
-
-                                        </button></div></div></div>
-
-                                  </div>
-                                </Accordion.Body>
-                              </Accordion.Item>
-
-                            </Accordion>
-
-          </div>
-        {/* End Transforms show hide content */}
-
-
-        <button data-testid="ShelfDrawerBtn" class="btn-appearence DrawerBtn--bdcva  ">
-                     {/* start Appearance show hide content  */}
-                     <div class="TitleContainer--2xD-b title-content target-accordian">
-                        <Accordion >
-                                <Accordion.Item eventKey="0">
-                                  <Accordion.Header>  Appearance</Accordion.Header>
-                                  <Accordion.Body>
-                                    <div data-testid="ShelfDrawerBtnContent" class="target-image-content Content--15Wyt Open--EFZA8" style={{ overflow: "visible" }}>
-                                      <div>
-                                        <div class="Title--fDSi1 Title--36gWd">Image</div>
-                                        <div class="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO " style={{ width: "100%", height: "170px" }}>
-                                          <img src={targetImage} style={{ width: '100%', height: '100%', display: 'flex', objectFit: 'cover' }} />
-                                          <div class="HoverDiv--jI34Q "><button style={{ width: "100%", height: "100%" }}><div class="SubBtn--26RUV TrkImgUploadButton--3e-ZC" >Replace</div></button><input type="file" accept="image/jpeg,image/png,.jpeg,.jpg,.png" onChange={TargetImage} style={{ 'margin': '-60px 0 0 0 ', 'position': 'relative', 'z-index': '3' }} /></div>
-                                          <div class="HoverDiv--2gksf ">
-                                            <button class="ActionBtn--1x70k">
-                                              <div class="EntityReplaceBtn--V4byk">Replace</div>
-                                            </button>
-                                            <input type="file" style={{ display: "none" }} />
-                                          </div>
-                                        </div>
                                       </div>
-                                    </div>
 
-                                  </Accordion.Body>
-                                </Accordion.Item>
-                       </Accordion>
-                      </div>
-                      {/* End Appearance show hide  */}                
-                </button>
 
-                  {/* start Actions show hide content  */}
-                  <div class="TitleContainer--2xD-b title-content target-accordian">
-                              <Accordion >
-                                <Accordion.Item eventKey="0">
-                                  <Accordion.Header>Actions</Accordion.Header>
-                                  <Accordion.Body>
-                                    <div data-testid="ShelfDrawerBtnContent" class="target-image-content Content--15Wyt Open--EFZA8" style={{ overflow: "visible" }}>
-                                      <div>
-                                        <div class="Title--fDSi1 Title--36gWd">Image</div>
-                                        <div class="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO " style={{ width: "100%", height: "170px" }}>
-                                          <img src={targetImage} style={{ width: '100%', height: '100%', display: 'flex', objectFit: 'cover' }} />
-                                          <div class="HoverDiv--jI34Q "><button style={{ width: "100%", height: "100%" }}><div class="SubBtn--26RUV TrkImgUploadButton--3e-ZC" >Replace</div></button><input type="file" accept="image/jpeg,image/png,.jpeg,.jpg,.png" onChange={TargetImage} style={{ 'margin': '-60px 0 0 0 ', 'position': 'relative', 'z-index': '3' }} /></div>
-                                          <div class="HoverDiv--2gksf ">
-                                            <button class="ActionBtn--1x70k">
-                                              <div class="EntityReplaceBtn--V4byk">Replace</div>
-                                            </button>
-                                            <input type="file" style={{ display: "none" }} />
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
+                                    </Accordion.Body>
+                                  </Accordion.Item>
+                                </div>
+                                {/* End Analytics show hide content  */}
 
-                                  </Accordion.Body>
-                                </Accordion.Item>
-                              </Accordion>
+                                {/* <svg class="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
+                              </button><div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Closed--2YzdP" style={{ overflow: "hidden" }}></div>
 
-                      </div>
-                     {/* End Actions show hide content  */}
-
-                     <button data-testid="ShelfDrawerBtn" class="btn-transition-effect DrawerBtn--bdcva ">
-                         {/* start Transition Effects show hide content  */}
-                         <div class="TitleContainer--2xD-b title-content target-accordian">
-                              <Accordion >
-                                <Accordion.Item eventKey="0">
-                                  <Accordion.Header> Transition Effects</Accordion.Header>
-                                  <Accordion.Body>
-                                    <div data-testid="ShelfDrawerBtnContent" class="target-image-content Content--15Wyt Open--EFZA8" style={{ overflow: "visible" }}>
-                                      <div>
-                                        <div class="Title--fDSi1 Title--36gWd">Image</div>
-                                        <div class="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO " style={{ width: "100%", height: "170px" }}>
-                                          <img src={targetImage} style={{ width: '100%', height: '100%', display: 'flex', objectFit: 'cover' }} />
-                                          <div class="HoverDiv--jI34Q "><button style={{ width: "100%", height: "100%" }}><div class="SubBtn--26RUV TrkImgUploadButton--3e-ZC" >Replace</div></button><input type="file" accept="image/jpeg,image/png,.jpeg,.jpg,.png" onChange={TargetImage} style={{ 'margin': '-60px 0 0 0 ', 'position': 'relative', 'z-index': '3' }} /></div>
-                                          <div class="HoverDiv--2gksf ">
-                                            <button class="ActionBtn--1x70k">
-                                              <div class="EntityReplaceBtn--V4byk">Replace</div>
-                                            </button>
-                                            <input type="file" style={{ display: "none" }} />
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                  </Accordion.Body>
-                                </Accordion.Item>
-                              </Accordion>
+                              <div style={{ borderTop: "1px solid rgb(178, 196, 215)", height: "auto", width: "100%" }}>
+                              </div>
                             </div>
-                            {/* End Transition Effects show hide content  */}
-                      
-                      {/* <svg class="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
-                      
-                      
-                      </button>
+                          </div>
+
+                        </Accordion>
+
+                        <div class="OuterContainer--1AGzZ">
+
+                          <div class="Switcher2d3d--1SCbh Disabled--fqu6h" data-testid="Switcher2d3d">
+
+                            <button class="Inactive--945so" data-testid="ToggleOffButton" />2D
+
+                            <label class="switch--1ZKOu"><input type="checkbox" data-testid="ToggleState" /><span class="slider--y3Xl-"></span></label>
+
+                            <button class="Active--3YQI9" data-testid="ToggleOnButton" />3D
+
+                          </div>
+
+                          <div style={{ borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "20px" }}></div><div class="ViewMenu--2ejhM"><span>27%</span></div>
+                        </div>
+                      </div>
                   </Tab.Pane>
+                     {/* End---- projects   */}
+
+
+
 
         <div class="InspectorMenu--1PeA4" data-testid="InspectorMenu">
           
@@ -1138,7 +1311,12 @@ console.log('===>' , id)}
                 
                 <div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Closed--2YzdP" style={{overflow:"hidden"}}></div><
                   
-                  div style={{borderTop: "1px solid rgb(178, 196, 215)" , height: "auto" ,width: "100%"}}></div></div><div style={{width: "100%"}}>
+                  div style={{borderTop: "1px solid rgb(178, 196, 215)" , height: "auto" ,width: "100%"}}></div>
+				  </div>
+				  
+				  
+				  
+				  <div style={{width: "100%"}}>
                   
                   <button data-testid="ShelfDrawerBtn" class="btn-actions DrawerBtn--bdcva  ">
                     

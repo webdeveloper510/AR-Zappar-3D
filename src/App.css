@@ -1209,6 +1209,16 @@ form.sign-up-pg-form option {
     box-shadow: 0 2px 4px 0 rgb(52 75 96 / 10%), 0 1px 3px 0 rgb(52 75 96 / 20%) !important;
     border-radius: 8px;
     border: 1px solid #ccc0;
+    min-width: 200px;
+    background: #fff;
+    line-height: normal;
+}
+.custom-drop-down ul.dropdown-menu.text-small.shadow.show li:hover a {
+    background: #EBF6FE;
+    color: #4A90E2;
+}
+.custom-drop-down ul.dropdown-menu.text-small.shadow.show li {
+    padding: 8px 12px 0 8px;
 }
 .custom-drop-down ul.dropdown-menu.text-small.shadow.show li a svg {
     padding-right: 10px;
@@ -2703,4 +2713,43 @@ div#editcover-image-popup span.status-icon {
     display: inline-block;
     margin-right: 6px;
     margin-top: 0px;
+}
+p.user-profile-name {
+    font-size: 13px;
+    color: #5089c7;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 0;
+}
+a.navbar-profile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+/***********22-may-2023********************/
+h3.mb16 {
+    font-family: 'Montserrat', sans-serif;
+}
+.home-screen-outer {
+    float: left;
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+.home-screen {
+    width: 55%;
+}
+.home-screen-right {
+    width: 45%;
+    padding-left: 20px;
+}
+button#createProjectBtn {
+    background: #5089c7;
+    font-size: 13px;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    border: none;
+    margin-bottom: 12px;
 }

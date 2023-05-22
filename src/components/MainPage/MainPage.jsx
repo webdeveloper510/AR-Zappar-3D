@@ -1,6 +1,7 @@
 import React, { useEffect , useState } from "react";
 import "../../App.css";
 import Pro1 from '../../assets/images/pro-1.jpg'
+import homsecreen from '../../assets/images/homescreen.png'
 import axios from "axios";
 import { API } from "../../config/api";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -193,12 +194,12 @@ const MainPage =()=>{
                     </div>
                   </div>
                 </div>
-                <div className="row col-md-12 p-5" id="card-project-outer" >
+                <div className="row col-md-12 pt-5" id="card-project-outer" >
                   {proInfo?.length>0?(
                      proInfo?.map((proData, i) => {
                       return(
-                        <div className="card project-card-placeholder col-md-3 mb-4 mx-2 p-0 link-body">
-                           {/* onClick={() => {handleProject(proData.id)}}  */}
+                        <div className="card project-card-placeholder col-md-3 mb-4 mx-2 p-0 link-body"
+                           onClick={() => {handleProject(proData.id)}} >
                         
                       
 
@@ -240,7 +241,24 @@ const MainPage =()=>{
                       </div>
                       )
                     })
-                  ):<h3> To Start Create a New Project </h3>}
+                  ):
+                  <>
+                  <div class="home-screen-outer">
+                  <div class="home-screen">
+                  <img src={homsecreen} className="home-img" alt="..."/>
+                  </div>
+                  <div class="home-screen-right">
+      <h3 class="mb16">Welcome to sayehbaz!</h3>
+      <p class="mb16 fs14">We are excited for you to be here!</p>
+      <p class="mb16 fs14">We offer a set of award-winning tools for creators of all abilities to build augmented reality experiences. Start your first project today.</p>
+      <button type="button" class="btn btn-primary btn-medium mb24" id="createProjectBtn">Create project</button>
+      <p class="fs14">Not sure where to begin? Learn about AR and the different types of experiences with our
+      <button type="button" class="btn btn-link" id="interactiveTourLink">interactive tour.</button></p>
+    </div>
+    </div>
+                     
+                  </>
+                 }
                                     
                   
                 </div>
