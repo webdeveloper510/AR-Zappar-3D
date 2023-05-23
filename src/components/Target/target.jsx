@@ -970,38 +970,12 @@ console.log('===>' , id)}
                                 {/* End Transition show hide content  */}
 
                                 {/* <svg class="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
-                              </button><div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Closed--2YzdP" style={{ overflow: "hidden" }}></div>
-
-                              <div style={{ borderTop: "1px solid rgb(178, 196, 215)", height: "auto", width: "100%" }}>
-                              </div>
-
-
-
-
+                              </button>
 
                             </div>
                           </div>
                                {/* /**************photoUi*end***************/}
                         </Accordion>
-
-
-                        
-
-                        <div class="OuterContainer--1AGzZ">
-
-                          <div class="Switcher2d3d--1SCbh Disabled--fqu6h" data-testid="Switcher2d3d">
-
-                            <button class="Inactive--945so" data-testid="ToggleOffButton" />2D
-
-                            <label class="switch--1ZKOu"><input type="checkbox" data-testid="ToggleState" /><span class="slider--y3Xl-"></span></label>
-
-                            <button class="Active--3YQI9" data-testid="ToggleOnButton" />3D
-
-                          </div>
-
-                          <div style={{ borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "20px" }}></div><div class="ViewMenu--2ejhM"><span>27%</span></div>
-                        </div>
-
                       </div>
                     </Tab.Pane>
                  {/* End---- scene   */}
@@ -1055,8 +1029,8 @@ console.log('===>' , id)}
                                               </p>
                                             </div>
 
-                                            <div className="row">
-                                              <h5 class="opacity">Opacity</h5>
+                                            <div className="row opacity-div">
+                                              <p class="opacity">Opacity</p>
                                               <div>
                                                 <input
                                                   type="range"
@@ -1073,10 +1047,10 @@ console.log('===>' , id)}
 
 
                                             <div className="row">
-                                              <h5 class="orient-head">Orientation</h5>
+                                              <p class="orient-head">Orientation</p>
                                               <Tab.Container id="left-tabs-example" defaultActiveKey="first">
                                               <Col className="side-tab mb-5 mb-md-0 p-0">
-                                                <Nav variant="pills" className="side-main py-4 px-2">
+                                                <Nav variant="pills" className="side-main">
                                                   <Nav.Item>
                                                     <Nav.Link eventKey="first">
                                                       <FaDoorOpen style={{ color: "rgb(113 123 131)", width: "15px", height: "15px", marginRight: 4 }} />
@@ -1095,37 +1069,43 @@ console.log('===>' , id)}
                                               </Col>
                                               </Tab.Container>
                                             </div>
+                                          <div class="Row--2gJ1o">
+                                              <span class="Title--3nkDe">Dimensions</span>
+                                              <div class="SizeRow--1gy1t">
+                                                <div class="SizeRowInner--3VgZi">
+                                                <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false SizeInputField--1CLRd Disabled--2q2TU">
+                                                  <input type="number" data-testid="NumericalInput" />
+                                                  <label data-testid="NumericalInputLabel" style={{color: "rgb(63, 85, 108)"}}>W</label>
+                                                  </div><div style={{borderLeft: "1px solid rgb(178, 196, 215)",width: "auto",height: "23px"}}>
+                                                    </div>
+                                                    <div data-testid="NumericalInputContainerDiv" class="NumericalInput--3r_8a false SizeInputField--1CLRd Disabled--2q2TU">
+                                              <input type="number" data-testid="NumericalInput" />
+                                              <label data-testid="NumericalInputLabel" style={{color: "rgb(63, 85, 108)"}}>H</label>
+                                              </div></div></div>
+                                              </div>                                
 
-                                            <div className="row">
-                                              <h5>Dimensions</h5>
-                                              <div className="row">
-                                                <div className="col-2">
-                                                  <p>j</p>
-                                                </div>
-                                                <div className="col-2">
-                                                  <p>w</p>
-                                                </div>
-                                                <div className="col-2">
-                                                  <p>w</p>
-                                                </div>
-                                                <div className="col-2">
-                                                  <p> 0</p>
-                                                </div>
-                                              </div>
-                                            </div>
-
-                                            <div className="row">
-                                              <p>Units</p>
+                                            <div className="row units-div">
+                                            <span class="Title-units">Units</span>
+                                            
                                               {/* start dropdown origin */}
                                               <Accordion >
                                                 <Accordion.Item eventKey="0">
                                                   <Accordion.Header>coordinates</Accordion.Header>
                                                   <Accordion.Body>
-                                                    <p>millimetres</p>
-                                                    <p>centimetres</p>
-                                                    <p>inches</p>
-                                                    <p>feet</p>
-                                                    <p>coordinates</p>
+
+
+                                                  <div class=" " data-testid="MenuList">
+                                                    <div class="Option--31oUF HasNoIcon--3C9vr" data-testid="millimetres" title="millimetres">
+                                                      <div class="Container--Mc1y-"><span>millimetres</span></div></div>
+                                                      <div class="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="centimetres">
+                                                        <div class="Container--Mc1y-"><span>centimetres</span></div></div>
+                                                        <div class="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="inches">
+                                                          <div class="Container--Mc1y-"><span>inches</span></div></div>
+                                                          <div class="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="feet">
+                                                            <div class="Container--Mc1y-"><span>feet</span></div></div>
+                                                            <div class="Option--31oUF Active--37WPC HasNoIcon--3C9vr" data-testid="Option" title="coordinates">
+                                                    <div class="Container--Mc1y-"><span>coordinates</span></div></div></div>
+                                          
                                                   </Accordion.Body>
                                                 </Accordion.Item>
                                               </Accordion>
@@ -1153,63 +1133,72 @@ console.log('===>' , id)}
                               <button data-testid="ShelfDrawerBtn" class="btn-actions DrawerBtn--bdcva  ">
 
                                 {/* start Backgound-Sound show hide content  */}
-                                <div class="TitleContainer--2xD-b title-content">
+                                <div class="TitleContainer--2xD-b title-content" id="browser-lib">
                                   <Accordion.Item eventKey="3">
                                     <Accordion.Header>Background Sound</Accordion.Header>
                                     <Accordion.Body>
-                                      <div className="row">
+                                      <div className="row browser-btn-div">
                                         <button data-testid="ShelfDrawerBtn" class="btn-upload DrawerBtn--bdcva Open--EFZA8 ">
-                                          <div class="TitleContainer--2xD-b"> Browse media library
-                                          </div>
-                                        </button>
-                                        <div>
-
-                                          <div className="mp3">
-                                            <label for="profile_pic"><RiVideoUploadLine style={{ fontSize: "40px" }} /></label>
-                                            <input
+                                          <div class="TitleContainer--2xD-b"> Browse media library<RiVideoUploadLine style={{ fontSize: "20px" }} />
+                                          <input
                                               type="file"
                                               id="profile_pic"
                                               name="profile_pic"
                                               accept=".mp3, .mp4" />
                                           </div>
+                                        </button>
+                                        <div>
+
                                         </div>
                                       </div>
-                                      <div className="row">
-                                        <p style={{ fontSize: "12px" }}>Looking for audio assets?</p>
+                                      <div className="row recent-files">
+                                        <p>Looking for audio assets?</p>
 
-                                        <h5 style={{ fontSize: "11px" }}>Recent files</h5>
+                                        <h5>Recent files</h5>
 
                                         {/* start Recent files */}
+                                        <div class="audio-div">
                                         <p style={{ fontSize: "13px" }}><GiLoveSong />Beep_2.mp3
                                           <span onClick={handleClick} style={{ marginLeft: "50px", fontSize: "30px;" }} >
                                             {isPlaying ? <AiOutlinePauseCircle /> : <BsPlayCircle />}
                                           </span>
                                         </p>
+                                        </div>
+                                        <div class="audio-div">
                                         <p style={{ fontSize: "13px" }}><GiLoveSong />Beep_2.mp3
                                           <span onClick={handleClick} style={{ marginLeft: "50px", fontSize: "30px;" }} >
                                             {isPlaying ? <AiOutlinePauseCircle /> : <BsPlayCircle />}
                                           </span>
                                         </p>
+                                        </div>
+                                        <div class="audio-div">
                                         <p style={{ fontSize: "13px" }}><GiLoveSong />Beep_2.mp3
                                           <span onClick={handleClick} style={{ marginLeft: "50px", fontSize: "30px;" }} >
                                             {isPlaying ? <AiOutlinePauseCircle /> : <BsPlayCircle />}
                                           </span>
                                         </p>
+                                        </div>
+                                        <div class="audio-div">
                                         <p style={{ fontSize: "13px" }}><GiLoveSong />Beep_2.mp3
                                           <span onClick={handleClick} style={{ marginLeft: "50px", fontSize: "30px;" }} >
                                             {isPlaying ? <AiOutlinePauseCircle /> : <BsPlayCircle />}
                                           </span>
                                         </p>
+                                        </div>
+                                        <div class="audio-div">
                                         <p style={{ fontSize: "13px" }}><GiLoveSong />Beep_2.mp3
                                           <span onClick={handleClick} style={{ marginLeft: "50px", fontSize: "30px;" }} >
                                             {isPlaying ? <AiOutlinePauseCircle /> : <BsPlayCircle />}
                                           </span>
-                                        </p>    <p style={{ fontSize: "13px" }}><GiLoveSong />Beep_2.mp3
+                                        </p>  
+                                        </div>
+                                        <div class="audio-div">
+                                          <p style={{ fontSize: "13px" }}><GiLoveSong />Beep_2.mp3
                                           <span onClick={handleClick} style={{ marginLeft: "50px", fontSize: "30px;" }} >
                                             {isPlaying ? <AiOutlinePauseCircle /> : <BsPlayCircle />}
                                           </span>
                                         </p>
-
+                                            </div>
 
 
 
@@ -1235,17 +1224,24 @@ console.log('===>' , id)}
                                 <div class="TitleContainer--2xD-b title-content">
                                   <Accordion.Item eventKey="4">
                                     <Accordion.Header>Analytics</Accordion.Header>
-                                    <Accordion.Body>
-                                      <div className="row">
-                                        <p>Track with:</p>
+                                    <Accordion.Body id="track-top">
+                                      <div className="row track-with">
+                                      <span class="Title-track">Track with:</span>
+                                       
                                         {/* start dropdown origin */}
                                         <Accordion >
                                           <Accordion.Item eventKey="0">
                                             <Accordion.Header>Choose provider</Accordion.Header>
                                             <Accordion.Body>
-                                              <p>Choose provider</p>
-                                              <p>Google Analytics</p>
-                                              <p>Microsoft Clarity</p>
+
+                                            <div class=" " data-testid="MenuList">
+                                              <div class="Option--31oUF Active--37WPC HasNoIcon--3C9vr" data-testid="Option" title="Choose provider">
+                                                <div class="Container--Mc1y-"><span>Choose provider</span></div></div>
+                                                <div class="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="Google Analytics">
+                                                  <div class="Container--Mc1y-"><span>Google Analytics</span></div></div>
+                                                  <div class="Option--31oUF HasNoIcon--3C9vr" data-testid="Option" title="Microsoft Clarity">
+                                              <div class="Container--Mc1y-"><span>Microsoft Clarity</span></div></div></div>
+                                              
                                             </Accordion.Body>
                                           </Accordion.Item>
                                         </Accordion>
@@ -1273,20 +1269,7 @@ console.log('===>' , id)}
 
                         </Accordion>
 
-                        <div class="OuterContainer--1AGzZ">
-
-                          <div class="Switcher2d3d--1SCbh Disabled--fqu6h" data-testid="Switcher2d3d">
-
-                            <button class="Inactive--945so" data-testid="ToggleOffButton" />2D
-
-                            <label class="switch--1ZKOu"><input type="checkbox" data-testid="ToggleState" /><span class="slider--y3Xl-"></span></label>
-
-                            <button class="Active--3YQI9" data-testid="ToggleOnButton" />3D
-
-                          </div>
-
-                          <div style={{ borderLeft: "1px solid rgb(178, 196, 215)", width: "auto", height: "20px" }}></div><div class="ViewMenu--2ejhM"><span>27%</span></div>
-                        </div>
+                        
                       </div>
                   </Tab.Pane>
                      {/* End---- projects   */}
@@ -1294,46 +1277,14 @@ console.log('===>' , id)}
 
 
 
-        <div class="InspectorMenu--1PeA4" data-testid="InspectorMenu">
+        <div class="InspectorMenu--1PeA44" data-testid="InspectorMenu">
           
           <div class="ShelfContainer--1Ad4O">
-            <div style={{width: "100%"}}>
-            
-      <div style={{borderTop: "1px solid rgb(178, 196, 215)", height: "auto", width: "100%"}}></div>
-      </div>
-        <div style={{width: "100%"}}>
-      
-
-     
-                <div style={{borderTop: "1px solid rgb(178, 196, 215)" ,height: "auto", width: "100%"}}></div></div><div style={{width: "100%"}}>
-                  
-                
-                
-                <div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Closed--2YzdP" style={{overflow:"hidden"}}></div><
-                  
-                  div style={{borderTop: "1px solid rgb(178, 196, 215)" , height: "auto" ,width: "100%"}}></div>
-				  </div>
-				  
-				  
-				  
-				  <div style={{width: "100%"}}>
-                  
-                  <button data-testid="ShelfDrawerBtn" class="btn-actions DrawerBtn--bdcva  ">
+				  <div style={{width: "100%"}}>    
                     
+                    </div>
                    
-                    
-                    {/* <svg class="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
-                    
-                    </button><div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Closed--2YzdP" style={{overflow: "hidden"}}></div>
-                    
-                    <div style={{borderTop: "1px solid rgb(178, 196, 215)", height: "auto", width: "100%"}}></div></div><div style={{width: "100%"}}>
-                      
-                    
-                      
-                      
-                      <div data-testid="ShelfDrawerBtnContent" class="Content--15Wyt Closed--2YzdP" style={{overflow: "hidden"}}></div>
-                      
-                      <div style={{borderTop: "1px solid rgb(178, 196, 215)", height: "auto", width: "100%"}}></div></div></div>
+                        </div>
                       
                         <div class="OuterContainer--1AGzZ">
                           
@@ -1347,7 +1298,8 @@ console.log('===>' , id)}
                                     
                                     </div>
                                     
-                            <div style={{borderLeft: "1px solid rgb(178, 196, 215)"  ,width: "auto", height: "20px"}}></div><div class="ViewMenu--2ejhM"><span>27%</span></div>
+                            <div class="border-middle" style={{borderLeft: "1px solid rgb(178, 196, 215)"  ,width: "auto", height: "16px"}}></div><div class="ViewMenu--2ejhM"><span>27%</span>
+                            </div>
                         </div>
                       </div>
                 </Tab.Content>

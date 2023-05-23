@@ -198,19 +198,22 @@ input {
 }
 
 .Inactive--945so {
-  margin-right: -2px;
+  margin-right: 34px;
 }
 
 .switch--1ZKOu {
   position: relative;
   display: inline-block;
-  width: 50px;
+  width: 20px;
   height: 24px;
   margin: 0 10px;
 }
 
 .switch--1ZKOu input {
   display: none;
+}
+.ViewMenu--2ejhM {
+    margin-left: 20px;
 }
 
 .slider--y3Xl- {
@@ -335,6 +338,12 @@ input {
     display: block;
     font-family: 'Montserrat', sans-serif !important;
 
+}
+.ContextMenuButton--p-6XR svg path:hover {
+    fill: #5089c7;
+}
+.InspectorMenu--1PeA44 {
+    margin-bottom: 20px;
 }
 .btn-upload {
     border: 0px;
@@ -659,7 +668,6 @@ button {
 .Option--31oUF {
     width: 100%;
     color: #344b60;
-    padding: 10px 0;
     border-left: 3px solid rgba(0,0,0,0);
     display: flex;
     align-items: center;
@@ -974,42 +982,7 @@ input[type=range] {
     display: block;
     height: 4px;
 }
-/* input[type=range]:focus {
-    outline: none;
-  }
-  input[type=range]::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 4px;
-    cursor: pointer;
-    background: #ccc;
-    border: none
-  }
-  
-  input[type=range]::-webkit-slider-thumb {
-    border: none;
-    height: 30px;
-    width: 8px;
-    background: red;
-    -webkit-appearance: none;
-    margin-top: -7px;
-  }
-  
- 
-  
-  input[type=range]::-moz-range-track {
-    width: 100%;
-    height: 4px;
-    cursor: pointer;
-    background: red;
-    border: none;
-  }
-  
-  input[type=range]::-moz-range-thumb {
-    border: none;
-    height: 30px;
-    width: 6px;
-    background: #fff;
-  } */
+
 /**************right-target-bar*****************/
 .InputRow--1kdSn.InputRow--2M9c1 {
     margin-bottom: 16px;
@@ -1054,4 +1027,188 @@ input[type=range] {
     display: flex;
     font-size: 14px;
     flex-direction: row;
+}
+.target-right .tab-pane .accordion .accordion-item .accordion-collapse .accordion-body {
+    padding-left: 5px;
+}
+.Title-units{
+    font-size: 13px;
+    margin: 8px 0;
+    font-family: 'Montserrat', sans-serif;
+    width: fit-content;
+    text-align: left;
+}
+
+/*****************************/
+.Row--2gJ1o {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.Title--3nkDe {
+    font-size: 13px;
+    margin: 8px 0;
+    display: flex;
+    font-family: 'Montserrat', sans-serif;
+}
+.Row--2gJ1o .SizeRow--1gy1t, .Row--2gJ1o .SizeRowInner--3VgZi {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.Row--2gJ1o .SizeRowInner--3VgZi {
+    width: fit-content;
+}
+
+.NumericalInput--3r_8a {
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    background-color: #eef6fe;
+    border: 1px solid #eef6fe;
+    width: 58px;
+    height: 32px;
+    border-radius: 3px;
+    color: #344b60;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0);
+}
+.row.units-div .accordion-body p {
+    font-size: 14px;
+    margin-bottom: 0;
+    text-align: left;
+    line-height: 32px;
+}
+.row.units-div button.accordion-button {
+    border: 1px solid #ccc !important;
+    padding-top: 4px !important;
+    padding-bottom: 5px !important;
+    border-radius: 1px !important;
+}
+.Option--31oUF.HasNoIcon--3C9vr:hover {
+    border-left: 3px solid #4a90e2;
+    color: #4a90e2;
+    background-color: #ecf6ff;
+}
+.row.units-div .accordion-body {
+    background: #fff;
+    box-shadow: 0px 1px 8px #ccc;
+}
+.row.units-div .accordion-body {
+    padding-left: 5px;
+    padding-right: 0;
+    padding-top: 6px;
+    padding-bottom: 0;
+}
+#browser-lib button.btn-upload.DrawerBtn--bdcva.Open--EFZA8 {
+    width: 100%;
+    margin-right: 8px;
+    background-color: #4a90e2;
+    border-radius: 8px;
+    color: #fff;
+    padding: 0;
+    margin-left: 8px;
+}
+.row.browser-btn-div {
+    position: relative;
+}
+input#profile_pic {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+}
+#browser-lib button.btn-upload.DrawerBtn--bdcva.Open--EFZA8 .TitleContainer--2xD-b {
+    font-size: 12px;
+    padding-left: 10px !important;
+    text-align: left;
+    padding-right: 0px;
+}
+#browser-lib button.btn-upload.DrawerBtn--bdcva.Open--EFZA8 .TitleContainer--2xD-b svg path {
+    color: #fff;
+}
+#browser-lib button.btn-upload.DrawerBtn--bdcva.Open--EFZA8 .TitleContainer--2xD-b svg {
+    margin-left: 10px;
+}
+p.orient-head {
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: left;
+    font-weight: 500;
+}
+p.opacity {
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: left;
+    font-weight: 500;
+}
+.row.recent-files h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    text-align: left;
+}
+.row.recent-files p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    text-align: left;
+}
+.audio-div:hover {
+    border-left: 3px solid #4a90e2;
+    color: #4a90e2;
+    background-color: #ecf6ff;
+}
+span.Title-track {
+    text-align: left;
+    width: fit-content;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+}
+.track-with button.accordion-button {
+    border: 1px solid #ccc !important;
+    padding-top: 4px !important;
+    padding-bottom: 5px !important;
+    border-radius: 1px !important;
+}
+.track-with .accordion-body {
+    background: #fff;
+    box-shadow: 0px 1px 8px #ccc;
+}
+.Container--Mc1y- span {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+}
+.track-with button.btn-upload.DrawerBtn--bdcva.Open--EFZA8 .TitleContainer--2xD-b {
+    color: #4a90e2 !important;
+}
+.track-with button.btn-upload.DrawerBtn--bdcva.Open--EFZA8 {
+    border-radius: 8px;
+    border: solid 1px #4a90e2;
+    background-color: rgba(0,0,0,0);
+    color: #4a90e2 !important;
+    cursor: pointer;
+    margin-top: 20px;
+    padding: 4px;
+}
+.track-with .accordion-body {
+    padding-top: 0;
+}
+div#track-top {
+    padding-top: 0;
+}
+.target-page {
+    position: relative;
+    padding-right: 0 !important;
+}
+div#right-tabs-example-tabpane-second {
+    padding-top: 0 !important;
+}
+div#right-tabs-example-tabpane-first {
+    padding-top: 0 !important;
+}
+.right-tabs .side-main.py-4.px-2.nav.nav-pills {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+}
+.border-middle {
+    margin-left: 10px;
 }
