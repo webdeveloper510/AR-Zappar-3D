@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { useEffect , useState } from "react";
 import { toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
@@ -10,9 +11,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload  } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan  } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare  } from '@fortawesome/free-solid-svg-icons';
-import google from '../../assets/images/google.png'
+import google from '../../assets/images/google.png';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 const UserProfile =()=>{
   const navigate = useNavigate()
+
+
+  /********** Start----Model edit popup State *************/
+  const [showeditpassword, setshowpassword] = useState(false);
+
+  const handlepasswordClose = () => setshowpassword(false);
+  const handleEditShow = () => setshowpassword(true);
+
+   /********** End----Model edit popup State *************/
+
+
+
 
   const handleLogout = ()=>{  
     localStorage.clear()
@@ -63,7 +78,7 @@ const UserProfile =()=>{
                 <div class="row m-0 p-0">
                   
                     <form class="user-pg-form">
-                    <h4 class="text-center user-settings">User Settings</h4>
+                    <h4 class="text-center user-settings">User Settingss</h4>
                       <div class="row mb-2">
                           <div class="col-md-2">
                             <img src="https://github.com/mdo.png" alt="mdo" width="60" height="60" class="rounded-circle" />
@@ -103,12 +118,15 @@ const UserProfile =()=>{
                             <label class="form-label fw-semibold">Password</label>
                             <input type="password" class="form-control border-0" placeholder="**************************" />
                         </div>
-                        <div class="col-2 edit-btn">
+                        <div class="col-2 edit-btn" >
                         <FontAwesomeIcon icon={faPenToSquare} />
-                            <a href="#" class="text-decoration-none text-dark">Edit</a>
+                            <a class="text-decoration-none text-dark" onClick={handleEditShow}>Edit</a>
                         </div>
                       </div>
                       <hr/>
+
+
+                      
                       <div class="row">
                         <div class="col-8">
                             <label class="form-label fw-semibold">Tow-Factor Authentication (2FA)</label>
@@ -145,7 +163,62 @@ const UserProfile =()=>{
 
         </div>
     </div>
+     {/* Start changepassowrd Model  */}
+ <Modal id="change-password-popup" show={showeditpassword} onHide={handlepasswordClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Change Password</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            
+           <div className="container">
+        <div className="card-password">
+           
+                <div className="input-text">
+                  <label>New Passowd</label>
+                    <input type="password" className="" placeholder="New Password" />
+                    <i className="fa fa-envelope"></i>
+
+                </div>
+                <div className="input-text">
+                  <label>Confirm Passowd</label>
+                    <input type="password" className="" placeholder="Confirm Password" />
+                    <i className="fa fa-envelope"></i>
+
+                </div>
+               
+                <div className="requirement">
+                     <p>Must meet at least 1 of these complexity requirements:
+                      <ul>
+                        <li>Minimum of 5 characters</li>
+                      </ul>
+                     </p>
+                </div>
+
+                <div className="requirement">
+                    <h5> Note</h5>
+                    <p> Password requirements are being enforced by the policies of the following workspace (s): Personal projects
+                     </p>
+                </div>
+               
+
+        </div>
+    </div>
+            </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" class="btn-cancel-cover" onClick={handlepasswordClose}>
+             Cancel
+            </Button>
+            <Button variant="primary" class="btn-save-cover" onClick={handlepasswordClose}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+
+     {/* End changepassword Model  */}
 </div>
+
+
     )
 }
 

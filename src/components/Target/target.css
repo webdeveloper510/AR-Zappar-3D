@@ -320,7 +320,7 @@ input {
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 16%);
 }
 .InspectorMenu--1PeA4 {
-    height: calc(100vh - 60px);
+    height: calc(75vh - 60px);
     padding: 0;
 }
 .right-tabs .nav-item .active svg path {
@@ -948,7 +948,8 @@ input.TextInput--14pX7.Editable--3ahFV {
 }
 .accor-title {
     font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
+    text-align: left;
 }
 .btn-target-upload {
     padding: 4px 0px;
@@ -1211,4 +1212,130 @@ div#right-tabs-example-tabpane-first {
 }
 .border-middle {
     margin-left: 10px;
+}
+div#look-preview {
+    width: 80%;
+    max-width: 80%;
+}
+.card-preview-right {
+    float: left;
+    width: 50%;
+}
+.card-preview-left {
+    float: left;
+    width: 50%;
+}
+.card-preview-right img {
+    width: 50%;
+    text-align: center;
+}
+.card-preview-left span {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+}
+.test-qr {
+    text-align: center;
+    margin-top: 40px;
+}
+.card-preview {
+    width: 100%;
+    float: left;
+    display: flex;
+    align-items: center;
+}
+.card-preview-left-inner span {
+    padding-left: 80px;
+}
+.btn-pre-back {
+    float: left;
+    text-align: left;
+    width: 48%;
+}
+.btn-pre-publish {
+    float: left;
+    width: 50%;
+    text-align: right;
+}
+buttonbootstrap.btn-cancel-preview {
+    border-radius: 8px;
+    border: solid 1px #4a90e2;
+    background-color: rgba(0,0,0,0);
+    color: #4a90e2;
+    cursor: pointer;
+    padding: 12px 20px 12px 20px;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+buttonbootstrap.btn-publish-preview {
+    border-radius: 8px;
+    background-color: #4a90e2;
+    color: #fff;
+    cursor: pointer;
+    padding: 12px 20px 12px 20px;
+}
+.card-publish-left {
+    float: left;
+    width: 100%;
+}
+.qr-title {
+    width: 100%;
+    float: left;
+}
+.qr-title span {
+    margin-left: 10px;
+}
+.card-preview-left-inner {
+    float: left;
+    width: 100%;
+    text-align: left;
+}
+.test-qr-publish{
+    text-align: left;
+}
+.card-published {
+    float: left;
+    width: 100%;
+}
+.card-publish-left {
+    float: left;
+    width: 100%;
+    margin-top: 26px;
+}
+.card-publish-right {
+    float: left;
+    width: 75%;
+    padding-left: 20px;
+}
+.card-publish-left-inner {
+    float: left;
+}
+.publish-inner-text span {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+.published-btn {
+    display: flex;
+    margin-top: 20px;
+}
+.btn-edit-publish {
+    padding-right: 13px;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+}
+.btn-edit-publish svg {
+    padding-right: 6px;
+}
+.btn-down-publish{
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+}
+buttonbootstrap.btn-download-preview {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+}
+.qr-title span {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
 }
