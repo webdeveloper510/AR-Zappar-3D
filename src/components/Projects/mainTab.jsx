@@ -1,11 +1,8 @@
 import React from "react";
 import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
 import FirstTab from "./firsttTab";
 import SecondTab from "./secondTab";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FaUser, FaCog, FaEnvelope } from 'react-icons/fa';
-import { SiBoost } from 'react-icons/si';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';

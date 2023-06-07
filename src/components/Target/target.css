@@ -1339,3 +1339,11 @@ buttonbootstrap.btn-download-preview {
     font-size: 14px;
     font-family: 'Montserrat', sans-serif;
 }
+.EditorCanvas--3VU0J {
+    left: 60px;
+    width: calc(100% - 272px - 60px) !important;
+    height: 100%;
+}
+canvas {
+    outline: 0;
+}

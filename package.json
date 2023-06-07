@@ -41,6 +41,7 @@
     "three-gltf-loader": "^1.111.0",
     "three-js-editor-react-2": "^1.0.36",
     "threex": "^1.0.0",
+    "threex.domevents": "^1.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

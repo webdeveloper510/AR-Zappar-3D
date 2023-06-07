@@ -1,4 +1,4 @@
-import React , {useState} from "react";
+import React , {useEffect, useState} from "react";
 import axios from "axios";
 import { API } from "../../config/api";
 import "../../App.css"
@@ -8,7 +8,8 @@ import logoImage from '../../assets/images/sayehbazf.png';
 import "react-datepicker/dist/react-datepicker.css";
 import loginright from '../../assets/images/login-banner.png';
 import DatePicker from 'react-datepicker';
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
+import profileImg from "../../assets/images/profile.png"
 //    
 
 const RegisterPage =()=>{
@@ -55,6 +56,9 @@ const RegisterPage =()=>{
     const handleSelect =(e)=>{
         selectProff(e.target.value)
     }
+
+   
+
     // console.log("Proffession----------->" , Proffession)
 
 // Date picker
@@ -106,7 +110,11 @@ const handleDateChange = (event) => {
     const handelLogin =()=>{
         navigate('/')
     }
+
+    // let defaultImage='/home/codenomad/Desktop/Projects/copy2/AR-Zappar-3D/src/assets/images/UniversalAR.jpg'
+
     const handleRegister = ()=>{
+        console.log(profileImg);
         if (MyDataObject){
             const formData = new FormData();
             formData.append("firstname" , firstName,)
@@ -115,8 +123,10 @@ const handleDateChange = (event) => {
             formData.append("password" , password,)
             formData.append("proffession", Proffession,)
             formData.append("dateofbirth" , selectedDate)
-            console.log("MyDataObject----------->" , formData)
-
+            fetch(profileImg)
+            .then((response) => response.blob())
+            .then((blob) => {
+              formData.append("image", blob, "profile.png");
             axios.post(API.BASE_URL + 'signup/', formData, {
                 headers: {
                   'accept': 'application/json',
@@ -124,17 +134,15 @@ const handleDateChange = (event) => {
                 },
               })
               .then(function (response) {
-                console.log(response)
+                console.log(response,'sign up')
                 console.log('Registerd SuccessFully', response);
                 navigate('/')
-                toast.success('Registerd Successfully !')
-                // uploadProImg(response.data.imagePro? response.data.imagePro : "")
-                
+                toast.success('Registerd Successfully !')             
               })
               .catch(function(err) {
                 console.error('Error Registrations !', err);
               });
-            
+            })
         }
     }
 
