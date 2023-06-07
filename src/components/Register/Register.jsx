@@ -254,3 +254,18 @@ const handleDateChange = (event) => {
 }
 
 export default RegisterPage;
+
+
+// setMirror
+// setRotation_x
+// setRotation_y
+// setRotation_z
+// setdepth
+// setheight
+// projectId
+// setposition_d
+
+// setposition_x
+// setposition_y
+// setvideo_id
+// setwidthVideo

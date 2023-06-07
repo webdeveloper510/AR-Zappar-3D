@@ -136,7 +136,8 @@ const ModelAr =()=> {
                         setVideo(responseProject.data.data[0].video_data)
                         set3Dmodel(responseProject.data.data[0].ThreeDmodeldata)
                         setScene(responseProject.data.data[0].scene_data)
-                        setProject(responseProject.data.data[0].project_content_data)
+                        setProject(responseProject.data.data[0].project_content_data);
+                        console.log(responseProject.data.data[0].video_data,'responseProject.data.data[0].video_datare');
                         rendeR=false
 
                     }).catch ((err)=>{
