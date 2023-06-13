@@ -6,9 +6,10 @@ import { GLTFLoader } from '../node_modules/three/examples/jsm/loaders/GLTFLoade
 import axios from 'axios';
 import { API } from './config/api';
 import { useParams } from 'react-router-dom';
-import React,{useState} from 'react';
+import React,{useState ,useRef} from 'react';
 import { toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
+
 // import {DomEvents} from 'threex.domevents/threex.domevents'
 
 
@@ -16,9 +17,8 @@ import 'react-toastify/dist/ReactToastify.css';
 let rendeR=true;
 
 const ModelAr =()=> {
-
     // UseStates In Initialization State ---------------------------------------------------------------------->
-
+        const canvasRef = useRef(null); // Create a ref for the canvas element
         const [loaded, setLoaded] = React.useState(false);
         const projectID = localStorage.getItem('projectId')
         const [getWidth , setWidth] = useState(null)
@@ -56,7 +56,7 @@ const ModelAr =()=> {
         function init() {
 
             // Initialize The Project View Model---------------------------------------------------------------->
-            renderer = new THREE.WebGLRenderer();
+            renderer = new THREE.WebGLRenderer({antialias: true});
             renderer.setPixelRatio( window.devicePixelRatio );
             renderer.setSize( window.innerWidth, window.innerHeight );
             document.body.appendChild( renderer.domElement );
@@ -500,6 +500,10 @@ const ModelAr =()=> {
     setTimeout(boxModal, 1000)
 
         },[rendeR ]);      
-
+        return (
+            <div>
+              <canvas ref={canvasRef}></canvas>
+            </div>
+          );
 }
 export default ModelAr;

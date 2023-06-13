@@ -141,6 +141,7 @@ const MainPage =()=>{
                   'content-type': 'multipart/form-data'
             },
           }).then(function(response) {
+            localStorage.setItem('projectId',response.data.id)
             navigate("/project/"+response.data.id)
           }).catch(function(err) {
             toast.error("Not able to create project !")

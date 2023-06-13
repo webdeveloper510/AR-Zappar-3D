@@ -37,6 +37,43 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { Canvas } from "@react-three/fiber";
 
 const Target = () => {
+  // HANDLE GET USER-ID FROM LOCALSTORAGE ------------------------------------------------------------------------------------------------------------------
+
+  const { id } = useParams();
+
+  // STATES for PROJECT DATA OF AN PROJECT ---------------------------------------------->
+
+  const [getButton, setButton] = useState(null);
+  const [getText, setText] = useState(null);
+  const [getImage, setImage] = useState(null);
+  const [getVideo, setVideo] = useState(null);
+  const [get3Dmodel, set3Dmodel] = useState(null);
+  const [getScene, setScene] = useState(null);
+  const [getProject, setProject] = useState(null);
+
+  const [s_scene_name  , scene_name] = useState(null)
+  const [s_scene_id  , scene_id] = useState(null)
+  const [s_delay  , delay] = useState(null)
+  const [s_duration  , duration] = useState(null)
+  const [s_scene_id_id  , scene_id_id] = useState(null)
+  const [s_height  , s_Height] = useState(null)
+  const [s_id  , s_ID] = useState(null)
+  const [s_transition_enter  , transition_enter] = useState(null)
+  const [s_transition_exit  , transition_exit] = useState(null)
+
+  const [cont_id , Project_content_id] = useState(null)
+  const [cont_project_content_id_id , Project_content_project_content_id_id] = useState(null)
+  const [cont_track_with , Project_content_track_with] = useState(null)
+  const [cont_Sound_id , Back_Sound_id] = useState(null)
+  const [cont_media_file , Project_content_media_file] = useState(null)
+  const [cont_project_content_id , Project_content_project_content_id] = useState(null)
+  const [cont_dimensions_h , Project_content_dimensions_h] = useState(null)
+  const [cont_dimensions_w , Project_content_dimensions_w] = useState(null)
+  const [cont_opacity , Project_content_opacity] = useState(null)
+  const [cont_orientation , Project_content_orientation] = useState(null)
+  const [cont_target_image , Project_content_target_image] = useState(null)
+  const [cont_units , Project_content_units] = useState(null)
+
   const buttonBootstrap = new Button();
   /*******************  Start --- tab close state ***************** */
   const [activeKey, setActiveKey] = useState(null);
@@ -49,7 +86,6 @@ const Target = () => {
   const navigate = useNavigate();
   const [targetImage, selectedTargetImage] = useState(null);
   const [ProjectTitle, title] = useState("");
-  const [selectedFile, setVideoUrl] = useState(null);
   const [newpath, setNewPath] = useState(null);
   const [Url, setUrl] = useState("");
   const [MobileFunctions, ShowMobileFunctions] = useState(false);
@@ -62,13 +98,7 @@ const Target = () => {
   const [getHeight, setHeight] = useState(null);
   const [getLength, setLength] = useState(null);
   const [textureImage, ImageUploaded] = useState(null);
-  const [getButton, setButton] = useState(null);
-  const [getText, setText] = useState(null);
-  const [getImage, setImage] = useState(null);
-  const [getVideo, setVideo] = useState(null);
-  const [get3Dmodel, set3Dmodel] = useState(null);
-  const [getScene, setScene] = useState(null);
-  const [getProject, setProject] = useState(null);
+
   const [toGetData, settoGetData] = useState(true);
   const [Mirror, setMirror] = useState();
   const [Rotation_x, setRotation_x] = useState();
@@ -116,11 +146,8 @@ const Target = () => {
   const [Imgposition_y, setImgposition_y] = useState();
   const [Imgwidth, setImgwidth] = useState();
 
-  //  state for data from video action
-  const [video_action, setvideo_action] = useState();
 
-  //  state to store image from input
-  const [inputImg, setinputImg] = useState(null);
+
 
   // state for unts like centimeter, milimeter
   const [selectedUnit, setselectedUnit] = useState(null);
@@ -186,6 +213,417 @@ const Target = () => {
 
   // const [selectedUnit1,setselectedUnit1]=useState('centimeters')
 
+  // GET Basic Details OF PROJECT ------------------------------------------------------------>
+
+  useEffect(() => {
+    axios
+      .get(API.BASE_URL + "project-list/" + id + "/")
+      .then(function (response) {
+        title(response.data.ProTitle);
+      })
+      .catch(function (error) {});
+  }, []);
+
+  
+
+  // Get All Project Data --------------------------------------------------------------------------->
+  useEffect(() => {
+    axios
+      .get(API.BASE_URL + "get_projectdata/" + id + "/")
+      .then((responseProject) => {
+        setButton(responseProject.data.data[0].button_data);
+        setText(responseProject.data.data[0].text_data);
+        setImage(responseProject.data.data[0].image_data);
+        setVideo(responseProject.data.data[0].video_data);
+        set3Dmodel(responseProject.data.data[0].ThreeDmodeldata);
+        setScene(responseProject.data.data[0].scene_data);
+        setProject(responseProject.data.data[0].project_content_data);
+
+
+        // Image Dimensions ----------------------------------------------------------------------------------------------------->
+
+        const DataImage = responseProject.data.data[0].image_data;
+        for (let i = 0; i < DataImage.length; i += 1) {
+          dimwidth(DataImage[i][0].image_transform.width);
+          dimheight(DataImage[i][0].image_transform.height);
+          dimdepth(DataImage[i][0].image_transform.depth);
+          dimposition_x(DataImage[i][0].image_transform.position_x);
+          dimposition_y(DataImage[i][0].image_transform.position_y);
+          dimposition_d(DataImage[i][0].image_transform.position_d);
+          dimRotation_x(DataImage[i][0].image_transform.Rotation_x);
+          dimRotation_y(DataImage[i][0].image_transform.Rotation_y);
+          dimRotation_z(DataImage[i][0].image_transform.Rotation_z);
+        }
+
+
+        // Video Dimensions ----------------------------------------------------------------------------------------------------->
+
+        const videoData = responseProject.data.data[0].video_data;
+        for (let i = 0; i < videoData.length; i++) {
+          setMirror(videoData[i][0].video_transform.Mirror);
+          setRotation_x(videoData[i][0].video_transform.Rotation_x);
+          setRotation_y(videoData[i][0].video_transform.Rotation_y);
+          setRotation_z(videoData[i][0].video_transform.Rotation_z);
+          setdepth(videoData[i][0].video_transform.depth);
+          setheight(videoData[i][0].video_transform.height);
+          setposition_d(videoData[i][0].video_transform.position_d);
+          setposition_x(videoData[i][0].video_transform.position_x);
+          setposition_y(videoData[i][0].video_transform.position_y);
+          setvideo_id(videoData[i][0].video_transform.video_id_id);
+          setwidthVideo(videoData[i][0].video_transform.video_id);
+          setprojectId(videoData[i][0].video_transform.width);
+        }
+
+        const sceneData = responseProject.data.data[0].scene_data;
+        for (let i = 0; i < sceneData.length; i++) {
+          scene_id(sceneData[i][0].scene_id);
+          setnameInScene(sceneData[i][0].scene_name);
+          delay(sceneData[i][0].scene_transition.delay);
+          duration(sceneData[i][0].scene_transition.duration);
+          scene_id_id(sceneData[i][0].scene_transition.scene_id_id);
+          s_Height(sceneData[i][0].scene_transition.height);
+          s_ID(sceneData[i][0].scene_transition.id);
+          transition_enter(sceneData[i][0].scene_transition.transition_enter);
+          transition_exit(sceneData[i][0].scene_transition.transition_exit);
+        }
+        const ProjectData = responseProject.data.data[0].project_content_data
+        for (let i = 0; i < ProjectData.length; i++){
+          Project_content_id(ProjectData[i][0].analytics_dict.id);
+          Project_content_project_content_id_id(ProjectData[i][0].analytics_dict.project_content_id_id);
+          Project_content_track_with(ProjectData[i][0].analytics_dict.track_with);
+          Back_Sound_id(ProjectData[i][0].background_sound.id);
+          Project_content_media_file(ProjectData[i][0].background_sound.media_file);
+          Project_content_project_content_id(ProjectData[i][0].background_sound.project_content_id);
+          Project_content_dimensions_h(ProjectData[i][0].dimensions_h);
+          Project_content_dimensions_w(ProjectData[i][0].dimensions_w);
+          Project_content_opacity(ProjectData[i][0].opacity);
+          Project_content_orientation(ProjectData[i][0].orientation);
+          Project_content_target_image(ProjectData[i][0].target_image);
+          Project_content_units(ProjectData[i][0].units);
+        }
+      })
+      .catch((err) => {
+        toast.error("Connecting to Server !");
+      });
+  }, [toGetData]);
+
+console.log("---------SCENE DATA --------->" , cont_id)
+console.log("---------SCENE DATA --------->" ,cont_project_content_id_id)
+console.log("---------SCENE DATA --------->" , cont_track_with)
+console.log("---------SCENE DATA --------->" ,cont_Sound_id)
+console.log("---------SCENE DATA --------->" , cont_media_file)
+console.log("---------SCENE DATA --------->" , cont_project_content_id)
+console.log("---------SCENE DATA --------->" , cont_dimensions_h)
+console.log("---------SCENE DATA --------->" , cont_dimensions_w)
+console.log("---------SCENE DATA --------->" , cont_opacity)
+console.log("---------SCENE DATA --------->" , cont_orientation)
+console.log("---------SCENE DATA --------->" , cont_target_image)
+console.log("---------SCENE DATA --------->" , cont_units)
+  // Image Upload API with all DATA ---------------------------------------------------------------------------------------------->
+
+   const handleImageInput = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        const image = new Image();
+        image.src = event.target.result;
+
+        // Get the dimensions once the image has loaded
+        image.onload = () => {
+          const width = image.width;
+          const height = image.height;
+          const scaleFactor = 10; // Number of pixels per unit
+          const threeewidth = width / scaleFactor;
+          const threeeheight = height / scaleFactor;
+
+
+          // Append the image and project ID to FormData
+          const formData = new FormData();
+          formData.append("image", file);
+          formData.append("project_id", id);
+          axios
+            .post(API.BASE_URL + "upload-image/", formData)
+            .then(function (response) {
+              toast.success("Image Uploaded!");
+              imageDimensions(response.data.id, threeewidth, threeeheight);
+              imageTransitionAPI(response.data.id,);
+              imageAppearanceAPI(response.data.id,);
+              imageActionAPI(response.data.id,);
+            })
+            .catch(function (err) {
+              toast.error("Image not Uploaded!");
+            });
+      };
+    };
+    reader.readAsDataURL(file);
+  };
+
+    // STATES FOR THE IMAGE DIMESNSIONS AND PROPERTIES ------------------------------------------------------------------------------->
+    const imageDimensions = (id, threeewidth, threeeheight) => {
+      const formData = new FormData();
+      formData.append("image_id", id);
+      formData.append("width", threeewidth);
+      formData.append("height", threeeheight);
+      formData.append("depth", 0);
+      formData.append("position_x", 0);
+      formData.append("position_y", 0);
+      formData.append("position_d", 0);
+      formData.append("Rotation_x", 0);
+      formData.append("Rotation_y", 0);
+      formData.append("Rotation_z", 0);
+      formData.append("Mirror", null);
+      axios
+        .post(API.BASE_URL + "/image_transform/", formData)
+        .then(function (response) {
+          console.log(response, "resoonsere-------------------------->>>>");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+  
+    // post api function for image appearance
+    const imageAppearanceAPI = (id) => {
+      const formData = {corner_radius: 0,frame_type: 0,opacity: 1,border_width: 0,border_colo: null,image_id: id,};
+      axios.post(API.BASE_URL + "image_appearance/", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }).then(function (response) {
+          setborder_color(response.data.border_color);
+          setborder_width(response.data.border_width);
+          setcorner_radius(response.data.corner_radius);
+          setframe_type(response.data.frame_type);
+          setopacity(response.data.opacity);
+        }).catch(function (err) {
+          console.log(err);
+        });
+    };
+
+    // post api function for image transition
+    const imageTransitionAPI = (id) => {  
+      const formData = {transition_enter: null,transition_exit: null,height: 0,duration: 0,delay: 0,image_id: id,}
+      axios.post(API.BASE_URL + "image_transition/", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }).then(function (response) {
+          setTraNdelay(response.data.delay);
+          setTraNduration(response.data.duration);
+          setTraNheight(response.data.height);
+          setTraNid(response.data.id);
+          setTraNimage_id(response.data.image_id);
+          setTraNtransition_enter(response.data.transition_enter);
+          setTraNtransition_exit(response.data.transition_exit);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    };
+
+    // post api function for image action
+    const imageActionAPI = (id) => {
+      const formData = {image_action: null,image_id: id,};
+      axios.post(API.BASE_URL + "image_action/", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }).then(function (response) {
+          setimage_action(response.data.image_action);
+        }).catch(function (err) {
+          console.log(err);
+        });
+    };
+
+
+    // VIdeo Data Of Video with all data --------------------------------------------------------------------------------------->
+    const handleInputChange = (event) => {
+      const videoFile = event.target.files[0];
+      const videoElement = document.createElement("video");
+      videoElement.src = URL.createObjectURL(videoFile);
+      const formData = new FormData();
+      videoElement.onloadedmetadata = () => {
+        const width = videoElement.videoWidth / 10;
+        const height = videoElement.videoHeight / 10;
+
+        // Upload the video with additional information
+        const FormData ={video: videoFile, project_id: id}
+        axios.post( API.BASE_URL + "upload-video/", FormData,{
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+        }).then(function (response) {
+            setVideoData(response.data.id , width , height); 
+            videoTransitionAPI(response.data.id);           
+            videoActionAPI(response.data.id);
+          })
+          .catch(function (err) {
+            console.log(err);
+          });
+      };
+    };
+
+    const setVideoData = (id , width , height) => {
+      const formData = new FormData();
+        formData.append("video_id" , id);
+        formData.append("width", width);
+        formData.append("height", height);
+        formData.append("depth", 0);
+        formData.append("position_x", 0);
+        formData.append("position_y", 0);
+        formData.append("position_d", 0);
+        formData.append("Rotation_x", 0);
+        formData.append("Rotation_y", 0);
+        formData.append("Rotation_z", 0);
+        formData.append("Mirror", null);
+      axios
+        .post(API.BASE_URL + "video_transform/", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(function (response) {
+          settoGetData((prev) => !prev);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    };
+
+    // post api function for video action
+  const videoActionAPI = (id) => {
+    const formData = { video_id: id, video_action: null };
+    axios.post(API.BASE_URL + "video_action/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(function (response) {
+        console.log(response.data.video_action,'RESPONSE from VIDEO ACTION YES <<<<============');
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
+
+  // post api function for video transition
+  const videoTransitionAPI = (id) => {
+    const formData = {transition_enter: null,transition_exit: null,height: 0,duration: 0,delay: 0,video_id: id, };
+    axios.put(API.BASE_URL + "video_transition/"+id+"/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }).then(function (response) {
+        console.log(response.data,'RESPONSE video Transition YES YES YES<<<<============');
+      }).catch(function (err) {
+        console.log(err);
+      });
+  };
+
+
+  // HANDLE 3Dmodel CHANGE ------------------------------------------------------------------------------------------------>
+
+  const handle3Dmodel = (e) => {
+    const formData = new FormData();
+    formData.append("File", e.target.files[0]);
+    formData.append("project_id", id);
+    axios.post(API.BASE_URL + "upload-threed-model-file/", formData)
+      .then(function (response) {
+        toast.success("Image Uploaded !");
+        threeDmodelTransform(response.data.data.id);
+        threeDmodelTransition(response.data.data.id);
+        threeDmodelAction(response.data.data.id);
+      })
+      .catch(function (err) {
+        console.log(err, "from handle 3DDDDDDD");
+        toast.error("Image not Uploaded !");
+      });
+  };
+
+
+  // three model transform api
+
+  const threeDmodelTransform = (id) => {
+    const formData = {ThreeDModel_id: id,width: 0,height: 0,depth: 0,position_x: 0,position_y: 0,position_d: 0,Rotation_x: 0,Rotation_y: 0,Rotation_z: 0,Mirror: 0};
+    axios.post(API.BASE_URL + "threed-model_transform/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }).then(function (response) {
+        console.log(response, "RESponSE from three D Model Transform");
+        settoGetData((prev) => !prev);
+      }).catch(function (err) {
+        console.log(err);
+      });
+  };
+
+  // three model transition api
+  const threeDmodelTransition = (id) => {
+    const formData = {transition_enter: null,transition_exit: null,height: 0,duration: 0,delay: 0,ThreeDModel_id: id};
+    axios.post(API.BASE_URL + "threed-model_transition/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }).then(function (response) {
+        console.log(response, "RESponSE from three D Model Transition");
+        settoGetData((prev) => !prev);
+      }).catch(function (err) {
+        console.log(err);
+      });
+  };
+
+  // three model action api
+  const threeDmodelAction = (id) => {
+    const formData = {ThreeDModel_id: id,action: null};
+    axios.post(API.BASE_URL + "threed-model_action/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }).then(function (response) {
+        console.log(response, "RESponSE from three D Model Action");
+        settoGetData((prev) => !prev);
+      }).catch(function (err) {
+        console.log(err);
+      });
+  };
+
+
+  // Create SCENE WHEN THE PROJECT IS LOADED :------------------------------------------------------------------------->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   /******************* CONST USESTATES  ***************** */
 
   // start music pause to paly icons
@@ -218,32 +656,15 @@ const Target = () => {
   //  HANDLE TARGET IMAGE FUNCTION ------------------------------------------------------------------------------------------------------------------------
 
   const TargetImage = (e) => {
-    var file = e.target.files[0];
-    var reader = new FileReader();
-    reader.onloadend = (onload) => {
-      selectedTargetImage(reader.result);
+    selectedTargetImage(e.target.files[0]);
     };
-    reader.readAsDataURL(file);
-  };
-  localStorage.setItem("targetImage", targetImage);
 
-  // HANDLE GET USER-ID FROM LOCALSTORAGE ------------------------------------------------------------------------------------------------------------------
 
-  const userId = localStorage.getItem("id");
-  const { id } = useParams();
 
-  localStorage.setItem("projectId", id);
+
 
   // USE-EFFECT FOR THE USER'S PROJECS LIST -----------------------------------------------------------------------------------------------------------------
 
-  useEffect(() => {
-    axios
-      .get(API.BASE_URL + "project-list/" + id + "/")
-      .then(function (response) {
-        title(response.data.ProTitle);
-      })
-      .catch(function (error) {});
-  }, []);
 
   const token = localStorage.getItem("token");
   useEffect(() => {
@@ -269,96 +690,6 @@ const Target = () => {
       window.location.reload(true);
     }
   });
-
-  const setVideoData = (formData) => {
-    axios
-      .post(API.BASE_URL + "video_transform/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        // we are only setting data to backend here not doing anything with response
-        settoGetData((prev) => !prev);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  const handleInputChange = (event) => {
-    const videoFile = event.target.files[0];
-    setVideoUrl(event.target.files[0]);
-    const videoElement = document.createElement("video");
-    videoElement.src = URL.createObjectURL(videoFile);
-    const formData = new FormData();
-    videoElement.onloadedmetadata = () => {
-      const width = videoElement.videoWidth / 10;
-      const height = videoElement.videoHeight / 10;
-      const size = videoFile.size / 1000;
-      const type = videoFile.type;
-      // Add video information to FormData
-      // formData.append("video_id" , localStorage.getItem('id'));
-      formData.append("width", width);
-      formData.append("height", height);
-      formData.append("depth", 0);
-      formData.append("position_x", 0);
-      formData.append("position_y", 0);
-      formData.append("position_d", 0);
-      formData.append("Rotation_x", 0);
-      formData.append("Rotation_y", 0);
-      formData.append("Rotation_z", 0);
-
-      formData.append("Mirror", null);
-
-      // Upload the video with additional information
-      axios
-        .post(
-          API.BASE_URL + "upload-video/",
-          {
-            video: videoFile,
-            project_id: localStorage.getItem("id"),
-          },
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-        .then(function (response) {
-          // console.log(response,'response from input change handler');
-          formData.append("video_id", response.data.id);
-          setNewPath(response.data.video ? response.data.video : "");
-          localStorage.setItem("videoId", response.data.id);
-          setVideoData(formData);
-
-          // formData for video transition api
-
-          const formDataForVideoTransition = {
-            transition_enter: null,
-            transition_exit: null,
-            height: 0,
-            duration: 0,
-            delay: 0,
-            video_id: response.data.id,
-          };
-
-          // videoTransitionAPI(formDataForVideoTransition);
-
-          //  form data for video action api
-
-          const formDataForVideoAction = {
-            video_id: response.data.id,
-            video_action: "Take photooo",
-          };
-
-          videoActionAPI(formDataForVideoAction);
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-    };
-  };
 
   // Update the URL state when the user enters a new URL
   const handleChange = (event) => {
@@ -472,556 +803,7 @@ const Target = () => {
     }
   }
 
-  //  get api function for get image data
-
-  const getImageDataAPI = () => {
-    axios
-      .get(API.BASE_URL + "get-image-data/1/")
-      .then(function (response) {
-        console.log(
-          response.data.data[0].Image_Transform[0],
-          "RESPONSE from GET image data API<<<<============"
-        );
-        setImgMirror(response.data.data[0].Image_Transform[0].Mirror);
-        setImgRotation_x(response.data.data[0].Image_Transform[0].Rotation_x);
-        setImgRotation_y(response.data.data[0].Image_Transform[0].Rotation_y);
-        setImgRotation_z(response.data.data[0].Image_Transform[0].Rotation_z);
-        setImgdepth(response.data.data[0].Image_Transform[0].depth);
-        setImgheight(response.data.data[0].Image_Transform[0].height);
-        setImgposition_d(response.data.data[0].Image_Transform[0].position_d);
-        setImgposition_x(response.data.data[0].Image_Transform[0].position_x);
-        setImgposition_y(response.data.data[0].Image_Transform[0].position_y);
-        setImgwidth(response.data.data[0].Image_Transform[0].width);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  //  get api function for get video data
-
-  const getVideoDataAPI = () => {
-    axios
-      .get(API.BASE_URL + "get-video-data/1/")
-      .then(function (response) {
-        console.log(
-          response.data,
-          "RESPONSE from get ALLLLLL video data API<<<<============"
-        );
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  // post api function for image action
-
-  const imageActionAPI = (formData) => {
-    axios
-      .post(API.BASE_URL + "image_action/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        // console.log(response.data.image_action,'RESPONSE from Image action <<<<============');
-        setimage_action(response.data.image_action);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  // post api function for video action
-
-  const videoActionAPI = (formData) => {
-    axios
-      .post(API.BASE_URL + "video_action/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        // console.log(response.data.video_action,'RESPONSE from VIDEO ACTION YES <<<<============');
-        setvideo_action(response.data.video_action);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  // post api function for image appearance
-
-  const imageAppearanceAPI = (formData) => {
-    axios
-      .post(API.BASE_URL + "image_appearance/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        // console.log(response.data,'RESPONSE from Image appearance<<============');
-        setborder_color(response.data.border_color);
-        setborder_width(response.data.border_width);
-        setcorner_radius(response.data.corner_radius);
-        setframe_type(response.data.frame_type);
-        setopacity(response.data.opacity);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  // post api function for image transition
-
-  const imageTransitionAPI = (formData) => {
-    axios
-      .post(API.BASE_URL + "image_transition/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        // console.log(response.data,'RESPONSE<<<<============');
-
-        setTraNdelay(response.data.delay);
-        setTraNduration(response.data.duration);
-        setTraNheight(response.data.height);
-        setTraNid(response.data.id);
-        setTraNimage_id(response.data.image_id);
-        setTraNtransition_enter(response.data.transition_enter);
-        setTraNtransition_exit(response.data.transition_exit);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  // post api function for video transition
-
-  const videoTransitionAPI = (formData) => {
-    axios
-      .put(API.BASE_URL + "video_transition/5/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        // console.log(response.data,'RESPONSE video Transition YES YES YES<<<<============');
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  // HANDLE IMAGE CHANGE ------------------------------------------------------------------------------------------------>
-  const handleImageInput = (e) => {
-    const file = e.target.files[0];
-
-    setinputImg(file);
-    // Read the file using FileReader
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      // Create an Image object
-      const image = new Image();
-      image.src = event.target.result;
-
-      // Get the dimensions once the image has loaded
-      image.onload = () => {
-        const width = image.width;
-        const height = image.height;
-
-        const scaleFactor = 10; // Number of pixels per unit
-
-        const threeewidth = width / scaleFactor;
-        const threeeheight = height / scaleFactor;
-        // Append the image and project ID to FormData
-        const formData = new FormData();
-        formData.append("image", file);
-        formData.append("project_id", id);
-        axios
-          .post(API.BASE_URL + "upload-image/", formData)
-          .then(function (response) {
-            toast.success("Image Uploaded!");
-            imageDimensions(response.data.id, threeewidth, threeeheight);
-            // API image transition
-            // console.log(response,'<<<<<<<<<<<<<<=========================334');
-            const formDataForImageTransition = {
-              transition_enter: null,
-              transition_exit: null,
-              height: 0,
-              duration: 0,
-              delay: 0,
-              image_id: response.data.id,
-            };
-
-            const formDataForImageAppearance = {
-              corner_radius: 42,
-              frame_type: 12,
-              opacity: 5,
-              border_width: 12,
-              border_colo: null,
-              image_id: response.data.id,
-            };
-
-            const formDataForImageAction = {
-              image_action: "Take Photo",
-              image_id: response.data.id,
-            };
-
-            imageTransitionAPI(formDataForImageTransition);
-            imageAppearanceAPI(formDataForImageAppearance);
-            imageActionAPI(formDataForImageAction);
-          })
-          .catch(function (err) {
-            toast.error("Image not Uploaded!");
-          });
-      };
-    };
-    reader.readAsDataURL(file);
-  };
-
-  // STATES FOR THE IMAGE DIMESNSIONS AND PROPERTIES ------------------------------------------------------------------------------->
-
-  const imageDimensions = (id, threeewidth, threeeheight) => {
-    const formData = new FormData();
-    formData.append("image_id", id);
-    formData.append("width", threeewidth);
-    formData.append("height", threeeheight);
-    formData.append("depth", 0);
-    formData.append("position_x", 0);
-    formData.append("position_y", 0);
-    formData.append("position_d", 0);
-    formData.append("Rotation_x", 0);
-    formData.append("Rotation_y", 0);
-    formData.append("Rotation_z", 0);
-    formData.append("Mirror", null);
-    axios
-      .post(API.BASE_URL + "/image_transform/", formData)
-      .then(function (response) {
-        console.log(response, "resoonsere-------------------------->>>>");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
-  // three model transform api
-
-  const threeDmodelTransform = (formData) => {
-    axios
-      .post(API.BASE_URL + "threed-model_transform/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        console.log(response, "RESponSE from three D Model Transform");
-        settoGetData((prev) => !prev);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  // three model transition api
-
-  const threeDmodelTransition = (formData) => {
-    axios
-      .post(API.BASE_URL + "threed-model_transition/1/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        console.log(response, "RESponSE from three D Model Transition");
-        settoGetData((prev) => !prev);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  // three model action api
-
-  const threeDmodelAction = (formData) => {
-    axios
-      .post(API.BASE_URL + "threed-model_action/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        console.log(response, "RESponSE from three D Model Action");
-        settoGetData((prev) => !prev);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  // HANDLE 3Dmodel CHANGE ------------------------------------------------------------------------------------------------>
-
-  const handle3Dmodel = (e) => {
-    const formData = new FormData();
-    formData.append("File", e.target.files[0]);
-    formData.append("project_id", id);
-    axios
-      .post(API.BASE_URL + "upload-threed-model-file/", formData)
-      .then(function (response) {
-        console.log(
-          response,
-          "Response !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        );
-        toast.success("Image Uploaded !");
-
-        //  formData for three D data transform api
-        const formDataThreeDdataTransform = {
-          ThreeDModel_id: response.data.data.id,
-          width: 0,
-          height: 0,
-          depth: 0,
-          position_x: 0,
-          position_y: 0,
-          position_d: 0,
-          Rotation_x: 0,
-          Rotation_y: 0,
-          Rotation_z: 0,
-          Mirror: 0,
-        };
-
-        const formDataThreeDdataTransition = {
-          transition_enter: "Slide Up",
-          transition_exit: "Slide Downn",
-          height: 0,
-          duration: 0,
-          delay: 0,
-          ThreeDModel_id: 0,
-        };
-        const formDataThreeDdataAction = {
-          ThreeDModel_id: response.data.data.id,
-          action: "Take Photo",
-        };
-
-        threeDmodelTransform(formDataThreeDdataTransform);
-        threeDmodelTransition(formDataThreeDdataTransition);
-        threeDmodelAction(formDataThreeDdataAction);
-      })
-      .catch(function (err) {
-        console.log(err, "from handle 3DDDDDDD");
-        toast.error("Image not Uploaded !");
-      });
-  };
-
-  // function for post api project content
-
-  const projectContentApi = () => {
-    // will be called at on change units not set yet
-    const formDataForProjectContentAPI = {
-      target_image: getImage,
-      project_Id: id,
-      opacity: 0,
-      orientation: 0,
-      dimensions_w: 0,
-      dimensions_h: 0,
-      units: selectedUnit,
-    };
-
-    axios
-      .post(API.BASE_URL + "project_content/", formDataForProjectContentAPI, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        console.log(response, "RESponSE from projectContentApi");
-        const project_content_id = response.data.id;
-        backgroundSoundApi(project_content_id);
-        analyticsApi(project_content_id);
-      })
-      .catch(function (err) {
-        console.log(err, "From project content api");
-      });
-  };
-
-  // function for post api background sound
-
-  const backgroundSoundApi = (idee) => {
-    // called inside  projectContentApi
-    const formDataForBackgroundSoundAPI = {
-      project_content_id: idee,
-      media_file: null,
-    };
-    axios
-      .post(
-        API.BASE_URL + `background_sound/${id}/`,
-        formDataForBackgroundSoundAPI,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-      .then(function (response) {
-        console.log(response, "RESponSE from backgroundSoundApi");
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  const analyticsApi = (idee) => {
-    // called inside  projectContentApi
-    const formDataForAnalyticsAPI = {
-      project_content_id: idee,
-      track_with: null,
-    };
-    axios
-      .post(API.BASE_URL + "analytics/", formDataForAnalyticsAPI, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        console.log(response, "RESponSE from analyticsApi");
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  // Get Project Details ---------------------------------------------------------------------------------------------------->
-
-  //  function for post api scene transition
-
-  const sceneTransitionApi = (formData) => {
-    axios
-      .post(API.BASE_URL + "scene_transition/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        console.log(
-          response,
-          "RESponSE from sceneTransitionAPI<<<<<<<<<<<<<<<<<<<<<"
-        );
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  // function for post api create scene
-
-  const createSceneApi = () => {
-    const payLoad = {
-      project_id: id,
-      name: null,
-    };
-    axios
-      .post(API.BASE_URL + "scene/", payLoad, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        console.log(
-          response.data.id,
-          "RESponSE from createSceneAPI..............."
-        );
-        const formDataForSceneTransition = {
-          scene_id: 1,
-          transition_enter: null,
-          transition_exit: null,
-          height: 0,
-          duration: 0,
-          delay: 0,
-        };
-        // API for scene transition
-        sceneTransitionApi(formDataForSceneTransition);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  //  useEffect for Scene
-  useEffect(() => {
-    createSceneApi();
-  }, []);
-
-  useEffect(() => {
-    console.log("useEffect called");
-    projectContentApi();
-  }, [selectedUnit]);
-
-  useEffect(() => {
-    axios
-      .get(API.BASE_URL + "get_projectdata/" + id + "/")
-      .then((responseProject) => {
-        setButton(responseProject.data.data[0].button_data);
-        setText(responseProject.data.data[0].text_data);
-        setImage(responseProject.data.data[0].image_data);
-        setVideo(responseProject.data.data[0].video_data);
-        set3Dmodel(responseProject.data.data[0].ThreeDmodeldata);
-        setScene(responseProject.data.data[0].scene_data);
-        setProject(responseProject.data.data[0].project_content_data);
-        // console.log(responseProject.data.data[0].video_data,'VideoData<<<,,,,,,,,,,,,,,,,,>>>>>>>>>>>>>>>>>>');
-
-        // Video Dimensions ----------------------------------------------------------------------------------------------------->
-
-        const videoData = responseProject.data.data[0].video_data;
-
-        for (let i = 0; i < videoData.length; i++) {
-          setMirror(videoData[i][0].video_transform.Mirror);
-          setRotation_x(videoData[i][0].video_transform.Rotation_x);
-          setRotation_y(videoData[i][0].video_transform.Rotation_y);
-          setRotation_z(videoData[i][0].video_transform.Rotation_z);
-          setdepth(videoData[i][0].video_transform.depth);
-          setheight(videoData[i][0].video_transform.height);
-          setposition_d(videoData[i][0].video_transform.position_d);
-          setposition_x(videoData[i][0].video_transform.position_x);
-          setposition_y(videoData[i][0].video_transform.position_y);
-          setvideo_id(videoData[i][0].video_transform.video_id_id);
-          setwidthVideo(videoData[i][0].video_transform.video_id);
-          setprojectId(videoData[i][0].video_transform.width);
-        }
-
-        // Image Dimensions ----------------------------------------------------------------------------------------------------->
-        const DataImage = responseProject.data.data[0].image_data;
-        for (let i = 0; i < DataImage.length; i += 1) {
-          // console.log('Image Dimensions ----------------------------------------------------------------------------------------------------->' , DataImage[i][0].image_transform)
-          dimwidth(DataImage[i][0].image_transform.width);
-          dimheight(DataImage[i][0].image_transform.height);
-          dimdepth(DataImage[i][0].image_transform.depth);
-          dimposition_x(DataImage[i][0].image_transform.position_x);
-          dimposition_y(DataImage[i][0].image_transform.position_y);
-          dimposition_d(DataImage[i][0].image_transform.position_d);
-          dimRotation_x(DataImage[i][0].image_transform.Rotation_x);
-          dimRotation_y(DataImage[i][0].image_transform.Rotation_y);
-          dimRotation_z(DataImage[i][0].image_transform.Rotation_z);
-        }
-        // api to get image data
-        // getImageDataAPI();
-        // api to get video data
-        // getVideoDataAPI();
-        // const formDataForProjectContentAPI={
-        //   target_image: inputImg ,
-        //   project_Id: id ,
-        //   opacity: 0 ,
-        //   orientation: 0 ,
-        //   dimensions_w:0  ,
-        //   dimensions_h:0  ,
-        //   units: null ,
-        // }
-
-        // projectContentApi(formDataForProjectContentAPI)
-      })
-      .catch((err) => {
-        toast.error("Connecting to Server !");
-      });
-  }, [toGetData]);
+ 
 
   return (
     <div className="targetPage" ref={containerRef}>
@@ -2291,9 +2073,8 @@ const Target = () => {
               </div>
             </div>
             <div className="col-md-9 p-0 m-0 target-center" id="tracker">
-              <Canvas>
-                <ModelAr />
-              </Canvas>
+              <canvas id="myCanvas" width={window.innerWidth} height={window.innerHeight}></canvas>
+              <ModelAr />
             </div>
             {/* <div class="EditorCanvas--3VU0J" style={{position: "relative", width: "100%" ,height: "100%",overflow: "hidden"}}>
               <ModelAr />

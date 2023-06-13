@@ -95,7 +95,6 @@ const Project =()=>{
       const formData = new FormData();
       formData.append('ProTitle',titlePro)
       formData.append('FeaturedtrackerOption' , SceneType)
-  
       axios.post(API.BASE_URL + 'update-project/'+id+'/', formData, {
         headers: {
           'accept': 'application/json',
@@ -103,15 +102,94 @@ const Project =()=>{
           },
         })
       .then(function (response) {
-        console.log(response);
+        CreateScene(id)
+        CreateProject(id)
         navigate('/target/'+id)
       })
       .catch(function(err) {
         console.error('Error uploading file', err);
       });
     }
-
 }
+//-------------------------------------------CreateScene---------------------------------------->
+const CreateScene=(id)=>{
+  const formdata = {'project_id': id,'name': 'Scene 1'}
+  axios.post(API.BASE_URL + 'scene/', formdata ,{
+    headers: {
+      'accept': 'application/json',
+          'content-type': 'multipart/form-data' 
+      },
+  }).then(function (response) {
+    console.log(response.data.id)
+    sceneTransitions(response.data.id)
+  }).catch(function(errorMessage){
+    console.log(errorMessage)
+  })
+}
+const sceneTransitions=(id)=>{
+  const formData = {
+    scene_id: id,
+    transition_enter: null,
+    transition_exit: null,
+    height: 0,
+    duration: 0,
+    delay: 0,
+  }
+  axios.post(API.BASE_URL + "scene_transition/", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  }).then(function (response) {
+  }).catch(function (err) {
+    console.log(err);
+  });
+}
+
+
+// --------------------------------------------------------CreateProject----------------------------------------------->
+
+  const CreateProject=(id)=>{
+    const formData = {target_image:  null,project_Id: id,opacity: 0,orientation: 0,dimensions_w: 0,dimensions_h: 0,units: ''};
+    axios.post(API.BASE_URL + 'project_content/', formData ,{
+      headers: {
+        'accept': 'application/json',
+            'content-type': 'multipart/form-data' 
+        },
+    }).then(function (response) {
+      const project_content_id = response.data.id;
+      backgroundSoundApi(project_content_id);
+      analyticsApi(project_content_id);
+    }).catch(function(errorMessage){
+      console.log(errorMessage)
+    })
+  }
+
+  // function for post api background sound
+
+  const backgroundSoundApi = (idee) => {
+    const formData = {project_content_id: idee, media_file: null};
+    axios.post(API.BASE_URL + 'background_sound/',formData,{
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }).then(function (response) {
+      }).catch(function (err) {
+        console.log(err);
+      });
+  };
+
+  const analyticsApi = (idee) => {
+    const formData = {project_content_id: idee,track_with: null};
+    axios.post(API.BASE_URL + "analytics/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }).then(function (response) {
+        console.log(response, "RESponSE from analyticsApi");
+      }).catch(function (err) {
+        console.log(err);
+      });
+  };
 
  // USEEFFECT FOR IMAGE  ------------------------------------------------------------------->
 
