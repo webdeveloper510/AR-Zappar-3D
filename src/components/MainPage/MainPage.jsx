@@ -115,8 +115,6 @@ const MainPage =()=>{
 
     }
 
-  
-
     const handleSelectProjectType = (event , type) =>{
       selectProjectType(type);
       event.currentTarget.classList.add("project-type")

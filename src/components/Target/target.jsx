@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import WorldTracking from '../../assets/images/worldtracking.jpg'
+import faceTracking from '../../assets/images/facetracking.png'
+import ImageTracking from '../../assets/images/imagetracking.png';
 import {faHandPointUp,faT,faImage,faVideo,faCube,faImagePortrait,faGear,faChevronLeft,faLayerGroup} from "@fortawesome/free-solid-svg-icons";
 import { FaDoorOpen } from "react-icons/fa";
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
@@ -25,7 +28,8 @@ import Row from "react-bootstrap/Row";
 import Accordion from "react-bootstrap/Accordion";
 import Tab from "react-bootstrap/Tab";
 import "./target.css";
-import imgScene from '../../assets/images/facetracking.png'
+import imgScene from '../../assets/images/facetracking.png';
+
 
 
 const Target = () => {
@@ -690,12 +694,26 @@ const tiktokImage     ="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCA
   console.log(cont_orientation)
 
 // -------------------------------------------------------------------------->
-const AddedElement = () => <div className="scene1"></div>
-const AddedElement2 = () => <h6>Scene </h6>
 const [count, setCount] = useState(1)
 
+ // To SELECT TARGET   ------------------------------------------------------------------->
+ const [FeaturedtrackerOption,Featuredtracker] = useState(null);
+ const handleSelectTarget =(event , type)=>{
+  selectSceneType(type)
+  event.currentTarget.classList.add("selected");
+}
+ /********** Start----Model State *************/
+ const [FeaturedOption , TrackerOption] = useState(false);
+ const [SceneType , selectSceneType] = useState(null);
 
+ const handleClose = () =>{
+  TrackerOption(false);
+} 
+// const [show, setShow] = useState(false);
 
+const handleOpenTrackerOption=()=>{
+  TrackerOption(true)
+}
   return (
     <div className="targetPage" ref={containerRef}>
       <div className="navbar taget-navbar">
@@ -5643,8 +5661,8 @@ const [count, setCount] = useState(1)
         {/*  all scenes will be shown in this div */}
       {showScene && 
       <div className="scenes-list"> 
-           { [...Array(count)].map((_, i) => <AddedElement key={i} /> )}
-           { [...Array(count)].map((_, i) => <h6>Scene 1({i})  </h6> )}
+           { [...Array(count)].map((_, i) =>  <div className="scene1"><h6 class="scene-txt">Scene 1({i})</h6></div> )}
+           {/* { [...Array(count)].map((_, i) => <h6>Scene 1({i})  </h6> )} */}
       </div>
       }
         <div class="scene-inner-content" >
@@ -5678,7 +5696,7 @@ const [count, setCount] = useState(1)
    
 	  <Accordion onClick={()=>setshowScene((prev)=>!prev)}>
 	  <Accordion.Item eventKey="0" >
-        <Accordion.Header> Name</Accordion.Header>
+        <Accordion.Header>Scene 1</Accordion.Header>
        
 		  </Accordion.Item>
 	   </Accordion>
@@ -5689,7 +5707,7 @@ const [count, setCount] = useState(1)
    </Tab.Container>
     
          </div>
-         <div class="scene-right-icon">
+         <div class="scene-right-icon" onClick={handleOpenTrackerOption}>
          <svg
       xmlns="http://www.w3.org/2000/svg"
       width="32"
@@ -5710,7 +5728,69 @@ const [count, setCount] = useState(1)
     </svg>
          </div>
         </div>
-       </div>
+        </div>
+
+
+        {/* Start---model data */}
+
+ <Modal
+        show={FeaturedOption}
+
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        className="slectTrigger" id="ope-design-popup"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Select a tracking type for your new scene</Modal.Title>
+         </Modal.Header>
+        <Modal.Body>
+
+
+          <div className="open-designer-popup" >
+            <div className={`three-image-designer ${SceneType === "WorldTracking" ? "selected" : ""}`} onClick={event => handleSelectTarget(event , "WorldTracking")}>
+            <div className="designer-image">
+            <img src={WorldTracking}></img>
+            </div>
+            <div className="designer-content">
+            <h3>World tracking</h3>
+            <p>Place content on flat surfaces, like the ground or tabletop.</p>
+            </div>
+            </div>
+
+            <div className={`three-image-designer ${SceneType === "ImageTracking" ? "selected" : ""}`} onClick={event => handleSelectTarget(event , "ImageTracking")}>
+            <div className="designer-image">
+            <img src={ImageTracking}></img>
+            </div>
+            <div className="designer-content">
+            <h3>Image tracking</h3>
+            <p>Content will anchor to images. Great for posters.</p>
+            </div>
+            </div>
+
+            <div className={`three-image-designer ${SceneType === "FaceTracking" ? "selected" : ""}`} onClick={event => handleSelectTarget(event , "FaceTracking")}>
+            <div className="designer-image">
+            <img src={faceTracking}></img>
+            </div>
+            <div className="designer-content">
+            <h3>Face tracking</h3>
+            <p>Attach content to anchor points on parts of the face.</p>
+            </div>
+            </div>
+
+           
+          </div>
+          <div className="scene-outer">
+            <button className="btn-scene" disabled="" style={{padding: "10px 16px"}}>Create scene</button>
+            </div>
+		    <>
+       
+       
+        </>
+          
+        </Modal.Body>
+      </Modal>
+      {/* End---model data */}
     </div>
   );
 };

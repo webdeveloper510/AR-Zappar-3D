@@ -1458,14 +1458,20 @@ a.orientations.active {
 color: var(--bs-link-hover-color);
 }
 .scenes-list {
-    border: 1px solid #4f83c4;
-    box-shadow: 5px 4px 14px 0px #888888;
-    margin-right: 19%;
-    margin-left: 5%;
-    height: 140px;
+    float: none;
+    width: 500px;
+    display: flex;
+    margin: 0 auto;
+    justify-content: start;
+    margin-top: -100px;
+    height: 160px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    box-shadow: 2px 0px 23px 7px rgb(52 75 96 / 10%), 1px 0px 9px 0px rgb(52 75 96 / 20%);
+    border-radius: 8px;
 }
 .scene1 {
-    width: 10%;
+    width: 100px;
     border: 1px dotted #4f83c4;
     min-height: 70%;
     padding: 2px 3px;
@@ -1473,6 +1479,9 @@ color: var(--bs-link-hover-color);
     background: url('../../assets/images/Screenshot.png');
     background-size: 100% 100%;
     transition: 0.9s;
+    height: 100px;
+    transition: 0.9s;
+    position: relative;
 }
 .scene1:hover{
     background: url('../../assets/images/Screenshot.png');
@@ -1487,7 +1496,50 @@ g:hover {
     fill: #4f83c4;
 }
 h6 {
-    margin: 0 0 0 42px;
-    padding: 0;
+    margin: 95px 0 0 12px !important;
+    padding: 0 !important;
+    float: left !important;
+}
+.scene-right-icon {
     float: left;
+    width: 20%;
+}
+.scence-middle-content {
+    float: left;
+    width: 60%;
+}
+.scene-left-icon {
+    float: left;
+    width: 20%;
+}
+h6.scene-txt {
+    position: absolute;
+    width: 100%;
+    float: left !important;
+    text-align: center;
+    left: 0;
+    right: 0;
+    margin: 0 !important;
+    bottom: -24px;
+    font-size: 14px;
+    font-family: 'Lato', sans-serif !important;
+}
+.scene-inner-content {
+    margin: 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 344px;
+    height: 56px;
+    border-radius: 6px 6px 0 0;
+    box-shadow: 0 2px 4px 0 rgb(52 75 96 / 10%), 0 1px 3px 0 rgb(52 75 96 / 20%);
+    background-color: #fff;
+    transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: auto;
+}
+.scence-middle-content .tab-content {
+    background: transparent !important;
+}
+.scence-middle-content .accordion-item {
+    border-bottom: none !important;
 }

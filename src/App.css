@@ -3124,15 +3124,7 @@ label.label-name {
     width: 100%;
     text-align: center;
 }
-.scene-inner-content {
-    width: 50%;
-    margin: 0 auto;
-    display: block;
-}
-.scene-left-icon {
-    float: left;
-    width: 30%;
-}
+
 /* .host {
     height: 350px;
 }
