@@ -9,6 +9,9 @@ import { useParams } from 'react-router-dom';
 import React,{useState ,useRef} from 'react';
 import { toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
+import svgHere from '../src/assets/images/svgviewer-output.svg'
+import svgHere2 from '../src/assets/images/Mediamodifier-Design.svg'
+import { DoubleSide } from 'three';
 
 // import {DomEvents} from 'threex.domevents/threex.domevents'
 
@@ -20,7 +23,6 @@ const ModelAr =()=> {
     // UseStates In Initialization State ---------------------------------------------------------------------->
         const canvasRef = useRef(null); // Create a ref for the canvas element
         const [loaded, setLoaded] = React.useState(false);
-        const projectID = localStorage.getItem('projectId')
         const [getWidth , setWidth] = useState(null)
         const [getHeight , setHeight] = useState(null)
         const [getLength , setLength] = useState(null)
@@ -32,9 +34,10 @@ const ModelAr =()=> {
         const [get3Dmodel , set3Dmodel] = useState(null)
         const [getScene , setScene] = useState(null)
         const [getProject , setProject] = useState(null)
+        const [get2D3D, set2D3D] = useState(null);
         const formdata = new FormData;
-        
-
+        const {id} = useParams()
+        const PlaneTexture = [svgHere , svgHere2]
     // UseEffect Using ---------------------------------------------------------------------------------------->
         useEffect(() => {
  
@@ -75,12 +78,20 @@ const ModelAr =()=> {
 
 
             // Creating Plane For Tracker ------------------------------------------------------------------------->
+          
 
-                const grid =  new THREE.PlaneGeometry( 300, 400  ) ;
-                const planematerialFront = new THREE.MeshBasicMaterial( {color: 0xcacaca, side: THREE.DoubleSide , transparent : false} );
-                plane = new THREE.Mesh( grid, planematerialFront );
-                scene.add( plane );
+            const textureLoader = new THREE.TextureLoader();
+            const texture1 = textureLoader.load(svgHere)
+            const geometry = new THREE.PlaneGeometry(300, 400);
+            const material = new THREE.MeshBasicMaterial({map : texture1 , side : THREE.DoubleSide , transparent : false})           
 
+            // const material2 = new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load(svgHere2) , side : THREE.BackSide , transparent : false})           
+            const plane = new THREE.Mesh(geometry,material );
+            material.needsUpdate = false;
+            scene.add(plane);
+            console.log(plane.material)
+            plane.position.set(0, 0, 0);
+            plane.rotation.y = Math.PI;
             // Adding Light Effects ------------------------------------------------------------------------------->
            
 
@@ -124,7 +135,7 @@ const ModelAr =()=> {
 
                     // All Data Get for Image Tracking --------------------------------------------->
 
-                    axios.get(API.BASE_URL+"get_projectdata/"+projectID+"/")
+                    axios.get(API.BASE_URL+"get_projectdata/"+id+"/")
                     .then((responseProject)=>{
                         if(!rendeR){
                             
@@ -137,14 +148,14 @@ const ModelAr =()=> {
                         set3Dmodel(responseProject.data.data[0].ThreeDmodeldata)
                         setScene(responseProject.data.data[0].scene_data)
                         setProject(responseProject.data.data[0].project_content_data);
-                        console.log(responseProject.data.data[0].video_data,'responseProject.data.data[0].video_datare');
+                        set2D3D(responseProject.data.data[0].twoD_threeD_data)
                         rendeR=false
 
                     }).catch ((err)=>{
                         toast.error("Connecting to Server !")
                     })
 
-                    
+
                    
                     // Image Handler Function ------------------------------------------------------------------------------------------>
                     // var domEvents = new DomEvents(cameraPersp, renderer.domElement);
@@ -154,11 +165,16 @@ const ModelAr =()=> {
                             const imageData = getImage[i][0].image_url
                             const textureLoader = new THREE.TextureLoader()
                             const texturedf = textureLoader.load(imageData)
+                            texturedf.minFilter = THREE.LinearFilter;
+                            texturedf.magFilter = THREE.LinearFilter;
                             const geometry = new THREE.PlaneGeometry(getImage[i][0].image_transform.width, getImage[i][0].image_transform.height)
                             const material = new THREE.MeshBasicMaterial({ map: texturedf, transparent: false })
                             const mesh = new THREE.Mesh(geometry, material);
-                            plane.add(mesh);
-                            mesh.position.set(0, 0, 0)
+                            scene.add(mesh);
+                            mesh.position.set(getImage[i][0].image_transform.position_x, getImage[i][0].image_transform.position_y, getImage[i][0].image_transform.position_d)
+                            mesh.rotation.x =getImage[i][0].image_transform.Rotation_x
+                            mesh.rotation.y =getImage[i][0].image_transform.Rotation_y
+                            mesh.rotation.z =getImage[i][0].image_transform.Rotation_z
                             mesh.userData.type = 'image';
                             mesh.userData.id = imageId;                           
                         }
@@ -219,111 +235,20 @@ const ModelAr =()=> {
                             })
                         }
                     }
-           
 
-                // var vector = new THREE.Vector3(
-                //         (event.clientX / window.innerWidth) * 2 - 1,
-                //         -(event.clientY / window.innerHeight) * 2 + 1, 0.5);
-                  
-                //   var rayCaster = scene.pickingRay(vector, cameraPersp);
-                  
-                //   var intersectedObjects = rayCaster.intersectObjects(scene.children, true);
-                                
-                                // IMAGE DRAG AND DROP FUNCTION 
+                    // Switch Between 2D and 3D controls ------------------------------------------------------------------------------------------------>              
 
-                                    // const TextureImage = document.querySelector('.Grid--1NhFW')
-                                    // TextureImage.addEventListener('click', (e) =>{
-                                    //         const TexturePath = e.target.dataset.texture
-                                    //         var img2 = document.getElementById("social-icon")
-                                    //         img2.src = TexturePath
-                                    //         const confirm = document.getElementById('submitTexture')
-                                    //         confirm.addEventListener("click", () =>{
-                                    //                     const ImageGet = new THREE.TextureLoader()
-                                    //                     const Rtexture = ImageGet.load(TexturePath)
-                                    //                     const ImageGeo = new THREE.BoxGeometry(80,80,1)
-                                    //                     const Imagematerial =[
-                                    //                             new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
-                                    //                             new THREE.MeshBasicMaterial({ transparent: false , color :0x3d3d3d}),
-                                    //                             new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
-                                    //                             new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
-                                    //                             new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
-                                    //                             new THREE.MeshBasicMaterial({map:Rtexture,transparent:false} ),
-                                    //                         ]
-                                    //                 const ImageSocial = new THREE.Mesh(ImageGeo , Imagematerial)
-                                    //                 const previousMesh = scene.getObjectByName('ImageSocial')
-                                    //                     if (previousMesh !== undefined) {
-                                    //                         scene.remove(previousMesh)
-                                    //                         }
-                                    //                 ImageSocial.name = 'ImageSocial'
-                                    //                 ModelsArray.push(ImageSocial)
-                                    //                 scene.add(ImageSocial)
-                                    //                 control4.attach(ImageSocial)
-                                    //         })
-                                    //     })
-
-                                                // const TextureImage2 = document.querySelector('.Grid--r1Nnn')
-                                                // TextureImage2.addEventListener('click', (e) =>{
-                                                //         console.log(e.target.dataset.texture)
-                                                //         const TexturePath = e.target.dataset.texture
-                                                //         var img2 = document.getElementById("social-icon")
-                                                //         img2.src = TexturePath
-                                                //         const confirm = document.getElementById('submitTexture')
-                                                //         confirm.addEventListener("click", () =>{
-                                                //                 console.log(TexturePath)
-                                                //                 const ImageGet = new THREE.TextureLoader()
-                                                //                 const Rtexture = ImageGet.load(TexturePath)
-                                                //                 const ImageGeo = new THREE.BoxGeometry(80,80,1)
-                                                //                 const Imagematerial =[
-                                                //                     new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
-                                                //                     new THREE.MeshBasicMaterial({ transparent: false , color :0x3d3d3d}),
-                                                //                     new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
-                                                //                     new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
-                                                //                     new THREE.MeshBasicMaterial({ color: 0x3d3d3d } ),
-                                                //                     new THREE.MeshBasicMaterial({map:Rtexture,transparent:false} ),
-                                                //                 ]
-                                                //             const ImageSocial = new THREE.Mesh(ImageGeo , Imagematerial)
-                                                //             scene.add(ImageSocial)
-                                                //             ModelsArray.push(ImageSocial)
-                                                //             control5.attach(ImageSocial)
-                                                //     })
-                                                // })
-
-
-                                        // TEXT FEATURE 
-                                        // const TextureImage3 = document.querySelector('.Grid--v4HT5')
-                                        // TextureImage3.addEventListener('click', (e) => {
-                                        //         if (e.target.tagName === 'DIV') {
-                                        //                 const div = e.target;
-                                        //                 const style = window.getComputedStyle(div);
-                                        //                 const backgroundImage = style.getPropertyValue('background-image');
-                                        //                 const textureUrl = backgroundImage.slice(4, -1).replace(/"/g, "");
-                                        //                 const imageLoader = new THREE.TextureLoader();
-                                        //                 const texture = imageLoader.load(textureUrl);
-                                        //                 const geometry = new THREE.BoxGeometry(80, 40, 1);
-                                        //                 const materials = [
-                                        //                 new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
-                                        //                 new THREE.MeshBasicMaterial({ transparent: false, color: 0x3d3d3d }),
-                                        //                 new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
-                                        //                 new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
-                                        //                 new THREE.MeshBasicMaterial({ color: 0x3d3d3d }),
-                                        //                 new THREE.MeshBasicMaterial({ map: texture, transparent: false }),
-                                        //                 ];
-                                        //             const mesh = new THREE.Mesh(geometry, materials);
-                                        //             scene.add(mesh);
-                                        //             control6.attach(mesh)
-                                        //             ModelsArray.push(mesh)
-
-                                        //         }
-                                        // });
-
-                                        // scene.traverse(object => {
-                                        // // if (object.userData.name == 'Mesh Material'){
-                                        //     console.log(object)
-                                        //     object.addEventListener('click', () => {
-                                        //         console.log("cLIckED")
-                                        //     })
-                                        // // } 
-                                        // });
+                    if (get2D3D){
+                        for (let i = 0; i < get2D3D.length; i++) {
+                            if(get2D3D[i].switch_value){
+                                orbit.enabled=true
+                            }else{
+                                orbit.enabled=false
+                                control.detach(mesh);
+                                control2.detach(Videomesh);
+                            }
+                        }
+                    }
 
                                                                 
                                         // ADJUSTMENTT FEATURES
@@ -433,24 +358,7 @@ const ModelAr =()=> {
 
         }
 
-        // Switch Between 2D and 3D controls ------------------------------------------------------------------------------------------------>              
-        const switchElement = document.querySelector('.Switcher2d3d--1SCbh');
-        switchElement.addEventListener('click', (event) =>{ 
-            if (event.target.checked) {
-                switchTo3DMode();
-                } else {
-                switchTo2DMode();
-                }
-        })
-            function switchTo2DMode() {
-            orbit.enabled=false
-            control.detach(mesh);
-            control2.detach(Videomesh);
-            }
-                                
-            function switchTo3DMode() {
-            orbit.enabled=true
-            }
+
 
 
 

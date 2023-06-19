@@ -1349,6 +1349,7 @@ buttonbootstrap.btn-download-preview {
 canvas {
     outline: 0;
 }
+
 div#target-buttons-bar {
     top: 10px;
 }
@@ -1436,4 +1437,23 @@ div#transition-affects-outer .nav-item {
 }
 .video-img-tabs {
     padding-left: 10px;
+}
+.nav-items {
+    width: 100%;
+    display: flex;
+}
+.nav-links {
+    width: 50%;
+    margin: 0;
+    padding: 0;
+}
+/* a.orientations.active {
+    text-decoration: none;
+} */
+a.orientations {
+    text-decoration: none;
+    color: #000;
+}
+a.orientations.active {
+color: var(--bs-link-hover-color);
 }
