@@ -1998,7 +1998,7 @@ console.log("---------SCENE DATA --------->" , cont_units)
                     className="bg-light p-4 tab-content"
                   >
                     <p className="m-0 fs-4 fw-semibold ">
-                      Image{" "}
+                      Imageeeeee{" "}
                       <i className="bi bi-question-circle text-muted fs-6"></i>
                     </p>
                     <div className="mt-3">
@@ -2238,7 +2238,7 @@ console.log("---------SCENE DATA --------->" , cont_units)
                                                         className="nav-link p-0 m-0 fw-bold link-dark enter-text"
                                                       >
                                                         {" "}
-                                                        Enter
+                                                        Enter-1
                                                       </a>
                                                     </Nav.Link>
                                                   </Nav.Item>
@@ -4097,7 +4097,7 @@ console.log("---------SCENE DATA --------->" , cont_units)
                                                           className="nav-link p-0 m-0 fw-bold link-dark enter-text"
                                                         >
                                                           {" "}
-                                                          Enter
+                                                          Enterr
                                                         </a>
                                                       </Nav.Link>
                                                     </Nav.Item>
