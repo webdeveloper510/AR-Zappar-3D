@@ -23,14 +23,15 @@ const SecondTab = () => {
                               
 
                                 <div class="d-flex text-center">
+                                <button class="pt-1 pb-1" id="png-btn-download" type="button"><FontAwesomeIcon icon={faArrowDown} style={{ color: "rgb(120 120 120)", width: "15px", height: "15px", marginRight: 8 }} />PNG</button>
                                 <button class="pt-1 pb-1" id="svg-btn-download" type="button"><FontAwesomeIcon icon={faArrowDown} style={{ color: "rgb(120 120 120)", width: "15px", height: "15px", marginRight: 8 }} />SVG</button>
-                                  <button class="pt-1 pb-1" id="png-btn-download" type="button"><FontAwesomeIcon icon={faArrowDown} style={{ color: "rgb(120 120 120)", width: "15px", height: "15px", marginRight: 8 }} />PNG</button>
+                                 
                                   
                                 </div>
                                 
                               </div>
                               <div class="col-md-4"></div>
-                              <div class="col-md-4">
+                              <div class="col-md-4 destination-img">
                               <h5 class="project-destination-head">Destination</h5>
                                 
                                 <img src={Mob1} alt="" />

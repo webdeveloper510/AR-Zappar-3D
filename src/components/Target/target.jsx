@@ -25,6 +25,7 @@ import {
   faLayerGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import { FaDoorOpen } from "react-icons/fa";
+import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { GiFlatPlatform, GiLoveSong } from "react-icons/gi";
 import { RiVideoUploadLine } from "react-icons/ri";
@@ -1106,10 +1107,10 @@ console.log("---------SCENE DATA --------->" , cont_units)
         </div>
       </div>
 
-      <div className="container-fluid target-page" ref={containerRef}>
+      <div className="container-fluid target-page ft"  ref={containerRef}>
         {/*  The Editors Controls  */}
 
-        <div className="OuterContainer--pMxMG">
+        <div className="OuterContainer--pMxMG" id="target-buttons-bar">
           <div className="ContextMenu--LKriV">
             <button
               className="ContextMenuButton--12X9C ContextMenuButton--p-6XR"
@@ -1663,7 +1664,7 @@ console.log("---------SCENE DATA --------->" , cont_units)
         )}
         {/* Mobile View Close  */}
 
-        <div className="container-fluid target-page">
+        <div className="container-fluid target-page f">
           <div className="row col-md-12 justify-content-between">
             <div className="col-md-1 p-0 m-0 target-left">
               <Tab.Container id="left-tabs-example">
@@ -2040,7 +2041,26 @@ console.log("---------SCENE DATA --------->" , cont_units)
                     className="bg-light p-4 tab-content"
                   >
                     <p className="m-0 fs-4 fw-semibold">
-                      3D{" "}
+                      3Dfff{" "}
+                      <i className="bi bi-question-circle text-muted fs-6"></i>
+                    </p>
+                    <div className="mt-3">
+                      <input
+                        type="file"
+                        id="3D-upload"
+                        className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2"
+                        onChange={handle3Dmodel}
+                      />
+                      {/* >Browse media library</button> */}
+                      {/* <button className="btn text-dark border-1 border-dark rounded-2"><i className="bi bi-upload"></i></button> */}
+                    </div>
+                  </Tab.Pane>
+                  <Tab.Pane
+                    eventKey="fifth"
+                    className="bg-light p-4 tab-content"
+                  >
+                    <p className="m-0 fs-4 fw-semibold">
+                    Applets{" "}
                       <i className="bi bi-question-circle text-muted fs-6"></i>
                     </p>
                     <div className="mt-3">
@@ -2083,7 +2103,7 @@ console.log("---------SCENE DATA --------->" , cont_units)
               <Tab.Container id="right-tabs-example" defaultActiveKey="first">
                 <Row className="flex-column justify-content-between tab-list right-tabs">
                   <Col className="side-tab mb-5 mb-md-0 p-0">
-                    <Nav variant="pills" className="side-main py-4 px-2">
+                    <Nav variant="pills" className="side-main px-2">
                       <Nav.Item>
                         <Nav.Link eventKey="first">
                           <FontAwesomeIcon
@@ -2097,7 +2117,7 @@ console.log("---------SCENE DATA --------->" , cont_units)
                           />
                           <a
                             href="#tab1"
-                            className="nav-link p-0 m-0 fw-bold link-dark"
+                            className="nav-link p-0 m-0 fw-bold link-dark target-bar-text"
                           >
                             Scene
                           </a>
@@ -2117,7 +2137,7 @@ console.log("---------SCENE DATA --------->" , cont_units)
                           />
                           <a
                             href="#tab2"
-                            className="nav-link p-0 m-0 fw-bold link-dark"
+                            className="nav-link p-0 m-0 fw-bold link-dark target-bar-text"
                           >
                             Project
                           </a>
@@ -2188,7 +2208,7 @@ console.log("---------SCENE DATA --------->" , cont_units)
                                 class="btn-transition-effect DrawerBtn--bdcva  "
                               >
                                 {/* start Transition show hide content  */}
-                                <div class="TitleContainer--2xD-b title-content">
+                                <div class="TitleContainer--2xD-b title-content" id="transition-affects-outer">
                                   <Accordion.Item eventKey="4">
                                     <Accordion.Header>
                                       {" "}
@@ -2206,13 +2226,13 @@ console.log("---------SCENE DATA --------->" , cont_units)
                                               id="left-tabs-example"
                                               defaultActiveKey="first"
                                             >
-                                              <Col className="side-tab mb-5 mb-md-0 p-0">
+                                              <Col className="side-tab col-md-12 mb-5 mb-md-0 p-0">
                                                 <Nav
                                                   variant="pills"
-                                                  className="side-main py-4 px-2"
+                                                  className="side-main"
                                                 >
                                                   <Nav.Item>
-                                                    <Nav.Link eventKey="first">
+                                                    <Nav.Link eventKey="first-enter">
                                                       <a
                                                         href="#tab1"
                                                         className="nav-link p-0 m-0 fw-bold link-dark enter-text"
@@ -2224,7 +2244,7 @@ console.log("---------SCENE DATA --------->" , cont_units)
                                                   </Nav.Item>
 
                                                   <Nav.Item>
-                                                    <Nav.Link eventKey="second">
+                                                    <Nav.Link eventKey="second-exit">
                                                       <a
                                                         href="#tab2"
                                                         className="nav-link p-0 m-0 fw-bold link-dark enter-text"
@@ -2235,6 +2255,917 @@ console.log("---------SCENE DATA --------->" , cont_units)
                                                   </Nav.Item>
                                                 </Nav>
                                               </Col>
+											   <Col className="tab-main">
+													<Tab.Content>
+													 {/* Start---- Enter   */}
+													  <Tab.Pane
+														eventKey="first-enter"
+														className="bg-light tab-content target-tab-content"
+													  >
+													  <Accordion>
+                              <div class="transition-outer">
+                              <div class="transition-for-all">
+                           <div class="first-img border-to-all">
+                           <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="68"
+                                      height="68"
+                                      viewBox="0 0 68 68"
+                                    >
+                                      <defs>
+                                        <rect id="path-1" width="68" height="68" x="0" y="0" rx="5"></rect>
+                                        <linearGradient
+                                          id="linearGradient-3"
+                                          x1="100%"
+                                          x2="0%"
+                                          y1="50%"
+                                          y2="50%"
+                                        >
+                                          <stop offset="0%" stopColor="#EEF6FF"></stop>
+                                          <stop offset="100%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                        </linearGradient>
+                                      </defs>
+                                      <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                        <g>
+                                          <mask id="mask-2" fill="#fff">
+                                            <use href="#path-1"></use>
+                                          </mask>
+                                          
+                                          <path
+                                            fill="#96BFEF"
+                                            d="M3.4 22.6148507L17.8328447 6.8 38.4 30.8755409 20.8993196 45.675647 30.1572612 59.8 3.83003227 45.4802808 16.58811 31.9959974z"
+                                            mask="url(#mask-2)"
+                                          ></path>
+                                        </g>
+                                      </g>
+                                    </svg>
+                              <div class="Title--2wreU none-text">None</div>
+                           </div>
+                           
+													<div class="second-img border-to-all">
+                          <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="68"
+                                      height="68"
+                                      viewBox="0 0 68 68"
+                                    >
+                                      <defs>
+                                        <rect id="path-1" width="68" height="68" x="0" y="0" rx="5"></rect>
+                                        <linearGradient
+                                          id="linearGradient-3"
+                                          x1="100%"
+                                          x2="0%"
+                                          y1="50%"
+                                          y2="50%"
+                                        >
+                                          <stop offset="0%" stopColor="#EEF6FF"></stop>
+                                          <stop offset="100%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                        </linearGradient>
+                                      </defs>
+                                      <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                        <g>
+                                          <mask id="mask-2" fill="#fff">
+                                            <use href="#path-1"></use>
+                                          </mask>
+                                          <path
+                                            fill="url(#linearGradient-3)"
+                                            fillRule="nonzero"
+                                            d="M-17 22.6148507L-2.56715528 6.8 17.8328447 6.8 17.2472582 18.6534773 16.58811 31.9959974 10.7026223 45.675647 30.1572612 59.8 -2.56715528 59.8 -16.5699677 45.4802808 -3.81189004 31.9959974z"
+                                            mask="url(#mask-2)"
+                                          ></path>
+                                          <path
+                                            fill="#96BFEF"
+                                            d="M63.298 37.644l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
+                                            mask="url(#mask-2)"
+                                            transform="rotate(90 52.36 34)"
+                                          ></path>
+                                          <path
+                                            fill="#96BFEF"
+                                            d="M3.4 22.6148507L17.8328447 6.8 38.4 30.8755409 20.8993196 45.675647 30.1572612 59.8 3.83003227 45.4802808 16.58811 31.9959974z"
+                                            mask="url(#mask-2)"
+                                          ></path>
+                                        </g>
+                                      </g>
+                                    </svg>
+                                    <div class="Title--2wreU">Slide L-R</div>
+                          </div>
+                            <div class="third-img border-to-all">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="68"
+                                height="68"
+                                viewBox="0 0 68 68"
+                              >
+                                <defs>
+                                  <rect id="path-1" width="68" height="68" x="0" y="0" rx="5"></rect>
+                                  <linearGradient
+                                    id="linearGradient-3"
+                                    x1="83.061%"
+                                    x2="0%"
+                                    y1="50%"
+                                    y2="50%"
+                                  >
+                                    <stop offset="0%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                    <stop offset="100%" stopColor="#EEF6FF"></stop>
+                                  </linearGradient>
+                                </defs>
+                                <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                  <g>
+                                    <mask id="mask-2" fill="#fff">
+                                      <use href="#path-1"></use>
+                                    </mask>
+                                    <path
+                                      fill="url(#linearGradient-3)"
+                                      fillRule="nonzero"
+                                      d="M40.8 22.6148507L43.3328447 6.8 75.6328447 6.8 75.0472582 18.6534773 74.38811 31.9959974 74.38811 45.4802808 72.536306 59.8 55.6572612 59.8 41.2300323 45.4802808 53.98811 31.9959974z"
+                                      mask="url(#mask-2)"
+                                    ></path>
+                                    <path
+                                      fill="#96BFEF"
+                                      d="M28.9 22.6148507L43.3328447 6.8 63.9 30.8755409 46.3993196 45.675647 55.6572612 59.8 29.3300323 45.4802808 42.08811 31.9959974z"
+                                      mask="url(#mask-2)"
+                                    ></path>
+                                    <path
+                                      fill="#96BFEF"
+                                      d="M27.598 37.644l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
+                                      mask="url(#mask-2)"
+                                      transform="matrix(0 1 1 0 -17.34 17.34)"
+                                    ></path>
+                                  </g>
+                                </g>
+                              </svg>
+                              <div class="Title--2wreU">Slide R-L</div>
+                            </div>
+                            </div>
+                            <div class="transition-for-all">
+                            <div class="fourth-img border-to-all">
+                            <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="68"
+                                  height="70"
+                                  viewBox="0 0 68 70"
+                                >
+                                  <defs>
+                                    <path
+                                      id="path-1"
+                                      d="M4.987.165l58-.152a5 5 0 015.013 5v58.165a5 5 0 01-5 5H5a5 5 0 01-5-5V5.165a5 5 0 014.987-5z"
+                                    ></path>
+                                    <linearGradient
+                                      id="linearGradient-3"
+                                      x1="50%"
+                                      x2="50%"
+                                      y1="0%"
+                                      y2="100%"
+                                    >
+                                      <stop offset="0%" stopColor="#EEF6FF"></stop>
+                                      <stop offset="100%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                    </linearGradient>
+                                  </defs>
+                                  <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                    <g transform="translate(0 1)">
+                                      <g transform="translate(0 -1)">
+                                        <g transform="translate(0 .822)">
+                                          <mask id="mask-2" fill="#fff">
+                                            <use href="#path-1"></use>
+                                          </mask>
+                                          <path
+                                            fill="url(#linearGradient-3)"
+                                            fillRule="nonzero"
+                                            d="M16 49.4649587L30.0083493 34.1783937 49.9705882 57.4497055 49.9705882 68.6858564 39.9328401 85.4079602 16 71.3920676z"
+                                            mask="url(#mask-2)"
+                                          ></path>
+                                          <g mask="url(#mask-2)">
+                                            <g transform="translate(15.5 10.038)">
+                                              <path
+                                                fill="#96BFEF"
+                                                fillRule="nonzero"
+                                                d="M0.5 39.4272899L14.5083493 24.1407249 34.4705882 47.4120367 17.4846337 61.717754 26.4702829 75.3702914 0.917384264 61.5289139 13.3002244 48.495065z"
+                                              ></path>
+                                              <path
+                                                fill="#96BFEF"
+                                                fillRule="evenodd"
+                                                d="M27.787 9.987L18.254.493a1.654 1.654 0 00-2.358 0L6.363 9.987a1.672 1.672 0 00.072 2.278 1.69 1.69 0 002.286.104l8.422-8.32 8.42 8.387a1.654 1.654 0 002.358 0 1.673 1.673 0 00-.134-2.45z"
+                                              ></path>
+                                              <g
+                                                fill="none"
+                                                fillRule="evenodd"
+                                                strokeLinecap="round"
+                                                strokeWidth="1"
+                                                transform="matrix(0 -1 -1 0 31.5 69.14)"
+                                              >
+                                                <g transform="translate(14 25)">
+                                                  <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                                  <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                                </g>
+                                                <g transform="translate(4)">
+                                                  <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                                  <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                                </g>
+                                                <g transform="translate(0 14)">
+                                                  <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                                  <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                                </g>
+                                              </g>
+                                            </g>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </svg>
+                                <div class="Title--2wreU">Slide up</div>
+                            </div>
+                            <div class="five-img border-to-all">
+                            <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="68"
+                                  height="68"
+                                  viewBox="0 0 68 68"
+                                >
+                                  <defs>
+                                    <path
+                                      id="path-1"
+                                      d="M5 0h58a5 5 0 015 5v58a5 5 0 01-5 5H5a5 5 0 01-5-5V5a5 5 0 015-5z"
+                                    ></path>
+                                    <linearGradient
+                                      id="linearGradient-3"
+                                      x1="50%"
+                                      x2="50%"
+                                      y1="0%"
+                                      y2="100%"
+                                    >
+                                      <stop offset="0%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                      <stop offset="100%" stopColor="#EEF6FF"></stop>
+                                    </linearGradient>
+                                  </defs>
+                                  <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                    <g>
+                                      <mask id="mask-2" fill="#fff">
+                                        <use href="#path-1"></use>
+                                      </mask>
+                                      <g mask="url(#mask-2)">
+                                        <g transform="translate(17 -20.4)">
+                                          <path
+                                            fill="url(#linearGradient-3)"
+                                            fillRule="nonzero"
+                                            d="M0.430032272 15.8148507L7.63284472 9.05941988e-15 28.0328447 9.05941988e-15 35 11.8534773 35 24.0755409 26.78811 30.9020874 26.78811 53 0.430032272 38.6802808z"
+                                          ></path>
+                                          <path
+                                            fill="#96BFEF"
+                                            fillRule="nonzero"
+                                            d="M1.09618981e-12 15.8148507L14.4328447 1.20792265e-14 35 24.0755409 17.4993196 38.875647 26.7572612 53 0.430032272 38.6802808 13.18811 25.1959974z"
+                                          ></path>
+                                          <path
+                                            fill="#96BFEF"
+                                            fillRule="evenodd"
+                                            d="M27.598 76.632l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
+                                            transform="matrix(1 0 0 -1 0 145.976)"
+                                          ></path>
+                                        </g>
+                                      </g>
+                                      <g strokeLinecap="round" mask="url(#mask-2)">
+                                        <g transform="rotate(90 27.5 16)">
+                                          <g transform="translate(13.5 21)">
+                                            <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                            <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                          </g>
+                                          <g transform="translate(14.5 .5)">
+                                            <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                            <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                          </g>
+                                          <g transform="translate(.5 9.5)">
+                                            <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                            <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </svg>
+                                <div class="Title--2wreU">Slide down</div>
+                            </div>
+                            <div class="six-img border-to-all">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="68"
+                                height="68"
+                                viewBox="0 0 68 68"
+                              >
+                                <defs>
+                                  <radialGradient
+                                    id="radialGradient-1"
+                                    cx="50%"
+                                    cy="50%"
+                                    r="46.12%"
+                                    fx="50%"
+                                    fy="50%"
+                                    gradientTransform="matrix(1 0 0 1.47487 0 -.237)"
+                                  >
+                                    <stop offset="0%" stopColor="#96BFEF" stopOpacity="0.584"></stop>
+                                    <stop offset="100%" stopColor="#96BFEF" stopOpacity="0.214"></stop>
+                                  </radialGradient>
+                                </defs>
+                                <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                  <g>
+                                    <rect width="68" height="68" x="0" y="0" rx="5"></rect>
+                                    <g
+                                      fill="url(#radialGradient-1)"
+                                      fillRule="nonzero"
+                                      transform="translate(17 6.8)"
+                                    >
+                                      <path d="M0 15.8148507L14.4328447 0 35 24.0755409 17.4993196 38.875647 26.7572612 53 0.430032272 38.6802808 13.18811 25.1959974z"></path>
+                                    </g>
+                                  </g>
+                                </g>
+                              </svg>
+                              <div class="Title--2wreU">Fade-In</div>
+                            </div>
+                            </div>
+                            <div class="transition-for-all">
+                            <div class="seven-img border-to-all">
+                            <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="56"
+                                  height="58"
+                                  viewBox="0 0 56 58"
+                                >
+                                  <defs>
+                                    <radialGradient
+                                      id="radialGradient-1"
+                                      cx="50%"
+                                      cy="48.736%"
+                                      r="76.188%"
+                                      fx="50%"
+                                      fy="48.736%"
+                                      gradientTransform="matrix(0 .66667 -1 0 .987 .154)"
+                                    >
+                                      <stop offset="0%" stopColor="#96BFEF" stopOpacity="0.63"></stop>
+                                      <stop offset="100%" stopColor="#FFF" stopOpacity="0"></stop>
+                                    </radialGradient>
+                                  </defs>
+                                  <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                    <g transform="translate(-6 -5)">
+                                      <g transform="translate(6 5)">
+                                        <g transform="translate(.822)">
+                                          <g fillRule="nonzero" transform="translate(11.178 4)">
+                                            <path
+                                              fill="#96BFEF"
+                                              d="M6.4 18.1937302L14.3174462 9.6 25.6 22.6825581 15.9996267 30.7248799 21.078269 38.4 6.63590342 30.6187186 13.6346203 23.2914099z"
+                                            ></path>
+                                            <path
+                                              fill="url(#radialGradient-1)"
+                                              d="M0 14.3228836L13.1957437 0 32 21.8042635 15.9993779 35.2081331 24.4637816 48 0.393172363 35.0311977 12.0577005 22.8190165z"
+                                            ></path>
+                                          </g>
+                                          <g fill="#96BFEF" transform="matrix(-1 0 0 1 14 43.7)">
+                                            <path
+                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
+                                              transform="scale(1 -1) rotate(45 23.312 0)"
+                                            ></path>
+                                          </g>
+                                          <g fill="#96BFEF" transform="translate(40.291 43.7)">
+                                            <path
+                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
+                                              transform="scale(1 -1) rotate(45 23.312 0)"
+                                            ></path>
+                                          </g>
+                                          <g fill="#96BFEF" transform="rotate(180 7 7)">
+                                            <path
+                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
+                                              transform="scale(1 -1) rotate(45 23.312 0)"
+                                            ></path>
+                                          </g>
+                                          <g fill="#96BFEF" transform="matrix(1 0 0 -1 40.291 14)">
+                                            <path
+                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
+                                              transform="scale(1 -1) rotate(45 23.312 0)"
+                                            ></path>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </svg>
+                                <div class="Title--2wreU">Scale-Up</div>
+                              </div>
+                              <div class="eight-img border-to-all">
+                              <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="46"
+                                    height="51"
+                                    viewBox="0 0 46 51"
+                                  >
+                                    <defs>
+                                      <radialGradient
+                                        id="radialGradient-1"
+                                        cx="50%"
+                                        cy="48.736%"
+                                        r="76.188%"
+                                        fx="50%"
+                                        fy="48.736%"
+                                        gradientTransform="matrix(0 .66667 -1 0 .987 .154)"
+                                      >
+                                        <stop offset="0%" stopColor="#96BFEF" stopOpacity="0.63"></stop>
+                                        <stop offset="100%" stopColor="#FFF" stopOpacity="0"></stop>
+                                      </radialGradient>
+                                    </defs>
+                                    <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                      <g transform="translate(-11 -8)">
+                                        <g transform="translate(11 8)">
+                                          <g transform="translate(0 .588)">
+                                            <g fill="#96BFEF" transform="matrix(1 0 0 -1 0 49.412)">
+                                              <path
+                                                d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
+                                                transform="scale(1 -1) rotate(45 22.255 0)"
+                                              ></path>
+                                            </g>
+                                            <g fill="#96BFEF" transform="rotate(180 23 24.706)">
+                                              <path
+                                                d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
+                                                transform="scale(1 -1) rotate(45 22.255 0)"
+                                              ></path>
+                                            </g>
+                                            <g fill="#96BFEF" transform="translate(0 .412)">
+                                              <path
+                                                d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
+                                                transform="scale(1 -1) rotate(45 22.255 0)"
+                                              ></path>
+                                            </g>
+                                            <g fill="#96BFEF" transform="matrix(-1 0 0 1 46 .412)">
+                                              <path
+                                                d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
+                                                transform="scale(1 -1) rotate(45 22.255 0)"
+                                              ></path>
+                                            </g>
+                                            <g fillRule="nonzero" transform="translate(7 .412)">
+                                              <path
+                                                fill="#96BFEF"
+                                                d="M6.4 18.1937302L14.3174462 9.6 25.6 22.6825581 15.9996267 30.7248799 21.078269 38.4 6.63590342 30.6187186 13.6346203 23.2914099z"
+                                              ></path>
+                                              <path
+                                                fill="url(#radialGradient-1)"
+                                                d="M0 14.3228836L13.1957437 0 32 21.8042635 15.9993779 35.2081331 24.4637816 48 0.393172363 35.0311977 12.0577005 22.8190165z"
+                                              ></path>
+                                            </g>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </svg>
+                                  <div class="Title--2wreU">Scale-Down</div>
+                              </div>
+                            </div>
+                           </div>
+							 </Accordion>
+									</Tab.Pane>
+													  {/* Start---- Exit   */}
+													    <Tab.Pane
+														eventKey="second-exit"
+														className="bg-light tab-content target-tab-content"
+													  >
+													  <Accordion>
+                           
+                           <div class="transition-outer">
+                              <div class="transition-for-all">
+                           <div class="first-img border-to-all">
+                           <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="35"
+                                height="53"
+                                viewBox="0 0 35 53"
+                              >
+                                <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                  <g fill="#96BFEF" transform="translate(-38 -292)">
+                                    <g transform="translate(21 284)">
+                                      <path d="M17 23.8148507L31.4328447 8 52 32.0755409 34.4993196 46.875647 43.7572612 61 17.4300323 46.6802808 30.18811 33.1959974z"></path>
+                                    </g>
+                                  </g>
+                                </g>
+                              </svg>
+                              <div class="Title--2wreU none-text">None</div>
+                           </div>
+                           
+													<div class="second-img border-to-all">
+                          <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="68"
+                                      height="68"
+                                      viewBox="0 0 68 68"
+                                    >
+                                      <defs>
+                                        <rect id="path-1" width="68" height="68" x="0" y="0" rx="5"></rect>
+                                        <linearGradient
+                                          id="linearGradient-3"
+                                          x1="100%"
+                                          x2="0%"
+                                          y1="50%"
+                                          y2="50%"
+                                        >
+                                          <stop offset="0%" stopColor="#EEF6FF"></stop>
+                                          <stop offset="100%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                        </linearGradient>
+                                      </defs>
+                                      <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                        <g>
+                                          <mask id="mask-2" fill="#fff">
+                                            <use href="#path-1"></use>
+                                          </mask>
+                                          <path
+                                            fill="url(#linearGradient-3)"
+                                            fillRule="nonzero"
+                                            d="M-17 22.6148507L-2.56715528 6.8 17.8328447 6.8 17.2472582 18.6534773 16.58811 31.9959974 10.7026223 45.675647 30.1572612 59.8 -2.56715528 59.8 -16.5699677 45.4802808 -3.81189004 31.9959974z"
+                                            mask="url(#mask-2)"
+                                          ></path>
+                                          <path
+                                            fill="#96BFEF"
+                                            d="M63.298 37.644l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
+                                            mask="url(#mask-2)"
+                                            transform="rotate(90 52.36 34)"
+                                          ></path>
+                                          <path
+                                            fill="#96BFEF"
+                                            d="M3.4 22.6148507L17.8328447 6.8 38.4 30.8755409 20.8993196 45.675647 30.1572612 59.8 3.83003227 45.4802808 16.58811 31.9959974z"
+                                            mask="url(#mask-2)"
+                                          ></path>
+                                        </g>
+                                      </g>
+                                    </svg>
+                                    <div class="Title--2wreU">Slide L-R</div>
+                          </div>
+                            <div class="third-img border-to-all">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="68"
+                                height="68"
+                                viewBox="0 0 68 68"
+                              >
+                                <defs>
+                                  <rect id="path-1" width="68" height="68" x="0" y="0" rx="5"></rect>
+                                  <linearGradient
+                                    id="linearGradient-3"
+                                    x1="83.061%"
+                                    x2="0%"
+                                    y1="50%"
+                                    y2="50%"
+                                  >
+                                    <stop offset="0%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                    <stop offset="100%" stopColor="#EEF6FF"></stop>
+                                  </linearGradient>
+                                </defs>
+                                <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                  <g>
+                                    <mask id="mask-2" fill="#fff">
+                                      <use href="#path-1"></use>
+                                    </mask>
+                                    <path
+                                      fill="url(#linearGradient-3)"
+                                      fillRule="nonzero"
+                                      d="M40.8 22.6148507L43.3328447 6.8 75.6328447 6.8 75.0472582 18.6534773 74.38811 31.9959974 74.38811 45.4802808 72.536306 59.8 55.6572612 59.8 41.2300323 45.4802808 53.98811 31.9959974z"
+                                      mask="url(#mask-2)"
+                                    ></path>
+                                    <path
+                                      fill="#96BFEF"
+                                      d="M28.9 22.6148507L43.3328447 6.8 63.9 30.8755409 46.3993196 45.675647 55.6572612 59.8 29.3300323 45.4802808 42.08811 31.9959974z"
+                                      mask="url(#mask-2)"
+                                    ></path>
+                                    <path
+                                      fill="#96BFEF"
+                                      d="M27.598 37.644l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
+                                      mask="url(#mask-2)"
+                                      transform="matrix(0 1 1 0 -17.34 17.34)"
+                                    ></path>
+                                  </g>
+                                </g>
+                              </svg>
+                              <div class="Title--2wreU">Slide R-L</div>
+                            </div>
+                            </div>
+                            <div class="transition-for-all">
+                            <div class="fourth-img border-to-all">
+                            <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="68"
+                                  height="70"
+                                  viewBox="0 0 68 70"
+                                >
+                                  <defs>
+                                    <path
+                                      id="path-1"
+                                      d="M4.987.165l58-.152a5 5 0 015.013 5v58.165a5 5 0 01-5 5H5a5 5 0 01-5-5V5.165a5 5 0 014.987-5z"
+                                    ></path>
+                                    <linearGradient
+                                      id="linearGradient-3"
+                                      x1="50%"
+                                      x2="50%"
+                                      y1="0%"
+                                      y2="100%"
+                                    >
+                                      <stop offset="0%" stopColor="#EEF6FF"></stop>
+                                      <stop offset="100%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                    </linearGradient>
+                                  </defs>
+                                  <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                    <g transform="translate(0 1)">
+                                      <g transform="translate(0 -1)">
+                                        <g transform="translate(0 .822)">
+                                          <mask id="mask-2" fill="#fff">
+                                            <use href="#path-1"></use>
+                                          </mask>
+                                          <path
+                                            fill="url(#linearGradient-3)"
+                                            fillRule="nonzero"
+                                            d="M16 49.4649587L30.0083493 34.1783937 49.9705882 57.4497055 49.9705882 68.6858564 39.9328401 85.4079602 16 71.3920676z"
+                                            mask="url(#mask-2)"
+                                          ></path>
+                                          <g mask="url(#mask-2)">
+                                            <g transform="translate(15.5 10.038)">
+                                              <path
+                                                fill="#96BFEF"
+                                                fillRule="nonzero"
+                                                d="M0.5 39.4272899L14.5083493 24.1407249 34.4705882 47.4120367 17.4846337 61.717754 26.4702829 75.3702914 0.917384264 61.5289139 13.3002244 48.495065z"
+                                              ></path>
+                                              <path
+                                                fill="#96BFEF"
+                                                fillRule="evenodd"
+                                                d="M27.787 9.987L18.254.493a1.654 1.654 0 00-2.358 0L6.363 9.987a1.672 1.672 0 00.072 2.278 1.69 1.69 0 002.286.104l8.422-8.32 8.42 8.387a1.654 1.654 0 002.358 0 1.673 1.673 0 00-.134-2.45z"
+                                              ></path>
+                                              <g
+                                                fill="none"
+                                                fillRule="evenodd"
+                                                strokeLinecap="round"
+                                                strokeWidth="1"
+                                                transform="matrix(0 -1 -1 0 31.5 69.14)"
+                                              >
+                                                <g transform="translate(14 25)">
+                                                  <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                                  <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                                </g>
+                                                <g transform="translate(4)">
+                                                  <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                                  <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                                </g>
+                                                <g transform="translate(0 14)">
+                                                  <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                                  <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                                </g>
+                                              </g>
+                                            </g>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </svg>
+                                <div class="Title--2wreU">Slide up</div>
+                            </div>
+                            <div class="five-img border-to-all">
+                            <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="68"
+                                  height="68"
+                                  viewBox="0 0 68 68"
+                                >
+                                  <defs>
+                                    <path
+                                      id="path-1"
+                                      d="M5 0h58a5 5 0 015 5v58a5 5 0 01-5 5H5a5 5 0 01-5-5V5a5 5 0 015-5z"
+                                    ></path>
+                                    <linearGradient
+                                      id="linearGradient-3"
+                                      x1="50%"
+                                      x2="50%"
+                                      y1="0%"
+                                      y2="100%"
+                                    >
+                                      <stop offset="0%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                      <stop offset="100%" stopColor="#EEF6FF"></stop>
+                                    </linearGradient>
+                                  </defs>
+                                  <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                    <g>
+                                      <mask id="mask-2" fill="#fff">
+                                        <use href="#path-1"></use>
+                                      </mask>
+                                      <g mask="url(#mask-2)">
+                                        <g transform="translate(17 -20.4)">
+                                          <path
+                                            fill="url(#linearGradient-3)"
+                                            fillRule="nonzero"
+                                            d="M0.430032272 15.8148507L7.63284472 9.05941988e-15 28.0328447 9.05941988e-15 35 11.8534773 35 24.0755409 26.78811 30.9020874 26.78811 53 0.430032272 38.6802808z"
+                                          ></path>
+                                          <path
+                                            fill="#96BFEF"
+                                            fillRule="nonzero"
+                                            d="M1.09618981e-12 15.8148507L14.4328447 1.20792265e-14 35 24.0755409 17.4993196 38.875647 26.7572612 53 0.430032272 38.6802808 13.18811 25.1959974z"
+                                          ></path>
+                                          <path
+                                            fill="#96BFEF"
+                                            fillRule="evenodd"
+                                            d="M27.598 76.632l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
+                                            transform="matrix(1 0 0 -1 0 145.976)"
+                                          ></path>
+                                        </g>
+                                      </g>
+                                      <g strokeLinecap="round" mask="url(#mask-2)">
+                                        <g transform="rotate(90 27.5 16)">
+                                          <g transform="translate(13.5 21)">
+                                            <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                            <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                          </g>
+                                          <g transform="translate(14.5 .5)">
+                                            <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                            <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                          </g>
+                                          <g transform="translate(.5 9.5)">
+                                            <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                            <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </svg>
+                                <div class="Title--2wreU">Slide down</div>
+                            </div>
+                            <div class="six-img border-to-all">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="68"
+                                height="68"
+                                viewBox="0 0 68 68"
+                              >
+                                <defs>
+                                  <radialGradient
+                                    id="radialGradient-1"
+                                    cx="50%"
+                                    cy="50%"
+                                    r="46.12%"
+                                    fx="50%"
+                                    fy="50%"
+                                    gradientTransform="matrix(1 0 0 1.47487 0 -.237)"
+                                  >
+                                    <stop offset="0%" stopColor="#96BFEF" stopOpacity="0.584"></stop>
+                                    <stop offset="100%" stopColor="#96BFEF" stopOpacity="0.214"></stop>
+                                  </radialGradient>
+                                </defs>
+                                <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                  <g>
+                                    <rect width="68" height="68" x="0" y="0" rx="5"></rect>
+                                    <g
+                                      fill="url(#radialGradient-1)"
+                                      fillRule="nonzero"
+                                      transform="translate(17 6.8)"
+                                    >
+                                      <path d="M0 15.8148507L14.4328447 0 35 24.0755409 17.4993196 38.875647 26.7572612 53 0.430032272 38.6802808 13.18811 25.1959974z"></path>
+                                    </g>
+                                  </g>
+                                </g>
+                              </svg>
+                              <div class="Title--2wreU">Fade-Out</div>
+                            </div>
+                            </div>
+                            <div class="transition-for-all">
+                            <div class="seven-img border-to-all">
+                            <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="56"
+                                  height="58"
+                                  viewBox="0 0 56 58"
+                                >
+                                  <defs>
+                                    <radialGradient
+                                      id="radialGradient-1"
+                                      cx="50%"
+                                      cy="48.736%"
+                                      r="76.188%"
+                                      fx="50%"
+                                      fy="48.736%"
+                                      gradientTransform="matrix(0 .66667 -1 0 .987 .154)"
+                                    >
+                                      <stop offset="0%" stopColor="#96BFEF" stopOpacity="0.63"></stop>
+                                      <stop offset="100%" stopColor="#FFF" stopOpacity="0"></stop>
+                                    </radialGradient>
+                                  </defs>
+                                  <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                    <g transform="translate(-6 -5)">
+                                      <g transform="translate(6 5)">
+                                        <g transform="translate(.822)">
+                                          <g fillRule="nonzero" transform="translate(11.178 4)">
+                                            <path
+                                              fill="#96BFEF"
+                                              d="M6.4 18.1937302L14.3174462 9.6 25.6 22.6825581 15.9996267 30.7248799 21.078269 38.4 6.63590342 30.6187186 13.6346203 23.2914099z"
+                                            ></path>
+                                            <path
+                                              fill="url(#radialGradient-1)"
+                                              d="M0 14.3228836L13.1957437 0 32 21.8042635 15.9993779 35.2081331 24.4637816 48 0.393172363 35.0311977 12.0577005 22.8190165z"
+                                            ></path>
+                                          </g>
+                                          <g fill="#96BFEF" transform="matrix(-1 0 0 1 14 43.7)">
+                                            <path
+                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
+                                              transform="scale(1 -1) rotate(45 23.312 0)"
+                                            ></path>
+                                          </g>
+                                          <g fill="#96BFEF" transform="translate(40.291 43.7)">
+                                            <path
+                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
+                                              transform="scale(1 -1) rotate(45 23.312 0)"
+                                            ></path>
+                                          </g>
+                                          <g fill="#96BFEF" transform="rotate(180 7 7)">
+                                            <path
+                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
+                                              transform="scale(1 -1) rotate(45 23.312 0)"
+                                            ></path>
+                                          </g>
+                                          <g fill="#96BFEF" transform="matrix(1 0 0 -1 40.291 14)">
+                                            <path
+                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
+                                              transform="scale(1 -1) rotate(45 23.312 0)"
+                                            ></path>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </svg>
+                                <div class="Title--2wreU">Scale-Up</div>
+                              </div>
+                              <div class="eight-img border-to-all">
+                              <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="46"
+                                    height="51"
+                                    viewBox="0 0 46 51"
+                                  >
+                                    <defs>
+                                      <radialGradient
+                                        id="radialGradient-1"
+                                        cx="50%"
+                                        cy="48.736%"
+                                        r="76.188%"
+                                        fx="50%"
+                                        fy="48.736%"
+                                        gradientTransform="matrix(0 .66667 -1 0 .987 .154)"
+                                      >
+                                        <stop offset="0%" stopColor="#96BFEF" stopOpacity="0.63"></stop>
+                                        <stop offset="100%" stopColor="#FFF" stopOpacity="0"></stop>
+                                      </radialGradient>
+                                    </defs>
+                                    <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                      <g transform="translate(-11 -8)">
+                                        <g transform="translate(11 8)">
+                                          <g transform="translate(0 .588)">
+                                            <g fill="#96BFEF" transform="matrix(1 0 0 -1 0 49.412)">
+                                              <path
+                                                d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
+                                                transform="scale(1 -1) rotate(45 22.255 0)"
+                                              ></path>
+                                            </g>
+                                            <g fill="#96BFEF" transform="rotate(180 23 24.706)">
+                                              <path
+                                                d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
+                                                transform="scale(1 -1) rotate(45 22.255 0)"
+                                              ></path>
+                                            </g>
+                                            <g fill="#96BFEF" transform="translate(0 .412)">
+                                              <path
+                                                d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
+                                                transform="scale(1 -1) rotate(45 22.255 0)"
+                                              ></path>
+                                            </g>
+                                            <g fill="#96BFEF" transform="matrix(-1 0 0 1 46 .412)">
+                                              <path
+                                                d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
+                                                transform="scale(1 -1) rotate(45 22.255 0)"
+                                              ></path>
+                                            </g>
+                                            <g fillRule="nonzero" transform="translate(7 .412)">
+                                              <path
+                                                fill="#96BFEF"
+                                                d="M6.4 18.1937302L14.3174462 9.6 25.6 22.6825581 15.9996267 30.7248799 21.078269 38.4 6.63590342 30.6187186 13.6346203 23.2914099z"
+                                              ></path>
+                                              <path
+                                                fill="url(#radialGradient-1)"
+                                                d="M0 14.3228836L13.1957437 0 32 21.8042635 15.9993779 35.2081331 24.4637816 48 0.393172363 35.0311977 12.0577005 22.8190165z"
+                                              ></path>
+                                            </g>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </svg>
+                                  <div class="Title--2wreU">Scale-Down</div>
+                              </div>
+                            </div>
+                           </div>
+                            
+                           
+													  </Accordion>
+													  </Tab.Pane>
+													</Tab.Content>
+													</Col>
+											  
                                             </Tab.Container>
                                           </div>
                                         </div>
@@ -2244,7 +3175,7 @@ console.log("---------SCENE DATA --------->" , cont_units)
                                 </div>
                                 {/* End Transition show hide content  */}
 
-                                {/* <svg class="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
+                              
                               </button>
                               <div
                                 data-testid="ShelfDrawerBtnContent"
@@ -2306,7 +3237,7 @@ console.log("---------SCENE DATA --------->" , cont_units)
                                 </div>
                                 {/* End Transition show hide content  */}
 
-                                {/* <svg class="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
+                               
                               </button>
                             </div>
                           </div>
@@ -2328,7 +3259,7 @@ console.log("---------SCENE DATA --------->" , cont_units)
                                 class="btn-transform DrawerBtn--bdcva Open--EFZA8 "
                               ></button>
 
-                              {/* <title></title><path d="M0.333/421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
+                          
                             </div>
                             <div style={{ width: "100%" }}>
                               <button
@@ -2672,7 +3603,7 @@ console.log("---------SCENE DATA --------->" , cont_units)
                                 </div>
                                 {/* End Target-Image show hide content  */}
 
-                                {/* <svg class="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
+                               
                               </button>
 
                               <div
@@ -3136,7 +4067,7 @@ console.log("---------SCENE DATA --------->" , cont_units)
                                   class="btn-transition-effect DrawerBtn--bdcva  "
                                 >
                                   {/* start Transition show hide content  */}
-                                  <div class="TitleContainer--2xD-b title-content">
+                                  <div class="TitleContainer--2xD-b title-content" id="transition-affects-outer-two"> 
                                     <Accordion.Item eventKey="4">
                                       <Accordion.Header>
                                         {" "}
@@ -3157,10 +4088,10 @@ console.log("---------SCENE DATA --------->" , cont_units)
                                                 <Col className="side-tab mb-5 mb-md-0 p-0">
                                                   <Nav
                                                     variant="pills"
-                                                    className="side-main py-4 px-2"
+                                                    className="side-main px-2"
                                                   >
                                                     <Nav.Item>
-                                                      <Nav.Link eventKey="first">
+                                                      <Nav.Link eventKey="first-enter">
                                                         <a
                                                           href="#tab1"
                                                           className="nav-link p-0 m-0 fw-bold link-dark enter-text"
@@ -3172,7 +4103,7 @@ console.log("---------SCENE DATA --------->" , cont_units)
                                                     </Nav.Item>
 
                                                     <Nav.Item>
-                                                      <Nav.Link eventKey="second">
+                                                      <Nav.Link eventKey="second-exit">
                                                         <a
                                                           href="#tab2"
                                                           className="nav-link p-0 m-0 fw-bold link-dark enter-text"
@@ -3183,6 +4114,935 @@ console.log("---------SCENE DATA --------->" , cont_units)
                                                     </Nav.Item>
                                                   </Nav>
                                                 </Col>
+                                                <Col className="tab-main">
+													<Tab.Content>
+													 {/* Start---- Enter   */}
+													  <Tab.Pane
+														eventKey="first-enter"
+														className="bg-light tab-content target-tab-content"
+													  >
+													  <Accordion>
+                              <div class="transition-outer">
+                              <div class="transition-for-all">
+                           <div class="first-img border-to-all">
+                           <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="68"
+                                      height="68"
+                                      viewBox="0 0 68 68"
+                                    >
+                                      <defs>
+                                        <rect id="path-1" width="68" height="68" x="0" y="0" rx="5"></rect>
+                                        <linearGradient
+                                          id="linearGradient-3"
+                                          x1="100%"
+                                          x2="0%"
+                                          y1="50%"
+                                          y2="50%"
+                                        >
+                                          <stop offset="0%" stopColor="#EEF6FF"></stop>
+                                          <stop offset="100%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                        </linearGradient>
+                                      </defs>
+                                      <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                        <g>
+                                          <mask id="mask-2" fill="#fff">
+                                            <use href="#path-1"></use>
+                                          </mask>
+                                          
+                                          <path
+                                            fill="#96BFEF"
+                                            d="M3.4 22.6148507L17.8328447 6.8 38.4 30.8755409 20.8993196 45.675647 30.1572612 59.8 3.83003227 45.4802808 16.58811 31.9959974z"
+                                            mask="url(#mask-2)"
+                                          ></path>
+                                        </g>
+                                      </g>
+                                    </svg>
+                              <div class="Title--2wreU none-text">None</div>
+                           </div>
+                           
+													<div class="second-img border-to-all">
+                          <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="68"
+                                      height="68"
+                                      viewBox="0 0 68 68"
+                                    >
+                                      <defs>
+                                        <rect id="path-1" width="68" height="68" x="0" y="0" rx="5"></rect>
+                                        <linearGradient
+                                          id="linearGradient-3"
+                                          x1="100%"
+                                          x2="0%"
+                                          y1="50%"
+                                          y2="50%"
+                                        >
+                                          <stop offset="0%" stopColor="#EEF6FF"></stop>
+                                          <stop offset="100%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                        </linearGradient>
+                                      </defs>
+                                      <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                        <g>
+                                          <mask id="mask-2" fill="#fff">
+                                            <use href="#path-1"></use>
+                                          </mask>
+                                          <path
+                                            fill="url(#linearGradient-3)"
+                                            fillRule="nonzero"
+                                            d="M-17 22.6148507L-2.56715528 6.8 17.8328447 6.8 17.2472582 18.6534773 16.58811 31.9959974 10.7026223 45.675647 30.1572612 59.8 -2.56715528 59.8 -16.5699677 45.4802808 -3.81189004 31.9959974z"
+                                            mask="url(#mask-2)"
+                                          ></path>
+                                          <path
+                                            fill="#96BFEF"
+                                            d="M63.298 37.644l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
+                                            mask="url(#mask-2)"
+                                            transform="rotate(90 52.36 34)"
+                                          ></path>
+                                          <path
+                                            fill="#96BFEF"
+                                            d="M3.4 22.6148507L17.8328447 6.8 38.4 30.8755409 20.8993196 45.675647 30.1572612 59.8 3.83003227 45.4802808 16.58811 31.9959974z"
+                                            mask="url(#mask-2)"
+                                          ></path>
+                                        </g>
+                                      </g>
+                                    </svg>
+                                    <div class="Title--2wreU">Slide L-R</div>
+                          </div>
+                            <div class="third-img border-to-all">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="68"
+                                height="68"
+                                viewBox="0 0 68 68"
+                              >
+                                <defs>
+                                  <rect id="path-1" width="68" height="68" x="0" y="0" rx="5"></rect>
+                                  <linearGradient
+                                    id="linearGradient-3"
+                                    x1="83.061%"
+                                    x2="0%"
+                                    y1="50%"
+                                    y2="50%"
+                                  >
+                                    <stop offset="0%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                    <stop offset="100%" stopColor="#EEF6FF"></stop>
+                                  </linearGradient>
+                                </defs>
+                                <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                  <g>
+                                    <mask id="mask-2" fill="#fff">
+                                      <use href="#path-1"></use>
+                                    </mask>
+                                    <path
+                                      fill="url(#linearGradient-3)"
+                                      fillRule="nonzero"
+                                      d="M40.8 22.6148507L43.3328447 6.8 75.6328447 6.8 75.0472582 18.6534773 74.38811 31.9959974 74.38811 45.4802808 72.536306 59.8 55.6572612 59.8 41.2300323 45.4802808 53.98811 31.9959974z"
+                                      mask="url(#mask-2)"
+                                    ></path>
+                                    <path
+                                      fill="#96BFEF"
+                                      d="M28.9 22.6148507L43.3328447 6.8 63.9 30.8755409 46.3993196 45.675647 55.6572612 59.8 29.3300323 45.4802808 42.08811 31.9959974z"
+                                      mask="url(#mask-2)"
+                                    ></path>
+                                    <path
+                                      fill="#96BFEF"
+                                      d="M27.598 37.644l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
+                                      mask="url(#mask-2)"
+                                      transform="matrix(0 1 1 0 -17.34 17.34)"
+                                    ></path>
+                                  </g>
+                                </g>
+                              </svg>
+                              <div class="Title--2wreU">Slide R-L</div>
+                            </div>
+                            </div>
+                            <div class="transition-for-all">
+                            <div class="fourth-img border-to-all">
+                            <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="68"
+                                  height="70"
+                                  viewBox="0 0 68 70"
+                                >
+                                  <defs>
+                                    <path
+                                      id="path-1"
+                                      d="M4.987.165l58-.152a5 5 0 015.013 5v58.165a5 5 0 01-5 5H5a5 5 0 01-5-5V5.165a5 5 0 014.987-5z"
+                                    ></path>
+                                    <linearGradient
+                                      id="linearGradient-3"
+                                      x1="50%"
+                                      x2="50%"
+                                      y1="0%"
+                                      y2="100%"
+                                    >
+                                      <stop offset="0%" stopColor="#EEF6FF"></stop>
+                                      <stop offset="100%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                    </linearGradient>
+                                  </defs>
+                                  <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                    <g transform="translate(0 1)">
+                                      <g transform="translate(0 -1)">
+                                        <g transform="translate(0 .822)">
+                                          <mask id="mask-2" fill="#fff">
+                                            <use href="#path-1"></use>
+                                          </mask>
+                                          <path
+                                            fill="url(#linearGradient-3)"
+                                            fillRule="nonzero"
+                                            d="M16 49.4649587L30.0083493 34.1783937 49.9705882 57.4497055 49.9705882 68.6858564 39.9328401 85.4079602 16 71.3920676z"
+                                            mask="url(#mask-2)"
+                                          ></path>
+                                          <g mask="url(#mask-2)">
+                                            <g transform="translate(15.5 10.038)">
+                                              <path
+                                                fill="#96BFEF"
+                                                fillRule="nonzero"
+                                                d="M0.5 39.4272899L14.5083493 24.1407249 34.4705882 47.4120367 17.4846337 61.717754 26.4702829 75.3702914 0.917384264 61.5289139 13.3002244 48.495065z"
+                                              ></path>
+                                              <path
+                                                fill="#96BFEF"
+                                                fillRule="evenodd"
+                                                d="M27.787 9.987L18.254.493a1.654 1.654 0 00-2.358 0L6.363 9.987a1.672 1.672 0 00.072 2.278 1.69 1.69 0 002.286.104l8.422-8.32 8.42 8.387a1.654 1.654 0 002.358 0 1.673 1.673 0 00-.134-2.45z"
+                                              ></path>
+                                              <g
+                                                fill="none"
+                                                fillRule="evenodd"
+                                                strokeLinecap="round"
+                                                strokeWidth="1"
+                                                transform="matrix(0 -1 -1 0 31.5 69.14)"
+                                              >
+                                                <g transform="translate(14 25)">
+                                                  <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                                  <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                                </g>
+                                                <g transform="translate(4)">
+                                                  <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                                  <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                                </g>
+                                                <g transform="translate(0 14)">
+                                                  <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                                  <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                                </g>
+                                              </g>
+                                            </g>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </svg>
+                                <div class="Title--2wreU">Slide up</div>
+                            </div>
+                            <div class="five-img border-to-all">
+                            <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="68"
+                                  height="68"
+                                  viewBox="0 0 68 68"
+                                >
+                                  <defs>
+                                    <path
+                                      id="path-1"
+                                      d="M5 0h58a5 5 0 015 5v58a5 5 0 01-5 5H5a5 5 0 01-5-5V5a5 5 0 015-5z"
+                                    ></path>
+                                    <linearGradient
+                                      id="linearGradient-3"
+                                      x1="50%"
+                                      x2="50%"
+                                      y1="0%"
+                                      y2="100%"
+                                    >
+                                      <stop offset="0%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                      <stop offset="100%" stopColor="#EEF6FF"></stop>
+                                    </linearGradient>
+                                  </defs>
+                                  <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                    <g>
+                                      <mask id="mask-2" fill="#fff">
+                                        <use href="#path-1"></use>
+                                      </mask>
+                                      <g mask="url(#mask-2)">
+                                        <g transform="translate(17 -20.4)">
+                                          <path
+                                            fill="url(#linearGradient-3)"
+                                            fillRule="nonzero"
+                                            d="M0.430032272 15.8148507L7.63284472 9.05941988e-15 28.0328447 9.05941988e-15 35 11.8534773 35 24.0755409 26.78811 30.9020874 26.78811 53 0.430032272 38.6802808z"
+                                          ></path>
+                                          <path
+                                            fill="#96BFEF"
+                                            fillRule="nonzero"
+                                            d="M1.09618981e-12 15.8148507L14.4328447 1.20792265e-14 35 24.0755409 17.4993196 38.875647 26.7572612 53 0.430032272 38.6802808 13.18811 25.1959974z"
+                                          ></path>
+                                          <path
+                                            fill="#96BFEF"
+                                            fillRule="evenodd"
+                                            d="M27.598 76.632l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
+                                            transform="matrix(1 0 0 -1 0 145.976)"
+                                          ></path>
+                                        </g>
+                                      </g>
+                                      <g strokeLinecap="round" mask="url(#mask-2)">
+                                        <g transform="rotate(90 27.5 16)">
+                                          <g transform="translate(13.5 21)">
+                                            <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                            <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                          </g>
+                                          <g transform="translate(14.5 .5)">
+                                            <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                            <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                          </g>
+                                          <g transform="translate(.5 9.5)">
+                                            <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                            <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </svg>
+                                <div class="Title--2wreU">Slide down</div>
+                            </div>
+                            <div class="six-img border-to-all">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="68"
+                                height="68"
+                                viewBox="0 0 68 68"
+                              >
+                                <defs>
+                                  <radialGradient
+                                    id="radialGradient-1"
+                                    cx="50%"
+                                    cy="50%"
+                                    r="46.12%"
+                                    fx="50%"
+                                    fy="50%"
+                                    gradientTransform="matrix(1 0 0 1.47487 0 -.237)"
+                                  >
+                                    <stop offset="0%" stopColor="#96BFEF" stopOpacity="0.584"></stop>
+                                    <stop offset="100%" stopColor="#96BFEF" stopOpacity="0.214"></stop>
+                                  </radialGradient>
+                                </defs>
+                                <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                  <g>
+                                    <rect width="68" height="68" x="0" y="0" rx="5"></rect>
+                                    <g
+                                      fill="url(#radialGradient-1)"
+                                      fillRule="nonzero"
+                                      transform="translate(17 6.8)"
+                                    >
+                                      <path d="M0 15.8148507L14.4328447 0 35 24.0755409 17.4993196 38.875647 26.7572612 53 0.430032272 38.6802808 13.18811 25.1959974z"></path>
+                                    </g>
+                                  </g>
+                                </g>
+                              </svg>
+                              <div class="Title--2wreU">Fade-In</div>
+                            </div>
+                            </div>
+                            <div class="transition-for-all">
+                            <div class="seven-img border-to-all">
+                            <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="56"
+                                  height="58"
+                                  viewBox="0 0 56 58"
+                                >
+                                  <defs>
+                                    <radialGradient
+                                      id="radialGradient-1"
+                                      cx="50%"
+                                      cy="48.736%"
+                                      r="76.188%"
+                                      fx="50%"
+                                      fy="48.736%"
+                                      gradientTransform="matrix(0 .66667 -1 0 .987 .154)"
+                                    >
+                                      <stop offset="0%" stopColor="#96BFEF" stopOpacity="0.63"></stop>
+                                      <stop offset="100%" stopColor="#FFF" stopOpacity="0"></stop>
+                                    </radialGradient>
+                                  </defs>
+                                  <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                    <g transform="translate(-6 -5)">
+                                      <g transform="translate(6 5)">
+                                        <g transform="translate(.822)">
+                                          <g fillRule="nonzero" transform="translate(11.178 4)">
+                                            <path
+                                              fill="#96BFEF"
+                                              d="M6.4 18.1937302L14.3174462 9.6 25.6 22.6825581 15.9996267 30.7248799 21.078269 38.4 6.63590342 30.6187186 13.6346203 23.2914099z"
+                                            ></path>
+                                            <path
+                                              fill="url(#radialGradient-1)"
+                                              d="M0 14.3228836L13.1957437 0 32 21.8042635 15.9993779 35.2081331 24.4637816 48 0.393172363 35.0311977 12.0577005 22.8190165z"
+                                            ></path>
+                                          </g>
+                                          <g fill="#96BFEF" transform="matrix(-1 0 0 1 14 43.7)">
+                                            <path
+                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
+                                              transform="scale(1 -1) rotate(45 23.312 0)"
+                                            ></path>
+                                          </g>
+                                          <g fill="#96BFEF" transform="translate(40.291 43.7)">
+                                            <path
+                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
+                                              transform="scale(1 -1) rotate(45 23.312 0)"
+                                            ></path>
+                                          </g>
+                                          <g fill="#96BFEF" transform="rotate(180 7 7)">
+                                            <path
+                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
+                                              transform="scale(1 -1) rotate(45 23.312 0)"
+                                            ></path>
+                                          </g>
+                                          <g fill="#96BFEF" transform="matrix(1 0 0 -1 40.291 14)">
+                                            <path
+                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
+                                              transform="scale(1 -1) rotate(45 23.312 0)"
+                                            ></path>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </svg>
+                                <div class="Title--2wreU">Scale-Up</div>
+                              </div>
+                              <div class="eight-img border-to-all">
+                              <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="46"
+                                    height="51"
+                                    viewBox="0 0 46 51"
+                                  >
+                                    <defs>
+                                      <radialGradient
+                                        id="radialGradient-1"
+                                        cx="50%"
+                                        cy="48.736%"
+                                        r="76.188%"
+                                        fx="50%"
+                                        fy="48.736%"
+                                        gradientTransform="matrix(0 .66667 -1 0 .987 .154)"
+                                      >
+                                        <stop offset="0%" stopColor="#96BFEF" stopOpacity="0.63"></stop>
+                                        <stop offset="100%" stopColor="#FFF" stopOpacity="0"></stop>
+                                      </radialGradient>
+                                    </defs>
+                                    <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                      <g transform="translate(-11 -8)">
+                                        <g transform="translate(11 8)">
+                                          <g transform="translate(0 .588)">
+                                            <g fill="#96BFEF" transform="matrix(1 0 0 -1 0 49.412)">
+                                              <path
+                                                d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
+                                                transform="scale(1 -1) rotate(45 22.255 0)"
+                                              ></path>
+                                            </g>
+                                            <g fill="#96BFEF" transform="rotate(180 23 24.706)">
+                                              <path
+                                                d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
+                                                transform="scale(1 -1) rotate(45 22.255 0)"
+                                              ></path>
+                                            </g>
+                                            <g fill="#96BFEF" transform="translate(0 .412)">
+                                              <path
+                                                d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
+                                                transform="scale(1 -1) rotate(45 22.255 0)"
+                                              ></path>
+                                            </g>
+                                            <g fill="#96BFEF" transform="matrix(-1 0 0 1 46 .412)">
+                                              <path
+                                                d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
+                                                transform="scale(1 -1) rotate(45 22.255 0)"
+                                              ></path>
+                                            </g>
+                                            <g fillRule="nonzero" transform="translate(7 .412)">
+                                              <path
+                                                fill="#96BFEF"
+                                                d="M6.4 18.1937302L14.3174462 9.6 25.6 22.6825581 15.9996267 30.7248799 21.078269 38.4 6.63590342 30.6187186 13.6346203 23.2914099z"
+                                              ></path>
+                                              <path
+                                                fill="url(#radialGradient-1)"
+                                                d="M0 14.3228836L13.1957437 0 32 21.8042635 15.9993779 35.2081331 24.4637816 48 0.393172363 35.0311977 12.0577005 22.8190165z"
+                                              ></path>
+                                            </g>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </svg>
+                                  <div class="Title--2wreU">Scale-Down</div>
+                              </div>
+                            </div>
+                           </div>
+							 </Accordion>
+									</Tab.Pane>
+													  {/* Start---- Exit   */}
+													    <Tab.Pane
+														eventKey="second-exit"
+														className="bg-light tab-content target-tab-content"
+													  >
+													  <Accordion>
+                           
+                           <div class="transition-outer">
+                              <div class="transition-for-all">
+                           <div class="first-img border-to-all">
+                           <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="68"
+                                      height="68"
+                                      viewBox="0 0 68 68"
+                                    >
+                                      <defs>
+                                        <rect id="path-1" width="68" height="68" x="0" y="0" rx="5"></rect>
+                                        <linearGradient
+                                          id="linearGradient-3"
+                                          x1="100%"
+                                          x2="0%"
+                                          y1="50%"
+                                          y2="50%"
+                                        >
+                                          <stop offset="0%" stopColor="#EEF6FF"></stop>
+                                          <stop offset="100%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                        </linearGradient>
+                                      </defs>
+                                      <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                        <g>
+                                          <mask id="mask-2" fill="#fff">
+                                            <use href="#path-1"></use>
+                                          </mask>
+                                          
+                                          <path
+                                            fill="#96BFEF"
+                                            d="M3.4 22.6148507L17.8328447 6.8 38.4 30.8755409 20.8993196 45.675647 30.1572612 59.8 3.83003227 45.4802808 16.58811 31.9959974z"
+                                            mask="url(#mask-2)"
+                                          ></path>
+                                        </g>
+                                      </g>
+                                    </svg>
+                              <div class="Title--2wreU none-text">None</div>
+                           </div>
+                           
+													<div class="second-img border-to-all">
+                          <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="68"
+                                      height="68"
+                                      viewBox="0 0 68 68"
+                                    >
+                                      <defs>
+                                        <rect id="path-1" width="68" height="68" x="0" y="0" rx="5"></rect>
+                                        <linearGradient
+                                          id="linearGradient-3"
+                                          x1="100%"
+                                          x2="0%"
+                                          y1="50%"
+                                          y2="50%"
+                                        >
+                                          <stop offset="0%" stopColor="#EEF6FF"></stop>
+                                          <stop offset="100%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                        </linearGradient>
+                                      </defs>
+                                      <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                        <g>
+                                          <mask id="mask-2" fill="#fff">
+                                            <use href="#path-1"></use>
+                                          </mask>
+                                          <path
+                                            fill="url(#linearGradient-3)"
+                                            fillRule="nonzero"
+                                            d="M-17 22.6148507L-2.56715528 6.8 17.8328447 6.8 17.2472582 18.6534773 16.58811 31.9959974 10.7026223 45.675647 30.1572612 59.8 -2.56715528 59.8 -16.5699677 45.4802808 -3.81189004 31.9959974z"
+                                            mask="url(#mask-2)"
+                                          ></path>
+                                          <path
+                                            fill="#96BFEF"
+                                            d="M63.298 37.644l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
+                                            mask="url(#mask-2)"
+                                            transform="rotate(90 52.36 34)"
+                                          ></path>
+                                          <path
+                                            fill="#96BFEF"
+                                            d="M3.4 22.6148507L17.8328447 6.8 38.4 30.8755409 20.8993196 45.675647 30.1572612 59.8 3.83003227 45.4802808 16.58811 31.9959974z"
+                                            mask="url(#mask-2)"
+                                          ></path>
+                                        </g>
+                                      </g>
+                                    </svg>
+                                    <div class="Title--2wreU">Slide L-R</div>
+                          </div>
+                            <div class="third-img border-to-all">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="68"
+                                height="68"
+                                viewBox="0 0 68 68"
+                              >
+                                <defs>
+                                  <rect id="path-1" width="68" height="68" x="0" y="0" rx="5"></rect>
+                                  <linearGradient
+                                    id="linearGradient-3"
+                                    x1="83.061%"
+                                    x2="0%"
+                                    y1="50%"
+                                    y2="50%"
+                                  >
+                                    <stop offset="0%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                    <stop offset="100%" stopColor="#EEF6FF"></stop>
+                                  </linearGradient>
+                                </defs>
+                                <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                  <g>
+                                    <mask id="mask-2" fill="#fff">
+                                      <use href="#path-1"></use>
+                                    </mask>
+                                    <path
+                                      fill="url(#linearGradient-3)"
+                                      fillRule="nonzero"
+                                      d="M40.8 22.6148507L43.3328447 6.8 75.6328447 6.8 75.0472582 18.6534773 74.38811 31.9959974 74.38811 45.4802808 72.536306 59.8 55.6572612 59.8 41.2300323 45.4802808 53.98811 31.9959974z"
+                                      mask="url(#mask-2)"
+                                    ></path>
+                                    <path
+                                      fill="#96BFEF"
+                                      d="M28.9 22.6148507L43.3328447 6.8 63.9 30.8755409 46.3993196 45.675647 55.6572612 59.8 29.3300323 45.4802808 42.08811 31.9959974z"
+                                      mask="url(#mask-2)"
+                                    ></path>
+                                    <path
+                                      fill="#96BFEF"
+                                      d="M27.598 37.644l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
+                                      mask="url(#mask-2)"
+                                      transform="matrix(0 1 1 0 -17.34 17.34)"
+                                    ></path>
+                                  </g>
+                                </g>
+                              </svg>
+                              <div class="Title--2wreU">Slide R-L</div>
+                            </div>
+                            </div>
+                            <div class="transition-for-all">
+                            <div class="fourth-img border-to-all">
+                            <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="68"
+                                  height="70"
+                                  viewBox="0 0 68 70"
+                                >
+                                  <defs>
+                                    <path
+                                      id="path-1"
+                                      d="M4.987.165l58-.152a5 5 0 015.013 5v58.165a5 5 0 01-5 5H5a5 5 0 01-5-5V5.165a5 5 0 014.987-5z"
+                                    ></path>
+                                    <linearGradient
+                                      id="linearGradient-3"
+                                      x1="50%"
+                                      x2="50%"
+                                      y1="0%"
+                                      y2="100%"
+                                    >
+                                      <stop offset="0%" stopColor="#EEF6FF"></stop>
+                                      <stop offset="100%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                    </linearGradient>
+                                  </defs>
+                                  <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                    <g transform="translate(0 1)">
+                                      <g transform="translate(0 -1)">
+                                        <g transform="translate(0 .822)">
+                                          <mask id="mask-2" fill="#fff">
+                                            <use href="#path-1"></use>
+                                          </mask>
+                                          <path
+                                            fill="url(#linearGradient-3)"
+                                            fillRule="nonzero"
+                                            d="M16 49.4649587L30.0083493 34.1783937 49.9705882 57.4497055 49.9705882 68.6858564 39.9328401 85.4079602 16 71.3920676z"
+                                            mask="url(#mask-2)"
+                                          ></path>
+                                          <g mask="url(#mask-2)">
+                                            <g transform="translate(15.5 10.038)">
+                                              <path
+                                                fill="#96BFEF"
+                                                fillRule="nonzero"
+                                                d="M0.5 39.4272899L14.5083493 24.1407249 34.4705882 47.4120367 17.4846337 61.717754 26.4702829 75.3702914 0.917384264 61.5289139 13.3002244 48.495065z"
+                                              ></path>
+                                              <path
+                                                fill="#96BFEF"
+                                                fillRule="evenodd"
+                                                d="M27.787 9.987L18.254.493a1.654 1.654 0 00-2.358 0L6.363 9.987a1.672 1.672 0 00.072 2.278 1.69 1.69 0 002.286.104l8.422-8.32 8.42 8.387a1.654 1.654 0 002.358 0 1.673 1.673 0 00-.134-2.45z"
+                                              ></path>
+                                              <g
+                                                fill="none"
+                                                fillRule="evenodd"
+                                                strokeLinecap="round"
+                                                strokeWidth="1"
+                                                transform="matrix(0 -1 -1 0 31.5 69.14)"
+                                              >
+                                                <g transform="translate(14 25)">
+                                                  <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                                  <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                                </g>
+                                                <g transform="translate(4)">
+                                                  <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                                  <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                                </g>
+                                                <g transform="translate(0 14)">
+                                                  <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                                  <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                                </g>
+                                              </g>
+                                            </g>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </svg>
+                                <div class="Title--2wreU">Slide up</div>
+                            </div>
+                            <div class="five-img border-to-all">
+                            <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="68"
+                                  height="68"
+                                  viewBox="0 0 68 68"
+                                >
+                                  <defs>
+                                    <path
+                                      id="path-1"
+                                      d="M5 0h58a5 5 0 015 5v58a5 5 0 01-5 5H5a5 5 0 01-5-5V5a5 5 0 015-5z"
+                                    ></path>
+                                    <linearGradient
+                                      id="linearGradient-3"
+                                      x1="50%"
+                                      x2="50%"
+                                      y1="0%"
+                                      y2="100%"
+                                    >
+                                      <stop offset="0%" stopColor="#EEF6FF" stopOpacity="0"></stop>
+                                      <stop offset="100%" stopColor="#EEF6FF"></stop>
+                                    </linearGradient>
+                                  </defs>
+                                  <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                    <g>
+                                      <mask id="mask-2" fill="#fff">
+                                        <use href="#path-1"></use>
+                                      </mask>
+                                      <g mask="url(#mask-2)">
+                                        <g transform="translate(17 -20.4)">
+                                          <path
+                                            fill="url(#linearGradient-3)"
+                                            fillRule="nonzero"
+                                            d="M0.430032272 15.8148507L7.63284472 9.05941988e-15 28.0328447 9.05941988e-15 35 11.8534773 35 24.0755409 26.78811 30.9020874 26.78811 53 0.430032272 38.6802808z"
+                                          ></path>
+                                          <path
+                                            fill="#96BFEF"
+                                            fillRule="nonzero"
+                                            d="M1.09618981e-12 15.8148507L14.4328447 1.20792265e-14 35 24.0755409 17.4993196 38.875647 26.7572612 53 0.430032272 38.6802808 13.18811 25.1959974z"
+                                          ></path>
+                                          <path
+                                            fill="#96BFEF"
+                                            fillRule="evenodd"
+                                            d="M27.598 76.632l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
+                                            transform="matrix(1 0 0 -1 0 145.976)"
+                                          ></path>
+                                        </g>
+                                      </g>
+                                      <g strokeLinecap="round" mask="url(#mask-2)">
+                                        <g transform="rotate(90 27.5 16)">
+                                          <g transform="translate(13.5 21)">
+                                            <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                            <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                          </g>
+                                          <g transform="translate(14.5 .5)">
+                                            <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                            <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                          </g>
+                                          <g transform="translate(.5 9.5)">
+                                            <path stroke="#FFF" d="M0.5 1L17.5 1"></path>
+                                            <path stroke="#96BFEF" d="M0.5 0.5L17.5 0.5"></path>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </svg>
+                                <div class="Title--2wreU">Slide down</div>
+                            </div>
+                            <div class="six-img border-to-all">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="68"
+                                height="68"
+                                viewBox="0 0 68 68"
+                              >
+                                <defs>
+                                  <radialGradient
+                                    id="radialGradient-1"
+                                    cx="50%"
+                                    cy="50%"
+                                    r="46.12%"
+                                    fx="50%"
+                                    fy="50%"
+                                    gradientTransform="matrix(1 0 0 1.47487 0 -.237)"
+                                  >
+                                    <stop offset="0%" stopColor="#96BFEF" stopOpacity="0.584"></stop>
+                                    <stop offset="100%" stopColor="#96BFEF" stopOpacity="0.214"></stop>
+                                  </radialGradient>
+                                </defs>
+                                <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                  <g>
+                                    <rect width="68" height="68" x="0" y="0" rx="5"></rect>
+                                    <g
+                                      fill="url(#radialGradient-1)"
+                                      fillRule="nonzero"
+                                      transform="translate(17 6.8)"
+                                    >
+                                      <path d="M0 15.8148507L14.4328447 0 35 24.0755409 17.4993196 38.875647 26.7572612 53 0.430032272 38.6802808 13.18811 25.1959974z"></path>
+                                    </g>
+                                  </g>
+                                </g>
+                              </svg>
+                              <div class="Title--2wreU">Fade-Out</div>
+                            </div>
+                            </div>
+                            <div class="transition-for-all">
+                            <div class="seven-img border-to-all">
+                            <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="56"
+                                  height="58"
+                                  viewBox="0 0 56 58"
+                                >
+                                  <defs>
+                                    <radialGradient
+                                      id="radialGradient-1"
+                                      cx="50%"
+                                      cy="48.736%"
+                                      r="76.188%"
+                                      fx="50%"
+                                      fy="48.736%"
+                                      gradientTransform="matrix(0 .66667 -1 0 .987 .154)"
+                                    >
+                                      <stop offset="0%" stopColor="#96BFEF" stopOpacity="0.63"></stop>
+                                      <stop offset="100%" stopColor="#FFF" stopOpacity="0"></stop>
+                                    </radialGradient>
+                                  </defs>
+                                  <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                    <g transform="translate(-6 -5)">
+                                      <g transform="translate(6 5)">
+                                        <g transform="translate(.822)">
+                                          <g fillRule="nonzero" transform="translate(11.178 4)">
+                                            <path
+                                              fill="#96BFEF"
+                                              d="M6.4 18.1937302L14.3174462 9.6 25.6 22.6825581 15.9996267 30.7248799 21.078269 38.4 6.63590342 30.6187186 13.6346203 23.2914099z"
+                                            ></path>
+                                            <path
+                                              fill="url(#radialGradient-1)"
+                                              d="M0 14.3228836L13.1957437 0 32 21.8042635 15.9993779 35.2081331 24.4637816 48 0.393172363 35.0311977 12.0577005 22.8190165z"
+                                            ></path>
+                                          </g>
+                                          <g fill="#96BFEF" transform="matrix(-1 0 0 1 14 43.7)">
+                                            <path
+                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
+                                              transform="scale(1 -1) rotate(45 23.312 0)"
+                                            ></path>
+                                          </g>
+                                          <g fill="#96BFEF" transform="translate(40.291 43.7)">
+                                            <path
+                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
+                                              transform="scale(1 -1) rotate(45 23.312 0)"
+                                            ></path>
+                                          </g>
+                                          <g fill="#96BFEF" transform="rotate(180 7 7)">
+                                            <path
+                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
+                                              transform="scale(1 -1) rotate(45 23.312 0)"
+                                            ></path>
+                                          </g>
+                                          <g fill="#96BFEF" transform="matrix(1 0 0 -1 40.291 14)">
+                                            <path
+                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
+                                              transform="scale(1 -1) rotate(45 23.312 0)"
+                                            ></path>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </svg>
+                                <div class="Title--2wreU">Scale-Up</div>
+                              </div>
+                              <div class="eight-img border-to-all">
+                              <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="46"
+                                    height="51"
+                                    viewBox="0 0 46 51"
+                                  >
+                                    <defs>
+                                      <radialGradient
+                                        id="radialGradient-1"
+                                        cx="50%"
+                                        cy="48.736%"
+                                        r="76.188%"
+                                        fx="50%"
+                                        fy="48.736%"
+                                        gradientTransform="matrix(0 .66667 -1 0 .987 .154)"
+                                      >
+                                        <stop offset="0%" stopColor="#96BFEF" stopOpacity="0.63"></stop>
+                                        <stop offset="100%" stopColor="#FFF" stopOpacity="0"></stop>
+                                      </radialGradient>
+                                    </defs>
+                                    <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                      <g transform="translate(-11 -8)">
+                                        <g transform="translate(11 8)">
+                                          <g transform="translate(0 .588)">
+                                            <g fill="#96BFEF" transform="matrix(1 0 0 -1 0 49.412)">
+                                              <path
+                                                d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
+                                                transform="scale(1 -1) rotate(45 22.255 0)"
+                                              ></path>
+                                            </g>
+                                            <g fill="#96BFEF" transform="rotate(180 23 24.706)">
+                                              <path
+                                                d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
+                                                transform="scale(1 -1) rotate(45 22.255 0)"
+                                              ></path>
+                                            </g>
+                                            <g fill="#96BFEF" transform="translate(0 .412)">
+                                              <path
+                                                d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
+                                                transform="scale(1 -1) rotate(45 22.255 0)"
+                                              ></path>
+                                            </g>
+                                            <g fill="#96BFEF" transform="matrix(-1 0 0 1 46 .412)">
+                                              <path
+                                                d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
+                                                transform="scale(1 -1) rotate(45 22.255 0)"
+                                              ></path>
+                                            </g>
+                                            <g fillRule="nonzero" transform="translate(7 .412)">
+                                              <path
+                                                fill="#96BFEF"
+                                                d="M6.4 18.1937302L14.3174462 9.6 25.6 22.6825581 15.9996267 30.7248799 21.078269 38.4 6.63590342 30.6187186 13.6346203 23.2914099z"
+                                              ></path>
+                                              <path
+                                                fill="url(#radialGradient-1)"
+                                                d="M0 14.3228836L13.1957437 0 32 21.8042635 15.9993779 35.2081331 24.4637816 48 0.393172363 35.0311977 12.0577005 22.8190165z"
+                                              ></path>
+                                            </g>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </svg>
+                                  <div class="Title--2wreU">Scale-Down</div>
+                              </div>
+                            </div>
+                           </div>
+                            
+                           
+													  </Accordion>
+													  </Tab.Pane>
+													</Tab.Content>
+													</Col>
                                               </Tab.Container>
                                             </div>
                                           </div>
@@ -3535,7 +5395,158 @@ console.log("---------SCENE DATA --------->" , cont_units)
                                         </div>
 
                                         <div className="row opacity-div">
-                                          <p class="opacity">frams</p>
+                                          <p class="opacity">frames</p>
+                                          <div class="frames-outer">
+                                            <div class="frames-list">
+                                            <div class="no-frame frame-for-all">
+                                         <span>No Frame</span>
+                                            </div>
+                                            <div class="first-frame frame-for-all">
+                                            <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        xmlnsXlink="http://www.w3.org/1999/xlink"
+                                                        width="106"
+                                                        height="72"
+                                                        viewBox="0 0 106 72"
+                                                      >
+                                                        <defs>
+                                                          <path id="path-1" d="M0 0H106V72H0z"></path>
+                                                        </defs>
+                                                        <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                                          <g>
+                                                            <mask id="mask-2" fill="#fff">
+                                                              <use xlinkHref="#path-1"></use>
+                                                            </mask>
+                                                            <use fill="#FFF" xlinkHref="#path-1"></use>
+                                                            <g mask="url(#mask-2)">
+                                                              <g fillRule="nonzero" transform="translate(-1)">
+                                                                <g transform="translate(.693)">
+                                                                  <path
+                                                                    fill="#D5E7FD"
+                                                                    d="M.307 0h107l-.005 41.742c-5.378-5.98-16.902-13.773-32.831-13.773-15.398 0-29.565 7.592-36.46 18.878-3.677-1.725-9.478-3.618-16.699-3.618-7.22 0-15.08 2.153-21.005 5.771V0z"
+                                                                  ></path>
+                                                                  <path
+                                                                    fill="#96BFEF"
+                                                                    d="M50.307 72h-50V56.23C4.58 52.63 11.644 49 21.141 49c3.96 0 9.616.875 14.545 3.32 6.478 3.213 13.328 9.857 14.621 19.68z"
+                                                                  ></path>
+                                                                  <path
+                                                                    fill="#AFD4FF"
+                                                                    d="M107.307 51.571V72H56.962c-1.392-14.235-12.72-21.58-13.655-22.19C50.732 37.515 64.158 33 74.66 33c11.1 0 25.613 5.062 32.647 18.571z"
+                                                                  ></path>
+                                                                </g>
+                                                                <path
+                                                                  fill="#E8F0FA"
+                                                                  d="M23.19 7.679c-7.317 0-13.25 5.727-13.25 12.793 0 7.066 5.933 12.794 13.25 12.794 7.318 0 13.25-5.728 13.25-12.794 0-7.066-5.932-12.793-13.25-12.793z"
+                                                                ></path>
+                                                                <path
+                                                                  fill="#FFF"
+                                                                  d="M23.19 12.796c4.391 0 7.95 3.437 7.95 7.676 0 4.24-3.559 7.676-7.95 7.676-4.39 0-7.95-3.437-7.95-7.676 0-4.24 3.56-7.676 7.95-7.676z"
+                                                                ></path>
+                                                              </g>
+                                                            </g>
+                                                          </g>
+                                                        </g>
+                                                      </svg>
+                                            </div>
+                                          </div>
+
+                                          <div class="frames-list">
+                                            <div class="third-frame frame-for-all">
+                                            <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        xmlnsXlink="http://www.w3.org/1999/xlink"
+                                                        width="106"
+                                                        height="72"
+                                                        viewBox="0 0 106 72"
+                                                      >
+                                                        <defs>
+                                                          <path id="path-1" d="M0 0H106V72H0z"></path>
+                                                        </defs>
+                                                        <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                                          <g>
+                                                            <mask id="mask-2" fill="#fff">
+                                                              <use xlinkHref="#path-1"></use>
+                                                            </mask>
+                                                            <use fill="#FFF" xlinkHref="#path-1"></use>
+                                                            <g mask="url(#mask-2)">
+                                                              <g fillRule="nonzero" transform="translate(-1)">
+                                                                <g transform="translate(.693)">
+                                                                  <path
+                                                                    fill="#D5E7FD"
+                                                                    d="M.307 0h107l-.005 41.742c-5.378-5.98-16.902-13.773-32.831-13.773-15.398 0-29.565 7.592-36.46 18.878-3.677-1.725-9.478-3.618-16.699-3.618-7.22 0-15.08 2.153-21.005 5.771V0z"
+                                                                  ></path>
+                                                                  <path
+                                                                    fill="#96BFEF"
+                                                                    d="M50.307 72h-50V56.23C4.58 52.63 11.644 49 21.141 49c3.96 0 9.616.875 14.545 3.32 6.478 3.213 13.328 9.857 14.621 19.68z"
+                                                                  ></path>
+                                                                  <path
+                                                                    fill="#AFD4FF"
+                                                                    d="M107.307 51.571V72H56.962c-1.392-14.235-12.72-21.58-13.655-22.19C50.732 37.515 64.158 33 74.66 33c11.1 0 25.613 5.062 32.647 18.571z"
+                                                                  ></path>
+                                                                </g>
+                                                                <path
+                                                                  fill="#E8F0FA"
+                                                                  d="M23.19 7.679c-7.317 0-13.25 5.727-13.25 12.793 0 7.066 5.933 12.794 13.25 12.794 7.318 0 13.25-5.728 13.25-12.794 0-7.066-5.932-12.793-13.25-12.793z"
+                                                                ></path>
+                                                                <path
+                                                                  fill="#FFF"
+                                                                  d="M23.19 12.796c4.391 0 7.95 3.437 7.95 7.676 0 4.24-3.559 7.676-7.95 7.676-4.39 0-7.95-3.437-7.95-7.676 0-4.24 3.56-7.676 7.95-7.676z"
+                                                                ></path>
+                                                              </g>
+                                                            </g>
+                                                          </g>
+                                                        </g>
+                                                      </svg>
+                                            </div>
+                                            <div class="fourth-frame frame-for-all">
+                                            <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        xmlnsXlink="http://www.w3.org/1999/xlink"
+                                                        width="106"
+                                                        height="72"
+                                                        viewBox="0 0 106 72"
+                                                      >
+                                                        <defs>
+                                                          <path id="path-1" d="M0 0H106V72H0z"></path>
+                                                        </defs>
+                                                        <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                                          <g>
+                                                            <mask id="mask-2" fill="#fff">
+                                                              <use xlinkHref="#path-1"></use>
+                                                            </mask>
+                                                            <use fill="#FFF" xlinkHref="#path-1"></use>
+                                                            <g mask="url(#mask-2)">
+                                                              <g fillRule="nonzero" transform="translate(-1)">
+                                                                <g transform="translate(.693)">
+                                                                  <path
+                                                                    fill="#D5E7FD"
+                                                                    d="M.307 0h107l-.005 41.742c-5.378-5.98-16.902-13.773-32.831-13.773-15.398 0-29.565 7.592-36.46 18.878-3.677-1.725-9.478-3.618-16.699-3.618-7.22 0-15.08 2.153-21.005 5.771V0z"
+                                                                  ></path>
+                                                                  <path
+                                                                    fill="#96BFEF"
+                                                                    d="M50.307 72h-50V56.23C4.58 52.63 11.644 49 21.141 49c3.96 0 9.616.875 14.545 3.32 6.478 3.213 13.328 9.857 14.621 19.68z"
+                                                                  ></path>
+                                                                  <path
+                                                                    fill="#AFD4FF"
+                                                                    d="M107.307 51.571V72H56.962c-1.392-14.235-12.72-21.58-13.655-22.19C50.732 37.515 64.158 33 74.66 33c11.1 0 25.613 5.062 32.647 18.571z"
+                                                                  ></path>
+                                                                </g>
+                                                                <path
+                                                                  fill="#E8F0FA"
+                                                                  d="M23.19 7.679c-7.317 0-13.25 5.727-13.25 12.793 0 7.066 5.933 12.794 13.25 12.794 7.318 0 13.25-5.728 13.25-12.794 0-7.066-5.932-12.793-13.25-12.793z"
+                                                                ></path>
+                                                                <path
+                                                                  fill="#FFF"
+                                                                  d="M23.19 12.796c4.391 0 7.95 3.437 7.95 7.676 0 4.24-3.559 7.676-7.95 7.676-4.39 0-7.95-3.437-7.95-7.676 0-4.24 3.56-7.676 7.95-7.676z"
+                                                                ></path>
+                                                              </g>
+                                                            </g>
+                                                          </g>
+                                                        </g>
+                                                      </svg>
+                                            </div>
+                                          </div>
+                                          </div>
                                         </div>
 
                                         <div className="row opacity-div">
@@ -3741,7 +5752,73 @@ console.log("---------SCENE DATA --------->" , cont_units)
             </div>
           </div>
         </div>
+   
       </div>
+      <div class="scene-popup-div">
+        <div class="scene-inner-content">
+          <div class="scene-left-icon">
+          <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="19"
+      height="20"
+      viewBox="0 0 19 20"
+    >
+      <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+        <g fill="#344B60" fillRule="nonzero" transform="translate(-715 -202)">
+          <g transform="translate(472 191)">
+            <g transform="translate(232) matrix(1 0 0 -1 11 31)">
+              <path d="M13.684 5.271V3.164C13.684 1.266 12.1 0 10.526 0H3.164C1.56 0 0 1.292 0 3.164v8.426c0 1.82 1.54 3.147 3.164 3.147h2.103v2.103c0 1.93 1.622 3.16 3.154 3.16h7.365c1.575 0 3.161-1.247 3.161-3.16.008-4.572.012-7.375.012-8.41 0-1.554-1.234-3.167-3.173-3.167l-2.102.008zm-10.53 8.413c-1.255 0-2.103-1.034-2.103-2.107V3.156c0-1.205.988-2.105 2.104-2.105h7.371c1.305 0 2.108 1.075 2.108 2.105v2.107H8.421a3.161 3.161 0 00-3.158 3.162v5.26H3.155zm14.744 3.158c0 1.04-.797 2.117-2.109 2.117H8.421c-1.06 0-2.105-.88-2.105-2.117v-8.41c0-1.273 1.035-2.116 2.105-2.116h7.368c1.007 0 2.109.792 2.109 2.115v8.411zm-5.769-7.368c.272 0 .493.224.493.495v2.136h2.146c.273 0 .495.223.495.502v.05a.5.5 0 01-.495.5H12.62l.001 2.137c0 .274-.22.495-.493.495h-.048a.496.496 0 01-.492-.495v-2.136H9.442a.498.498 0 01-.496-.502v-.05a.5.5 0 01.496-.5l2.145-.001V9.969c0-.273.22-.495.493-.495h.048z"></path>
+            </g>
+          </g>
+        </g>
+      </g>
+    </svg>
+          </div>
+         <div class="scence-middle-content">
+
+
+         <Tab.Container id="bottom-scene-container" defaultActiveKey="first">
+   <Row>
+   <Col>
+   <Tab.Content>
+     <Tab.Pane eventKey="first" className="bg-light py-4 tab-content target-tab-content">
+	  <Accordion>
+	  <Accordion.Item eventKey="0">
+        <Accordion.Header> Name</Accordion.Header>
+          <Accordion.Body>
+		  testing scene
+		  </Accordion.Body>
+		  </Accordion.Item>
+	   </Accordion>
+	  </Tab.Pane>
+   </Tab.Content>
+   </Col>
+   </Row>
+   </Tab.Container>
+    
+         </div>
+         <div class="scene-right-icon">
+         <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+    >
+      <g fill="#344B60" fillRule="nonzero">
+        <path
+          d="M6.009 2.5a.5.5 0 010 1H.991a.5.5 0 010-1h5.018z"
+          transform="translate(12.5 13)"
+        ></path>
+        <path
+          d="M3.99 5.509A.496.496 0 013.5 6a.496.496 0 01-.49-.491V.491C3.01.22 3.236 0 3.5 0c.271 0 .49.228.49.491v5.018z"
+          transform="translate(12.5 13)"
+        ></path>
+        <path d="M23 6a3 3 0 013 3v14a3 3 0 01-3 3H9a3 3 0 01-3-3V9a3 3 0 013-3h14zm0 1H9a2 2 0 00-1.995 1.85L7 9v14a2 2 0 001.85 1.995L9 25h14a2 2 0 001.995-1.85L25 23V9a2 2 0 00-1.85-1.995L23 7z"></path>
+      </g>
+    </svg>
+         </div>
+        </div>
+       </div>
     </div>
   );
 };

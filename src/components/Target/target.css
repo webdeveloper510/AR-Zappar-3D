@@ -1139,9 +1139,11 @@ p.orient-head {
 }
 p.opacity {
     font-size: 13px;
-    font-family: 'Montserrat', sans-serif;
     text-align: left;
     font-weight: 500;
+    color: #344b60;
+    text-transform: capitalize;
+font-family: "Lato",sans-serif !important;
 }
 .row.recent-files h5 {
     font-family: 'Montserrat', sans-serif;
@@ -1346,4 +1348,92 @@ buttonbootstrap.btn-download-preview {
 }
 canvas {
     outline: 0;
+}
+div#target-buttons-bar {
+    top: 10px;
+}
+div#target-buttons-bar button {
+    margin: 0px 10px 0 10px;
+}
+.border-to-all {
+    margin: 16px 0 4px 6px;
+    border-radius: 5px;
+    border: 1px solid #efefef;
+    cursor: pointer;
+    float: left;
+    height: 65px;
+    width: 65px;
+}
+div#transition-affects-outer .accordion-body {
+    flex-direction: initial;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.Title--2wreU {
+    color: #5c5c5c;
+    font-size: 14px;
+}
+.transition-for-all {
+    float: left;
+    width: 100%;
+    display: flex;
+    margin-bottom: 20px;
+}
+.target-right {
+    z-index: 1;
+}
+a#right-tabs-example-tab-second::before {
+    content: "\002F";
+    position: absolute;
+    top: 0;
+    right: -5px;
+    transform: rotate(110deg);
+    height: 1px;
+    width: 18px;
+    background: #b2c4d7;
+}
+a#right-tabs-example-tab-first {
+    position: relative;
+}
+div#transition-affects-outer .nav-item {
+    width: fit-content;
+}
+.no-frame.frame-for-all span {
+    color: #d1d9e8;
+}
+.frame-for-all {
+    width: 104px;
+    height: 73px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid #efefef;
+    border-radius: 8px;
+    margin-right: 7px;
+    margin-bottom: 10px;
+}
+.frames-list {
+    float: left;
+    display: flex;
+    justify-content: space-between;
+}
+.first-frame.frame-for-all svg {
+    width: 95px;
+}
+.first-frame.frame-for-all {
+    box-shadow: 0px 0px 4px #d3d3d3;
+    background-color: #fff;
+}
+.fourth-frame.frame-for-all {
+    border: 4px solid #fff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 4px #d3d3d3;
+}
+.third-frame.frame-for-all svg {
+    padding: 4px;
+}
+.video-img-tabs {
+    padding-left: 10px;
 }

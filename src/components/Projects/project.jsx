@@ -3,16 +3,23 @@ import { API } from "../../../src/config/api"
 import axios from "axios"; 
 import { useNavigate , useParams } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
 import { toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import WorldTracking from '../../assets/images/worldtracking.jpg'
 import faceTracking from '../../assets/images/facetracking.png'
 import ImageTracking from '../../assets/images/imagetracking.png';
 import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import NavBar from "../Navbar/navbar";
 import SideBar from "../SideBar/sidebar";
 import mainbg from '../../assets/images/main-bg.jpg';
 import {  faCodeMerge } from '@fortawesome/free-solid-svg-icons';
+import {  faAreaChart } from '@fortawesome/free-solid-svg-icons';
+import {  faWrench } from '@fortawesome/free-solid-svg-icons';
+import { faTag } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faList } from '@fortawesome/free-solid-svg-icons';
 import MainTab from "./mainTab";
 
 
@@ -26,6 +33,8 @@ const Project =()=>{
   const [show, setShow] = useState(false);
   const [SceneType , selectSceneType] = useState(null);
   const [FeaturedtrackerOption,Featuredtracker] = useState(null);
+  const [showcreatelabel, setcreatelabel] = useState(false);
+  
 
  // USE EFFECT FOR ID ------------------------------------------------------------------->
  useEffect  (() => {
@@ -210,7 +219,9 @@ useEffect(() => {
 
 
 
-
+/***********creatlabelpopup***************************** */
+const handleDeleteClose = () => setcreatelabel(false);
+const handleshowcreatelabel = () => setcreatelabel(true);
 
  /********** Start----Model State *************/
 
@@ -273,9 +284,70 @@ return(
                         </div>
                         </div>
                     </div>
-                    <div class="col-md-4 align-self-center p-4">
+                    <div class="col-md-4 align-self-center p-4" id="project-actions">
                     <span class=" status-icon"></span>
-                      <input id="projName" className="mt-md-0" type="text" onChange={handleUntitle} value={titlePro} />  
+                      <input id="projName" className="mt-md-0" type="text" onChange={handleUntitle} value={titlePro} /> 
+                  <div class="actions-div">
+                      <div className="dropdown custom-drop-down">
+                          <a href="#" className="navbar-profile-toggle link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                          
+                            <p class="user-profile-name"><FontAwesomeIcon icon={faWrench} />Actions</p><FontAwesomeIcon icon={faChevronDown} />
+                          </a>
+                          <ul className="dropdown-menu text-small shadow">
+                            <li><a className="dropdown-item"> 
+                          
+                            Duplicate</a></li>
+                            <li><a className="dropdown-item">
+                         Get deep link ID</a></li>
+                            <li><hr className="dropdown-divider"/></li>
+                            <li><a className="dropdown-item">
+                          Unpublish</a></li>
+                          <li><a className="dropdown-item">Delete</a></li>
+                          </ul>
+                        </div>
+
+                        {/* labels*/}
+                        <div className="dropdown custom-drop-down"id="project-labels">
+                            <a href="#" className="navbar-profile-toggle link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            
+                              <p class="user-profile-name"><FontAwesomeIcon icon={faTag} />Labels</p><FontAwesomeIcon icon={faChevronDown} />
+                            </a>
+                            <ul className="dropdown-menu text-small shadow">
+                              <li>
+                              <div class="field">
+                                <div class="input-wrapper"><input id="search-labels-input" type="search" placeholder="Search labels"/>
+                                <svg class="search-label-svg" role="button" width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M19,11 C23.418278,11 27,14.581722 27,19 C27,21.0296419 26.2441691,22.8827501 24.9986213,24.2932105 L29.2708011,28.5802351 C29.4657149,28.775845 29.4651506,29.092427 29.2695406,29.2873408 C29.0956652,29.4605974 28.8262068,29.4794023 28.6315796,29.3440591 L28.562435,29.2860803 L24.2922058,24.9995083 C22.8818702,26.2445279 21.0291601,27 19,27 C14.581722,27 11,23.418278 11,19 C11,14.581722 14.581722,11 19,11 Z M19,12 C15.1340068,12 12,15.1340068 12,19 C12,22.8659932 15.1340068,26 19,26 C20.8819703,26 22.5904778,25.2573173 23.8484255,24.0490489 C23.8682789,24.0062003 23.8973303,23.9668665 23.9327917,23.9315312 C23.9676812,23.8967659 24.0064192,23.8682194 24.0476289,23.8458892 C25.2573173,22.5904778 26,20.8819703 26,19 C26,15.1340068 22.8659932,12 19,12 Z" fill="#344B60"></path></svg></div></div>
+                              </li>
+                              <li><hr className="dropdown-divider"/></li>
+                              <li class="create-labels" onClick={handleshowcreatelabel}><FontAwesomeIcon icon={faPlus} /> Create Labels</li>
+                            </ul>
+                          </div>
+                          </div>
+
+                          {/*start create label popup*/}
+                           
+                          <Modal id="create-label-popup" show={showcreatelabel} onHide={handleDeleteClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Create label</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <div class="field mb24"><div class="label-wrapper">
+                  <label class="label-name" for="Labelname">Label name</label></div>
+                  <div class="input-wrapper">
+                  <input slot="input" type="text" id="Labelname" min="0" max="255"/></div></div>
+                  </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" class="btn-cancel-popup" onClick={handleDeleteClose}>
+                  Cancel
+                  </Button>
+                  <Button variant="primary" class="btn-delete-popup" onClick={handleDeleteClose}>
+                   Create
+                  </Button>
+                </Modal.Footer>
+            </Modal>
+
+                          {/*end  create  label popup*/}
+
                     </div>
                     <div class="col-md-4 p-4 created-text-design">
                       <a href="#" class="link-dark text-decoration-none text-end d-block"> Create by: {nameOfUser} | {created_at} </a>
@@ -285,9 +357,16 @@ return(
                   </div>
                   
                   <div className="project-page-bottom mt-5 p-0">
-                    <div class="row sec-2 project-bottom-title">
+                    <div class="sec-2 project-bottom-title">
+                      <div class="trigger-head-left">
                       <p class="project-triggers-head">
                         <FontAwesomeIcon icon={faCodeMerge} />Triggers <i class="bi bi-pencil-square ps-2"></i></p>
+                        </div>
+                        <div class="trigger-head-right">
+                        <p class="project-triggers-head">
+                       
+                          Project icon & title</p>
+                        </div>
                     </div>
 
 
@@ -296,6 +375,73 @@ return(
 
                       {/* End Main Tab  */}
                   </div>
+
+                  <div className="project-page-bottom mt-5 p-0" id="Analytics-div">
+                    <div class="sec-2 project-bottom-title">
+                      <div class="trigger-head-left">
+                      <p class="project-triggers-head">
+                        <FontAwesomeIcon icon={faAreaChart} />Analytics</p>
+                        </div>
+                    </div>
+                      <div class="Analytics-left-div">
+                        <div class="total-views">
+                          <p>Total Views</p>
+                        </div>
+                      </div>
+                      <div class="Analytics-right-div">
+                      <div class="analytics-right-inner-text">
+                        <h3>Try business for complete analytics</h3>
+                        <p>Discover greater insight into how your project campaigns are performing with with a business workspace.</p>
+                     <div class="upgrade-business">
+                     <a href="#" class="btn btn-primary btn-small">Upgrade to business</a>
+                     </div>
+                      </div>
+                      </div>
+                  </div>
+
+                  <div className="project-page-bottom mt-5 p-0" id="published-logs">
+                    <div class="sec-2 project-bottom-title">
+                      <div class="trigger-head-left">
+                      <p class="project-triggers-head">
+                      <FontAwesomeIcon icon={faList} />Publish logs</p>
+                        </div>
+                    </div>
+                    
+                      <div class="published-log-tabel">
+                      <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">User</th>
+      <th scope="col">Email</th>
+      <th scope="col">Publish Date</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"><img alt="mdo" width="32" height="32" class="rounded-circle published-log-img" src="http://43.204.111.164:8000/media/profile_picture/profile.png" />Web Developer</th>
+      <td>developerweb6@gmail.com</td>
+      <td>May 24, 2023, 10:42 a.m.</td>
+      <td>Version | v5</td>
+    </tr>
+    <tr>
+      <th scope="row"><img alt="mdo" width="32" height="32" class="rounded-circle published-log-img" src="http://43.204.111.164:8000/media/profile_picture/profile.png" />Web Developer</th>
+      <td>developerweb6@gmail.com</td>
+      <td>May 24, 2023, 10:42 a.m.</td>
+      <td>Version | v5</td>
+    </tr>
+    <tr>
+      <th scope="row"><img alt="mdo" width="32" height="32" class="rounded-circle published-log-img" src="http://43.204.111.164:8000/media/profile_picture/profile.png" />Web Developer</th>
+      <td>developerweb6@gmail.com</td>
+      <td>May 24, 2023, 10:42 a.m.</td>
+      <td>Version | v5</td>
+    </tr>
+  </tbody>
+</table>
+                     
+                      </div>
+                  </div>
+
                 </div>
             </div>
           </div>
