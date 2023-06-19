@@ -114,6 +114,7 @@ const Project =()=>{
         CreateScene(id)
         CreateProject(id)
         navigate('/target/'+id)
+        twoDThreeD(id)
       })
       .catch(function(err) {
         console.error('Error uploading file', err);
@@ -155,10 +156,10 @@ const sceneTransitions=(id)=>{
 }
 
 
-// --------------------------------------------------------CreateProject----------------------------------------------->
+// --------------------------------------------------------CreateProject Content--------------------------------->
 
   const CreateProject=(id)=>{
-    const formData = {target_image:  null,project_Id: id,opacity: 0,orientation: 0,dimensions_w: 0,dimensions_h: 0,units: ''};
+    const formData = {target_image:  null,project_Id: id,opacity: 0,orientation: null,dimensions_w: 0,dimensions_h: 0,units: ''};
     axios.post(API.BASE_URL + 'project_content/', formData ,{
       headers: {
         'accept': 'application/json',
@@ -200,6 +201,17 @@ const sceneTransitions=(id)=>{
       });
   };
 
+// -------------------------------------------------------Two-D Three-D Switch ------------------------------>
+
+  const twoDThreeD=(id)=>{
+    const formData = {'project_Id': id, 'value':'True'};
+    axios.post(API.BASE_URL + "twod_threed/", formData,{
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }).then(function(res){}).catch(function(err){})
+  }
+
  // USEEFFECT FOR IMAGE  ------------------------------------------------------------------->
 
 useEffect(() => {
@@ -219,9 +231,11 @@ useEffect(() => {
 
 
 
+
 /***********creatlabelpopup***************************** */
 const handleDeleteClose = () => setcreatelabel(false);
 const handleshowcreatelabel = () => setcreatelabel(true);
+
 
  /********** Start----Model State *************/
 
