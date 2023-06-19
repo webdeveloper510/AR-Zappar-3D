@@ -1457,3 +1457,37 @@ a.orientations {
 a.orientations.active {
 color: var(--bs-link-hover-color);
 }
+.scenes-list {
+    border: 1px solid #4f83c4;
+    box-shadow: 5px 4px 14px 0px #888888;
+    margin-right: 19%;
+    margin-left: 5%;
+    height: 140px;
+}
+.scene1 {
+    width: 10%;
+    border: 1px dotted #4f83c4;
+    min-height: 70%;
+    padding: 2px 3px;
+    margin: 8px;
+    background: url('../../assets/images/Screenshot.png');
+    background-size: 100% 100%;
+    transition: 0.9s;
+}
+.scene1:hover{
+    background: url('../../assets/images/Screenshot.png');
+    opacity: 0.5;    
+    background-size: 100% 100%;
+}
+svg {
+    cursor: pointer;
+    transition: 0.5s;
+}
+g:hover {
+    fill: #4f83c4;
+}
+h6 {
+    margin: 0 0 0 42px;
+    padding: 0;
+    float: left;
+}

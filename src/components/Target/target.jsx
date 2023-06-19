@@ -689,10 +689,10 @@ const tiktokImage     ="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCA
 
   console.log(cont_orientation)
 
-  // if(cont_orientation){
-  //   const classToAdded = document.getElementsByClassName('orientations')
-  //   // classToAdded.append("selected");
-  // }
+// -------------------------------------------------------------------------->
+const AddedElement = () => <div className="scene1"></div>
+const AddedElement2 = () => <h6>Scene </h6>
+const [count, setCount] = useState(1)
 
 
 
@@ -5641,12 +5641,14 @@ const tiktokImage     ="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCA
       
       <div class="scene-popup-div">
         {/*  all scenes will be shown in this div */}
-      {showScene && <div style={{border:'1px solid red',marginRight:'19%',marginLeft:'5%'}}> 
-      All scenes  
-    
-      </div>}
+      {showScene && 
+      <div className="scenes-list"> 
+           { [...Array(count)].map((_, i) => <AddedElement key={i} /> )}
+           { [...Array(count)].map((_, i) => <h6>Scene 1({i})  </h6> )}
+      </div>
+      }
         <div class="scene-inner-content" >
-          <div class="scene-left-icon">
+          <div class="scene-left-icon" onClick={() => setCount(count + 1)}>
           <svg
       xmlns="http://www.w3.org/2000/svg"
       width="19"
