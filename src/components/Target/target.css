@@ -1543,3 +1543,200 @@ h6.scene-txt {
 .scence-middle-content .accordion-item {
     border-bottom: none !important;
 }
+button#browse-btn {
+    width: 100%;
+    margin-right: 8px;
+    height: 35px;
+    background-color: #4a90e2;
+    border-radius: 8px;
+    color: #fff !important;
+    border: none;
+}
+input#img-upload {
+    opacity: 0;
+    height: 35px;
+}
+.images-btn-outer {
+    float: left;
+    width: 100%;
+}
+.upload-btn-outer {
+    float: left;
+    width: 20%;
+    text-align: center;
+}
+.browse-btn-outer {
+    width: 80%;
+    float: left;
+}
+.upload-btn-outer svg {
+    padding: 7px;
+    width: 48px;
+    height: 34px;
+    color: #4a90e2;
+    border: 1px solid #4a90e2;
+    border-radius: 8px;
+    position: absolute;
+    right: 20px;
+}
+.field.f1.search-browse {
+    float: left;
+    width: 50%;
+    position: relative;
+}
+div#drop-media-files span {
+    font-size: 14px;
+    color: #4a90e2;
+    padding: 9px 17px 9px 15px;
+    width: 100%;
+    float: left;
+}
+div#drop-media-files {
+    float: left;
+    width: 95%;
+    border: 1.5px dashed #4a90e2;
+    border-radius: 8px;
+    position: relative;
+}
+.field.f1.search-browse svg {
+    position: absolute;
+    right: 0px;
+}
+.field.f1.search-browse input {
+    width: 100%;
+    max-width: 100%;
+    height: 40px;
+    background: 0% 0% no-repeat padding-box padding-box rgb(255, 255, 255);
+    border: 1px solid rgb(178, 196, 215);
+    border-radius: 8px;
+    padding: 0px 12px;
+    font-size: 14px;
+    font-family: Lato;
+    box-sizing: border-box;
+    line-height: 1.2;
+    color: rgb(52, 75, 96);
+    position: relative;
+}
+div#browse-media-popup {
+    width: 100%;
+    max-width: 90%;
+}
+.browse-tabs-outer .nav-tabs li {
+    display: contents;
+    float: left;
+}
+.browse-tabs-outer {
+    float: left;
+    width: 100%;
+}
+.drop-media-outer {
+    float: left;
+    width: 30%;
+}
+.browse-sort {
+    float: left;
+    width: 20%;
+}
+input#img-upload-popup {
+    position: absolute;
+    top: 0;
+}
+p.sort-head {
+    font-size: 14px;
+    font-family: 'Lato', sans-serif !important;
+    padding-left: 3px;
+    padding-right: 10px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.browse-sort-drop-down a.navbar-profile-toggle {
+    justify-content: start;
+}
+.browse-sort-drop-down svg.svg-inline--fa.fa-chevron-down {
+    font-size: 12px;
+}
+.browse-sort-drop-down svg.svg-inline--fa.fa-chevron-down path {
+    fill: #57a5fc;
+}
+.browse-inner-images {
+    float: left;
+    width: 100%;
+}
+.browse-inner-images-height iframe {
+    width: 100%;
+    height: fit-content;
+}
+.browse-inner-images-height {
+    float: left;
+    display: inline-flex;
+    width: 31%;
+    margin: 10px;
+    height: 150px;
+}
+.browse-right {
+    float: left;
+    width: 25%;
+}
+.browse-left {
+    float: left;
+    width: 75%;
+}
+.no-img-selected span {
+    width: 100%;
+    float: left;
+    margin-top: 20px;
+    font-family: 'Lato', sans-serif !important;
+}
+.no-img-selected svg {
+    text-align: center;
+}
+.no-img-selected {
+    float: left;
+    width: 100%;
+    text-align: center;
+}
+button#select-file-btn {
+    width: 80%;
+    height: 35px;
+    background-color: #4a90e2;
+    border-radius: 8px;
+    color: #fff !important;
+    border: none;
+    margin: 0px auto;
+    float: none;
+    display: block;
+}
+.select-file-btn-outer {
+    float: left;
+    width: 100%;
+    margin-top: 16px;
+}
+div#file-selects-drop-down-tabpane-first {
+    margin-left: 30px;
+}
+.flex.acenter.preview-row p {
+    font-size: 14px;
+    padding-right: 8px;
+    font-family: 'Lato', sans-serif !important;
+}
+#file-selects-drop-down-tabpane-first .accordion-body {
+    padding: 0px 12px 24px 0px;
+    margin-top: 25px;
+
+}
+#file-selects-drop-down-tabpane-first .accordion-item{
+    border-bottom: none;
+}
+#file-selects-drop-down-tabpane-first p.f1.jc-end {
+    flex: 1 1 0%;
+}
+h2.buttons-head {
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    float: left;
+    width: 100%;
+}
+h6.btn-target-left.mt-3 {
+    float: left;
+    width: 100%;
+}
