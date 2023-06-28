@@ -409,7 +409,7 @@ const ModelAr =()=> {
 
         },[rendeR ]);      
         return (
-            <div>
+            <div >
               <canvas ref={canvasRef}></canvas>
             </div>
           );
