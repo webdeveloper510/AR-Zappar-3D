@@ -11,12 +11,14 @@ import { useNavigate } from "react-router-dom";
 import { faArrowLeft  } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-bootstrap/Modal';
 import mainbg from '../../assets/images/main-bg.jpg';
+import backtop from '../../assets/SVG/back_top.svg';
 import DesignersLogo from "../../assets/images/designerslogo.png"
 import UniversalAR from "../../assets/images/UniversalAR.jpg"
 import StudioImage from "../../assets/images/studio.jpg"
 import NavBar from "../Navbar/navbar";
 import SideBar from "../SideBar/sidebar";
 import Button from 'react-bootstrap/Button';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import defaultProjectImage from "../../assets/images/defaultProject.png"
 
 const MainPage =()=>{
@@ -36,7 +38,8 @@ const MainPage =()=>{
   const [draggedImage,setdraggedImage]=useState(null);
   const [imgName,setimgName]=useState(null);
   const val = localStorage.getItem('id');
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem('token');
+  const [showcreatelabel, setcreatelabel] = useState(false);
 
 
   // USE EFFFECTS FUNCTIONS ***************************************************************/
@@ -65,7 +68,9 @@ const MainPage =()=>{
   }, [])
 
   // CONST ES6 FUNCTIONS ***************************************************************/
-
+/***********creatlabelpopup***************************** */
+const handledeleteClose = () => setcreatelabel(false);
+const handleshowcreatelabel = () => setcreatelabel(true);
   /********** Start----Model State *************/
 
     const handleClose = () =>{
@@ -228,7 +233,7 @@ const MainPage =()=>{
             <>
             <SideBar />
             </>
-            <div className="col-md-10 p-0 m-0 side-main side-pic-container" style={{ backgroundImage:`url(${mainbg})` }}>
+            <div className="col-md-11 p-0 m-0 side-main main-page-container side-pic-container" style={{ backgroundImage:`url(${backtop})` }}>
                 <div className="container">
 
                   {proInfo?.length>0?(
@@ -236,30 +241,132 @@ const MainPage =()=>{
                             <div className="container-fluid d-md-flex w-100 justify-content-between align-items-center">
                               <div className="dropdown col-md-4">
                                 <a id="projectStart" variant="primary" onClick={handleShow} className="d-flex align-items-center mb-2 mb-lg-0 link-dark text-decoration-none ">
-                                    Create New Project
+                                  <h3> Create New Project</h3>
                                     <FontAwesomeIcon icon={faCirclePlus} style={{ color: "rgb(120 120 120)", width: "37px", height: "37px", marginLeft: 8 }} />
                                 </a>
                               </div>
                       
                             <div className="d-flex align-items-center col-md-8">
                               <form className="w-100 me-3" role="search" id="search-form">
-                                <input type="search" className="form-control" placeholder="Search projects" aria-label="Search"/>
+                                <svg class="main-serach"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="40"
+                                height="40"
+                                viewBox="0 0 40 40"
+                              >
+                                <path
+                                  fill="#344B60"
+                                  d="M19 11a8 8 0 015.999 13.293l4.272 4.287a.5.5 0 01-.64.764l-.069-.058L24.292 25A8 8 0 1119 11zm0 1a7 7 0 104.848 12.049.412.412 0 01.085-.117.5.5 0 01.115-.086A6.96 6.96 0 0026 19a7 7 0 00-7-7z"
+                                ></path>
+                              </svg>
+                                <input type="search" className="form-control main-serach-input" placeholder="Search projects" aria-label="Search"/>
                               </form>
                               <div className="flex-shrink-0 dropdown sort-bar">
-                                <a href="#" className="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i className="bi bi-filter-left pe-1"></i>Sort
+                                <a href="#" className="main-page-sortbar d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="40"
+                                      height="40"
+                                      viewBox="0 0 40 40"
+                                    >
+                                      <path d="M15.5 27a.5.5 0 01.09.992L15.5 28h-4a.5.5 0 01-.09-.992L11.5 27h4zm10-8a.5.5 0 01.492.41l.008.09v6.793l2.146-2.147.07-.057a.5.5 0 01.695.695l-.057.07-3 3a.498.498 0 01-.227.13l-.084.014h-.086a.498.498 0 01-.241-.087l-.07-.057-3-3a.5.5 0 01.638-.765l.07.057L25 26.293V19.5a.5.5 0 01.5-.5zm-5 0a.5.5 0 01.09.992L20.5 20h-9a.5.5 0 01-.09-.992L11.5 19h9zm8-8a.5.5 0 01.09.992L28.5 12h-17a.5.5 0 01-.09-.992L11.5 11h17z"></path>
+                                    </svg>Sort  <svg class="down-arrow-img"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="10"
+                                        height="10"
+                                        fill="#000"
+                                        version="1.1"
+                                        viewBox="0 0 330 330"
+                                        xmlSpace="preserve"
+                                      >
+                                        <path d="M325.607 79.393c-5.857-5.857-15.355-5.858-21.213.001l-139.39 139.393L25.607 79.393c-5.857-5.857-15.355-5.858-21.213.001-5.858 5.858-5.858 15.355 0 21.213l150.004 150a14.999 14.999 0 0021.212-.001l149.996-150c5.859-5.857 5.859-15.355.001-21.213z"></path>
+                                      </svg>
                                 </a>
-                                <ul className="dropdown-menu text-small shadow">
+                                <ul className="dropdown-menu text-small shadow main-page-sort" id="fist-sort-listing">
                                   <li><a className="dropdown-item" href="file:///C:/Users/USER/Downloads/Compressed/web-ar/project-list.html">By date created</a></li>
                                   <li><a className="dropdown-item" href="file:///C:/Users/USER/Downloads/Compressed/web-ar/project-list.html">By date published</a></li>
                                   <li><a className="dropdown-item" href="file:///C:/Users/USER/Downloads/Compressed/web-ar/project-list.html">By project name</a></li>
                                 </ul>
                               </div>
+
+                             
+
+                              <div className="flex-shrink-0 ms-2 filter-bar">
+                                  <a href="#" className="main-page-filterbar d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="40"
+                                    height="40"
+                                    viewBox="0 0 40 40"
+                                  >
+                                    <path d="M10.5 10l-.084.007a.5.5 0 00-.325.779l6.915 9.88.001 8.834c0 .445.538.667.852.353l3.99-3.995.051-.06a.5.5 0 00.095-.293v-4.82l7.895-9.874A.5.5 0 0029.5 10h-19zm17.961.999l-7.354 9.2-.047.07a.5.5 0 00-.062.242v4.786l-2.994 2.997v-7.783L18 20.435a.5.5 0 00-.084-.21l-6.458-9.226h17.004z"></path>
+                                  </svg>Filter  <svg class="down-arrow-img"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="10"
+                                        height="10"
+                                        fill="#000"
+                                        version="1.1"
+                                        viewBox="0 0 330 330"
+                                        xmlSpace="preserve"
+                                      >
+                                        <path d="M325.607 79.393c-5.857-5.857-15.355-5.858-21.213.001l-139.39 139.393L25.607 79.393c-5.857-5.857-15.355-5.858-21.213.001-5.858 5.858-5.858 15.355 0 21.213l150.004 150a14.999 14.999 0 0021.212-.001l149.996-150c5.859-5.857 5.859-15.355.001-21.213z"></path>
+                                      </svg>
+                                </a>
+                                <ul className="dropdown-menu text-small shadow main-page-sort" id="sort-fliter-list">
+                                <div class="flex btw filter-inner-list"><div class="filter-title">Tool</div>
+                                <a href="#" class="btn btn-link">Clear all</a></div>
+                                <li class="" title="Universal AR"><div class="field"><label><input type="checkbox" name="uar" value="uar"/>Universal AR</label></div></li>
+                                <li class="" title="Studio"><div class="field"><label><input type="checkbox" name="studio" value="studio"/>Studio</label></div></li>
+                                <li class="" title="Designer"><div class="field"><label><input type="checkbox" name="designer-2" value="designer-2"/>Designer</label></div></li>
+                                <li>
+                              <div class="field-serch">
+                                <div class="input-wrapper"><input id="search-labels-input" type="search" placeholder="Search labels"/>
+                                <svg class="search-label-svg" role="button" width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M19,11 C23.418278,11 27,14.581722 27,19 C27,21.0296419 26.2441691,22.8827501 24.9986213,24.2932105 L29.2708011,28.5802351 C29.4657149,28.775845 29.4651506,29.092427 29.2695406,29.2873408 C29.0956652,29.4605974 28.8262068,29.4794023 28.6315796,29.3440591 L28.562435,29.2860803 L24.2922058,24.9995083 C22.8818702,26.2445279 21.0291601,27 19,27 C14.581722,27 11,23.418278 11,19 C11,14.581722 14.581722,11 19,11 Z M19,12 C15.1340068,12 12,15.1340068 12,19 C12,22.8659932 15.1340068,26 19,26 C20.8819703,26 22.5904778,25.2573173 23.8484255,24.0490489 C23.8682789,24.0062003 23.8973303,23.9668665 23.9327917,23.9315312 C23.9676812,23.8967659 24.0064192,23.8682194 24.0476289,23.8458892 C25.2573173,22.5904778 26,20.8819703 26,19 C26,15.1340068 22.8659932,12 19,12 Z" fill="#344B60"></path></svg></div></div>
+                              </li>
+                              <hr/>
+                              {/* <li><hr className="dropdown-divider"/></li> */}
+                              <li class="create-labels" onClick={handleshowcreatelabel}><FontAwesomeIcon icon={faPlus} /> Create Labels</li>
+                              </ul>
+                              </div>
+
                               <div className="flex-shrink-0 ms-2 list-bar">
                                   <a href="#" className="d-flex align-items-center link-dark text-decoration-none">
-                                    List<FontAwesomeIcon icon={faList} style={{ color: "rgb(113 123 131)", width: "15px", height: "15px", marginLeft: 8 }} />
+                                   
+                                    <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="40"
+                                            height="40"
+                                            viewBox="0 0 40 40"
+                                          >
+                                            <path d="M12 12a1 1 0 011 1v1a1 1 0 01-1 1h-1a1 1 0 01-1-1v-1a1 1 0 011-1h1zm0 1h-1v1h1v-1zm0 6a1 1 0 011 1v1a1 1 0 01-1 1h-1a1 1 0 01-1-1v-1a1 1 0 011-1h1zm0 1h-1v1h1v-1zm0 6a1 1 0 011 1v1a1 1 0 01-1 1h-1a1 1 0 01-1-1v-1a1 1 0 011-1h1zm0 1h-1v1h1v-1zm17.423-7a.5.5 0 01.09.992l-.09.008H15.577a.5.5 0 01-.09-.992l.09-.008h13.846zm0 7a.5.5 0 01.09.992l-.09.008H15.577a.5.5 0 01-.09-.992l.09-.008h13.846zm0-14a.5.5 0 01.09.992l-.09.008H15.577a.5.5 0 01-.09-.992l.09-.008h13.846z"></path>
+                                    </svg>
+                                    List
                                   </a>
                               </div>
+                                 {/*start create label popup*/}
+                           
+                          <Modal id="create-label-popup" show={showcreatelabel} onHide={handledeleteClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Create label</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <div class="field mb24"><div class="label-wrapper">
+                  <label class="label-name" for="Labelname">Label name</label></div>
+                  <div class="input-wrapper">
+                  <input slot="input" type="text" id="Labelname" min="0" max="255"/></div></div>
+                  </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" class="btn-cancel-popup" onClick={handledeleteClose}>
+                  Cancel
+                  </Button>
+                  <Button variant="primary" class="btn-delete-popup" onClick={handledeleteClose}>
+                   Create
+                  </Button>
+                </Modal.Footer>
+            </Modal>
+
+                          {/*end  create  label popup*/}
+
                             </div>
                           </div>
                         </div>

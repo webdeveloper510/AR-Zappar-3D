@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../Navbar/navbar";
 import SideBar from "../SideBar/sidebar";
 import mainbg from "../../assets/images/main-bg.jpg";
+import backtop from '../../assets/SVG/back_top.svg';
 const TeamPage = () => {
   const navigate = useNavigate();
 
@@ -23,8 +24,8 @@ const TeamPage = () => {
           <SideBar />
 
           <div
-            className="col-md-10 p-0 m-0 team-page"
-            style={{ backgroundImage: `url(${mainbg})` }}
+            className="col-md-11 p-0 m-0 team-page"
+            style={{ backgroundImage: `url(${backtop})` }}
           >
             <h4 className="text-center m-3 team-head">The Lorem Team</h4>
 

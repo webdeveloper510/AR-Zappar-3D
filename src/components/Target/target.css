@@ -476,7 +476,6 @@ input {
   }
   h2.buttons-head {
     font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
 }
 .first-head {
     font-size: 36px;
@@ -1133,7 +1132,7 @@ input#profile_pic {
 }
 p.orient-head {
     font-size: 13px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Lato', sans-serif !important;
     text-align: left;
     font-weight: 500;
 }
@@ -1146,12 +1145,12 @@ p.opacity {
 font-family: "Lato",sans-serif !important;
 }
 .row.recent-files h5 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Lato', sans-serif !important;
     font-size: 14px;
     text-align: left;
 }
 .row.recent-files p {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Lato', sans-serif !important;
     font-size: 12px;
     text-align: left;
 }
@@ -1164,7 +1163,7 @@ span.Title-track {
     text-align: left;
     width: fit-content;
     font-size: 14px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Lato', sans-serif !important;
 }
 .track-with button.accordion-button {
     border: 1px solid #ccc !important;
@@ -1178,7 +1177,7 @@ span.Title-track {
 }
 .Container--Mc1y- span {
     font-size: 14px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Lato', sans-serif !important;
 }
 .track-with button.btn-upload.DrawerBtn--bdcva.Open--EFZA8 .TitleContainer--2xD-b {
     color: #4a90e2 !important;
@@ -1732,11 +1731,209 @@ div#file-selects-drop-down-tabpane-first {
 }
 h2.buttons-head {
     font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
     float: left;
     width: 100%;
 }
 h6.btn-target-left.mt-3 {
     float: left;
     width: 100%;
+}
+
+div#take-actions svg {
+    padding-left: 6px;
+    margin-right: 4px;
+}
+div#take-actions .Option--31oUF.HasNoIcon--3C9vr {
+    padding-left: 0;
+}
+div#take-actions .Container--Mc1y- span {
+    font-size: 14px;
+    font-family: 'Lato', sans-serif !important;
+    text-align: left;
+}
+div#take-actions .accordion-body {
+    padding-left: 0;
+    padding-right: 0;
+}
+.action-btn-save, .action-btn-cancel{
+    width: 90% !important;
+}
+.units-div {
+    float: left;
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    font-family: 'Lato', sans-serif !important;
+}
+.units-div .accordion {
+    border: 1px solid #0000001f;
+    padding-left: 9px;
+}
+p.shared-txt {
+    font-family: 'Lato', sans-serif !important;
+}
+/* .units-div .accordion button {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+} */
+body {
+    overflow-x: hidden;
+}
+.video-img-tabs {
+    height: 100vh;
+}
+.OuterContainer--1AGzZ.bottom-2d-3d-height {
+    position: absolute;
+    align-items: end;
+    bottom: 10px;
+}
+/* .video-div-height {
+    height: calc(100vh - 60px) !important;
+    float: left;
+    width: 100%;
+} */
+.target-overview-cover-image {
+    height: 100%;
+    cursor: pointer;
+    transition: 1s;
+    background: #ecf2f9;
+    position: relative;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+span.upload-target-img {
+    background: #5089c7;
+    color: #fff;
+    padding: 4px;
+    border-radius: 8px;
+    position: absolute;
+    width: 90%;
+    left: 0;
+    right: 0;
+    align-items: center;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    margin: 0 auto;
+    top: 4em;
+}
+.replace-hover-btn {
+    display: none;
+    position: relative;
+    width: 100%;
+    float: left;
+    height: auto;
+    background: #4f8cc6;
+    border-radius: 8px;
+}
+.replace-hover-btn button {
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    float: left;
+    font-family: 'Lato', sans-serif !important;
+}
+.replace-hover-btn input {
+    position: absolute;
+    top: 0;
+}
+h6.btn-target-left.mt-3 {
+    padding-left: 0px !important;
+    margin-left: 0px !important;
+    margin-top: 7px !important;
+    font-size: 14px;
+}
+.col-md-11.p-0.m-0.side-main.main-page-container.side-pic-container .container {
+    width: 80%;
+    margin: 0 auto;
+}
+.col-md-11.p-0.m-0.project-page {
+    width: 80%;
+    margin: 50px auto !important;
+    border-left: 0;
+}
+section.open-designer-tab-section {
+    float: left;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+p.thene-txted {
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+}
+p.m-0.first-head {
+    font-family: Roboto;
+    color: rgb(52, 75, 96);
+    font-size: 36px;
+    margin-top: 16px;
+}
+p.m-0.second-head {
+    font-family: Roboto;
+    color: rgb(102, 114, 125);
+    font-size: 28px;
+    margin-top: 16px;
+}
+p.m-0.third-head {
+    font-family: Roboto;
+    color: rgb(124, 137, 150);
+    font-size: 18px;
+    margin-top: 16px;
+}
+.Standard-title {
+    font-family: Roboto;
+    font-size: 32px;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+.Rounded-title {
+    font-family: Comfortaa;
+    font-size: 32px;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+.ellipse.Elegant-title {
+    font-family: Cookie;
+    font-size: 32px;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+.ellipse.Classic-title {
+    font-family: Philosopher;
+    font-size: 32px;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+.round.Modern-title {
+    font-family: Quicksand;
+    font-size: 32px;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+.round.Futuristic-title {
+    font-family: Orbitron;
+    font-size: 32px;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+.round.Handwritten-title {
+    font-family: Sacramento;
+    font-size: 32px;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+.round.Magic-title-2 {
+    font-family: "Snowburst One";
+    font-size: 32px;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+.round.Funky-title {
+    font-family: Wallpoet;
+    font-size: 32px;
+    margin-top: 25px;
+    margin-bottom: 30px;
 }

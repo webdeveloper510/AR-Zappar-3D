@@ -277,13 +277,13 @@ return(
       <div className="projectDetail">
             <NavBar />
         <div className="main-page-content">
-          <div class="row project-pg d-md-flex justify-content-between">
+          <div class="row project-pg">
             <SideBar />
             
-            <div class="col-md-10 p-0 m-0 project-page" style={{ backgroundImage:`url(${mainbg})` }}>
+            <div class="col-md-11 p-0 m-0 project-page" style={{ backgroundImage:`url(${mainbg})` }}>
                 <div class="row sec-1 p-2 p-md-4 m-0">
                   <div className="project-page-upper d-md-flex justify-content-between align-items-center p-0">
-                    <div class="col-md-4 m-0 p-0 d-flex cover-designer-img">
+                    <div class="col-md-3 m-0 p-0 d-flex cover-designer-img">
                       <div class="overview-cover-image" style={{backgroundImage:`url(${imgProject != null ? imgProject : ""})` , backgroundSize: "100% 100%" , outline: "none" ,    borderRadius: "10px"}}>
                       <div class="pointer-div">
                         <div class="tag designer-tag-text">Designer</div>
@@ -298,14 +298,17 @@ return(
                         </div>
                         </div>
                     </div>
-                    <div class="col-md-4 align-self-center p-4" id="project-actions">
+                    <div class="col-md-5 align-self-center p-4" id="project-actions">
                     <span class=" status-icon"></span>
                       <input id="projName" className="mt-md-0" type="text" onChange={handleUntitle} value={titlePro} /> 
                   <div class="actions-div">
                       <div className="dropdown custom-drop-down">
                           <a href="#" className="navbar-profile-toggle link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                           
-                            <p class="user-profile-name"><FontAwesomeIcon icon={faWrench} />Actions</p><FontAwesomeIcon icon={faChevronDown} />
+                            <p class="user-profile-name"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+      <path d="M21.913 10.843c-1.703 1.107-2.6 3.132-2.327 5.126l.028.18-8.736 8.735a2.997 2.997 0 000 4.238l.138.13a2.998 2.998 0 004.101-.13l8.73-8.729.254.04a5.231 5.231 0 005.898-5.301l-.009-.098a.703.703 0 00-1.043-.497l-2.232 1.288-1.476-.862-.008-1.71 2.23-1.287a.702.702 0 00.013-1.208 5.232 5.232 0 00-5.368-.034l-.193.12zm4.636.556l.024.013-2.307 1.331.012 2.792 2.415 1.407L29 15.611l-.019.19a4.25 4.25 0 01-2.096 3.153 4.252 4.252 0 01-3.095.46l-.256-.058-9.058 9.048a2.038 2.038 0 01-2.88 0 2.033 2.033 0 010-2.876l9.062-9.053-.058-.254c-.406-1.795.394-3.696 1.986-4.632a4.26 4.26 0 013.963-.19z"></path>
+    </svg>Actions</p><FontAwesomeIcon icon={faChevronDown} />
                           </a>
                           <ul className="dropdown-menu text-small shadow">
                             <li><a className="dropdown-item"> 
@@ -324,7 +327,25 @@ return(
                         <div className="dropdown custom-drop-down"id="project-labels">
                             <a href="#" className="navbar-profile-toggle link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             
-                              <p class="user-profile-name"><FontAwesomeIcon icon={faTag} />Labels</p><FontAwesomeIcon icon={faChevronDown} />
+                              <p class="user-profile-name"><svg class="labels-svg"
+      xmlns="http://www.w3.org/2000/svg"
+      width="18"
+      height="18"
+      fill="#073158"
+      viewBox="0 0 20 20"
+    >
+      <g clipPath="url(#clip0_379_1216)">
+        <path
+          fill="#000"
+          d="M10.368 0a.68.68 0 01.484.201l8.35 8.39c.558.586.836 1.249.794 1.958-.04.664-.304 1.274-.807 1.846l-7.074 7.037-.115.092c-.638.406-1.26.564-1.85.428-.515-.118-1.054-.436-1.677-.978l-8.16-8.219a.68.68 0 01-.199-.47L0 1.472C.007 1.044.126.681.392.413.666.138 1.055.023 1.588 0h8.78zm-.284 1.363H1.618c-.13.005-.21.018-.243.02l-.006-.001v.015l-.004.078.111 8.516 7.929 7.988c.431.374.789.585 1.052.645.178.041.424-.017.75-.213l6.986-6.948c.278-.316.419-.642.44-.995.018-.307-.109-.61-.41-.927l-8.139-8.178zM6.474 3.21a2.956 2.956 0 012.732 4.084 2.956 2.956 0 01-3.864 1.599 2.956 2.956 0 01-1.827-2.73A2.956 2.956 0 016.474 3.21zm0 1.363a1.59 1.59 0 100 3.18 1.59 1.59 0 000-3.18z"
+        ></path>
+      </g>
+      <defs>
+        <clipPath id="clip0_379_1216">
+          <path fill="#fff" d="M0 0H20V20H0z"></path>
+        </clipPath>
+      </defs>
+    </svg>Labels</p><FontAwesomeIcon icon={faChevronDown} />
                             </a>
                             <ul className="dropdown-menu text-small shadow">
                               <li>

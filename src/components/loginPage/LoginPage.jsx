@@ -91,20 +91,21 @@ useEffect(()=>{
                                 {/* <img class="pwd-pic" src={passwordpic}></img> */}
                                 <input type="password" class="form-control" placeholder="Enter Your Password" onChange={handlePass} />
                             </div>
+                            <div class="mt-3">
+                                <a class="btn btn-sign-in" type="button"
+                                   onClick={handleLogin}>Sign in</a>    
+                            </div>
                             <div class="mb-3">
-                            <h6 class="forgot-div"> <a
+                            <h3 class="forgot-div"> <a
                                     href="#" class="login-forgot">Forgot Password ?</a>
-                            </h6>
+                            </h3>
                             </div>
                             {/* <div class="mb-3">
                                 <label class="form-label fw-semibold">2 Factor Authentication</label>
                                 <input type="password" class="form-control" placeholder="Enter Authentication Code"/>
                             </div> */}
 
-                            <div class="d-grid gap-2 mt-3">
-                                <a class="btn btn-sign-in" type="button"
-                                   onClick={handleLogin}>Sign in</a>    
-                            </div>
+                            
                             <div class="or-text"><p>or</p></div>
                             <div class="login-with-goo">
                             <button class="btn btn-sign-in-google" type="button">
