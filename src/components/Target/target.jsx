@@ -8,7 +8,7 @@ import WorldTracking from "../../assets/images/worldtracking.jpg";
 import faceTracking from "../../assets/images/facetracking.png";
 import ImageTracking from "../../assets/images/imagetracking.png";
 import WebFont from 'webfontloader';
-
+import { Dropdown, DropdownButton } from 'react-bootstrap';
 import {
   faHandPointUp,
   faT,
@@ -114,6 +114,7 @@ const Target = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [value, setValue] = useState(0); // value of Opacity
   const [valueborder, setbordervalue] = useState(0);
+  const [valueopacityborder, setborderopacityvalue] = useState(0);
   const [showpreview, setshowpreview] = useState(false);
   const [showpublish, setshowpublish] = useState(false);
   const navigate = useNavigate();
@@ -1036,6 +1037,10 @@ const Target = () => {
     setbordervalue(event.target.valueborder);
   };
 
+const handleborderopacityValue = (event) => {
+    setborderopacityvalue(event.target.valueopacityborder);
+  };
+  
   /********** Start----Model previw popup State *************/
 
   const handlepreviewClose = () => setshowpreview(false);
@@ -1171,7 +1176,27 @@ const Target = () => {
           <div className="d-flex align-items-center justify-content-between w-100 navbar-top">
             <div className="text-white target-text">
               <h4 className="d-flex align-items-center mb-0 target-heading">
-                <FontAwesomeIcon
+              <svg onClick={handleBack}
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlnsXlink="http://www.w3.org/1999/xlink"
+                    width="17"
+                    height="17"
+                    viewBox="0 0 20 20"
+                  >
+                    <defs>
+                      <path
+                        id="arrow-a"
+                        d="M3.936 3.492c.251 0 .455.2.455.453V15.41h11.418c.245 0 .449.182.491.41l.004.045-.004.047a.497.497 0 01-.49.408H4.08a.497.497 0 01-.355-.15.451.451 0 01-.243-.402V3.945c0-.222.166-.407.374-.445l.08-.008z"
+                      ></path>
+                    </defs>
+                    <use
+                      fill="#344B60"
+                      fillRule="evenodd"
+                      transform="rotate(45 9.249 9.921)"
+                      xlinkHref="#arrow-a"
+                    ></use>  
+                  </svg>
+                {/* <FontAwesomeIcon
                   icon={faChevronLeft}
                   style={{
                     color: "#5186C8",
@@ -1181,7 +1206,7 @@ const Target = () => {
                     cursor: "pointer",
                   }}
                   onClick={handleBack}
-                />
+                /> */}
                 {ProjectTitle}
               </h4>
             </div>
@@ -2035,15 +2060,21 @@ const Target = () => {
                       <Nav.Item>
                         <Nav.Link eventKey="first" onClick={()=>setisOpen(!isOpen)} 
                         >
-                          <FontAwesomeIcon
-                            icon={faHandPointUp}
-                            style={{
-                              color: "rgb(113 123 131)",
-                              width: "20px",
-                              height: "20px",
-                              marginRight: 4,
-                            }}
-                          />
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="14"
+                              height="20"
+                              viewBox="0 0 14 20"
+                            >
+                              <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                <path
+                                  fill="#344B60"
+                                  fillRule="nonzero"
+                                  d="M17.49 13.047c1.052 0 1.906.804 1.906 1.8l-.008 1.162.031-.01a2 2 0 01.426-.078l.15-.006c.75 0 1.4.41 1.71 1.005l.045.094.082-.034c.175-.066.363-.108.56-.123l.149-.005c1.051 0 1.906.804 1.906 1.793v.447l.065-.02a2 2 0 01.426-.079l.15-.005c1.051 0 1.905.804 1.905 1.793L27 23.408C27 27.044 23.861 30 20.001 30s-7-2.956-7-6.566c-.033-1.17.421-2.155 1.172-2.856.294-.274.623-.49.934-.619.193-.08.383-.13.586-.135l-.131.01.022-4.992c0-.944.775-1.718 1.757-1.79zm0 .952c-.493 0-.895.378-.895.843l-.036 8.329c0 .197-.17.357-.379.357s-.378-.16-.378-.357v-2.349c0-.258-1.848.55-1.79 2.586 0 3.11 2.687 5.64 5.99 5.64 3.3 0 5.987-2.53 5.987-5.64l-.007-2.625c0-.465-.402-.843-.895-.843s-.894.378-.894.843l.007.25c0 .198-.17.357-.379.357-.21 0-.379-.16-.379-.356l-.007-2.387c0-.465-.401-.843-.894-.843-.494 0-.895.378-.895.843l.007 1.715c0 .198-.17.357-.379.357-.21 0-.379-.16-.379-.357l-.007-2.652c0-.465-.4-.842-.894-.842-.493 0-.895.378-.895.842l.007 2.652c0 .198-.17.357-.379.357s-.378-.16-.378-.357l.036-5.52c0-.465-.402-.843-.895-.843zm4.303-.618v1h-2.147v-1h2.147zm-6.46 0v1h-2.146v-1h2.147zm-.417-2.671l1.518 1.43-.715.673-1.518-1.43.715-.673zm5.349 0l.715.673-1.518 1.43-.715-.674 1.518-1.43zM18.15 10v2.022h-1.167V10h1.167z"
+                                  transform="translate(-13 -10)"
+                                ></path>
+                              </g>
+                            </svg>
                           <a
                             href="#tab1"
                             className="nav-link p-0 m-0 fw-bold link-dark"
@@ -2055,15 +2086,21 @@ const Target = () => {
 
                       <Nav.Item>
                         <Nav.Link eventKey="second" onClick={()=>setisOpen(!isOpen)} >
-                          <FontAwesomeIcon
-                            icon={faT}
-                            style={{
-                              color: "rgb(113 123 131)",
-                              width: "20px",
-                              height: "20px",
-                              marginRight: 4,
-                            }}
-                          />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="15"
+                          height="20"
+                          viewBox="0 0 15 20"
+                        >
+                          <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                            <path
+                              fill="#344B60"
+                              fillRule="nonzero"
+                              d="M27.4694534 11.225L21.2234727 11.225 21.2234727 30 19.812701 30 19.812701 11.225 13 11.225 13 10 28 10 28 11.225z"
+                              transform="translate(-13 -10)"
+                            ></path>
+                          </g>
+                        </svg>
                           <a
                             href="#tab2"
                             className="nav-link p-0 m-0 fw-bold link-dark"
@@ -2075,15 +2112,21 @@ const Target = () => {
 
                       <Nav.Item>
                         <Nav.Link eventKey="third" onClick={()=>setisOpen(!isOpen)}>
-                          <FontAwesomeIcon
-                            icon={faImage}
-                            style={{
-                              color: "rgb(113 123 131)",
-                              width: "20px",
-                              height: "20px",
-                              marginRight: 4,
-                            }}
-                          />
+                        <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="16"
+                              viewBox="0 0 20 16"
+                            >
+                              <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                                <path
+                                  fill="#344B60"
+                                  fillRule="nonzero"
+                                  d="M15 14.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5zm0 1a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm4.475 11.504h-8.473v-3.066c.729-.714 1.877-1.438 3.498-1.438.676 0 1.641.174 2.483.659a5.039 5.039 0 012.492 3.845zm9.522-3.906l.08 4.002-8.597-.096c-.237-2.763-2.159-4.132-2.318-4.25a6.038 6.038 0 015.338-3.263c1.89 0 4.3.985 5.497 3.607zM11.002 13h18.002v8.175c-.91-1.175-2.807-2.678-5.504-2.678-2.607 0-5.005 1.492-6.173 3.71a5.956 5.956 0 00-2.827-.712 6.186 6.186 0 00-3.498 1.124V13zm-.546-1a.469.469 0 00-.456.44v15.12c.01.239.209.43.456.44h19.088a.469.469 0 00.456-.44V12.44a.466.466 0 00-.404-.44h-19.14z"
+                                  transform="translate(-10 -12)"
+                                ></path>
+                              </g>
+                            </svg>
                           <a
                             href="#tab3"
                             className="nav-link p-0 m-0 fw-bold link-dark"
@@ -2095,15 +2138,21 @@ const Target = () => {
 
                       <Nav.Item>
                         <Nav.Link eventKey="fourth" onClick={()=>setisOpen(!isOpen)}>
-                          <FontAwesomeIcon
-                            icon={faVideo}
-                            style={{
-                              color: "rgb(113 123 131)",
-                              width: "20px",
-                              height: "20px",
-                              marginRight: 4,
-                            }}
-                          />
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                          >
+                            <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                              <path
+                                fill="#344B60"
+                                fillRule="nonzero"
+                                d="M14.5 27a1.5 1.5 0 011.415 1H29.5a.5.5 0 01.09.992L29.5 29H15.914a1.5 1.5 0 01-2.828 0H10.5a.5.5 0 01-.09-.992L10.5 28h2.585a1.5 1.5 0 011.415-1zm0 1a.5.5 0 100 1 .5.5 0 000-1zM29 10a1 1 0 011 1v13a1 1 0 01-1 1H11a1 1 0 01-1-1V11a1 1 0 011-1h18zm0 1H11v13h18V11zm-11.566 2.5a.91.91 0 01.464.127l5.131 3.034a.985.985 0 010 1.678l-5.131 3.033a.918.918 0 01-1.275-.36.992.992 0 01-.123-.479v-6.066c0-.534.418-.967.934-.967zm-.059 1v6l5.25-3-5.25-3z"
+                                transform="translate(-10 -10)"
+                              ></path>
+                            </g>
+                          </svg>
 
                           {/* <Button  type="file" id="video-upload"  className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2" onChange={handleInputChange} /> */}
 
@@ -2123,15 +2172,19 @@ const Target = () => {
 
                       <Nav.Item>
                         <Nav.Link eventKey="fifth" onClick={()=>setisOpen(!isOpen)}>
-                          <FontAwesomeIcon
-                            icon={faCube}
-                            style={{
-                              color: "rgb(113 123 131)",
-                              width: "20px",
-                              height: "20px",
-                              marginRight: 4,
-                            }}
-                          />
+                        <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="18"
+                              height="20"
+                              viewBox="0 0 18 20"
+                            >
+                              <path
+                                fill="#344B60"
+                                fillRule="nonzero"
+                                d="M19.735 10.065a.557.557 0 01.52 0l8.43 4.477a.518.518 0 01.234.19c.054.08.08.169.081.257V25c0 .18-.103.347-.27.435l-8.47 4.5a.557.557 0 01-.52 0l-8.47-4.5A.496.496 0 0111 25l.013-9.896a.463.463 0 01.068-.371.525.525 0 01.292-.21zm-7.721 5.791L12 24.746l7.5 3.988.002-8.519-7.488-4.359zM28 15.847l-7.498 4.356-.002 8.531 7.5-3.988v-8.899zM19.996 11l-7.476 3.988 7.472 4.349 7.492-4.353L19.996 11z"
+                                transform="translate(-11 -10)"
+                              ></path>
+                            </svg>
                           <div className="threeD">
                           <a
                             href="#tab3"
@@ -2148,12 +2201,34 @@ const Target = () => {
                         </Nav.Link>
                       </Nav.Item>
 
-                      {/* <Nav.Item>
-                          <Nav.Link eventKey="sixth">
-                            <FontAwesomeIcon icon={faImage} style={{ color: "rgb(113 123 131)", width: "20px", height: "20px", marginRight: 4 }} />
-                            <a href="#tab3" className="nav-link p-0 m-0 fw-bold link-dark" >Image</a>
-                          </Nav.Link>
-                      </Nav.Item> */}
+                      <Nav.Item>
+                        <Nav.Link eventKey="sixth" onClick={()=>setisOpen(!isOpen)}>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="40"
+                            height="40"
+                            viewBox="0 0 40 40"
+                          >
+                            <path
+                              fill="#4A90E2"
+                              d="M29.685 23.75a.5.5 0 01-.108.63l-.074.053-8.751 5.066a1.5 1.5 0 01-1.361.073l-.143-.073-8.751-5.066a.5.5 0 01.42-.904l.08.038 8.752 5.067a.5.5 0 00.421.037l.08-.037 8.752-5.067a.5.5 0 01.683.182zm0-3.568a.5.5 0 01-.108.631l-.074.052-8.751 5.067a1.5 1.5 0 01-1.361.073l-.143-.073-8.751-5.067a.5.5 0 01.42-.903l.08.038 8.752 5.067a.5.5 0 00.421.037l.08-.037L29.003 20a.5.5 0 01.683.182zm-10.437-9.325a1.5 1.5 0 011.504 0l8.751 5.067a1 1 0 010 1.73l-8.751 5.068a1.5 1.5 0 01-1.504 0l-8.751-5.067a1 1 0 010-1.731zm1.003.866a.5.5 0 00-.502 0l-8.751 5.066 8.751 5.067a.5.5 0 00.502 0l8.751-5.067z"
+                            ></path>
+                          </svg>
+                          <div className="threeD">
+                          <a
+                            href="#tab5"
+                            className="nav-link p-0 m-0 fw-bold link-dark"
+                          >
+                           
+                          </a>
+                            <input
+                              id="3cube"
+                              type="file"
+                              className="nav-link p-0 m-0 fw-bold link-dark"
+                            />
+                          </div>
+                        </Nav.Link>
+                      </Nav.Item>
                     </Nav>
                   </Col>
 
@@ -2456,20 +2531,31 @@ const Target = () => {
                     </div>
                   </Tab.Pane>
                   <Tab.Pane
-                    eventKey="sixth"
+                   eventKey={isOpen ? "sixth" : null} onClick={()=>setisOpen(!isOpen)}
                     className="bg-light p-4 tab-content"
                   >
-                    <p className="m-0 fs-4 fw-semibold">
-                      Applets
-                      <i className="bi bi-question-circle text-muted fs-6"></i>
+                    <p className="m-0 scene-objects">
+                    Scene Objects
                     </p>
                     <div className="mt-3">
-                      <input
-                        type="file"
-                        id="3D-upload"
-                        className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2"
-                        onChange={handle3Dmodel}
-                      />
+                    <div class="screen-layer"><span>Screen Layer</span></div>
+                    <div class="video_file">
+
+                      <span class="videp_file_txt">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><g fill="none" fill-rule="evenodd" stroke="none" stroke-width="1"><path fill="#344B60" fill-rule="nonzero" d="M14.5 27a1.5 1.5 0 011.415 1H29.5a.5.5 0 01.09.992L29.5 29H15.914a1.5 1.5 0 01-2.828 0H10.5a.5.5 0 01-.09-.992L10.5 28h2.585a1.5 1.5 0 011.415-1zm0 1a.5.5 0 100 1 .5.5 0 000-1zM29 10a1 1 0 011 1v13a1 1 0 01-1 1H11a1 1 0 01-1-1V11a1 1 0 011-1h18zm0 1H11v13h18V11zm-11.566 2.5a.91.91 0 01.464.127l5.131 3.034a.985.985 0 010 1.678l-5.131 3.033a.918.918 0 01-1.275-.36.992.992 0 01-.123-.479v-6.066c0-.534.418-.967.934-.967zm-.059 1v6l5.25-3-5.25-3z" transform="translate(-10 -10)"></path></g></svg>
+                        file_example_MP4_480_1_5MG.mp4 (2)</span>
+                    </div>
+                     <div class="AR_layer_div">
+                    <div class="screen-layer"><span>AR Layer</span></div>
+                    {/* <div>
+                    <select className="form-select" aria-label="Select option">
+                            <option value="">Select an option</option>
+                            <option value="option1">Option 1</option>
+                            <option value="option2">Option 2</option>
+                            <option value="option3">Option 3</option>
+                          </select>
+                        </div> */}
+                    </div>
                       {/* >Browse media library</button> */}
                       {/* <button className="btn text-dark border-1 border-dark rounded-2"><i className="bi bi-upload"></i></button> */}
                     </div>
@@ -2479,8 +2565,8 @@ const Target = () => {
                 </Row>
               </Tab.Container>
 
-              <div className="d-flex flex-column flex-shrink-0">
-                <div className="position-absolute bottom-0 left-0 right-0 pb-3 bottom-icon">
+              {/* <div className="d-flex flex-column flex-shrink-0">
+                <div className="position-absolute bottom-0 left-0 right-0 pb-3 bottom-icon gg">
                   <FontAwesomeIcon
                     icon={faLayerGroup}
                     style={{
@@ -2490,7 +2576,7 @@ const Target = () => {
                     }}
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="col-md-9 p-0 m-0 target-center" id="tracker" onClick={()=>setisOpen(false)}>
               <canvas
@@ -2510,19 +2596,24 @@ const Target = () => {
             <div className="col-md-2 p-0 m-0 target-right" onClick={()=>setisOpen(false)}>
               <Tab.Container id="right-tabs-example" defaultActiveKey="first">
                 <Row className="flex-column justify-content-between tab-list right-tabs">
-                  <Col className="side-tab mb-5 mb-md-0 p-0">
+                  <div className="side-tab target-right-tab-drop-down">
                     <Nav variant="pills" className="side-main px-2">
                       <Nav.Item>
                         <Nav.Link eventKey="first">
-                          <FontAwesomeIcon
-                            icon={faImagePortrait}
-                            style={{
-                              color: "rgb(113 123 131)",
-                              width: "15px",
-                              height: "15px",
-                              marginRight: 4,
-                            }}
-                          />
+                        <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="21"
+                              viewBox="0 0 20 21"
+                            >
+                              <path
+                                fill="#344B60"
+                                fillRule="nonzero"
+                                stroke="none"
+                                strokeWidth="1"
+                                d="M19.5 14.596c.278 0 .503.224.503.5v4.356a.5.5 0 01-.492.6H15.49l-.09-.007a.5.5 0 01.09-.992h3.508v-3.957l.008-.09a.502.502 0 01.495-.41zm-19 0c.247 0 .452.177.495.41l.008.09-.001 3.957h3.51a.5.5 0 01.09.992l-.09.008H.488a.501.501 0 01-.492-.602v-4.355c0-.276.225-.5.503-.5zm15.564-9.568c.151.02.264.137.27.276v9.503c-.008.15-.14.27-.305.276H3.304c-.165-.006-.297-.126-.304-.276V5.304c.007-.15.14-.27.304-.276zM12 9.736c-1.192 0-2.716.55-3.559 2.05l.057.04c.273.198 1.345 1.053 1.489 2.631l5.731.06-.053-2.514C14.867 10.355 13.26 9.736 12 9.736zm-6 1.89a3.37 3.37 0 00-2.332.905v1.927h5.649c-.147-1.225-.925-2.017-1.662-2.417A3.637 3.637 0 006 11.627zm9.67-5.97H3.668v6.046A4.297 4.297 0 016 10.995c.815 0 1.47.234 1.885.447.778-1.394 2.377-2.331 4.115-2.331 1.798 0 3.063.945 3.67 1.683V5.656zm-9.337.943C7.253 6.599 8 7.302 8 8.17s-.746 1.571-1.667 1.571c-.92 0-1.666-.703-1.666-1.57 0-.869.746-1.572 1.666-1.572zm0 .628c-.552 0-1 .422-1 .943 0 .52.448.943 1 .943.553 0 1-.422 1-.943 0-.52-.447-.943-1-.943zM19.511.058a.501.501 0 01.493.601l-.001 4.356a.502.502 0 01-.997.09l-.009-.09V1.058h-3.508a.5.5 0 01-.09-.992l.09-.008h4.022zm-15 0l.09.008a.5.5 0 01-.09.992H1.002v3.957l-.007.09a.502.502 0 01-.998-.09V.66a.5.5 0 01.492-.6H4.51z"
+                              ></path>
+                            </svg>
                           <a
                             href="#tab1"
                             className="nav-link p-0 m-0 fw-bold link-dark target-bar-text"
@@ -2533,16 +2624,23 @@ const Target = () => {
                       </Nav.Item>
 
                       <Nav.Item>
+                    
                         <Nav.Link eventKey="second">
-                          <FontAwesomeIcon
-                            icon={faGear}
-                            style={{
-                              color: "rgb(113 123 131)",
-                              width: "15px",
-                              height: "15px",
-                              marginRight: 4,
-                            }}
-                          />
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                          >
+                            <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                              <path
+                                fill="#4A90E2"
+                                fillRule="nonzero"
+                                d="M21.854 10c.723 0 1.352.524 1.443 1.232l.27 1.842.086.042c.203.103.402.215.597.337l.103.067 1.84-.718c.612-.216 1.315-.01 1.684.513l.074.117 1.863 3.136c.351.627.2 1.417-.378 1.86l-1.509 1.147.011.184.005.241c0 .08-.002.16-.005.241l-.01.183 1.511 1.15c.536.411.704 1.127.428 1.748l-.066.132-1.838 3.092a1.46 1.46 0 01-1.8.64l-1.814-.708-.119.078a8.077 8.077 0 01-.593.334l-.07.033-.268 1.826a1.443 1.443 0 01-1.31 1.245l-.135.006h-3.701c-.723 0-1.352-.524-1.443-1.232l-.272-1.844-.084-.04a7.768 7.768 0 01-.597-.337l-.105-.068-1.838.719c-.612.216-1.315.01-1.684-.513l-.074-.117-1.863-3.136a1.447 1.447 0 01.378-1.86l1.508-1.148-.01-.185-.005-.239c0-.08.002-.159.005-.24l.01-.185-1.511-1.149a1.435 1.435 0 01-.431-1.752l.069-.128 1.838-3.092a1.46 1.46 0 011.8-.64l1.812.707.121-.077c.196-.12.393-.233.593-.334l.068-.034.27-1.825a1.443 1.443 0 011.31-1.245l.135-.006zm0 1h-3.701l-.085.007a.441.441 0 00-.368.371l-.352 2.385-.333.144a7.474 7.474 0 00-1.23.738l-2.304-.9-.081-.023a.454.454 0 00-.484.221l-1.85 3.114-.037.076a.437.437 0 00.148.5l1.952 1.485-.033.29c-.02.196-.032.394-.032.592 0 .297.028.594.065.882l-1.952 1.485-.06.055a.448.448 0 00-.051.521l1.85 3.114.048.068a.48.48 0 00.517.13l2.303-.9.294.208a6.72 6.72 0 001.27.674l.352 2.385.018.078c.059.176.233.3.435.3h3.701l.085-.007a.441.441 0 00.368-.371l.352-2.385.333-.144a7.474 7.474 0 001.23-.738l2.305.9.08.023a.454.454 0 00.484-.221l1.85-3.114.035-.076a.442.442 0 00-.146-.5l-1.952-1.485.033-.289c.02-.193.032-.389.032-.593 0-.306-.028-.594-.065-.882l1.952-1.485.06-.055a.448.448 0 00.051-.521l-1.85-3.114-.048-.068a.48.48 0 00-.516-.13l-2.304.9-.294-.208a6.72 6.72 0 00-1.27-.674l-.352-2.385-.018-.078a.454.454 0 00-.435-.3zm.147 5.536a4 4 0 11-4 6.928 4 4 0 014-6.928zM17.403 18.5a3 3 0 105.197 3 3 3 0 00-5.197-3z"
+                                transform="translate(-10 -10)"
+                              ></path>
+                            </g>
+                          </svg>
                           <a
                             href="#tab2"
                             className="nav-link p-0 m-0 fw-bold link-dark target-bar-text"
@@ -2552,7 +2650,7 @@ const Target = () => {
                         </Nav.Link>
                       </Nav.Item>
                     </Nav>
-                  </Col>
+                  </div>
 
                   <Col className="tab-main">
                     <Tab.Content>
@@ -4364,7 +4462,7 @@ const Target = () => {
                                                   </Accordion.Header>
                                                   <Accordion.Body>
                                                     <div
-                                                      class=" "
+                                                      class="units-inner-content"
                                                       data-testid="MenuList"
                                                     >
                                                       <div
@@ -4687,7 +4785,7 @@ const Target = () => {
                                             </Accordion.Header>
                                             <Accordion.Body>
                                               <div
-                                                class=" "
+                                                class="track-menu-list"
                                                 data-testid="MenuList"
                                               >
                                                 <div
@@ -6658,8 +6756,9 @@ const Target = () => {
                                         Appearance
                                       </Accordion.Header>
                                       <Accordion.Body>
-                                        <div className="row opacity-div">
-                                          <p class="opacity">Opacity</p>
+                                        
+                                      <div className="row opacity-div">
+                                          <p class="opacity">opacity</p>
                                           <div>
                                             <input
                                               type="range"
@@ -6667,12 +6766,13 @@ const Target = () => {
                                               name="vol"
                                               min="0"
                                               max="100"
-                                              value={value}
-                                              onChange={handleRangeValue}
+                                              value={valueopacityborder}
+                                              onChange={handleborderopacityValue}
                                             />
-                                            <p>{value}</p>
+                                            <p>{valueopacityborder}</p>
                                           </div>
                                         </div>
+                                    
 
                                         <div className="row opacity-div">
                                           <p class="opacity">frames</p>

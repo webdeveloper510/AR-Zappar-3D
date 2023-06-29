@@ -273,21 +273,33 @@ input {
     margin-left: 11px !important;
 
 }
+.target-right .side-main.px-2.nav.nav-pills a svg {
+    margin-right: 8px;
+}
+
+.target-right .side-main.px-2.nav.nav-pills a {
+    color: #344b60;
+}
+.target-right .side-main.px-2.nav.nav-pills a svg path {
+    fill: #344b60;
+}
 .target-heading {
-    color: #5186C8;
+    color: #344b60;
     font-size: 14px;
     text-transform: capitalize;
     font-weight: 500;
-    font-family: 'Montserrat', sans-serif;
+}
+.target-heading svg {
+    margin-left: 16px;
+    margin-right: 16px;
 }
 .target-heading svg path {
-    color: #5186C8;
-    fill: #5186C8;
+    color: #344b60;
+    fill: #344b60;
 }
 .target-btn button {
     font-size: 13px;
     letter-spacing: 0px;
-    font-family: 'Montserrat', sans-serif ;
     padding: 6px 20px 5px 20px;
 }
 .target-btn {
@@ -318,10 +330,15 @@ input {
 .right-tabs {
     background: #fff;
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 16%);
+    height: 100%;
 }
 .InspectorMenu--1PeA4 {
-    height: calc(75vh - 60px);
-    padding: 0;
+    /* height: calc(75vh - 60px);
+    padding: 0; */
+    float: left;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
 }
 .right-tabs .nav-item .active svg path {
     fill: #fff;
@@ -336,7 +353,6 @@ input {
     text-align: center;
     width: 100%;
     display: block;
-    font-family: 'Montserrat', sans-serif !important;
 
 }
 .ContextMenuButton--p-6XR svg path:hover {
@@ -406,7 +422,6 @@ input {
 .btn-transform .TitleContainer--2xD-b {
     letter-spacing: 0px;
     font-weight: 500;
-    font-family: 'Montserrat', sans-serif ;
 }
 .title-position, .title-content, .title-rotation {
     letter-spacing: 0px;
@@ -414,7 +429,6 @@ input {
     background: #fff;
     border: 0;
     line-height: 35px;
-    font-family: 'Montserrat', sans-serif ;
     margin-bottom: 10px;
 }
 .btn-appearence, .btn-actions {
@@ -425,7 +439,6 @@ input {
 .btn-appearence .TitleContainer--2xD-b, .btn-transition-effect .TitleContainer--2xD-b, .btn-actions .TitleContainer--2xD-b {
     letter-spacing: 0px;
     font-weight: 500;
-    font-family: 'Montserrat', sans-serif ;
 }
 .btn-transition-effect {
     background: #fff;
@@ -673,7 +686,7 @@ button {
     cursor: pointer;
 }
 .Option--31oUF.HasNoIcon--3C9vr {
-    padding-left: 10px;
+    padding-left: 0px;
 }
 .Option--31oUF .Container--Mc1y- {
     color: inherit;
@@ -901,7 +914,6 @@ button {
     background: transparent;
 }
 .target-tab-content .title-content .accordion-item .accordion-header {
-    font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     padding-left: 0;
     padding-bottom: 0;
@@ -920,7 +932,6 @@ input.TextInput--14pX7.Editable--3ahFV {
     font-size: 14px;
 }
 .target-accordian button.accordion-button.collapsed {
-    font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     padding-left: 0;
     padding-bottom: 0;
@@ -938,7 +949,6 @@ input.TextInput--14pX7.Editable--3ahFV {
     background: transparent !important;
 }
 .target-accordian button.accordion-button {
-    font-family: 'Montserrat', sans-serif;
     font-size: 14px;
 }
 .title-content.target-accordian {
@@ -946,7 +956,6 @@ input.TextInput--14pX7.Editable--3ahFV {
     display: block;
 }
 .accor-title {
-    font-family: 'Montserrat', sans-serif;
     font-size: 13px;
     text-align: left;
 }
@@ -962,14 +971,13 @@ input.TextInput--14pX7.Editable--3ahFV {
     fill: #4f8cc6;
 }
 h5.opacity {
-    font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     padding-left: 0;
     padding-bottom: 0;
     text-align: left;
 }
 h5.orient-head {
-    font-family: 'Montserrat', sans-serif;
+
     font-size: 14px;
     padding-left: 0;
     padding-bottom: 0;
@@ -1188,8 +1196,9 @@ span.Title-track {
     background-color: rgba(0,0,0,0);
     color: #4a90e2 !important;
     cursor: pointer;
-    margin-top: 20px;
-    padding: 4px;
+    width: 90%;
+    margin: 25px auto;
+    padding: 0;
 }
 .track-with .accordion-body {
     padding-top: 0;
@@ -1759,6 +1768,7 @@ div#take-actions .accordion-body {
     width: 90% !important;
 }
 .units-div {
+    position: relative;
     float: left;
     width: 100%;
     display: flex;
@@ -1769,6 +1779,12 @@ div#take-actions .accordion-body {
 .units-div .accordion {
     border: 1px solid #0000001f;
     padding-left: 9px;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    background: #fff;
+    text-align: left;
+    width: fit-content;
 }
 p.shared-txt {
     font-family: 'Lato', sans-serif !important;
@@ -1859,7 +1875,10 @@ section.open-designer-tab-section {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    border: none;
+    box-shadow: none;
 }
+
 p.thene-txted {
     float: left;
     width: 100%;
@@ -1936,4 +1955,79 @@ p.m-0.third-head {
     font-size: 32px;
     margin-top: 25px;
     margin-bottom: 30px;
+}
+h6.login-account.mt-3.text-center {
+    width: 100%;
+}
+.flex-column.justify-content-between.tab-list.right-tabs.video-img-tabs.row {
+    display: none;
+}
+h3.forgot-div {
+    text-align: center;
+}
+canvas {
+    top: 0;
+}
+.wf-active::-webkit-scrollbar {
+    width: 3px;
+  }
+.wf-active {
+    scrollbar-width: thin;
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+  }
+.wf-active::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+  }
+.wf-active::-webkit-scrollbar-thumb {
+    background-color: #4a90e2 ;
+    border-radius: 6px;
+    border: 3px solid transparent;
+  }
+.scene-objects {
+    color: #344b60;
+    font-size: 16px;
+}
+span.videp_file_txt {
+    margin-left: 16px;
+    margin-right: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 260px;
+    display: block;
+}
+span.videp_file_txt svg {
+    margin-right: 20px;
+    margin-left: 10px;
+}
+.video_file {
+    float: left;
+    width: 100%;
+    margin-top: 15px;
+}
+.AR_layer_div {
+    float: left;
+    width: 100%;
+    margin-top: 30px;
+}
+.screen-layer span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #344b60;
+    font-family: "Lato",sans-serif;
+}
+.col-md-1.p-0.m-0.target-left {
+    height: 100vh;
+}
+div#track-top .accordion-item h2.accordion-header button.accordion-button.collapsed {
+    padding-left: 10px;
+}
+div#track-top .accordion-item h2.accordion-header button.accordion-button {
+    padding-left: 10px;
+}
+.row.track-with .accordion-body {
+    padding-left: 0 !important;
+}
+.track-menu-list span {
+    padding-left: 10px;
 }

@@ -391,15 +391,59 @@ return(
                     </div>
                   </div>
                   
-                  <div className="project-page-bottom mt-5 p-0">
+                  <div className="project-page-bottom mt-5 p-0" id="trigger-section-outer">
                     <div class="sec-2 project-bottom-title">
                       <div class="trigger-head-left">
                       <p class="project-triggers-head">
-                        <FontAwesomeIcon icon={faCodeMerge} />Triggers <i class="bi bi-pencil-square ps-2"></i></p>
+                      <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="25"
+                          height="25"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M4 4h6v6H4V4m16 0v6h-6V4h6m-6 11h2v-2h-2v-2h2v2h2v-2h2v2h-2v2h2v3h-2v2h-2v-2h-3v2h-2v-4h3v-1m2 0v3h2v-3h-2M4 20v-6h6v6H4M6 6v2h2V6H6m10 0v2h2V6h-2M6 16v2h2v-2H6m-2-5h2v2H4v-2m5 0h4v4h-2v-2H9v-2m2-5h2v4h-2V6M2 2v4H0V2a2 2 0 012-2h4v2H2m20-2a2 2 0 012 2v4h-2V2h-4V0h4M2 18v4h4v2H2a2 2 0 01-2-2v-4h2m20 4v-4h2v4a2 2 0 01-2 2h-4v-2z"></path>
+                        </svg>
+                         Triggers <i class="bi bi-pencil-square ps-2"></i></p>
                         </div>
                         <div class="trigger-head-right">
-                        <p class="project-triggers-head">
                        
+                        <p class="project-triggers-head">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="25"
+                            height="25"
+                            viewBox="-13.32 0 68.514 68.514"
+                          >
+                            <g data-name="Group 62" transform="translate(-815.597 -920.238)">
+                              <g data-name="Group 59">
+                                <path
+                                  fill="#0c2b67"
+                                  d="M852.706 988.752h-32.343a4.773 4.773 0 01-4.766-4.767v-58.98a4.773 4.773 0 014.766-4.767h32.343a4.773 4.773 0 014.767 4.767v58.98a4.773 4.773 0 01-4.767 4.767zm-32.343-65.514a1.769 1.769 0 00-1.766 1.767v58.98a1.769 1.769 0 001.766 1.767h32.343a1.769 1.769 0 001.767-1.767v-58.98a1.769 1.769 0 00-1.767-1.767z"
+                                  data-name="Path 53"
+                                ></path>
+                              </g>
+                              <g data-name="Group 60">
+                                <rect
+                                  width="26.5"
+                                  height="43.764"
+                                  fill="#0c2b67"
+                                  data-name="Rectangle 35"
+                                  rx="2.058"
+                                  transform="translate(823.285 929.072)"
+                                ></rect>
+                              </g>
+                              <g data-name="Group 61">
+                                <circle
+                                  cx="3.699"
+                                  cy="3.699"
+                                  r="3.699"
+                                  fill="#0c2b67"
+                                  data-name="Ellipse 76"
+                                  transform="translate(832.836 975.706)"
+                                ></circle>
+                              </g>
+                            </g>
+                          </svg>
                           Project icon & title</p>
                         </div>
                     </div>

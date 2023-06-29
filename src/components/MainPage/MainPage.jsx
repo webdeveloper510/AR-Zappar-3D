@@ -330,7 +330,7 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                               </div>
 
                               <div className="flex-shrink-0 ms-2 list-bar">
-                                  <a href="#" className="d-flex align-items-center link-dark text-decoration-none">
+                                  <a className="d-flex align-items-center link-dark text-decoration-none">
                                    
                                     <svg
                                             xmlns="http://www.w3.org/2000/svg"

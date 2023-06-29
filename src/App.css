@@ -370,7 +370,7 @@ button#open-design {
     justify-content: space-between;
 }
 h5.project-title-head {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 500;
 }
 h5.project-destination-head {
@@ -378,12 +378,16 @@ h5.project-destination-head {
     font-weight: 500;
     font-family: 'Lato', sans-serif !important;
     text-align: left;
+    margin-bottom: 15px;
 }
 h5.project-webar-head {
     font-size: 16px;
     font-weight: 500;
-    font-family: 'Montserrat', sans-serif;
-    margin-top: 10px;
+    font-family: 'Lato', sans-serif !important;
+    margin-top: 15px;
+    float: left;
+    text-align: center;
+    width: 100%;
 }
 .project-pg .btn-2 {
     margin: 120px 0px 0px 40px;
@@ -396,18 +400,19 @@ h5.project-webar-head {
 
 .project-pg .tab-content {
     border: none !important;
-    background-color: #FFF;
     width: 100%;
 }
 
-.project-pg #tab1 {
+/* .project-pg #tab1 {
     border-bottom: 1px solid #e3e3e3 !important;
-}
+} */
 
 /*project page css end*/
 
 
-
+.project-pg .tab-content div#tab2 {
+    background: none;
+}
 
 /*team page css start*/
 
@@ -730,7 +735,7 @@ canvas {
     bottom: 0;
     float: none;
     height: -moz-fit-content!important;
-    height: 43pc!important;
+    /* height: 43pc!important; */
     left: 0;
     margin: 0 auto;
     position: absolute;
@@ -762,6 +767,7 @@ a.nav-link.p-0.m-0.fw-bold.link-dark {
 }
 .target-left-sidebar a.nav-link.p-0.m-0.fw-bold.link-dark {
     font-size: 14px;
+    color: rgb(52, 75, 96) !important;
 }
 .login {
     gap: 0.5rem !important;
@@ -861,6 +867,8 @@ p.project-triggers-head svg {
     min-width: 340px;
     position: absolute;
     z-index: 9;
+    height: 100vh;
+    left: 10px;
 }
 
 .target-left .tab-list .tab-content.tab-pane.active {
@@ -2615,11 +2623,13 @@ button.btn-delete-popup {
 .custom-pills .nav-item a p {
     font-size: 14px;
 }
-.open-designer-tab-section .col-sm-3 {
-    box-shadow: 2px 0px 5px rgb(178 179 180 / 30%);
+.open-designer-tab-section .col-sm-4 .custom-pills {
     padding-right: 0;
+    padding-top: 30px;
+    height: 100%;
+    border-radius: 8px;
+    box-shadow: 2px 0px 5px rgb(178 179 180 / 30%);
 }
-
 .triggers-tab-content .bottom-content {
     justify-content: space-around !important;
     align-items: center;
@@ -2629,7 +2639,20 @@ section.open-designer-tab-section {
     border-radius: 8px;
     border: 1px solid #cccccc57;
 }
+.col-md-5.destination-img img {
+    border-radius: 8px;
+    margin-right: 10px;
+    float: left;
+    padding: 0px;
+    width: 94%;
+}
 
+.project-qr-img svg {
+    margin-left: 40px;
+}
+.project-deep-link-img svg {
+    margin-left: 40px;
+}
 /* .card.project-card-placeholder.col-md-3.mb-4.mx-2.p-0.link-body:hover{
     background: #f0f0f0;
 }
@@ -2880,6 +2903,9 @@ h5.rowh5 {
     float: left;
     width: 65%;
 }
+.trigger-tabs .project-pg #tab1 {
+    border-bottom: none !important;
+}
 .triggers-content-div {
     float: left;
     width: 30%;
@@ -2887,8 +2913,9 @@ h5.rowh5 {
     padding: 24px;
     box-shadow: 0 0 4px 0 rgb(52 75 96 / 28%);
     border-radius: 8px;
-    height: 100%;
+    /* height: 100vh;
     margin-left: 25px;
+    max-height: 500px; */
 }
 .trigger-tabs {
     float: left;
@@ -2903,11 +2930,11 @@ h5.rowh5 {
 .trigger-head-right {
     float: left;
     width: 30%;
-    margin-left: 25px;
+    margin-left: 0px;
 }
 .trigger-head-left {
     float: left;
-    width: 65%;
+    width: 70%;
 }
 .sec-2.project-bottom-title {
     float: left;
@@ -3125,6 +3152,9 @@ label.label-name {
     float: left;
     width: 100%;
     text-align: center;
+    z-index: 9;
+    position: absolute;
+    bottom: 0;
 }
 
 svg.svg-inline--fa.fa-circle-plus path {
