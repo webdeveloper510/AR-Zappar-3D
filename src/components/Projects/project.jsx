@@ -45,14 +45,12 @@ const Project =()=>{
       addTitle(response.data.ProTitle)
       ProImg(response.data.imagePro.toString())
       CreationDate(response.data.created_at)
-      Featuredtracker(response.data.FeaturedtrackerOption)
     })
     .catch(function(error){
       console.log(error)
     })
   }
  },[imgProject])
- console.log("--------------------------------------------------->" , FeaturedtrackerOption)
 
  // USE EFFECT FOR USERNAME ------------------------------------------------------------------->
 
@@ -99,11 +97,10 @@ const Project =()=>{
   
  // FOR API  ------------------------------------------------------------------->
 
-  const handleSubmit = () => {    // will run on create scene
-    if (FeaturedtrackerOption===''){
+  const handleSubmit = () => {   
       const formData = new FormData();
       formData.append('ProTitle',titlePro)
-      formData.append('FeaturedtrackerOption' , SceneType)
+      console.log('Params Id', id)
       axios.post(API.BASE_URL + 'update-project/'+id+'/', formData, {
         headers: {
           'accept': 'application/json',
@@ -111,116 +108,14 @@ const Project =()=>{
           },
         })
       .then(function (response) {
-        CreateScene(id)
-        CreateProject(id)
         navigate('/target/'+id)
-        twoDThreeD(id)
       })
       .catch(function(err) {
         console.error('Error uploading file', err);
       });
-    }
 }
 //-------------------------------------------CreateScene---------------------------------------->
-const CreateScene=(id)=>{
-  const formdata = {'project_id': id,'name': 'Scene 1'}
-  axios.post(API.BASE_URL + 'scene/', formdata ,{
-    headers: {
-      'accept': 'application/json',
-          'content-type': 'multipart/form-data' 
-      },
-  }).then(function (response) {
-    console.log(response.data.id)
-    sceneTransitions(response.data.id)
-  }).catch(function(errorMessage){
-    console.log(errorMessage)
-  })
-}
-const sceneTransitions=(id)=>{
-  const formData = {
-    scene_id: id,
-    transition_enter: null,
-    transition_exit: null,
-    height: 0,
-    duration: 0,
-    delay: 0,
-  }
-  axios.post(API.BASE_URL + "scene_transition/", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  }).then(function (response) {
-  }).catch(function (err) {
-    console.log(err);
-  });
-}
 
-
-// --------------------------------------------------------CreateProject Content--------------------------------->
-
-  const CreateProject=(id)=>{
-    const formData = {target_image:  null,project_Id: id,opacity: 0,orientation: null,dimensions_w: 0,dimensions_h: 0,units: ''};
-    axios.post(API.BASE_URL + 'project_content/', formData ,{
-      headers: {
-        'accept': 'application/json',
-            'content-type': 'multipart/form-data' 
-        },
-    }).then(function (response) {
-      const project_content_id = response.data.id;
-      backgroundSoundApi(project_content_id);
-      analyticsApi(project_content_id);
-    }).catch(function(errorMessage){
-      console.log(errorMessage)
-    })
-  }
-
-  // function for post api background sound
-
-  const backgroundSoundApi = (idee) => {
-    const formData = {project_content_id: idee, media_file: null};
-    axios.post(API.BASE_URL + 'background_sound/',formData,{
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }).then(function (response) {
-      }).catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  const analyticsApi = (idee) => {
-    const formData = {project_content_id: idee,track_with: null};
-    axios.post(API.BASE_URL + "analytics/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }).then(function (response) {
-        console.log(response, "RESponSE from analyticsApi");
-      }).catch(function (err) {
-        console.log(err);
-      });
-  };
-
-// -------------------------------------------------------Two-D Three-D Switch ------------------------------>
-
-  const twoDThreeD=(id)=>{
-    const formData = {'project_Id': id, 'value':'True'};
-    axios.post(API.BASE_URL + "twod_threed/", formData,{
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }).then(function(res){}).catch(function(err){})
-  }
-
- // USEEFFECT FOR IMAGE  ------------------------------------------------------------------->
-
-useEffect(() => {
-  if(FeaturedtrackerOption) {
-    handleSubmit()
-
-    console.log("Done")
-  }
-}, [])
 
  // To SELECT TARGET   ------------------------------------------------------------------->
 
@@ -228,6 +123,7 @@ useEffect(() => {
     selectSceneType(type)
     event.currentTarget.classList.add("selected");
   }
+  
 
 
 
@@ -242,31 +138,6 @@ const handleshowcreatelabel = () => setcreatelabel(true);
  const handleClose = () =>{
   setShow(false);
 } 
-
-const handleShow = () => {   // will run on Open design------------------------------------>
-  if (FeaturedtrackerOption!=='') {
-    const formData = new FormData();
-    formData.append('ProTitle',titlePro)
-    axios.post(API.BASE_URL + 'update-project/'+id+'/', formData, {
-      headers: {
-        'accept': 'application/json',
-            'content-type': 'multipart/form-data'
-          },
-        })
-        .then(function (response) {
-          console.log('Alert--------------------->',response);
-          navigate('/target/'+id)
-        })
-        .catch(function(err) {
-          console.error('Error uploading file!!!', err);
-        });
-      }
-      else{
-    setShow(true);
-  }
-}
-
-
   
 /********** End----Model State *************/
 
@@ -387,7 +258,7 @@ return(
                     <div class="col-md-4 p-4 created-text-design">
                       <a href="#" class="link-dark text-decoration-none text-end d-block"> Create by: {nameOfUser} | {created_at} </a>
                       
-                      <button id="open-design" type="submit" class="btn btn-info d-block float-end btn-1"   onClick={handleShow} > Open Designer</button>
+                      <button id="open-design" type="submit" class="btn btn-info d-block float-end btn-1"   onClick={handleSubmit} > Open Designer</button>
                     </div>
                   </div>
                   

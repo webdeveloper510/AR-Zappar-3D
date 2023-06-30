@@ -63,6 +63,7 @@ const MainPage =()=>{
     axios.get(API.BASE_URL+'projects/'+val+'/' )
     .then(function(response){
       setProInfo(response.data)
+      console.log(response.data)
     }).catch(function(error){
     })
   }, [])
@@ -102,6 +103,7 @@ const handleshowcreatelabel = () => setcreatelabel(true);
 
 
     const handleProject = (id)=>{
+      console.log(id)
       // e.stopPropagation()
       axios.get(API.BASE_URL+'project-list/'+id+'/')
       .then(function(response){

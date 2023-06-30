@@ -82,7 +82,7 @@ const ModelAr =()=> {
 
             const textureLoader = new THREE.TextureLoader();
             const texture1 = textureLoader.load(svgHere)
-            const geometry = new THREE.PlaneGeometry(300, 400);
+            const geometry = new THREE.BoxGeometry(300, 400 ,8);
             const material = new THREE.MeshBasicMaterial({map : texture1 , side : THREE.DoubleSide , transparent : false})           
 
             // const material2 = new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load(svgHere2) , side : THREE.BackSide , transparent : false})           

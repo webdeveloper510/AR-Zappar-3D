@@ -48,6 +48,7 @@ import { Tabs } from "react-bootstrap";
 const Target = () => {
   // HANDLE GET USER-ID FROM LOCALSTORAGE ------------------------------------------------------------------------------------------------------------------
   const { id } = useParams();
+  const [show, setShow] = useState(false);
 
   // STATES for PROJECT DATA OF AN PROJECT ---------------------------------------------->
   const [getButton, setButton] = useState(null);
@@ -222,7 +223,121 @@ const Target = () => {
   const [aper_corner_radius, A_corner_radius] = useState(null);
   const [aper_frame_type, A_frame_type] = useState(null);
   const [aper_opacity, A_opacity] = useState(null);
+  // const [scene, A_opacity] = useState(null);
   // const [selectedUnit1,setselectedUnit1]=useState('centimeters')
+
+  // get SCENES DETAILS --------------------------------------------------------------------->
+
+  useEffect(()=>{
+    axios.get(API.BASE_URL+'scene_data_by_project'+'/'+id+'/')
+    .then(function(res){
+      console.log(res.data)
+      if(res.data.data==='No data found'){
+        setShow(true);
+      }
+      else{
+        console.log(res.data.project_content[0].id)
+        localStorage.setItem('ProjectContentID' , res.data.project_content[0].id)
+      }
+    })
+  },[])
+
+const handleSubmit=()=>{
+  const formdataScene = new FormData()
+  formdataScene.append('project_id' , id)
+  formdataScene.append('name' ,'Scene 1' )
+  formdataScene.append('FeaturedtrackerOption' , SceneType)
+  axios.post(API.BASE_URL+'scene/', formdataScene,{
+  }).then(function(res){
+    console.log("Created" , res)
+    if(localStorage.getItem("ProjectContentID")){
+      console.log("Done")
+    }else {
+      sceneTransitions(res.data.id)
+      CreateProject(id)
+      twoDThreeD(res.data.id)
+    }
+    setShow(false);
+  }).catch(function(err){
+    console.log(err)
+    toast.error("Connection Error")
+  })
+}
+const sceneTransitions=(id)=>{
+const formData = {
+  scene_id: id,
+  transition_enter: null,
+  transition_exit: null,
+  height: 0,
+  duration: 0,
+  delay: 0,
+}
+axios.post(API.BASE_URL + "scene_transition/", formData, {
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+}).then(function (response) {
+}).catch(function (err) {
+  console.log(err);
+});
+}
+
+// --------------------------------------------------------CreateProject Content--------------------------------->
+
+const CreateProject=(id)=>{
+  const formData = {target_image:  null,project_id: id,opacity: 0,orientation: null,dimensions_w: 0,dimensions_h: 0,units: ''};
+  axios.post(API.BASE_URL + 'project_content/', formData ,{
+    headers: {
+      'accept': 'application/json',
+          'content-type': 'multipart/form-data' 
+      },
+  }).then(function (response) {
+    const project_content_id = response.data.id;
+    localStorage.setItem("ProjectContentID" , project_content_id)
+    backgroundSoundApi(project_content_id);
+    analyticsApi(project_content_id);
+  }).catch(function(errorMessage){
+    console.log(errorMessage)
+  })
+}
+
+// function for post api background sound
+
+const backgroundSoundApi = (idee) => {
+  const formData = {project_content_id: idee, media_file: null};
+  axios.post(API.BASE_URL + 'background_sound/',formData,{
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }).then(function (response) {
+    }).catch(function (err) {
+      console.log(err);
+    });
+};
+
+const analyticsApi = (idee) => {
+  const formData = {project_content_id: idee,track_with: null};
+  axios.post(API.BASE_URL + "analytics/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }).then(function (response) {
+      console.log(response, "RESponSE from analyticsApi");
+    }).catch(function (err) {
+      console.log(err);
+    });
+};
+
+// // -------------------------------------------------------Two-D Three-D Switch ------------------------------>
+
+const twoDThreeD=(id)=>{
+  const formData = {'scene_id': id, 'value':'True'};
+  axios.post(API.BASE_URL + "twod_threed/", formData,{
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  }).then(function(res){}).catch(function(err){})
+}
 
   // GET Basic Details OF PROJECT ------------------------------------------------------------>
   useEffect(() => {
@@ -252,7 +367,7 @@ const Target = () => {
   // Get All Project Data --------------------------------------------------------------------------->
   useEffect(() => {
     axios
-      .get(API.BASE_URL + "get_projectdata/" + id + "/")
+      .get(API.BASE_URL + "scene_details/" + id + "/")
       .then((responseProject) => {
         console.log(responseProject, id);
         setButton(responseProject.data.data[0].button_data);
@@ -1098,6 +1213,7 @@ const handleborderopacityValue = (event) => {
   const handleBack = (event) => {
     navigate("/home");
     window.location.reload();
+    localStorage.removeItem('ProjectContentID')
   };
 
   const handleLogout = () => {
@@ -1166,7 +1282,6 @@ const handleborderopacityValue = (event) => {
   };
 
 
-  
 
 
   return (
@@ -1273,21 +1388,21 @@ const handleborderopacityValue = (event) => {
               <Modal.Body>
                 <div className="container">
                   <div className="card-preview">
-                    <div class="card-preview-left">
-                      <div class="card-preview-left-inner">
-                        <div class="pre-text-1">
+                    <div className="card-preview-left">
+                      <div className="card-preview-left-inner">
+                        <div className="pre-text-1">
                           <span>
                             1. Use your device camera to scan the test QR code
                             below.
                           </span>
                         </div>
-                        <div class="pre-text-2">
+                        <div className="pre-text-2">
                           <span>
                             2. Aim at the target image to preview your content.
                           </span>
                         </div>
 
-                        <div class="test-qr">
+                        <div className="test-qr">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="150"
@@ -1327,26 +1442,26 @@ const handleborderopacityValue = (event) => {
                         </div>
                       </div>
                     </div>
-                    <div class="card-preview-right">
-                      <img class="preview-img" src={previewimg}></img>
+                    <div className="card-preview-right">
+                      <img className="preview-img" src={previewimg}></img>
                     </div>
                   </div>
                 </div>
               </Modal.Body>
               <Modal.Footer>
-                <div class="btn-pre-back">
+                <div className="btn-pre-back">
                   <buttonBootstrap
                     variant="secondary"
-                    class="btn-cancel-preview"
+                    className="btn-cancel-preview"
                     onClick={handlepreviewClose}
                   >
                     Go Back
                   </buttonBootstrap>
                 </div>
-                <div class="btn-pre-publish">
+                <div className="btn-pre-publish">
                   <buttonBootstrap
                     variant="primary"
-                    class="btn-publish-preview"
+                    className="btn-publish-preview"
                     onClick={handlepreviewClose}
                   >
                     Publish
@@ -1369,7 +1484,7 @@ const handleborderopacityValue = (event) => {
               <Modal.Body>
                 <div className="container">
                   <div className="card-published">
-                    <div class="qr-title">
+                    <div className="qr-title">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="25"
@@ -1408,9 +1523,9 @@ const handleborderopacityValue = (event) => {
                       </svg>
                       <span>Test Project</span>
                     </div>
-                    <div class="card-publish-left">
-                      <div class="card-publish-left-inner">
-                        <div class="test-qr-publish">
+                    <div className="card-publish-left">
+                      <div className="card-publish-left-inner">
+                        <div className="test-qr-publish">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="100"
@@ -1449,29 +1564,29 @@ const handleborderopacityValue = (event) => {
                           </svg>
                         </div>
                       </div>
-                      <div class="card-publish-right">
-                        <div class="publish-inner-text">
+                      <div className="card-publish-right">
+                        <div className="publish-inner-text">
                           <span>
                             Scan the QR code with your phone camera to
                             experience in sayehbaz
                           </span>
                         </div>
 
-                        <div class="published-btn">
-                          <div class="btn-pub-edit">
+                        <div className="published-btn">
+                          <div className="btn-pub-edit">
                             <buttonBootstrap
                               variant="secondary"
-                              class="btn-edit-publish"
+                              className="btn-edit-publish"
                               onClick={handlepublishClose}
                             >
                               <FontAwesomeIcon icon={faPenToSquare} />
                               Edit
                             </buttonBootstrap>
                           </div>
-                          <div class="btn-down-publish">
+                          <div className="btn-down-publish">
                             <buttonBootstrap
                               variant="primary"
-                              class="btn-download-preview"
+                              className="btn-download-preview"
                               onClick={handlepublishClose}
                             >
                               <FontAwesomeIcon icon={faDownload} /> Download
@@ -2239,7 +2354,7 @@ const handleborderopacityValue = (event) => {
                     <h2 className="buttons-head">Buttons</h2>
                     <h6 className="btn-target-left mt-3">Basic buttons</h6>
                     <hr />
-                    <div class="Grid--v4HT5">
+                    <div className="Grid--v4HT5">
                       <div
                         id="1d3f034a-16b5-4754-9763-7bbabfce9095"
                         style={{
@@ -2337,17 +2452,17 @@ const handleborderopacityValue = (event) => {
                         Abc
                       </div>
                     </div>
-                    <div class="Title--29AmM">
+                    <div className="Title--29AmM">
                       Social buttons
                       <div
-                        class="TitleDivider--2R3vH"
+                        className="TitleDivider--2R3vH"
                         style={{
                           borderTop: "1px solid rgb(178, 196, 215)",
                           height: "auto",
                           width: "100%",
                         }}
                       >
-                        <div class="Grid--1NhFW">
+                        <div className="Grid--1NhFW">
                           {imageObject.map((img, i) => {
                             return (
                               <div
@@ -2397,13 +2512,13 @@ const handleborderopacityValue = (event) => {
                     <img
                       src=""
                       id="social-icon"
-                      class="social-icon"
+                      className="social-icon"
                       alt=""
                     ></img>
                     {/* <button
                       id="submitTexture"
                       type="submit"
-                      class="btn btn-primary"
+                      className="btn btn-primary"
                     >
                       Confirm
                     </button> */}
@@ -2447,8 +2562,8 @@ const handleborderopacityValue = (event) => {
                       <i className="bi bi-question-circle text-muted fs-6"></i>
                     </p>
                     <div className="mt-3">
-                      <div class="images-btn-outer">
-                        <div class="browse-btn-outer">
+                      <div className="images-btn-outer">
+                        <div className="browse-btn-outer">
                           <button
                             className="btn rounded-2"
                             id="browse-btn"
@@ -2457,7 +2572,7 @@ const handleborderopacityValue = (event) => {
                             <i className="bi bi-upload"></i>Browse media library
                           </button>
                         </div>
-                        <div class="upload-btn-outer">
+                        <div className="upload-btn-outer">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
@@ -2590,7 +2705,7 @@ const handleborderopacityValue = (event) => {
               </canvas>
               <ModelAr />
             </div>
-            {/* <div class="EditorCanvas--3VU0J" style={{position: "relative", width: "100%" ,height: "100%",overflow: "hidden"}}>
+            {/* <div className="EditorCanvas--3VU0J" style={{position: "relative", width: "100%" ,height: "100%",overflow: "hidden"}}>
               <ModelAr />
         </div> */}
             <div className="col-md-2 p-0 m-0 target-right" onClick={()=>setisOpen(false)}>
@@ -2660,23 +2775,23 @@ const handleborderopacityValue = (event) => {
                         className="bg-light py-4 tab-content target-tab-content"
                       >
                         <Accordion>
-                          <div class="ShelfContainer--1Ad4O">
+                          <div className="ShelfContainer--1Ad4O">
                             <div style={{ width: "100%" }}>
                               {/* start Content show hide content  */}
-                              <div class="TitleContainer--2xD-b title-content">
+                              <div className="TitleContainer--2xD-b title-content">
                                 <Accordion.Item eventKey="0">
                                   <Accordion.Header> Name</Accordion.Header>
                                   <Accordion.Body>
                                     <div
                                       data-testid="ShelfDrawerBtnContent"
-                                      class="target-image-content Content--15Wyt Open--EFZA8"
+                                      className="target-image-content Content--15Wyt Open--EFZA8"
                                       style={{ overflow: "visible" }}
                                     >
                                       <div>
-                                        <div class="TextInputContainer--1v9KK">
+                                        <div className="TextInputContainer--1v9KK">
                                           <input
                                             data-testid="TextInput"
-                                            class="TextInput--14pX7  Editable--3ahFV"
+                                            className="TextInput--14pX7  Editable--3ahFV"
                                             type="text"
                                             value={nameInScene}
                                             onChange={(e) =>
@@ -2703,7 +2818,7 @@ const handleborderopacityValue = (event) => {
                             <div style={{ width: "100%" }}>
                               <div
                                 data-testid="ShelfDrawerBtnContent"
-                                class="Content--15Wyt Closed--2YzdP"
+                                className="Content--15Wyt Closed--2YzdP"
                                 style={{ overflow: "hidden" }}
                               ></div>
                             </div>
@@ -2711,11 +2826,11 @@ const handleborderopacityValue = (event) => {
                             <div style={{ width: "100%" }}>
                               <button
                                 data-testid="ShelfDrawerBtn"
-                                class="btn-transition-effect DrawerBtn--bdcva  "
+                                className="btn-transition-effect DrawerBtn--bdcva  "
                               >
                                 {/* start Transition show hide content  */}
                                 <div
-                                  class="TitleContainer--2xD-b title-content"
+                                  className="TitleContainer--2xD-b title-content"
                                   id="transition-affects-outer"
                                 >
                                   <Accordion.Item eventKey="4">
@@ -2726,7 +2841,7 @@ const handleborderopacityValue = (event) => {
                                     <Accordion.Body>
                                       <div
                                         data-testid="ShelfDrawerBtnContent"
-                                        class="target-image-content Content--15Wyt Open--EFZA8"
+                                        className="target-image-content Content--15Wyt Open--EFZA8"
                                         style={{ overflow: "visible" }}
                                       >
                                         <div>
@@ -2772,9 +2887,9 @@ const handleborderopacityValue = (event) => {
                                                     className="bg-light tab-content target-tab-content"
                                                   >
                                                     <Accordion>
-                                                      <div class="transition-outer">
-                                                        <div class="transition-for-all">
-                                                          <div class="first-img border-to-all">
+                                                      <div className="transition-outer">
+                                                        <div className="transition-for-all">
+                                                          <div className="first-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -2830,12 +2945,12 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU none-text">
+                                                            <div className="Title--2wreU none-text">
                                                               None
                                                             </div>
                                                           </div>
 
-                                                          <div class="second-img border-to-all">
+                                                          <div className="second-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -2902,11 +3017,11 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Slide L-R
                                                             </div>
                                                           </div>
-                                                          <div class="third-img border-to-all">
+                                                          <div className="third-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -2973,13 +3088,13 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Slide R-L
                                                             </div>
                                                           </div>
                                                         </div>
-                                                        <div class="transition-for-all">
-                                                          <div class="fourth-img border-to-all">
+                                                        <div className="transition-for-all">
+                                                          <div className="fourth-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -3087,11 +3202,11 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Slide up
                                                             </div>
                                                           </div>
-                                                          <div class="five-img border-to-all">
+                                                          <div className="five-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -3194,11 +3309,11 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Slide down
                                                             </div>
                                                           </div>
-                                                          <div class="six-img border-to-all">
+                                                          <div className="six-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -3251,13 +3366,13 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Fade-In
                                                             </div>
                                                           </div>
                                                         </div>
-                                                        <div class="transition-for-all">
-                                                          <div class="seven-img border-to-all">
+                                                        <div className="transition-for-all">
+                                                          <div className="seven-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="56"
@@ -3349,11 +3464,11 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Scale-Up
                                                             </div>
                                                           </div>
-                                                          <div class="eight-img border-to-all">
+                                                          <div className="eight-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="46"
@@ -3445,7 +3560,7 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Scale-Down
                                                             </div>
                                                           </div>
@@ -3459,9 +3574,9 @@ const handleborderopacityValue = (event) => {
                                                     className="bg-light tab-content target-tab-content"
                                                   >
                                                     <Accordion>
-                                                      <div class="transition-outer">
-                                                        <div class="transition-for-all">
-                                                          <div class="first-img border-to-all">
+                                                      <div className="transition-outer">
+                                                        <div className="transition-for-all">
+                                                          <div className="first-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="35"
@@ -3484,12 +3599,12 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU none-text">
+                                                            <div className="Title--2wreU none-text">
                                                               None
                                                             </div>
                                                           </div>
 
-                                                          <div class="second-img border-to-all">
+                                                          <div className="second-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -3556,11 +3671,11 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Slide L-R
                                                             </div>
                                                           </div>
-                                                          <div class="third-img border-to-all">
+                                                          <div className="third-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -3627,13 +3742,13 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Slide R-L
                                                             </div>
                                                           </div>
                                                         </div>
-                                                        <div class="transition-for-all">
-                                                          <div class="fourth-img border-to-all">
+                                                        <div className="transition-for-all">
+                                                          <div className="fourth-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -3741,11 +3856,11 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Slide up
                                                             </div>
                                                           </div>
-                                                          <div class="five-img border-to-all">
+                                                          <div className="five-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -3848,11 +3963,11 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Slide down
                                                             </div>
                                                           </div>
-                                                          <div class="six-img border-to-all">
+                                                          <div className="six-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -3905,13 +4020,13 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Fade-Out
                                                             </div>
                                                           </div>
                                                         </div>
-                                                        <div class="transition-for-all">
-                                                          <div class="seven-img border-to-all">
+                                                        <div className="transition-for-all">
+                                                          <div className="seven-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="56"
@@ -4003,11 +4118,11 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Scale-Up
                                                             </div>
                                                           </div>
-                                                          <div class="eight-img border-to-all">
+                                                          <div className="eight-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="46"
@@ -4099,7 +4214,7 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Scale-Down
                                                             </div>
                                                           </div>
@@ -4120,7 +4235,7 @@ const handleborderopacityValue = (event) => {
                               </button>
                               <div
                                 data-testid="ShelfDrawerBtnContent"
-                                class="Content--15Wyt Closed--2YzdP"
+                                className="Content--15Wyt Closed--2YzdP"
                                 style={{ overflow: "hidden" }}
                               ></div>
 
@@ -4136,7 +4251,7 @@ const handleborderopacityValue = (event) => {
                             <div style={{ width: "100%" }}>
                               <div
                                 data-testid="ShelfDrawerBtnContent"
-                                class="Content--15Wyt Closed--2YzdP"
+                                className="Content--15Wyt Closed--2YzdP"
                                 style={{ overflow: "hidden" }}
                               ></div>
                             </div>
@@ -4144,10 +4259,10 @@ const handleborderopacityValue = (event) => {
                             <div style={{ width: "100%" }}>
                               <button
                                 data-testid="ShelfDrawerBtn"
-                                class="btn-transition-effect DrawerBtn--bdcva  "
+                                className="btn-transition-effect DrawerBtn--bdcva  "
                               >
                                 {/* start Transition show hide content  */}
-                                <div class="TitleContainer--2xD-b title-content">
+                                <div className="TitleContainer--2xD-b title-content">
                                   <Accordion.Item eventKey="5">
                                     <Accordion.Header>
                                       {" "}
@@ -4156,14 +4271,14 @@ const handleborderopacityValue = (event) => {
                                     <Accordion.Body>
                                       <div
                                         data-testid="ShelfDrawerBtnContent"
-                                        class="target-image-content Content--15Wyt Open--EFZA8"
+                                        className="target-image-content Content--15Wyt Open--EFZA8"
                                         style={{ overflow: "visible" }}
                                       >
                                         <div>
-                                          <div class="TextInputContainer--1v9KK">
+                                          <div className="TextInputContainer--1v9KK">
                                             <input
                                               data-testid="TextInput"
-                                              class="TextInput--14pX7  Editable--3ahFV"
+                                              className="TextInput--14pX7  Editable--3ahFV"
                                               type="text"
                                               value={PhotoUIVal}
                                               onChange={(e) =>
@@ -4191,20 +4306,20 @@ const handleborderopacityValue = (event) => {
                         className="bg-light py-4 tab-content target-tab-content"
                       >
                         <Accordion>
-                          <div class="ShelfContainer--1Ad4O">
+                          <div className="ShelfContainer--1Ad4O">
                             <div style={{ width: "100%" }}>
                               <button
                                 data-testid="ShelfDrawerBtn"
-                                class="btn-transform DrawerBtn--bdcva Open--EFZA8 "
+                                className="btn-transform DrawerBtn--bdcva Open--EFZA8 "
                               ></button>
                             </div>
                             <div style={{ width: "100%" }}>
                               <button
                                 data-testid="ShelfDrawerBtn"
-                                class="btn-appearence DrawerBtn--bdcva  "
+                                className="btn-appearence DrawerBtn--bdcva  "
                               >
                                 {/* start Target-Image show hide content  */}
-                                <div class="TitleContainer--2xD-b title-content">
+                                <div className="TitleContainer--2xD-b title-content">
                                   <Accordion.Item eventKey="2">
                                     <Accordion.Header>
                                       Target Image
@@ -4212,29 +4327,29 @@ const handleborderopacityValue = (event) => {
                                     <Accordion.Body>
                                       <div
                                         data-testid="ShelfDrawerBtnContent"
-                                        class="target-image-content Content--15Wyt Open--EFZA8"
+                                        className="target-image-content Content--15Wyt Open--EFZA8"
                                         style={{ overflow: "visible" }}
                                       >
                                         <div>
                                           <div className="continer">
                                             <div
                                               data-testid="ShelfDrawerBtnContent"
-                                              class="target-image-content Content--15Wyt Open--EFZA8"
+                                              className="target-image-content Content--15Wyt Open--EFZA8"
                                               style={{ overflow: "visible" }}
                                             >
                                               <div>
                                                 <div
-                                                  class="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO "
+                                                  className="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO "
                                                   style={{
                                                     width: "100%",
                                                     height: "170px",
                                                   }}
                                                 >
                                                   
-                                                        <div class="target-overview-cover-image">
-                                                        <div class="pointer-div">
+                                                        <div className="target-overview-cover-image">
+                                                        <div className="pointer-div">
                                                         
-                                                          <span class="upload-target-img">Upload Target image</span>
+                                                          <span className="upload-target-img">Upload Target image</span>
                                                             <input type="file" className="base-img" />
                                                             
                                                           
@@ -4253,9 +4368,9 @@ const handleborderopacityValue = (event) => {
                                                   /> */}
                                                   
                                                
-                                                  {/* <div class="HoverDiv--2gksf ">
-                                                    <button class="ActionBtn--1x70k">
-                                                      <div class="EntityReplaceBtn--V4byk">
+                                                  {/* <div className="HoverDiv--2gksf ">
+                                                    <button className="ActionBtn--1x70k">
+                                                      <div className="EntityReplaceBtn--V4byk">
                                                         Replace
                                                       </div>
                                                     </button>
@@ -4269,7 +4384,7 @@ const handleborderopacityValue = (event) => {
                                                 </div>
                                               </div>
                                             </div>
-                                            <div class="replace-hover-btn">
+                                            <div className="replace-hover-btn">
                                                     <button>
                                                         Replace
                                                     </button>
@@ -4280,7 +4395,7 @@ const handleborderopacityValue = (event) => {
                                                     />
                                                   </div>
                                             <div className="row">
-                                              <p class="shared-txt" style={{ fontSize: "12px" }}>
+                                              <p className="shared-txt" style={{ fontSize: "12px" }}>
                                                 Target image is shared across
                                                 all the image tracking scenes in
                                                 your project.
@@ -4288,7 +4403,7 @@ const handleborderopacityValue = (event) => {
                                             </div>
 
                                             <div className="row opacity-div">
-                                              <p class="opacity">Opacity</p>
+                                              <p className="opacity">Opacity</p>
                                               <div>
                                                 <input
                                                   type="range"
@@ -4304,7 +4419,7 @@ const handleborderopacityValue = (event) => {
                                             </div>
 
                                             <div className="row">
-                                              <p class="orient-head">
+                                              <p className="orient-head">
                                                 Orientation
                                               </p>
                                               <Tab.Container
@@ -4385,15 +4500,15 @@ const handleborderopacityValue = (event) => {
                                                 </div>
                                               </Tab.Container>
                                             </div>
-                                            <div class="Row--2gJ1o">
-                                              <span class="Title--3nkDe">
+                                            <div className="Row--2gJ1o">
+                                              <span className="Title--3nkDe">
                                                 Dimensions
                                               </span>
-                                              <div class="SizeRow--1gy1t">
-                                                <div class="SizeRowInner--3VgZi">
+                                              <div className="SizeRow--1gy1t">
+                                                <div className="SizeRowInner--3VgZi">
                                                   <div
                                                     data-testid="NumericalInputContainerDiv"
-                                                    class="NumericalInput--3r_8a false SizeInputField--1CLRd Disabled--2q2TU"
+                                                    className="NumericalInput--3r_8a false SizeInputField--1CLRd Disabled--2q2TU"
                                                   >
                                                     <input
                                                       type="number"
@@ -4425,7 +4540,7 @@ const handleborderopacityValue = (event) => {
                                                   ></div>
                                                   <div
                                                     data-testid="NumericalInputContainerDiv"
-                                                    class="NumericalInput--3r_8a false SizeInputField--1CLRd Disabled--2q2TU"
+                                                    className="NumericalInput--3r_8a false SizeInputField--1CLRd Disabled--2q2TU"
                                                   >
                                                     <input
                                                       type="number"
@@ -4450,7 +4565,7 @@ const handleborderopacityValue = (event) => {
                                             </div>
 
                                             <div className="units-div">
-                                              <span class="Title-units">
+                                              <span className="Title-units">
                                                 Units
                                               </span>
 
@@ -4462,16 +4577,20 @@ const handleborderopacityValue = (event) => {
                                                   </Accordion.Header>
                                                   <Accordion.Body>
                                                     <div
+
                                                       class="units-inner-content"
+
+                                                      className=" "
+
                                                       data-testid="MenuList"
                                                     >
                                                       <div
-                                                        class="Option--31oUF HasNoIcon--3C9vr"
+                                                        className="Option--31oUF HasNoIcon--3C9vr"
                                                         data-testid="millimetres"
                                                         title="millimetres"
                                                       >
                                                         <div
-                                                          class="Container--Mc1y-"
+                                                          className="Container--Mc1y-"
                                                           onClick={() =>
                                                             setselectedUnit(
                                                               "millimetres"
@@ -4484,11 +4603,11 @@ const handleborderopacityValue = (event) => {
                                                         </div>
                                                       </div>
                                                       <div
-                                                        class="Option--31oUF HasNoIcon--3C9vr"
+                                                        className="Option--31oUF HasNoIcon--3C9vr"
                                                         data-testid="Option"
                                                         title="centimetres"
                                                       >
-                                                        <div class="Container--Mc1y-">
+                                                        <div className="Container--Mc1y-">
                                                           <span
                                                             onClick={() =>
                                                               setselectedUnit(
@@ -4501,11 +4620,11 @@ const handleborderopacityValue = (event) => {
                                                         </div>
                                                       </div>
                                                       <div
-                                                        class="Option--31oUF HasNoIcon--3C9vr"
+                                                        className="Option--31oUF HasNoIcon--3C9vr"
                                                         data-testid="Option"
                                                         title="inches"
                                                       >
-                                                        <div class="Container--Mc1y-">
+                                                        <div className="Container--Mc1y-">
                                                           <span
                                                             onClick={() =>
                                                               setselectedUnit(
@@ -4518,11 +4637,11 @@ const handleborderopacityValue = (event) => {
                                                         </div>
                                                       </div>
                                                       <div
-                                                        class="Option--31oUF HasNoIcon--3C9vr"
+                                                        className="Option--31oUF HasNoIcon--3C9vr"
                                                         data-testid="Option"
                                                         title="feet"
                                                       >
-                                                        <div class="Container--Mc1y-">
+                                                        <div className="Container--Mc1y-">
                                                           <span
                                                             onClick={() =>
                                                               setselectedUnit(
@@ -4535,12 +4654,12 @@ const handleborderopacityValue = (event) => {
                                                         </div>
                                                       </div>
                                                       <div
-                                                        class="Option--31oUF Active--37WPC HasNoIcon--3C9vr"
+                                                        className="Option--31oUF Active--37WPC HasNoIcon--3C9vr"
                                                         data-testid="Option"
                                                         title="coordinates"
                                                       >
                                                         <div
-                                                          class="Container--Mc1y-"
+                                                          className="Container--Mc1y-"
                                                           onClick={() =>
                                                             setselectedUnit(
                                                               "coordinates"
@@ -4569,7 +4688,7 @@ const handleborderopacityValue = (event) => {
 
                               <div
                                 data-testid="ShelfDrawerBtnContent"
-                                class="Content--15Wyt Closed--2YzdP"
+                                className="Content--15Wyt Closed--2YzdP"
                                 style={{ overflow: "hidden" }}
                               ></div>
                               <div
@@ -4583,11 +4702,11 @@ const handleborderopacityValue = (event) => {
                             <div style={{ width: "100%" }}>
                               <button
                                 data-testid="ShelfDrawerBtn"
-                                class="btn-actions DrawerBtn--bdcva  "
+                                className="btn-actions DrawerBtn--bdcva  "
                               >
                                 {/* start Backgound-Sound show hide content  */}
                                 <div
-                                  class="TitleContainer--2xD-b title-content"
+                                  className="TitleContainer--2xD-b title-content"
                                   id="browser-lib"
                                 >
                                   <Accordion.Item eventKey="3">
@@ -4598,9 +4717,9 @@ const handleborderopacityValue = (event) => {
                                       <div className="row browser-btn-div">
                                         <button
                                           data-testid="ShelfDrawerBtn"
-                                          class="btn-upload DrawerBtn--bdcva Open--EFZA8 "
+                                          className="btn-upload DrawerBtn--bdcva Open--EFZA8 "
                                         >
-                                          <div class="TitleContainer--2xD-b">
+                                          <div className="TitleContainer--2xD-b">
                                             {" "}
                                             Browse media library
                                             <RiVideoUploadLine
@@ -4622,7 +4741,7 @@ const handleborderopacityValue = (event) => {
                                         <h5>Recent files</h5>
 
                                         {/* start Recent files */}
-                                        <div class="audio-div">
+                                        <div className="audio-div">
                                           <p style={{ fontSize: "13px" }}>
                                             <GiLoveSong />
                                             Beep_2.mp3
@@ -4641,7 +4760,7 @@ const handleborderopacityValue = (event) => {
                                             </span>
                                           </p>
                                         </div>
-                                        <div class="audio-div">
+                                        <div className="audio-div">
                                           <p style={{ fontSize: "13px" }}>
                                             <GiLoveSong />
                                             Beep_2.mp3
@@ -4660,7 +4779,7 @@ const handleborderopacityValue = (event) => {
                                             </span>
                                           </p>
                                         </div>
-                                        <div class="audio-div">
+                                        <div className="audio-div">
                                           <p style={{ fontSize: "13px" }}>
                                             <GiLoveSong />
                                             Beep_2.mp3
@@ -4679,7 +4798,7 @@ const handleborderopacityValue = (event) => {
                                             </span>
                                           </p>
                                         </div>
-                                        <div class="audio-div">
+                                        <div className="audio-div">
                                           <p style={{ fontSize: "13px" }}>
                                             <GiLoveSong />
                                             Beep_2.mp3
@@ -4698,7 +4817,7 @@ const handleborderopacityValue = (event) => {
                                             </span>
                                           </p>
                                         </div>
-                                        <div class="audio-div">
+                                        <div className="audio-div">
                                           <p style={{ fontSize: "13px" }}>
                                             <GiLoveSong />
                                             Beep_2.mp3
@@ -4717,7 +4836,7 @@ const handleborderopacityValue = (event) => {
                                             </span>
                                           </p>
                                         </div>
-                                        <div class="audio-div">
+                                        <div className="audio-div">
                                           <p style={{ fontSize: "13px" }}>
                                             <GiLoveSong />
                                             Beep_2.mp3
@@ -4744,11 +4863,11 @@ const handleborderopacityValue = (event) => {
                                 </div>
                                 {/* End Backgound-Sound show hide content  */}
 
-                                {/* <svg class="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
+                                {/* <svg className="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
                               </button>
                               <div
                                 data-testid="ShelfDrawerBtnContent"
-                                class="Content--15Wyt Closed--2YzdP"
+                                className="Content--15Wyt Closed--2YzdP"
                                 style={{ overflow: "hidden" }}
                               ></div>
 
@@ -4763,17 +4882,17 @@ const handleborderopacityValue = (event) => {
                             <div style={{ width: "100%" }}>
                               <button
                                 data-testid="ShelfDrawerBtn"
-                                class="btn-transition-effect DrawerBtn--bdcva  "
+                                className="btn-transition-effect DrawerBtn--bdcva  "
                               >
                                 {/* start Analytics show hide content  */}
-                                <div class="TitleContainer--2xD-b title-content">
+                                <div className="TitleContainer--2xD-b title-content">
                                   <Accordion.Item eventKey="4">
                                     <Accordion.Header>
                                       Analytics
                                     </Accordion.Header>
                                     <Accordion.Body id="track-top">
                                       <div className="row track-with">
-                                        <span class="Title-track">
+                                        <span className="Title-track">
                                           Track with:
                                         </span>
 
@@ -4785,35 +4904,39 @@ const handleborderopacityValue = (event) => {
                                             </Accordion.Header>
                                             <Accordion.Body>
                                               <div
+
                                                 class="track-menu-list"
+
+                                                className=" "
+
                                                 data-testid="MenuList"
                                               >
                                                 <div
-                                                  class="Option--31oUF Active--37WPC HasNoIcon--3C9vr"
+                                                  className="Option--31oUF Active--37WPC HasNoIcon--3C9vr"
                                                   data-testid="Option"
                                                   title="Choose provider"
                                                 >
-                                                  <div class="Container--Mc1y-">
+                                                  <div className="Container--Mc1y-">
                                                     <span>Choose provider</span>
                                                   </div>
                                                 </div>
                                                 <div
-                                                  class="Option--31oUF HasNoIcon--3C9vr"
+                                                  className="Option--31oUF HasNoIcon--3C9vr"
                                                   data-testid="Option"
                                                   title="Google Analytics"
                                                 >
-                                                  <div class="Container--Mc1y-">
+                                                  <div className="Container--Mc1y-">
                                                     <span>
                                                       Google Analytics
                                                     </span>
                                                   </div>
                                                 </div>
                                                 <div
-                                                  class="Option--31oUF HasNoIcon--3C9vr"
+                                                  className="Option--31oUF HasNoIcon--3C9vr"
                                                   data-testid="Option"
                                                   title="Microsoft Clarity"
                                                 >
-                                                  <div class="Container--Mc1y-">
+                                                  <div className="Container--Mc1y-">
                                                     <span>
                                                       Microsoft Clarity
                                                     </span>
@@ -4826,9 +4949,9 @@ const handleborderopacityValue = (event) => {
                                         {/* start dropdown origin */}
                                         <button
                                           data-testid="ShelfDrawerBtn"
-                                          class="btn-upload DrawerBtn--bdcva Open--EFZA8 "
+                                          className="btn-upload DrawerBtn--bdcva Open--EFZA8 "
                                         >
-                                          <div class="TitleContainer--2xD-b">
+                                          <div className="TitleContainer--2xD-b">
                                             {" "}
                                             Cancel
                                           </div>
@@ -4839,11 +4962,11 @@ const handleborderopacityValue = (event) => {
                                 </div>
                                 {/* End Analytics show hide content  */}
 
-                                {/* <svg class="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
+                                {/* <svg className="Arrow--3HygK" width="4px" height="6px" viewBox="0 0 4 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title></title><path d="M0.333421 5.10001C0.149329 5.26569 0.149329 5.53432 0.333421 5.7C0.517512 5.86569 0.815984 5.86569 1.00008 5.7L3.66669 3.30002C3.85079 3.13434 3.85079 2.86571 3.66669 2.70002C3.4826 2.53434 3.18413 2.53434 3.00004 2.70002L0.333421 5.10001Z" fill="#344B60"></path><path d="M1.00023 0.299978C0.816135 0.134294 0.517663 0.134294 0.333571 0.299978C0.14948 0.465662 0.14948 0.734289 0.333572 0.899973L3.00019 3.29996C3.18428 3.46564 3.48275 3.46564 3.66685 3.29996C3.85094 3.13427 3.85094 2.86564 3.66685 2.69996L1.00023 0.299978Z" fill="#344B60"></path></svg> */}
                               </button>
                               <div
                                 data-testid="ShelfDrawerBtnContent"
-                                class="Content--15Wyt Closed--2YzdP"
+                                className="Content--15Wyt Closed--2YzdP"
                                 style={{ overflow: "hidden" }}
                               ></div>
 
@@ -4862,37 +4985,37 @@ const handleborderopacityValue = (event) => {
                     </Tab.Content>
 
                     <div
-                      class="InspectorMenu--1PeA4 2D-3D-first-div"
+                      className="InspectorMenu--1PeA4 2D-3D-first-div"
                       data-testid="InspectorMenu"
                     >
-                      <div class="ShelfContainer--1Ad4O">
+                      <div className="ShelfContainer--1Ad4O">
                         <div style={{ width: "100%" }}></div>
                       </div>
 
-                      <div class="OuterContainer--1AGzZ st">
+                      <div className="OuterContainer--1AGzZ st">
                         <div
-                          class="Switcher2d3d--1SCbh Disabled--fqu6h"
+                          className="Switcher2d3d--1SCbh Disabled--fqu6h"
                           data-testid="Switcher2d3d"
                         >
                           <button
-                            class="Inactive--945so"
+                            className="Inactive--945so"
                             data-testid="ToggleOffButton"
                           >
                             2D
                           </button>
 
-                          <label class="switch--1ZKOu">
+                          <label className="switch--1ZKOu">
                             <input
                               type="checkbox"
                               id="checkID"
                               onChange={thecheckfunction}
                               data-testid="ToggleState"
                             />
-                            <span class="slider--y3Xl-"></span>
+                            <span className="slider--y3Xl-"></span>
                           </label>
 
                           <button
-                            class="Active--3YQI9"
+                            className="Active--3YQI9"
                             data-testid="ToggleOnButton"
                           >
                             3D
@@ -4900,14 +5023,14 @@ const handleborderopacityValue = (event) => {
                         </div>
 
                         <div
-                          class="border-middle"
+                          className="border-middle"
                           style={{
                             borderLeft: "1px solid rgb(178, 196, 215)",
                             width: "auto",
                             height: "16px",
                           }}
                         ></div>
-                        <div class="ViewMenu--2ejhM">
+                        <div className="ViewMenu--2ejhM">
                           <span>27%</span>
                         </div>
                       </div>
@@ -4928,14 +5051,14 @@ const handleborderopacityValue = (event) => {
                         className="bg-light py-4 tab-content target-tab-content"
                       >
                         <div
-                          class="InspectorMenu--1PeA4 video-div-height"
+                          className="InspectorMenu--1PeA4 video-div-height"
                           data-testid="InspectorMenu"
                         >
                           <Accordion>
-                            <div class="ShelfContainer--1Ad4O">
+                            <div className="ShelfContainer--1Ad4O">
                               <div style={{ width: "100%" }}>
                                 {/* start Content show hide content  */}
-                                <div class="TitleContainer--2xD-b title-content">
+                                <div className="TitleContainer--2xD-b title-content">
                                   <Accordion.Item eventKey="0">
                                     <Accordion.Header>
                                       {" "}
@@ -4944,12 +5067,12 @@ const handleborderopacityValue = (event) => {
                                     <Accordion.Body>
                                       <div
                                         data-testid="ShelfDrawerBtnContent"
-                                        class="target-image-content Content--15Wyt Open--EFZA8"
+                                        className="target-image-content Content--15Wyt Open--EFZA8"
                                         style={{ overflow: "visible" }}
                                       >
                                         <div>
                                           <div
-                                            class="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO "
+                                            className="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO "
                                             style={{
                                               width: "100%",
                                               height: "170px",
@@ -4964,14 +5087,14 @@ const handleborderopacityValue = (event) => {
                                                 objectFit: "cover",
                                               }}
                                             />
-                                            <div class="HoverDiv--jI34Q ">
+                                            <div className="HoverDiv--jI34Q ">
                                               <button
                                                 style={{
                                                   width: "100%",
                                                   height: "100%",
                                                 }}
                                               >
-                                                <div class="SubBtn--26RUV TrkImgUploadButton--3e-ZC">
+                                                <div className="SubBtn--26RUV TrkImgUploadButton--3e-ZC">
                                                   Replace
                                                 </div>
                                               </button>
@@ -4982,13 +5105,13 @@ const handleborderopacityValue = (event) => {
                                                 style={{
                                                   margin: "-60px 0 0 0 ",
                                                   position: "relative",
-                                                  "z-index": "3",
+                                                  "zIndex": "3",
                                                 }}
                                               />
                                             </div>
-                                            <div class="HoverDiv--2gksf ">
-                                              <button class="ActionBtn--1x70k">
-                                                <div class="EntityReplaceBtn--V4byk">
+                                            <div className="HoverDiv--2gksf ">
+                                              <button className="ActionBtn--1x70k">
+                                                <div className="EntityReplaceBtn--V4byk">
                                                   Replace
                                                 </div>
                                               </button>
@@ -5017,7 +5140,7 @@ const handleborderopacityValue = (event) => {
                               <div style={{ width: "100%" }}>
                                 <div
                                   data-testid="ShelfDrawerBtnContent"
-                                  class="Content--15Wyt Closed--2YzdP"
+                                  className="Content--15Wyt Closed--2YzdP"
                                   style={{ overflow: "hidden" }}
                                 ></div>
                               </div>
@@ -5026,10 +5149,10 @@ const handleborderopacityValue = (event) => {
                               <div style={{ width: "100%" }}>
                                 <button
                                   data-testid="ShelfDrawerBtn"
-                                  class="btn-transition-effect DrawerBtn--bdcva  "
+                                  className="btn-transition-effect DrawerBtn--bdcva  "
                                 >
                                   {/* start Transition show hide content  */}
-                                  <div class="TitleContainer--2xD-b title-content" id="transition-affects-outer-two"> 
+                                  <div className="TitleContainer--2xD-b title-content" id="transition-affects-outer-two"> 
                                     <Accordion.Item eventKey="4">
                                       <Accordion.Header>
                                         {" "}
@@ -5038,7 +5161,7 @@ const handleborderopacityValue = (event) => {
                                       <Accordion.Body>
                                       <div
                                         data-testid="ShelfDrawerBtnContent"
-                                        class="target-image-content Content--15Wyt Open--EFZA8"
+                                        className="target-image-content Content--15Wyt Open--EFZA8"
                                         style={{ overflow: "visible" }}
                                       >
                                         <div>
@@ -5084,9 +5207,9 @@ const handleborderopacityValue = (event) => {
                                                     className="bg-light tab-content target-tab-content"
                                                   >
                                                     <Accordion>
-                                                      <div class="transition-outer">
-                                                        <div class="transition-for-all">
-                                                          <div class="first-img border-to-all">
+                                                      <div className="transition-outer">
+                                                        <div className="transition-for-all">
+                                                          <div className="first-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -5142,12 +5265,12 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU none-text">
+                                                            <div className="Title--2wreU none-text">
                                                               None
                                                             </div>
                                                           </div>
 
-                                                          <div class="second-img border-to-all">
+                                                          <div className="second-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -5214,11 +5337,11 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Slide L-R
                                                             </div>
                                                           </div>
-                                                          <div class="third-img border-to-all">
+                                                          <div className="third-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -5285,13 +5408,13 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Slide R-L
                                                             </div>
                                                           </div>
                                                         </div>
-                                                        <div class="transition-for-all">
-                                                          <div class="fourth-img border-to-all">
+                                                        <div className="transition-for-all">
+                                                          <div className="fourth-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -5399,11 +5522,11 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Slide up
                                                             </div>
                                                           </div>
-                                                          <div class="five-img border-to-all">
+                                                          <div className="five-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -5506,11 +5629,11 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Slide down
                                                             </div>
                                                           </div>
-                                                          <div class="six-img border-to-all">
+                                                          <div className="six-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -5563,13 +5686,13 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Fade-In
                                                             </div>
                                                           </div>
                                                         </div>
-                                                        <div class="transition-for-all">
-                                                          <div class="seven-img border-to-all">
+                                                        <div className="transition-for-all">
+                                                          <div className="seven-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="56"
@@ -5661,11 +5784,11 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Scale-Up
                                                             </div>
                                                           </div>
-                                                          <div class="eight-img border-to-all">
+                                                          <div className="eight-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="46"
@@ -5757,7 +5880,7 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Scale-Down
                                                             </div>
                                                           </div>
@@ -5771,9 +5894,9 @@ const handleborderopacityValue = (event) => {
                                                     className="bg-light tab-content target-tab-content"
                                                   >
                                                     <Accordion>
-                                                      <div class="transition-outer">
-                                                        <div class="transition-for-all">
-                                                          <div class="first-img border-to-all">
+                                                      <div className="transition-outer">
+                                                        <div className="transition-for-all">
+                                                          <div className="first-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="35"
@@ -5796,12 +5919,12 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU none-text">
+                                                            <div className="Title--2wreU none-text">
                                                               None
                                                             </div>
                                                           </div>
 
-                                                          <div class="second-img border-to-all">
+                                                          <div className="second-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -5868,11 +5991,11 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Slide L-R
                                                             </div>
                                                           </div>
-                                                          <div class="third-img border-to-all">
+                                                          <div className="third-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -5939,13 +6062,13 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Slide R-L
                                                             </div>
                                                           </div>
                                                         </div>
-                                                        <div class="transition-for-all">
-                                                          <div class="fourth-img border-to-all">
+                                                        <div className="transition-for-all">
+                                                          <div className="fourth-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -6053,11 +6176,11 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Slide up
                                                             </div>
                                                           </div>
-                                                          <div class="five-img border-to-all">
+                                                          <div className="five-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -6160,11 +6283,11 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Slide down
                                                             </div>
                                                           </div>
-                                                          <div class="six-img border-to-all">
+                                                          <div className="six-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -6217,13 +6340,13 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Fade-Out
                                                             </div>
                                                           </div>
                                                         </div>
-                                                        <div class="transition-for-all">
-                                                          <div class="seven-img border-to-all">
+                                                        <div className="transition-for-all">
+                                                          <div className="seven-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="56"
@@ -6315,11 +6438,11 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Scale-Up
                                                             </div>
                                                           </div>
-                                                          <div class="eight-img border-to-all">
+                                                          <div className="eight-img border-to-all">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="46"
@@ -6411,7 +6534,7 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
-                                                            <div class="Title--2wreU">
+                                                            <div className="Title--2wreU">
                                                               Scale-Down
                                                             </div>
                                                           </div>
@@ -6434,7 +6557,7 @@ const handleborderopacityValue = (event) => {
                               </button>
                               <div
                                 data-testid="ShelfDrawerBtnContent"
-                                class="Content--15Wyt Closed--2YzdP"
+                                className="Content--15Wyt Closed--2YzdP"
                                 style={{ overflow: "hidden" }}
                               ></div>
 
@@ -6450,7 +6573,7 @@ const handleborderopacityValue = (event) => {
                               <div style={{ width: "100%" }}>
                                 <div
                                   data-testid="ShelfDrawerBtnContent"
-                                  class="Content--15Wyt Closed--2YzdP"
+                                  className="Content--15Wyt Closed--2YzdP"
                                   style={{ overflow: "hidden" }}
                                 ></div>
                               </div>
@@ -6458,10 +6581,10 @@ const handleborderopacityValue = (event) => {
                               <div style={{ width: "100%" }}>
                                 <button
                                   data-testid="ShelfDrawerBtn"
-                                  class="btn-transition-effect DrawerBtn--bdcva  "
+                                  className="btn-transition-effect DrawerBtn--bdcva  "
                                 >
                                   {/* start tranform show hide content  */}
-                                  <div class="TitleContainer--2xD-b title-content">
+                                  <div className="TitleContainer--2xD-b title-content">
                                     <Accordion.Item eventKey="5">
                                       <Accordion.Header>
                                         {" "}
@@ -6471,18 +6594,18 @@ const handleborderopacityValue = (event) => {
                                         <div className="continer">
                                           <div
                                             data-testid="ShelfDrawerBtnContent"
-                                            class="Content--15Wyt Open--EFZA8"
+                                            className="Content--15Wyt Open--EFZA8"
                                             style={{ overflow: "visible" }}
                                           >
                                             <div data-testid="Transforms">
-                                              <div class="accor-title RowTitle--21qhU RowTitle--3Xq7s">
+                                              <div className="accor-title RowTitle--21qhU RowTitle--3Xq7s">
                                                 Size (mm)
-                                                <button class="PadLockBtn--1bnDi"></button>
+                                                <button className="PadLockBtn--1bnDi"></button>
                                               </div>
-                                              <div class="InputRow--1kdSn InputRow--2M9c1">
+                                              <div className="InputRow--1kdSn InputRow--2M9c1">
                                                 <div
                                                   data-testid="NumericalInputContainerDiv"
-                                                  class="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj false"
+                                                  className="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj false"
                                                 >
                                                   <input
                                                     type="number"
@@ -6507,7 +6630,7 @@ const handleborderopacityValue = (event) => {
                                                 ></div>
                                                 <div
                                                   data-testid="NumericalInputContainerDiv"
-                                                  class="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj false"
+                                                  className="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj false"
                                                 >
                                                   <input
                                                     type="number"
@@ -6532,7 +6655,7 @@ const handleborderopacityValue = (event) => {
                                                 ></div>
                                                 <div
                                                   data-testid="NumericalInputContainerDiv"
-                                                  class="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj Disabled--2q2TU"
+                                                  className="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj Disabled--2q2TU"
                                                 >
                                                   <input
                                                     type="number"
@@ -6548,13 +6671,13 @@ const handleborderopacityValue = (event) => {
                                                   </label>
                                                 </div>
                                               </div>
-                                              <div class="accor-title RowTitle--3Kekp RowTitle--3Xq7s title-position">
+                                              <div className="accor-title RowTitle--3Kekp RowTitle--3Xq7s title-position">
                                                 Position (mm)
                                               </div>
-                                              <div class="InputRow--VLm0n InputRow--2M9c1">
+                                              <div className="InputRow--VLm0n InputRow--2M9c1">
                                                 <div
                                                   data-testid="NumericalInputContainerDiv"
-                                                  class="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false"
+                                                  className="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false"
                                                 >
                                                   <input
                                                     type="number"
@@ -6578,7 +6701,7 @@ const handleborderopacityValue = (event) => {
                                                 ></div>
                                                 <div
                                                   data-testid="NumericalInputContainerDiv"
-                                                  class="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false"
+                                                  className="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false"
                                                 >
                                                   <input
                                                     type="number"
@@ -6602,7 +6725,7 @@ const handleborderopacityValue = (event) => {
                                                 ></div>
                                                 <div
                                                   data-testid="NumericalInputContainerDiv"
-                                                  class="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false"
+                                                  className="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false"
                                                 >
                                                   <input
                                                     type="number"
@@ -6617,13 +6740,13 @@ const handleborderopacityValue = (event) => {
                                                   </label>
                                                 </div>
                                               </div>
-                                              <div class="accor-title RowTitle--1O1Ao RowTitle--3Xq7s title-rotation">
+                                              <div className="accor-title RowTitle--1O1Ao RowTitle--3Xq7s title-rotation">
                                                 Rotation (deg)
                                               </div>
-                                              <div class="InputRow--J8Q4c InputRow--2M9c1">
+                                              <div className="InputRow--J8Q4c InputRow--2M9c1">
                                                 <div
                                                   data-testid="NumericalInputContainerDiv"
-                                                  class="NumericalInput--3r_8a false TransformInput--2C1wH TransformInput--6Bbsj false"
+                                                  className="NumericalInput--3r_8a false TransformInput--2C1wH TransformInput--6Bbsj false"
                                                 >
                                                   <input
                                                     type="number"
@@ -6647,7 +6770,7 @@ const handleborderopacityValue = (event) => {
                                                 ></div>
                                                 <div
                                                   data-testid="NumericalInputContainerDiv"
-                                                  class="NumericalInput--3r_8a false TransformInput--2C1wH TransformInput--6Bbsj false"
+                                                  className="NumericalInput--3r_8a false TransformInput--2C1wH TransformInput--6Bbsj false"
                                                 >
                                                   <input
                                                     type="number"
@@ -6671,7 +6794,7 @@ const handleborderopacityValue = (event) => {
                                                 ></div>
                                                 <div
                                                   data-testid="NumericalInputContainerDiv"
-                                                  class="NumericalInput--3r_8a false TransformInput--2C1wH TransformInput--6Bbsj false"
+                                                  className="NumericalInput--3r_8a false TransformInput--2C1wH TransformInput--6Bbsj false"
                                                 >
                                                   <input
                                                     type="number"
@@ -6686,31 +6809,31 @@ const handleborderopacityValue = (event) => {
                                                   </label>
                                                 </div>
                                               </div>
-                                              <div class="InputRow--1FGNp InputRow--2M9c1">
-                                                <div class="InputRowTitle--3HdL6 InputRowTitle--DDSWz">
+                                              <div className="InputRow--1FGNp InputRow--2M9c1">
+                                                <div className="InputRowTitle--3HdL6 InputRowTitle--DDSWz">
                                                   <span>Order</span>
                                                 </div>
                                                 <button
                                                   data-testid="TransformsOrderMoveToFront"
-                                                  class="MoveForward--18DDT"
+                                                  className="MoveForward--18DDT"
                                                 ></button>
                                                 <button
                                                   data-testid="TransformsOrderMoveForward"
-                                                  class="MoveForward--18DDT"
+                                                  className="MoveForward--18DDT"
                                                 ></button>
                                                 <button
                                                   data-testid="TransformsOrderMoveBackward"
                                                   disabled=""
-                                                  class="MoveBack--O0pO4"
+                                                  className="MoveBack--O0pO4"
                                                 ></button>
                                                 <button
                                                   data-testid="TransformsOrderMoveToBack"
                                                   disabled=""
-                                                  class="MoveBack--O0pO4"
+                                                  className="MoveBack--O0pO4"
                                                 ></button>
                                               </div>
-                                              <div class="InputRow--1bROy InputRow--2M9c1">
-                                                <div class="InputRowTitle--6kOLL InputRowTitle--DDSWz">
+                                              <div className="InputRow--1bROy InputRow--2M9c1">
+                                                <div className="InputRowTitle--6kOLL InputRowTitle--DDSWz">
                                                   <span>Mirror</span>
                                                 </div>
                                                 <button data-testid="TransformsMirrorHorizontal"></button>
@@ -6739,7 +6862,7 @@ const handleborderopacityValue = (event) => {
                               <div style={{ width: "100%" }}>
                                 <div
                                   data-testid="ShelfDrawerBtnContent"
-                                  class="Content--15Wyt Closed--2YzdP"
+                                  className="Content--15Wyt Closed--2YzdP"
                                   style={{ overflow: "hidden" }}
                                 ></div>
                               </div>
@@ -6747,10 +6870,10 @@ const handleborderopacityValue = (event) => {
                               <div style={{ width: "100%" }}>
                                 <button
                                   data-testid="ShelfDrawerBtn"
-                                  class="btn-transition-effect DrawerBtn--bdcva  "
+                                  className="btn-transition-effect DrawerBtn--bdcva  "
                                 >
                                   {/* start appearance show hide content  */}
-                                  <div class="TitleContainer--2xD-b title-content">
+                                  <div className="TitleContainer--2xD-b title-content">
                                     <Accordion.Item eventKey="6">
                                       <Accordion.Header>
                                         Appearance
@@ -6759,6 +6882,10 @@ const handleborderopacityValue = (event) => {
                                         
                                       <div className="row opacity-div">
                                           <p class="opacity">opacity</p>
+
+                                        <div className="row opacity-div">
+                                          <p className="opacity">Opacity</p>
+
                                           <div>
                                             <input
                                               type="range"
@@ -6772,16 +6899,17 @@ const handleborderopacityValue = (event) => {
                                             <p>{valueopacityborder}</p>
                                           </div>
                                         </div>
+                                        </div>
                                     
 
                                         <div className="row opacity-div">
-                                          <p class="opacity">frames</p>
-                                          <div class="frames-outer">
-                                            <div class="frames-list">
-                                              <div class="no-frame frame-for-all">
+                                          <p className="opacity">frames</p>
+                                          <div className="frames-outer">
+                                            <div className="frames-list">
+                                              <div className="no-frame frame-for-all">
                                                 <span>No Frame</span>
                                               </div>
-                                              <div class="first-frame frame-for-all">
+                                              <div className="first-frame frame-for-all">
                                                 <svg
                                                   xmlns="http://www.w3.org/2000/svg"
                                                   xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -6847,8 +6975,8 @@ const handleborderopacityValue = (event) => {
                                               </div>
                                             </div>
 
-                                            <div class="frames-list">
-                                              <div class="third-frame frame-for-all">
+                                            <div className="frames-list">
+                                              <div className="third-frame frame-for-all">
                                                 <svg
                                                   xmlns="http://www.w3.org/2000/svg"
                                                   xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -6912,7 +7040,7 @@ const handleborderopacityValue = (event) => {
                                                   </g>
                                                 </svg>
                                               </div>
-                                              <div class="fourth-frame frame-for-all">
+                                              <div className="fourth-frame frame-for-all">
                                                 <svg
                                                   xmlns="http://www.w3.org/2000/svg"
                                                   xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -6981,7 +7109,7 @@ const handleborderopacityValue = (event) => {
                                         </div>
 
                                         <div className="row opacity-div">
-                                          <p class="opacity">Corner Radius</p>
+                                          <p className="opacity">Corner Radius</p>
                                           <div>
                                             <input
                                               type="range"
@@ -6997,7 +7125,7 @@ const handleborderopacityValue = (event) => {
                                         </div>
 
                                         <div className="row opacity-div border-input">
-                                          <p class="opacity">Border width</p>
+                                          <p className="opacity">Border width</p>
                                           <div>
                                             <input
                                               type="number"
@@ -7026,7 +7154,7 @@ const handleborderopacityValue = (event) => {
                               <div style={{ width: "100%" }}>
                                 <div
                                   data-testid="ShelfDrawerBtnContent"
-                                  class="Content--15Wyt Closed--2YzdP"
+                                  className="Content--15Wyt Closed--2YzdP"
                                   style={{ overflow: "hidden" }}
                                 ></div>
                               </div>
@@ -7034,10 +7162,10 @@ const handleborderopacityValue = (event) => {
                               <div style={{ width: "100%" }}>
                                 <button
                                   data-testid="ShelfDrawerBtn"
-                                  class="btn-transition-effect DrawerBtn--bdcva  "
+                                  className="btn-transition-effect DrawerBtn--bdcva  "
                                 >
                                   {/* start action show hide content  */}
-                                  <div class="TitleContainer--2xD-b title-content">
+                                  <div className="TitleContainer--2xD-b title-content">
                                     <Accordion.Item
                                       eventKey="7"
                                       id="take-actions"
@@ -7047,7 +7175,7 @@ const handleborderopacityValue = (event) => {
                                       </Accordion.Header>
                                       <Accordion.Body id="track-top">
                                         <div className="row track-with">
-                                          <span class="Title-track">
+                                          <span className="Title-track">
                                             1. On Tap:
                                           </span>
 
@@ -7081,15 +7209,15 @@ const handleborderopacityValue = (event) => {
                                               </Accordion.Header>
                                               <Accordion.Body>
                                                 <div
-                                                  class=" "
+                                                  className=" "
                                                   data-testid="MenuList"
                                                 >
                                                   <div
-                                                    class="Option--31oUF Active--37WPC HasNoIcon--3C9vr"
+                                                    className="Option--31oUF Active--37WPC HasNoIcon--3C9vr"
                                                     data-testid="Option"
                                                     title="Animate Model"
                                                   >
-                                                    <div class="Container--Mc1y-">
+                                                    <div className="Container--Mc1y-">
                                                       <span>
                                                       <svg
                                                         xmlns="http://www.w3.org/2000/svg"
@@ -7117,11 +7245,11 @@ const handleborderopacityValue = (event) => {
                                                     </div>
                                                   </div>
                                                   <div
-                                                    class="Option--31oUF HasNoIcon--3C9vr"
+                                                    className="Option--31oUF HasNoIcon--3C9vr"
                                                     data-testid="Option"
                                                     title="play sound"
                                                   >
-                                                    <div class="Container--Mc1y-">
+                                                    <div className="Container--Mc1y-">
                                                     <span>
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
@@ -7185,11 +7313,11 @@ const handleborderopacityValue = (event) => {
                                                     </div>
                                                   </div>
                                                   <div
-                                                    class="Option--31oUF HasNoIcon--3C9vr"
+                                                    className="Option--31oUF HasNoIcon--3C9vr"
                                                     data-testid="Option"
                                                     title="play video"
                                                   >
-                                                    <div class="Container--Mc1y-">
+                                                    <div className="Container--Mc1y-">
                                                       <span> 
                                                           <svg
                                               xmlns="http://www.w3.org/2000/svg"
@@ -7211,11 +7339,11 @@ const handleborderopacityValue = (event) => {
                                                   </div>
 
                                                   <div
-                                                    class="Option--31oUF HasNoIcon--3C9vr"
+                                                    className="Option--31oUF HasNoIcon--3C9vr"
                                                     data-testid="Option"
                                                     title="play video"
                                                   >
-                                                    <div class="Container--Mc1y-">
+                                                    <div className="Container--Mc1y-">
                                                       <span> 
                                                       <svg
                                                       xmlns="http://www.w3.org/2000/svg"
@@ -7286,11 +7414,11 @@ const handleborderopacityValue = (event) => {
                                                   </div>
 
                                                   <div
-                                                    class="Option--31oUF HasNoIcon--3C9vr"
+                                                    className="Option--31oUF HasNoIcon--3C9vr"
                                                     data-testid="Option"
                                                     title="play video"
                                                   >
-                                                    <div class="Container--Mc1y-">
+                                                    <div className="Container--Mc1y-">
                                                       <span> 
                                                                                                       <svg
                                                       xmlns="http://www.w3.org/2000/svg"
@@ -7318,18 +7446,18 @@ const handleborderopacityValue = (event) => {
                                           {/* start dropdown origin */}
                                           <button
                                             data-testid="ShelfDrawerBtn"
-                                            class="btn-action-save btn-upload DrawerBtn--bdcva Open--EFZA8 action-btn-save"
+                                            className="btn-action-save btn-upload DrawerBtn--bdcva Open--EFZA8 action-btn-save"
                                           >
-                                            <div class="Title-action-save">
+                                            <div className="Title-action-save">
                                               {" "}
                                               Save
                                             </div>
                                           </button>
                                           <button
                                             data-testid="ShelfDrawerBtn"
-                                            class="btn-action-cancel action-btn-cancel"
+                                            className="btn-action-cancel action-btn-cancel"
                                           >
-                                            <div class="Title-action-cancel">
+                                            <div className="Title-action-cancel">
                                               {" "}
                                               Cancel
                                             </div>
@@ -7348,37 +7476,37 @@ const handleborderopacityValue = (event) => {
                       </Tab.Pane>
 
                       <div
-                        class="InspectorMenu--1PeA44 2D-3D-second-div"
+                        className="InspectorMenu--1PeA44 2D-3D-second-div"
                         data-testid="InspectorMenu"
                       >
-                        <div class="ShelfContainer--1Ad4O">
+                        <div className="ShelfContainer--1Ad4O">
                           <div style={{ width: "100%" }}></div>
                         </div>
 
-                        <div class="OuterContainer--1AGzZ bottom-2d-3d-height">
+                        <div className="OuterContainer--1AGzZ bottom-2d-3d-height">
                           <div
-                            class="Switcher2d3d--1SCbh Disabled--fqu6h"
+                            className="Switcher2d3d--1SCbh Disabled--fqu6h"
                             data-testid="Switcher2d3d"
                           >
                             <button
-                              class="Inactive--945so"
+                              className="Inactive--945so"
                               data-testid="ToggleOffButton"
                             >
                               2D
                             </button>
 
-                            <label class="switch--1ZKOu">
+                            <label className="switch--1ZKOu">
                               <input
                                 type="checkbox"
                                 data-testid="ToggleState"
                                 id="checkID"
                                 onChange={thecheckfunction}
                               />
-                              <span class="slider--y3Xl-"></span>
+                              <span className="slider--y3Xl-"></span>
                             </label>
 
                             <button
-                              class="Active--3YQI9"
+                              className="Active--3YQI9"
                               data-testid="ToggleOnButton"
                             >
                               3D
@@ -7386,14 +7514,14 @@ const handleborderopacityValue = (event) => {
                           </div>
 
                           <div
-                            class="border-middle"
+                            className="border-middle"
                             style={{
                               borderLeft: "1px solid rgb(178, 196, 215)",
                               width: "auto",
                               height: "16px",
                             }}
                           ></div>
-                          <div class="ViewMenu--2ejhM">
+                          <div className="ViewMenu--2ejhM">
                             <span>27%</span>
                           </div>
                         </div>
@@ -7409,20 +7537,20 @@ const handleborderopacityValue = (event) => {
         </div>
       </div>
 
-      <div class="scene-popup-div">
+      <div className="scene-popup-div">
         {/*  all scenes will be shown in this div */}
         {showScene && (
           <div className="scenes-list">
             {[...Array(count)].map((_, i) => (
               <div className="scene1">
-                <h6 class="scene-txt">Scene 1({i})</h6>
+                <h6 className="scene-txt">Scene 1({i})</h6>
               </div>
             ))}
             {/* { [...Array(count)].map((_, i) => <h6>Scene 1({i})  </h6> )} */}
           </div>
         )}
-        <div class="scene-inner-content">
-          <div class="scene-left-icon" onClick={() => setCount(count + 1)}>
+        <div className="scene-inner-content">
+          <div className="scene-left-icon" onClick={() => setCount(count + 1)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="19"
@@ -7444,7 +7572,7 @@ const handleborderopacityValue = (event) => {
               </g>
             </svg>
           </div>
-          <div class="scence-middle-content">
+          <div className="scence-middle-content">
             <Tab.Container id="bottom-scene-container" defaultActiveKey="first">
               <Row>
                 <Col>
@@ -7464,7 +7592,7 @@ const handleborderopacityValue = (event) => {
               </Row>
             </Tab.Container>
           </div>
-          <div class="scene-right-icon" onClick={handleOpenTrackerOption}>
+          <div className="scene-right-icon" onClick={handleOpenTrackerOption}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="32"
@@ -7554,6 +7682,7 @@ const handleborderopacityValue = (event) => {
               className="btn-scene"
               disabled=""
               style={{ padding: "10px 16px" }}
+              onClick={handleSubmit}
             >
               Create scene
             </button>
@@ -7573,7 +7702,7 @@ const handleborderopacityValue = (event) => {
           <Modal.Title>Create browse media popup</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div class="browse-left">
+          <div className="browse-left">
             <div className="field mb24 drop-media-outer">
               <div className="input-wrapper" id="drop-media-files">
                 <span>Choose files or drop here to upload</span>
@@ -7600,7 +7729,7 @@ const handleborderopacityValue = (event) => {
                 </svg>
               </div>
             </div>
-            <div class="browse-sort">
+            <div className="browse-sort">
               <div className="dropdown custom-drop-down browse-sort-drop-down">
                 <a
                   href="#"
@@ -7616,7 +7745,7 @@ const handleborderopacityValue = (event) => {
                   >
                     <path d="M15.5 27a.5.5 0 01.09.992L15.5 28h-4a.5.5 0 01-.09-.992L11.5 27h4zm10-8a.5.5 0 01.492.41l.008.09v6.793l2.146-2.147.07-.057a.5.5 0 01.695.695l-.057.07-3 3a.498.498 0 01-.227.13l-.084.014h-.086a.498.498 0 01-.241-.087l-.07-.057-3-3a.5.5 0 01.638-.765l.07.057L25 26.293V19.5a.5.5 0 01.5-.5zm-5 0a.5.5 0 01.09.992L20.5 20h-9a.5.5 0 01-.09-.992L11.5 19h9zm8-8a.5.5 0 01.09.992L28.5 12h-17a.5.5 0 01-.09-.992L11.5 11h17z"></path>
                   </svg>
-                  <p class="sort-head">Sort</p>
+                  <p className="sort-head">Sort</p>
                   <FontAwesomeIcon icon={faChevronDown} />
                 </a>
                 <ul className="dropdown-menu text-small shadow">
@@ -7634,7 +7763,7 @@ const handleborderopacityValue = (event) => {
                 </ul>
               </div>
             </div>
-            <div class="browse-tabs-outer">
+            <div className="browse-tabs-outer">
               <Tabs
                 defaultActiveKey="tab1"
                 id="browse-media-tabs"
@@ -7642,14 +7771,14 @@ const handleborderopacityValue = (event) => {
               >
                 <Tab eventKey="tab1" title="All">
                   <p>
-                    <div class="browse-inner-images">
-                      <div class="browse-inner-images-height">
+                    <div className="browse-inner-images">
+                      <div className="browse-inner-images-height">
                         <img src="https://i.pcmag.com/imagery/articles/01eGstfLC8DcJFtCbjOVe69-12..v1623096915.jpg"></img>
                       </div>
-                      <div class="browse-inner-images-height">
+                      <div className="browse-inner-images-height">
                         <img src="https://image.cnbcfm.com/api/v1/image/107174527-1672936231120-gettyimages-1243527327-AA_26092022_878851.jpeg?v=1681776546&w=1920&h=1080"></img>
                       </div>
-                      <div class="browse-inner-images-height">
+                      <div className="browse-inner-images-height">
                         <iframe
                           width="560"
                           height="315"
@@ -7660,7 +7789,7 @@ const handleborderopacityValue = (event) => {
                           allowfullscreen
                         ></iframe>
                       </div>
-                      <div class="browse-inner-images-height">
+                      <div className="browse-inner-images-height">
                         <img src="https://wallpapers.com/images/featured/33q6a18khxgta4ll.jpg"></img>
                       </div>
                     </div>
@@ -7668,17 +7797,17 @@ const handleborderopacityValue = (event) => {
                 </Tab>
                 <Tab eventKey="tab2" title="Image">
                   <p>
-                    <div class="browse-inner-images">
-                      <div class="browse-inner-images-height">
+                    <div className="browse-inner-images">
+                      <div className="browse-inner-images-height">
                         <img src="https://cdn.create.vista.com/api/media/small/641561126/stock-photo-absolutely-extraordinary-peacock-tail-feathers"></img>
                       </div>
-                      <div class="browse-inner-images-height">
+                      <div className="browse-inner-images-height">
                         <img src="https://us.123rf.com/450wm/alexkich/alexkich1804/alexkich180401987/99629098-open-book-and-a-table.jpg?ver=6"></img>
                       </div>
-                      <div class="browse-inner-images-height">
+                      <div className="browse-inner-images-height">
                         <img src="https://images.pexels.com/photos/5040407/pexels-photo-5040407.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"></img>
                       </div>
-                      <div class="browse-inner-images-height">
+                      <div className="browse-inner-images-height">
                         <img src="https://image.cnbcfm.com/api/v1/image/107174527-1672936231120-gettyimages-1243527327-AA_26092022_878851.jpeg?v=1681776546&w=1920&h=1080"></img>
                       </div>
                     </div>
@@ -7686,8 +7815,8 @@ const handleborderopacityValue = (event) => {
                 </Tab>
                 <Tab eventKey="tab3" title="Video">
                   <p>
-                    <div class="browse-inner-images">
-                      <div class="browse-inner-images-height">
+                    <div className="browse-inner-images">
+                      <div className="browse-inner-images-height">
                         <iframe
                           width="560"
                           height="315"
@@ -7698,7 +7827,7 @@ const handleborderopacityValue = (event) => {
                           allowfullscreen
                         ></iframe>
                       </div>
-                      <div class="browse-inner-images-height">
+                      <div className="browse-inner-images-height">
                         <iframe
                           width="560"
                           height="315"
@@ -7709,7 +7838,7 @@ const handleborderopacityValue = (event) => {
                           allowfullscreen
                         ></iframe>
                       </div>
-                      <div class="browse-inner-images-height">
+                      <div className="browse-inner-images-height">
                         <iframe
                           width="560"
                           height="315"
@@ -7720,7 +7849,7 @@ const handleborderopacityValue = (event) => {
                           allowfullscreen
                         ></iframe>
                       </div>
-                      <div class="browse-inner-images-height">
+                      <div className="browse-inner-images-height">
                         <iframe
                           width="560"
                           height="315"
@@ -7736,17 +7865,17 @@ const handleborderopacityValue = (event) => {
                 </Tab>
                 <Tab eventKey="tab4" title="3D">
                   <p>
-                    <div class="browse-inner-images">
-                      <div class="browse-inner-images-height">
+                    <div className="browse-inner-images">
+                      <div className="browse-inner-images-height">
                         <img src="https://wallpapers.com/images/hd/3d-green-cartoon-ball-with-big-eyes-h03saehyf5skb4nf.jpg"></img>
                       </div>
-                      <div class="browse-inner-images-height">
+                      <div className="browse-inner-images-height">
                         <img src="https://wallpapers.com/images/featured/33q6a18khxgta4ll.jpg"></img>
                       </div>
-                      <div class="browse-inner-images-height">
+                      <div className="browse-inner-images-height">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Bicolor_cubic_honeycomb.png/800px-Bicolor_cubic_honeycomb.png"></img>
                       </div>
-                      <div class="browse-inner-images-height">
+                      <div className="browse-inner-images-height">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCTUtwpNZwwTO1D9eT4CP88YvJNa6I9gjGrg&usqp=CAU"></img>
                       </div>
                     </div>
@@ -7755,8 +7884,8 @@ const handleborderopacityValue = (event) => {
               </Tabs>
             </div>
           </div>
-          <div class="browse-right">
-            <div class="no-img-selected">
+          <div className="browse-right">
+            <div className="no-img-selected">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="184"
@@ -7778,13 +7907,13 @@ const handleborderopacityValue = (event) => {
               </svg>
               <span>No media selected</span>
             </div>
-            <div class="when-media-selected">
-              <div class="select-file-btn-outer">
-                <button class="btn rounded-2" id="select-file-btn">
+            <div className="when-media-selected">
+              <div className="select-file-btn-outer">
+                <button className="btn rounded-2" id="select-file-btn">
                   Select file
                 </button>
               </div>
-              <div class="sort-drop-down">
+              <div className="sort-drop-down">
                 <Tab.Container
                   id="file-selects-drop-down"
                   defaultActiveKey="first"
@@ -7800,26 +7929,26 @@ const handleborderopacityValue = (event) => {
                             <Accordion.Item eventKey="0">
                               <Accordion.Header> File Info</Accordion.Header>
                               <Accordion.Body>
-                                <div class="flex acenter preview-row">
+                                <div className="flex acenter preview-row">
                                   <p>Category</p>
-                                  <p class="f1 jc-end">Image</p>
+                                  <p className="f1 jc-end">Image</p>
                                 </div>
-                                <div class="flex acenter preview-row">
+                                <div className="flex acenter preview-row">
                                   <p>Type</p>
-                                  <p class="f1 jc-end">Image</p>
+                                  <p className="f1 jc-end">Image</p>
                                 </div>
-                                <div class="flex acenter preview-row">
+                                <div className="flex acenter preview-row">
                                   <p>Date uploaded</p>
-                                  <p class="f1 jc-end">Jun 19, 2023</p>
+                                  <p className="f1 jc-end">Jun 19, 2023</p>
                                 </div>
-                                <div class="flex acenter preview-row">
+                                <div className="flex acenter preview-row">
                                   <p>Uploaded by</p>
-                                  <p class="f1 jc-end ellipsis">
+                                  <p className="f1 jc-end ellipsis">
                                     Web Developer
                                   </p>
                                 </div>
                                 <hr />
-                                <div class="delete-files-btn">
+                                <div className="delete-files-btn">
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="40"
@@ -7828,7 +7957,7 @@ const handleborderopacityValue = (event) => {
                                   >
                                     <path d="M21.714 10c1.263 0 2.286.895 2.286 2v1h4.526c.262 0 .474.224.474.5 0 .245-.168.45-.389.492l-.085.008h-1.581l-.672 12.235C26.157 28.349 24.523 30 22.546 30h-5.092c-1.977 0-3.611-1.65-3.727-3.765L13.055 14h-1.581a.487.487 0 01-.474-.5c0-.245.168-.45.389-.492l.085-.008H16v-1c0-1.105 1.023-2 2.286-2h3.428zm4.296 4H13.99l.668 12.176c.084 1.527 1.224 2.732 2.632 2.819l.164.005h5.092c1.428 0 2.617-1.148 2.781-2.65l.015-.174L26.01 14zm-8.51 4a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L17 24.5v-6a.5.5 0 01.5-.5zm5 0a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L22 24.5v-6a.5.5 0 01.5-.5zm-.7-7h-3.6c-.615 0-1.123.386-1.192.883L17 12v1h6v-1c0-.513-.463-.936-1.06-.993L21.8 11z"></path>
                                   </svg>
-                                  <span class="delete-file-txt">
+                                  <span className="delete-file-txt">
                                     Delete file
                                   </span>
                                 </div>
@@ -7847,14 +7976,14 @@ const handleborderopacityValue = (event) => {
         <Modal.Footer>
           <button
             variant="secondary"
-            class="btn-cancel-popup"
+            className="btn-cancel-popup"
             onClick={handleDeleteClose}
           >
             Cancel
           </button>
           <button
             variant="primary"
-            class="btn-delete-popup"
+            className="btn-delete-popup"
             onClick={handleDeleteClose}
           >
             Create
@@ -7862,6 +7991,66 @@ const handleborderopacityValue = (event) => {
         </Modal.Footer>
       </Modal>
       {/*end of modal***popup**for**browsse**media**/}
+
+
+       {/* Start---model data */}
+ <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        className="slectTrigger" id="ope-design-popup"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Select a tracking type for your new scene</Modal.Title>
+         </Modal.Header>
+        <Modal.Body>
+
+
+          <div className="open-designer-popup" >
+            <div className={`three-image-designer ${SceneType === "WorldTracking" ? "selected" : ""}`} onClick={event => handleSelectTarget(event , "WorldTracking")}>
+            <div className="designer-image">
+            <img src={WorldTracking}></img>
+            </div>
+            <div className="designer-content">
+            <h3>World tracking</h3>
+            <p>Place content on flat surfaces, like the ground or tabletop.</p>
+            </div>
+            </div>
+
+            <div className={`three-image-designer ${SceneType === "ImageTracking" ? "selected" : ""}`} onClick={event => handleSelectTarget(event , "ImageTracking")}>
+            <div className="designer-image">
+            <img src={ImageTracking}></img>
+            </div>
+            <div className="designer-content">
+            <h3>Image tracking</h3>
+            <p>Content will anchor to images. Great for posters.</p>
+            </div>
+            </div>
+
+            <div className={`three-image-designer ${SceneType === "FaceTracking" ? "selected" : ""}`} onClick={event => handleSelectTarget(event , "FaceTracking")}>
+            <div className="designer-image">
+            <img src={faceTracking}></img>
+            </div>
+            <div className="designer-content">
+            <h3>Face tracking</h3>
+            <p>Attach content to anchor points on parts of the face.</p>
+            </div>
+            </div>
+
+           
+          </div>
+          <div className="scene-outer">
+            <button className="btn-scene" disabled="" style={{padding: "10px 16px"}} onClick={handleSubmit}>Create scene</button>
+            </div>
+		    <>
+       
+       
+        </>
+          
+        </Modal.Body>
+      </Modal>
+      {/* End---model data */}
     </div>
   );
 };
