@@ -1044,6 +1044,14 @@ const twoDThreeD=(id)=>{
       });
   };
 
+  const [ToggleButton , ButtonShow] = useState(false);
+  const ToggleButtonShow =(e) =>{
+    e.stopPropagation()
+    e.preventDefault();
+    ButtonShow(!ToggleButton)
+  }
+
+
   // function to change password
   // http://18.230.11.54:8001/changepassword/
   // payload :-> old_password,new_password
@@ -3193,6 +3201,7 @@ const handleborderopacityValue = (event) => {
                                                         </div>
                                                         <div className="transition-for-all">
                                                           <div className="fourth-img border-to-all">
+                                                            <div class="only-slide-img">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -3300,11 +3309,13 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
+                                                            </div>
                                                             <div className="Title--2wreU">
                                                               Slide up
                                                             </div>
                                                           </div>
                                                           <div className="five-img border-to-all">
+                                                          <div class="only-slide-img">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -3407,11 +3418,13 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
+                                                            </div>
                                                             <div className="Title--2wreU">
                                                               Slide down
                                                             </div>
                                                           </div>
                                                           <div className="six-img border-to-all">
+                                                          <div class="only-slide-img">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
@@ -3464,6 +3477,7 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
+                                                            </div>
                                                             <div className="Title--2wreU">
                                                               Fade-In
                                                             </div>
@@ -3471,6 +3485,7 @@ const handleborderopacityValue = (event) => {
                                                         </div>
                                                         <div className="transition-for-all">
                                                           <div className="seven-img border-to-all">
+                                                          <div class="only-slide-img">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="56"
@@ -3562,11 +3577,13 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
+                                                            </div>
                                                             <div className="Title--2wreU">
                                                               Scale-Up
                                                             </div>
                                                           </div>
                                                           <div className="eight-img border-to-all">
+                                                          <div class="only-slide-img">
                                                             <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="46"
@@ -3658,6 +3675,7 @@ const handleborderopacityValue = (event) => {
                                                                 </g>
                                                               </g>
                                                             </svg>
+                                                            </div>
                                                             <div className="Title--2wreU">
                                                               Scale-Down
                                                             </div>
@@ -7661,11 +7679,29 @@ const handleborderopacityValue = (event) => {
       </div>
 
       <div className="scene-popup-div">
+   
         {/*  all scenes will be shown in this div */}
         {showScene && (
           <div className="scenes-list">
+             
             {[...Array(count)].map((_, i) => (
               <div className="scene1">
+                  <div className="dropdown-menu-svg" direction="bottom-left">
+                              <button class="btn btn-dots" id="profile-dots" slot="toggle" onClick={ToggleButtonShow}>
+                                <svg xmlns="http://www.w3.org/2000/svg"  width="40"  height="40"  viewBox="0 0 40 40">
+                                <path  fillRule="evenodd"  d="M20 25a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0-6.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0-6.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"></path>
+                                </svg>
+                              </button>
+                              { ToggleButton && ( 
+                                <ul slot="body" class="profile-list">
+                                  <li class="edit-cover">Duplicate</li>
+                                  <li class="edit-cover">Rename</li>
+                                  <li class="danger">
+                                    Delete
+                                  </li>
+                                </ul>
+                              )}
+        </div>
                 <h6 className="scene-txt">Scene 1({i})</h6>
               </div>
             ))}
