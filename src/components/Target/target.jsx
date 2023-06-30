@@ -359,10 +359,24 @@ const twoDThreeD=(id)=>{
       .catch(function (error) {});
   }, []);
   const [showbrowsemedia, setbrowsemedia] = useState(false);
+  const [showvideomedia, setvideomedia] = useState(false);
+  const [showthreedmodal, setthreedmodal] = useState(false);
   /***********createbrowsemediapopup***************************** */
 
   const handleDeleteClose = () => setbrowsemedia(false);
   const handleshowbrowsemedia = () => setbrowsemedia(true);
+
+ /***********createvideomediapopup***************************** */
+
+
+  const handlevideoDeleteClose = () => setvideomedia(false);
+  const handleshowvideomedia = () => setvideomedia(true);
+
+   /***********create3Dmodalpopup***************************** */
+
+
+   const handlethreedDeleteClose = () => setthreedmodal(false);
+   const handleshowthreedmodal = () => setthreedmodal(true);
 
   // Get All Project Data --------------------------------------------------------------------------->
   useEffect(() => {
@@ -2612,7 +2626,54 @@ const handleborderopacityValue = (event) => {
                       Videos
                       <i className="bi bi-question-circle text-muted fs-6"></i>
                     </p>
-                    <div className="mt-3">
+
+                    <div className="mt-3" id="videos-popup">
+                      <div className="images-btn-outer">
+                        <div className="browse-btn-outer">
+                          <button
+                            className="btn rounded-2"
+                            id="browse-btn"
+                            onClick={handleshowvideomedia}
+                          >
+                           Browse media library
+                          </button>
+                        </div>
+                        <div className="upload-btn-outer">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                          >
+                            <g clipPath="url(#clip0_1953_9492)">
+                              <path
+                                fill="#4A90E2"
+                                d="M.8 9.2a.4.4 0 01-.394-.328L.4 8.8V1.6C.4.985.835.465 1.41.406L1.52.4h12.96c.591 0 1.062.484 1.115 1.086l.005.114v7.2a.4.4 0 01-.794.072L14.8 8.8V1.6c0-.204-.121-.361-.265-.394L14.48 1.2H1.52c-.148 0-.286.134-.315.326L1.2 1.6v7.2a.4.4 0 01-.4.4zm7.2 6a.4.4 0 01-.394-.328L7.6 14.8V6.966L5.883 8.683l-.056.046a.4.4 0 01-.51-.612l2.4-2.4a.398.398 0 01.182-.104l.067-.012h.068a.398.398 0 01.193.07l.056.046 2.4 2.4a.4.4 0 01-.51.612l-.056-.046L8.4 6.966V14.8a.4.4 0 01-.4.4z"
+                              ></path>
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_1953_9492">
+                                <path fill="#fff" d="M0 0H16V16H0z"></path>
+                              </clipPath>
+                            </defs>
+                          </svg> 
+                          <input class="video-upload"
+                            type="file"
+                            id="img-upload"
+                            onChange={handleInputChange}
+                          />
+                           {/* <input
+                          type="file"
+                          id="video-upload"
+                          className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2"
+                           onChange={handleImageInput}
+                        /> */}
+                        </div>
+                      </div>
+                     
+                    </div>
+
+                    {/* <div className="mt-3">
                       <form className="form" encType="multipart/form-data">
                         <input
                           type="file"
@@ -2621,9 +2682,10 @@ const handleborderopacityValue = (event) => {
                           onChange={handleInputChange}
                         />
                       </form>
+                      </div> */}
                       {/* >Browse media library</button> */}
                       {/* <button className="btn text-dark border-1 border-dark rounded-2"><i className="bi bi-upload"></i></button> */}
-                    </div>
+                   
                   </Tab.Pane>
 
                   <Tab.Pane
@@ -2632,18 +2694,54 @@ const handleborderopacityValue = (event) => {
                   >
                     <p className="m-0 fs-4 fw-semibold">
                       3D
-                      <i className="bi bi-question-circle text-muted fs-6"></i>
                     </p>
-                    <div className="mt-3">
-                      <input
+
+                    <div className="mt-3" id="threeD-modal-popup">
+                      <div className="images-btn-outer">
+                        <div className="browse-btn-outer">
+                          <button
+                            className="btn rounded-2"
+                            id="browse-btn"
+                            onClick={handleshowthreedmodal}
+                          >
+                           Browse media library
+                          </button>
+                        </div>
+                        <div className="upload-btn-outer">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                          >
+                            <g clipPath="url(#clip0_1953_9492)">
+                              <path
+                                fill="#4A90E2"
+                                d="M.8 9.2a.4.4 0 01-.394-.328L.4 8.8V1.6C.4.985.835.465 1.41.406L1.52.4h12.96c.591 0 1.062.484 1.115 1.086l.005.114v7.2a.4.4 0 01-.794.072L14.8 8.8V1.6c0-.204-.121-.361-.265-.394L14.48 1.2H1.52c-.148 0-.286.134-.315.326L1.2 1.6v7.2a.4.4 0 01-.4.4zm7.2 6a.4.4 0 01-.394-.328L7.6 14.8V6.966L5.883 8.683l-.056.046a.4.4 0 01-.51-.612l2.4-2.4a.398.398 0 01.182-.104l.067-.012h.068a.398.398 0 01.193.07l.056.046 2.4 2.4a.4.4 0 01-.51.612l-.056-.046L8.4 6.966V14.8a.4.4 0 01-.4.4z"
+                              ></path>
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_1953_9492">
+                                <path fill="#fff" d="M0 0H16V16H0z"></path>
+                              </clipPath>
+                            </defs>
+                          </svg> 
+                          <input class="3D-modal-upload"
+                            type="file"
+                            id="img-upload"
+                            onChange={handle3Dmodel}
+                          />
+                            {/* <input
                         type="file"
                         id="3D-upload"
                         className="btn btn-dark border-1 border-dark pt-2 pe-5 ps-5 pb-2 text-white rounded-2"
                         onChange={handle3Dmodel}
-                      />
-                      {/* >Browse media library</button> */}
-                      {/* <button className="btn text-dark border-1 border-dark rounded-2"><i className="bi bi-upload"></i></button> */}
+                      /> */}
+                        </div>
+                      </div>
+                     
                     </div>
+                   
                   </Tab.Pane>
                   <Tab.Pane
                    eventKey={isOpen ? "sixth" : null} onClick={()=>setisOpen(!isOpen)}
@@ -2862,7 +2960,7 @@ const handleborderopacityValue = (event) => {
                                                         className="nav-link p-0 m-0 fw-bold link-dark enter-text"
                                                       >
                                                         {" "}
-                                                        Enter-1
+                                                        Enter-111
                                                       </a>
                                                     </Nav.Link>
                                                   </Nav.Item>
@@ -3564,6 +3662,12 @@ const handleborderopacityValue = (event) => {
                                                               Scale-Down
                                                             </div>
                                                           </div>
+                                                          <div className="nine-img border-to-all">
+                                                       
+                                                            <div className="Title--2wreU">
+                                                              Scale-Down-dummy
+                                                            </div>
+                                                          </div>
                                                         </div>
                                                       </div>
                                                     </Accordion>
@@ -3968,7 +4072,7 @@ const handleborderopacityValue = (event) => {
                                                             </div>
                                                           </div>
                                                           <div className="six-img border-to-all">
-                                                            <svg
+                                                          <svg
                                                               xmlns="http://www.w3.org/2000/svg"
                                                               width="68"
                                                               height="68"
@@ -4218,6 +4322,12 @@ const handleborderopacityValue = (event) => {
                                                               Scale-Down
                                                             </div>
                                                           </div>
+                                                          <div className="nine-img border-to-all">
+                                                       
+                                                       <div className="Title--2wreU">
+                                                         Scale-Down-dummy
+                                                       </div>
+                                                     </div>
                                                         </div>
                                                       </div>
                                                     </Accordion>
@@ -5182,7 +5292,7 @@ const handleborderopacityValue = (event) => {
                                                         className="nav-link p-0 m-0 fw-bold link-dark enter-text"
                                                       >
                                                         {" "}
-                                                        Enter-1
+                                                        Enter-12
                                                       </a>
                                                     </Nav.Link>
                                                   </Nav.Item>
@@ -5884,6 +5994,13 @@ const handleborderopacityValue = (event) => {
                                                               Scale-Down
                                                             </div>
                                                           </div>
+
+                                                          <div className="nine-img border-to-all">
+                                                       
+                                                       <div className="Title--2wreU">
+                                                         Scale-Down-dummy
+                                                       </div>
+                                                     </div>
                                                         </div>
                                                       </div>
                                                     </Accordion>
@@ -6538,6 +6655,12 @@ const handleborderopacityValue = (event) => {
                                                               Scale-Down
                                                             </div>
                                                           </div>
+                                                          <div className="nine-img border-to-all">
+                                                       
+                                                       <div className="Title--2wreU">
+                                                         Scale-Down-dummy
+                                                       </div>
+                                                     </div>
                                                         </div>
                                                       </div>
                                                     </Accordion>
@@ -7992,6 +8115,607 @@ const handleborderopacityValue = (event) => {
       </Modal>
       {/*end of modal***popup**for**browsse**media**/}
 
+
+    {/*start of modal***popup**for**video**media**/}
+    <Modal
+        id="browse-video-popup"
+        show={showvideomedia}
+        onHide={handlevideoDeleteClose}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Create browse media popup</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="browse-left">
+            <div className="field mb24 drop-media-outer">
+              <div className="input-wrapper" id="drop-media-files">
+                <span>Choose files or drop here to upload</span>
+                <input
+                  type="file"
+                  id="img-upload-popup"
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            <div className="field f1 search-browse">
+              <div className="input-wrapper">
+                <input type="search" placeholder="Search labels" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="40"
+                  height="40"
+                  viewBox="0 0 40 40"
+                >
+                  <path
+                    fill="#344B60"
+                    d="M19 11a8 8 0 015.999 13.293l4.272 4.287a.5.5 0 01-.64.764l-.069-.058L24.292 25A8 8 0 1119 11zm0 1a7 7 0 104.848 12.049.412.412 0 01.085-.117.5.5 0 01.115-.086A6.96 6.96 0 0026 19a7 7 0 00-7-7z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div className="browse-sort">
+              <div className="dropdown custom-drop-down browse-sort-drop-down">
+                <a
+                  href="#"
+                  className="navbar-profile-toggle link-light text-decoration-none dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="40"
+                    height="40"
+                    viewBox="0 0 40 40"
+                  >
+                    <path d="M15.5 27a.5.5 0 01.09.992L15.5 28h-4a.5.5 0 01-.09-.992L11.5 27h4zm10-8a.5.5 0 01.492.41l.008.09v6.793l2.146-2.147.07-.057a.5.5 0 01.695.695l-.057.07-3 3a.498.498 0 01-.227.13l-.084.014h-.086a.498.498 0 01-.241-.087l-.07-.057-3-3a.5.5 0 01.638-.765l.07.057L25 26.293V19.5a.5.5 0 01.5-.5zm-5 0a.5.5 0 01.09.992L20.5 20h-9a.5.5 0 01-.09-.992L11.5 19h9zm8-8a.5.5 0 01.09.992L28.5 12h-17a.5.5 0 01-.09-.992L11.5 11h17z"></path>
+                  </svg>
+                  <p className="sort-head">Sort</p>
+                  <FontAwesomeIcon icon={faChevronDown} />
+                </a>
+                <ul className="dropdown-menu text-small shadow">
+                  <li>
+                    <a className="dropdown-item"> By date uploaded</a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      By file name
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item">Ny file type</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="browse-tabs-outer">
+              <Tabs
+                defaultActiveKey="tab1"
+                id="browse-media-tabs"
+                className="mt-3"
+              >
+                <Tab eventKey="tab1" title="All">
+                  <p>
+                    <div className="browse-inner-images">
+                      <div className="browse-inner-images-height">
+                        <img src="https://i.pcmag.com/imagery/articles/01eGstfLC8DcJFtCbjOVe69-12..v1623096915.jpg"></img>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <img src="https://image.cnbcfm.com/api/v1/image/107174527-1672936231120-gettyimages-1243527327-AA_26092022_878851.jpeg?v=1681776546&w=1920&h=1080"></img>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <iframe
+                          width="560"
+                          height="315"
+                          src="https://www.youtube.com/embed/IUN664s7N-c"
+                          title="YouTube video player"
+                          frameborder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen
+                        ></iframe>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <img src="https://wallpapers.com/images/featured/33q6a18khxgta4ll.jpg"></img>
+                      </div>
+                    </div>
+                  </p>
+                </Tab>
+                <Tab eventKey="tab2" title="Image">
+                  <p>
+                    <div className="browse-inner-images">
+                      <div className="browse-inner-images-height">
+                        <img src="https://cdn.create.vista.com/api/media/small/641561126/stock-photo-absolutely-extraordinary-peacock-tail-feathers"></img>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <img src="https://us.123rf.com/450wm/alexkich/alexkich1804/alexkich180401987/99629098-open-book-and-a-table.jpg?ver=6"></img>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <img src="https://images.pexels.com/photos/5040407/pexels-photo-5040407.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"></img>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <img src="https://image.cnbcfm.com/api/v1/image/107174527-1672936231120-gettyimages-1243527327-AA_26092022_878851.jpeg?v=1681776546&w=1920&h=1080"></img>
+                      </div>
+                    </div>
+                  </p>
+                </Tab>
+                <Tab eventKey="tab3" title="Video">
+                  <p>
+                    <div className="browse-inner-images">
+                      <div className="browse-inner-images-height">
+                        <iframe
+                          width="560"
+                          height="315"
+                          src="https://www.youtube.com/embed/IUN664s7N-c"
+                          title="YouTube video player"
+                          frameborder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen
+                        ></iframe>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <iframe
+                          width="560"
+                          height="315"
+                          src="https://www.youtube.com/embed/IUN664s7N-c"
+                          title="YouTube video player"
+                          frameborder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen
+                        ></iframe>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <iframe
+                          width="560"
+                          height="315"
+                          src="https://www.youtube.com/embed/IUN664s7N-c"
+                          title="YouTube video player"
+                          frameborder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen
+                        ></iframe>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <iframe
+                          width="560"
+                          height="315"
+                          src="https://www.youtube.com/embed/IUN664s7N-c"
+                          title="YouTube video player"
+                          frameborder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen
+                        ></iframe>
+                      </div>
+                    </div>
+                  </p>
+                </Tab>
+                <Tab eventKey="tab4" title="3D">
+                  <p>
+                    <div className="browse-inner-images">
+                      <div className="browse-inner-images-height">
+                        <img src="https://wallpapers.com/images/hd/3d-green-cartoon-ball-with-big-eyes-h03saehyf5skb4nf.jpg"></img>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <img src="https://wallpapers.com/images/featured/33q6a18khxgta4ll.jpg"></img>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Bicolor_cubic_honeycomb.png/800px-Bicolor_cubic_honeycomb.png"></img>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCTUtwpNZwwTO1D9eT4CP88YvJNa6I9gjGrg&usqp=CAU"></img>
+                      </div>
+                    </div>
+                  </p>
+                </Tab>
+              </Tabs>
+            </div>
+          </div>
+          <div className="browse-right">
+            <div className="no-img-selected">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="184"
+                fill="none"
+                viewBox="0 0 149 150"
+              >
+                <path
+                  fill="#EFF3F6"
+                  fillRule="evenodd"
+                  d="M57.77 27.271a5.5 5.5 0 100-11 5.5 5.5 0 000 11zm19 122c32.309 0 58.501-4.925 58.501-11s-26.192-11-58.5-11c-32.309 0-58.5 4.925-58.5 11s26.191 11 58.5 11zm34.902-101h-7.017l-2.327-5.444-4.925-2.843c-.632-.365-1.08-.91-1.293-1.495-.214-.585-.194-1.211.111-1.74l4.421-7.658c.306-.528.838-.86 1.452-.967.614-.107 1.309.009 1.94.373l4.94 2.852 11.939-1.443a.736.736 0 01.727 1.1l-9.968 17.265zm4.978.49a5.977 5.977 0 00-2.379-.49h-.09a1 1 0 011.048-1.702c.489.282 1.138.316 1.849.023.712-.294 1.431-.903 1.941-1.785.51-.883.677-1.81.575-2.574-.101-.762-.455-1.307-.943-1.59a1 1 0 111-1.732c1.137.657 1.761 1.82 1.926 3.058.164 1.238-.115 2.606-.826 3.838-.711 1.231-1.756 2.157-2.91 2.633a4.707 4.707 0 01-1.191.321zm3.553 4.602a5.985 5.985 0 00-.649-1.938c1.479-.907 2.853-2.288 3.881-4.07 1.323-2.292 1.788-4.749 1.509-6.847-.279-2.096-1.284-3.78-2.857-4.688a1 1 0 111-1.732c2.222 1.283 3.498 3.584 3.839 6.157.342 2.571-.234 5.47-1.759 8.11-1.271 2.203-3.027 3.923-4.964 5.008zm-99.99 23.762l7.008-37.682 7.266 4.227a6.005 6.005 0 00-.216 1.6l.148 19h2.352v6.553l-16.557 6.302zM73.539 48.27l-8.563-4.865c.192.587.296 1.214.296 1.865v3h8.267zm-15.84-9l-3.33-1.892-1.186 1.892h4.516z"
+                  clipRule="evenodd"
+                ></path>
+                <path
+                  fill="#D1DCE7"
+                  fillRule="evenodd"
+                  d="M68.253 3.195L4.943 27.06a3 3 0 00-1.749 3.866L19.421 73.97a3 3 0 003.865 1.749l11.383-4.291-.398-10.157v-16a6 6 0 016-6h19a6 6 0 016 6v3h49a6 6 0 016 6v7l-.3 7.647a2.988 2.988 0 001.003-1.042l19-32.909a3 3 0 00-1.098-4.098l-32.909-19a3 3 0 00-4.098 1.098L87.64 37.612l3.512 9.316c.167.443.278.893.337 1.343h-3.052a3.054 3.054 0 00-.092-.285L72.12 4.944a3 3 0 00-3.866-1.748zm48.898 61.076h-79.76l1.576 40.196a5 5 0 004.996 4.804h53.438a6.333 6.333 0 016.432-1.942l4.305 1.266-14.559-25.217c-1.421-2.257-1.295-5.153.316-7.246a6.218 6.218 0 016.882-2.107 6.299 6.299 0 013.893 2.95l6.32 10.948a6.467 6.467 0 011.91-1.645 6.057 6.057 0 013.421-.838l.83-21.169zm.12-3v-7a3 3 0 00-3-3h-52v-6a3 3 0 00-3-3h-19a3 3 0 00-3 3v16h80zm2.015 25.12l.556-14.197a5.982 5.982 0 003.73-2.818l19-32.909a6 6 0 00-2.196-8.196l-32.909-19a6 6 0 00-8.196 2.196l-13 22.515L74.927 3.885A6 6 0 0067.195.387L3.885 24.254a6 6 0 00-3.498 7.731l16.227 43.043a6 6 0 007.73 3.498l10.449-3.94 1.176 29.999a8 8 0 007.994 7.686h52.001a6.34 6.34 0 00.408 3.569 6.752 6.752 0 003.697 3.695l17.633 6.63c5.375 2.046 11.352 1.606 16.327-1.201l6.433-3.714a17.006 17.006 0 007.972-10.453 17.398 17.398 0 00-1.798-13.132l-7.514-13.015c-1.762-3.05-5.635-4.112-8.651-2.37a6.218 6.218 0 00-2.27 2.258 6.146 6.146 0 00-6.432-.308 6.365 6.365 0 00-2.303 2.279 8.07 8.07 0 00-.18-.119zm19.552 32.046l-6.433 3.714a16.293 16.293 0 01-13.811 1.149l-17.658-6.751a3.315 3.315 0 01-1.894-1.889 3.057 3.057 0 01.104-2.682 3.261 3.261 0 013.801-1.697l6.542 1.736a1.958 1.958 0 001.619-.212c.264-.078.504-.217.704-.406a2.23 2.23 0 00.189-2.459L96.346 81.826a2.994 2.994 0 01-.481-2.614 3.04 3.04 0 011.454-1.97 3.234 3.234 0 012.399-.255 3.072 3.072 0 011.939 1.502l10.762 18.64a1.22 1.22 0 001.065.806c.481.031.931-.228 1.144-.66a1.22 1.22 0 00-.165-1.325l-1.448-2.508c-.677-1.534-.103-3.323 1.333-4.152 1.436-.83 3.272-.432 4.262.921l2.779 4.813c.335.58 1.072.782 1.645.451.273-.157.469-.42.544-.727a1.178 1.178 0 00-.145-.904l-1.448-2.508c-.908-1.572-.384-3.575 1.171-4.472 1.554-.897 3.55-.35 4.458 1.222l2.818 4.88a1.203 1.203 0 001.52.273c.502-.29.722-.9.523-1.452l-1.467-2.542c-.886-1.535-.375-3.49 1.143-4.366 1.517-.876 3.466-.342 4.352 1.193l7.436 12.88a14.722 14.722 0 011.555 10.896c-.917 3.647-3.408 6.739-6.656 8.589z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+              <span>No media selected</span>
+            </div>
+            <div className="when-media-selected">
+              <div className="select-file-btn-outer">
+                <button className="btn rounded-2" id="select-file-btn">
+                  Select file
+                </button>
+              </div>
+              <div className="sort-drop-down">
+                <Tab.Container
+                  id="file-selects-drop-down"
+                  defaultActiveKey="first"
+                >
+                  <Row className="flex-column justify-content-between tab-list">
+                    <Col>
+                      <Tab.Content>
+                        <Tab.Pane
+                          eventKey="first"
+                          className="bg-light py-4 tab-content target-tab-content"
+                        >
+                          <Accordion>
+                            <Accordion.Item eventKey="0">
+                              <Accordion.Header> File Info</Accordion.Header>
+                              <Accordion.Body>
+                                <div className="flex acenter preview-row">
+                                  <p>Category</p>
+                                  <p className="f1 jc-end">Image</p>
+                                </div>
+                                <div className="flex acenter preview-row">
+                                  <p>Type</p>
+                                  <p className="f1 jc-end">Image</p>
+                                </div>
+                                <div className="flex acenter preview-row">
+                                  <p>Date uploaded</p>
+                                  <p className="f1 jc-end">Jun 19, 2023</p>
+                                </div>
+                                <div className="flex acenter preview-row">
+                                  <p>Uploaded by</p>
+                                  <p className="f1 jc-end ellipsis">
+                                    Web Developer
+                                  </p>
+                                </div>
+                                <hr />
+                                <div className="delete-files-btn">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="40"
+                                    height="40"
+                                    viewBox="0 0 40 40"
+                                  >
+                                    <path d="M21.714 10c1.263 0 2.286.895 2.286 2v1h4.526c.262 0 .474.224.474.5 0 .245-.168.45-.389.492l-.085.008h-1.581l-.672 12.235C26.157 28.349 24.523 30 22.546 30h-5.092c-1.977 0-3.611-1.65-3.727-3.765L13.055 14h-1.581a.487.487 0 01-.474-.5c0-.245.168-.45.389-.492l.085-.008H16v-1c0-1.105 1.023-2 2.286-2h3.428zm4.296 4H13.99l.668 12.176c.084 1.527 1.224 2.732 2.632 2.819l.164.005h5.092c1.428 0 2.617-1.148 2.781-2.65l.015-.174L26.01 14zm-8.51 4a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L17 24.5v-6a.5.5 0 01.5-.5zm5 0a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L22 24.5v-6a.5.5 0 01.5-.5zm-.7-7h-3.6c-.615 0-1.123.386-1.192.883L17 12v1h6v-1c0-.513-.463-.936-1.06-.993L21.8 11z"></path>
+                                  </svg>
+                                  <span className="delete-file-txt">
+                                    Delete file
+                                  </span>
+                                </div>
+                              </Accordion.Body>
+                            </Accordion.Item>
+                          </Accordion>
+                        </Tab.Pane>
+                      </Tab.Content>
+                    </Col>
+                  </Row>
+                </Tab.Container>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            variant="secondary"
+            className="btn-cancel-popup"
+            onClick={handlevideoDeleteClose}
+          >
+            Cancel
+          </button>
+          <button
+            variant="primary"
+            className="btn-delete-popup"
+            onClick={handlevideoDeleteClose}
+          >
+            Create
+          </button>
+        </Modal.Footer>
+      </Modal>
+      {/*end of modal***popup**for**video**media**/}
+
+
+       {/*start of modal***popup**for**browsse**media**/}
+       <Modal
+        id="threedmodalpopup"
+        show={showthreedmodal}
+        onHide={handlethreedDeleteClose}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Create browse media popup</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="browse-left">
+            <div className="field mb24 drop-media-outer">
+              <div className="input-wrapper" id="drop-media-files">
+                <span>Choose files or drop here to upload</span>
+                <input
+                  type="file"
+                  id="img-upload-popup"
+                  onChange={handleImageInput}
+                />
+              </div>
+            </div>
+            <div className="field f1 search-browse">
+              <div className="input-wrapper">
+                <input type="search" placeholder="Search labels" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="40"
+                  height="40"
+                  viewBox="0 0 40 40"
+                >
+                  <path
+                    fill="#344B60"
+                    d="M19 11a8 8 0 015.999 13.293l4.272 4.287a.5.5 0 01-.64.764l-.069-.058L24.292 25A8 8 0 1119 11zm0 1a7 7 0 104.848 12.049.412.412 0 01.085-.117.5.5 0 01.115-.086A6.96 6.96 0 0026 19a7 7 0 00-7-7z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div className="browse-sort">
+              <div className="dropdown custom-drop-down browse-sort-drop-down">
+                <a
+                  href="#"
+                  className="navbar-profile-toggle link-light text-decoration-none dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="40"
+                    height="40"
+                    viewBox="0 0 40 40"
+                  >
+                    <path d="M15.5 27a.5.5 0 01.09.992L15.5 28h-4a.5.5 0 01-.09-.992L11.5 27h4zm10-8a.5.5 0 01.492.41l.008.09v6.793l2.146-2.147.07-.057a.5.5 0 01.695.695l-.057.07-3 3a.498.498 0 01-.227.13l-.084.014h-.086a.498.498 0 01-.241-.087l-.07-.057-3-3a.5.5 0 01.638-.765l.07.057L25 26.293V19.5a.5.5 0 01.5-.5zm-5 0a.5.5 0 01.09.992L20.5 20h-9a.5.5 0 01-.09-.992L11.5 19h9zm8-8a.5.5 0 01.09.992L28.5 12h-17a.5.5 0 01-.09-.992L11.5 11h17z"></path>
+                  </svg>
+                  <p className="sort-head">Sort</p>
+                  <FontAwesomeIcon icon={faChevronDown} />
+                </a>
+                <ul className="dropdown-menu text-small shadow">
+                  <li>
+                    <a className="dropdown-item"> By date uploaded</a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      By file name
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item">Ny file type</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="browse-tabs-outer">
+              <Tabs
+                defaultActiveKey="tab1"
+                id="browse-media-tabs"
+                className="mt-3"
+              >
+                <Tab eventKey="tab1" title="All">
+                  <p>
+                    <div className="browse-inner-images">
+                      <div className="browse-inner-images-height">
+                        <img src="https://i.pcmag.com/imagery/articles/01eGstfLC8DcJFtCbjOVe69-12..v1623096915.jpg"></img>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <img src="https://image.cnbcfm.com/api/v1/image/107174527-1672936231120-gettyimages-1243527327-AA_26092022_878851.jpeg?v=1681776546&w=1920&h=1080"></img>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <iframe
+                          width="560"
+                          height="315"
+                          src="https://www.youtube.com/embed/IUN664s7N-c"
+                          title="YouTube video player"
+                          frameborder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen
+                        ></iframe>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <img src="https://wallpapers.com/images/featured/33q6a18khxgta4ll.jpg"></img>
+                      </div>
+                    </div>
+                  </p>
+                </Tab>
+                <Tab eventKey="tab2" title="Image">
+                  <p>
+                    <div className="browse-inner-images">
+                      <div className="browse-inner-images-height">
+                        <img src="https://cdn.create.vista.com/api/media/small/641561126/stock-photo-absolutely-extraordinary-peacock-tail-feathers"></img>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <img src="https://us.123rf.com/450wm/alexkich/alexkich1804/alexkich180401987/99629098-open-book-and-a-table.jpg?ver=6"></img>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <img src="https://images.pexels.com/photos/5040407/pexels-photo-5040407.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"></img>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <img src="https://image.cnbcfm.com/api/v1/image/107174527-1672936231120-gettyimages-1243527327-AA_26092022_878851.jpeg?v=1681776546&w=1920&h=1080"></img>
+                      </div>
+                    </div>
+                  </p>
+                </Tab>
+                <Tab eventKey="tab3" title="Video">
+                  <p>
+                    <div className="browse-inner-images">
+                      <div className="browse-inner-images-height">
+                        <iframe
+                          width="560"
+                          height="315"
+                          src="https://www.youtube.com/embed/IUN664s7N-c"
+                          title="YouTube video player"
+                          frameborder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen
+                        ></iframe>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <iframe
+                          width="560"
+                          height="315"
+                          src="https://www.youtube.com/embed/IUN664s7N-c"
+                          title="YouTube video player"
+                          frameborder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen
+                        ></iframe>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <iframe
+                          width="560"
+                          height="315"
+                          src="https://www.youtube.com/embed/IUN664s7N-c"
+                          title="YouTube video player"
+                          frameborder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen
+                        ></iframe>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <iframe
+                          width="560"
+                          height="315"
+                          src="https://www.youtube.com/embed/IUN664s7N-c"
+                          title="YouTube video player"
+                          frameborder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen
+                        ></iframe>
+                      </div>
+                    </div>
+                  </p>
+                </Tab>
+                <Tab eventKey="tab4" title="3D">
+                  <p>
+                    <div className="browse-inner-images">
+                      <div className="browse-inner-images-height">
+                        <img src="https://wallpapers.com/images/hd/3d-green-cartoon-ball-with-big-eyes-h03saehyf5skb4nf.jpg"></img>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <img src="https://wallpapers.com/images/featured/33q6a18khxgta4ll.jpg"></img>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Bicolor_cubic_honeycomb.png/800px-Bicolor_cubic_honeycomb.png"></img>
+                      </div>
+                      <div className="browse-inner-images-height">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCTUtwpNZwwTO1D9eT4CP88YvJNa6I9gjGrg&usqp=CAU"></img>
+                      </div>
+                    </div>
+                  </p>
+                </Tab>
+              </Tabs>
+            </div>
+          </div>
+          <div className="browse-right">
+            <div className="no-img-selected">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="184"
+                fill="none"
+                viewBox="0 0 149 150"
+              >
+                <path
+                  fill="#EFF3F6"
+                  fillRule="evenodd"
+                  d="M57.77 27.271a5.5 5.5 0 100-11 5.5 5.5 0 000 11zm19 122c32.309 0 58.501-4.925 58.501-11s-26.192-11-58.5-11c-32.309 0-58.5 4.925-58.5 11s26.191 11 58.5 11zm34.902-101h-7.017l-2.327-5.444-4.925-2.843c-.632-.365-1.08-.91-1.293-1.495-.214-.585-.194-1.211.111-1.74l4.421-7.658c.306-.528.838-.86 1.452-.967.614-.107 1.309.009 1.94.373l4.94 2.852 11.939-1.443a.736.736 0 01.727 1.1l-9.968 17.265zm4.978.49a5.977 5.977 0 00-2.379-.49h-.09a1 1 0 011.048-1.702c.489.282 1.138.316 1.849.023.712-.294 1.431-.903 1.941-1.785.51-.883.677-1.81.575-2.574-.101-.762-.455-1.307-.943-1.59a1 1 0 111-1.732c1.137.657 1.761 1.82 1.926 3.058.164 1.238-.115 2.606-.826 3.838-.711 1.231-1.756 2.157-2.91 2.633a4.707 4.707 0 01-1.191.321zm3.553 4.602a5.985 5.985 0 00-.649-1.938c1.479-.907 2.853-2.288 3.881-4.07 1.323-2.292 1.788-4.749 1.509-6.847-.279-2.096-1.284-3.78-2.857-4.688a1 1 0 111-1.732c2.222 1.283 3.498 3.584 3.839 6.157.342 2.571-.234 5.47-1.759 8.11-1.271 2.203-3.027 3.923-4.964 5.008zm-99.99 23.762l7.008-37.682 7.266 4.227a6.005 6.005 0 00-.216 1.6l.148 19h2.352v6.553l-16.557 6.302zM73.539 48.27l-8.563-4.865c.192.587.296 1.214.296 1.865v3h8.267zm-15.84-9l-3.33-1.892-1.186 1.892h4.516z"
+                  clipRule="evenodd"
+                ></path>
+                <path
+                  fill="#D1DCE7"
+                  fillRule="evenodd"
+                  d="M68.253 3.195L4.943 27.06a3 3 0 00-1.749 3.866L19.421 73.97a3 3 0 003.865 1.749l11.383-4.291-.398-10.157v-16a6 6 0 016-6h19a6 6 0 016 6v3h49a6 6 0 016 6v7l-.3 7.647a2.988 2.988 0 001.003-1.042l19-32.909a3 3 0 00-1.098-4.098l-32.909-19a3 3 0 00-4.098 1.098L87.64 37.612l3.512 9.316c.167.443.278.893.337 1.343h-3.052a3.054 3.054 0 00-.092-.285L72.12 4.944a3 3 0 00-3.866-1.748zm48.898 61.076h-79.76l1.576 40.196a5 5 0 004.996 4.804h53.438a6.333 6.333 0 016.432-1.942l4.305 1.266-14.559-25.217c-1.421-2.257-1.295-5.153.316-7.246a6.218 6.218 0 016.882-2.107 6.299 6.299 0 013.893 2.95l6.32 10.948a6.467 6.467 0 011.91-1.645 6.057 6.057 0 013.421-.838l.83-21.169zm.12-3v-7a3 3 0 00-3-3h-52v-6a3 3 0 00-3-3h-19a3 3 0 00-3 3v16h80zm2.015 25.12l.556-14.197a5.982 5.982 0 003.73-2.818l19-32.909a6 6 0 00-2.196-8.196l-32.909-19a6 6 0 00-8.196 2.196l-13 22.515L74.927 3.885A6 6 0 0067.195.387L3.885 24.254a6 6 0 00-3.498 7.731l16.227 43.043a6 6 0 007.73 3.498l10.449-3.94 1.176 29.999a8 8 0 007.994 7.686h52.001a6.34 6.34 0 00.408 3.569 6.752 6.752 0 003.697 3.695l17.633 6.63c5.375 2.046 11.352 1.606 16.327-1.201l6.433-3.714a17.006 17.006 0 007.972-10.453 17.398 17.398 0 00-1.798-13.132l-7.514-13.015c-1.762-3.05-5.635-4.112-8.651-2.37a6.218 6.218 0 00-2.27 2.258 6.146 6.146 0 00-6.432-.308 6.365 6.365 0 00-2.303 2.279 8.07 8.07 0 00-.18-.119zm19.552 32.046l-6.433 3.714a16.293 16.293 0 01-13.811 1.149l-17.658-6.751a3.315 3.315 0 01-1.894-1.889 3.057 3.057 0 01.104-2.682 3.261 3.261 0 013.801-1.697l6.542 1.736a1.958 1.958 0 001.619-.212c.264-.078.504-.217.704-.406a2.23 2.23 0 00.189-2.459L96.346 81.826a2.994 2.994 0 01-.481-2.614 3.04 3.04 0 011.454-1.97 3.234 3.234 0 012.399-.255 3.072 3.072 0 011.939 1.502l10.762 18.64a1.22 1.22 0 001.065.806c.481.031.931-.228 1.144-.66a1.22 1.22 0 00-.165-1.325l-1.448-2.508c-.677-1.534-.103-3.323 1.333-4.152 1.436-.83 3.272-.432 4.262.921l2.779 4.813c.335.58 1.072.782 1.645.451.273-.157.469-.42.544-.727a1.178 1.178 0 00-.145-.904l-1.448-2.508c-.908-1.572-.384-3.575 1.171-4.472 1.554-.897 3.55-.35 4.458 1.222l2.818 4.88a1.203 1.203 0 001.52.273c.502-.29.722-.9.523-1.452l-1.467-2.542c-.886-1.535-.375-3.49 1.143-4.366 1.517-.876 3.466-.342 4.352 1.193l7.436 12.88a14.722 14.722 0 011.555 10.896c-.917 3.647-3.408 6.739-6.656 8.589z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+              <span>No media selected</span>
+            </div>
+            <div className="when-media-selected">
+              <div className="select-file-btn-outer">
+                <button className="btn rounded-2" id="select-file-btn">
+                  Select file
+                </button>
+              </div>
+              <div className="sort-drop-down">
+                <Tab.Container
+                  id="file-selects-drop-down"
+                  defaultActiveKey="first"
+                >
+                  <Row className="flex-column justify-content-between tab-list">
+                    <Col>
+                      <Tab.Content>
+                        <Tab.Pane
+                          eventKey="first"
+                          className="bg-light py-4 tab-content target-tab-content"
+                        >
+                          <Accordion>
+                            <Accordion.Item eventKey="0">
+                              <Accordion.Header> File Info</Accordion.Header>
+                              <Accordion.Body>
+                                <div className="flex acenter preview-row">
+                                  <p>Category</p>
+                                  <p className="f1 jc-end">Image</p>
+                                </div>
+                                <div className="flex acenter preview-row">
+                                  <p>Type</p>
+                                  <p className="f1 jc-end">Image</p>
+                                </div>
+                                <div className="flex acenter preview-row">
+                                  <p>Date uploaded</p>
+                                  <p className="f1 jc-end">Jun 19, 2023</p>
+                                </div>
+                                <div className="flex acenter preview-row">
+                                  <p>Uploaded by</p>
+                                  <p className="f1 jc-end ellipsis">
+                                    Web Developer
+                                  </p>
+                                </div>
+                                <hr />
+                                <div className="delete-files-btn">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="40"
+                                    height="40"
+                                    viewBox="0 0 40 40"
+                                  >
+                                    <path d="M21.714 10c1.263 0 2.286.895 2.286 2v1h4.526c.262 0 .474.224.474.5 0 .245-.168.45-.389.492l-.085.008h-1.581l-.672 12.235C26.157 28.349 24.523 30 22.546 30h-5.092c-1.977 0-3.611-1.65-3.727-3.765L13.055 14h-1.581a.487.487 0 01-.474-.5c0-.245.168-.45.389-.492l.085-.008H16v-1c0-1.105 1.023-2 2.286-2h3.428zm4.296 4H13.99l.668 12.176c.084 1.527 1.224 2.732 2.632 2.819l.164.005h5.092c1.428 0 2.617-1.148 2.781-2.65l.015-.174L26.01 14zm-8.51 4a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L17 24.5v-6a.5.5 0 01.5-.5zm5 0a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L22 24.5v-6a.5.5 0 01.5-.5zm-.7-7h-3.6c-.615 0-1.123.386-1.192.883L17 12v1h6v-1c0-.513-.463-.936-1.06-.993L21.8 11z"></path>
+                                  </svg>
+                                  <span className="delete-file-txt">
+                                    Delete file
+                                  </span>
+                                </div>
+                              </Accordion.Body>
+                            </Accordion.Item>
+                          </Accordion>
+                        </Tab.Pane>
+                      </Tab.Content>
+                    </Col>
+                  </Row>
+                </Tab.Container>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            variant="secondary"
+            className="btn-cancel-popup"
+            onClick={handlethreedDeleteClose}
+          >
+            Cancel
+          </button>
+          <button
+            variant="primary"
+            className="btn-delete-popup"
+            onClick={handlethreedDeleteClose}
+          >
+            Create
+          </button>
+        </Modal.Footer>
+      </Modal>
+      {/*end of modal***popup**for**threed**modal**/}
 
        {/* Start---model data */}
  <Modal

@@ -2801,10 +2801,10 @@ h3.mb16 {
     padding-left: 20px;
 }
 button#createProjectBtn {
-    background: #5089c7;
+    background: #ef5332;
     font-size: 13px;
     color: #fff;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Lato', sans-serif !important;
     border: none;
     margin-bottom: 12px;
 }
@@ -2814,7 +2814,7 @@ button#createProjectBtn {
 } */
 .card-password .input-text label {
     width: 100%;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Lato', sans-serif !important;
     float: left;
     font-size: 14px;
     margin-bottom: 6px;
@@ -2833,10 +2833,10 @@ button#createProjectBtn {
     line-height: 1.2;
     color: #344B60;
     margin-bottom: 15px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Lato', sans-serif !important;
 }
 .requirement ul li {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Lato', sans-serif !important;
 }
 .requirement p {
     font-size: 14px;
@@ -2859,7 +2859,7 @@ button#createProjectBtn {
     margin-left: 13px;
 }
 .Title-action-save {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Lato', sans-serif !important;
     text-align: center;
     width: 100%;
     font-size: 14px;
@@ -2876,7 +2876,7 @@ button.btn-action-cancel {
     margin-left: 13px;
 }
 .Title-action-cancel {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Lato', sans-serif !important;
     text-align: center;
     width: 100%;
     font-size: 14px;
@@ -3295,4 +3295,7 @@ svg.labels-svg {
 }
 svg.labels-svg path {
     fill: #073158;
+}
+div#home-page-container {
+    width: 100%;
 }
