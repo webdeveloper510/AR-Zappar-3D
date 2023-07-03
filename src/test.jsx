@@ -17,7 +17,7 @@ import { DoubleSide } from 'three';
 
 
 
-let rendeR=true;
+// let rendeR=true;
 
 const ModelAr =()=> {
     // UseStates In Initialization State ---------------------------------------------------------------------->
@@ -82,7 +82,7 @@ const ModelAr =()=> {
 
             const textureLoader = new THREE.TextureLoader();
             const texture1 = textureLoader.load(svgHere)
-            const geometry = new THREE.BoxGeometry(300, 400 ,8);
+            const geometry = new THREE.BoxGeometry(350, 350 ,8);
             const material = new THREE.MeshBasicMaterial({map : texture1 , side : THREE.DoubleSide , transparent : false})           
 
             // const material2 = new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load(svgHere2) , side : THREE.BackSide , transparent : false})           
@@ -137,10 +137,10 @@ const ModelAr =()=> {
 
                     axios.get(API.BASE_URL+"get_projectdata/"+id+"/")
                     .then((responseProject)=>{
-                        if(!rendeR){
+                        // if(!rendeR){
                             
-                            toast.success("Project Loaded Successfully !!!")
-                        }
+                            // toast.success("Project Loaded Successfully !!!")
+                        // }
                         setButton(responseProject.data.data[0].button_data)
                         setText(responseProject.data.data[0].text_data)
                         setImage(responseProject.data.data[0].image_data)
@@ -149,7 +149,7 @@ const ModelAr =()=> {
                         setScene(responseProject.data.data[0].scene_data)
                         setProject(responseProject.data.data[0].project_content_data);
                         set2D3D(responseProject.data.data[0].twoD_threeD_data)
-                        rendeR=false
+                        // rendeR=false
 
                     }).catch ((err)=>{
                         toast.error("Connecting to Server !")
@@ -401,17 +401,13 @@ const ModelAr =()=> {
         // }       
 
         function render() {
-
+            // requestAnimationFrame(render)
             renderer.render( scene, currentCamera );
         }
+        requestAnimationFrame(render);
     }
     setTimeout(boxModal, 1000)
 
-        },[rendeR ]);      
-        return (
-            <div >
-              <canvas ref={canvasRef}></canvas>
-            </div>
-          );
+        },[]);
 }
 export default ModelAr;

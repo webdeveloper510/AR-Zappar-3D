@@ -144,7 +144,7 @@ const Target = () => {
   const [border_width, setborder_width] = useState();
   const [corner_radius, setcorner_radius] = useState();
   const [frame_type, setframe_type] = useState();
-  const [opacity, setopacity] = useState();
+  // const [opacity, setopacity] = useState();
 
   // states for data for image action api
   const [image_action, setimage_action] = useState("");
@@ -223,10 +223,25 @@ const Target = () => {
   const [aper_corner_radius, A_corner_radius] = useState(null);
   const [aper_frame_type, A_frame_type] = useState(null);
   const [aper_opacity, A_opacity] = useState(null);
-  // const [scene, A_opacity] = useState(null);
-  // const [selectedUnit1,setselectedUnit1]=useState('centimeters')
+  const [selectedUnit1,setselectedUnit1]=useState('centimeters')
+  const [selectedSceneIndex, setSelectedSceneIndex] = useState(0);
+
+
 
   // get SCENES DETAILS --------------------------------------------------------------------->
+
+  const [analyticsID , analytics_id] = useState(null)
+  const [project_content_ID , project_content_id] = useState(null)
+  const [TrackWith ,track_with] = useState(null)
+  const [MediaFile , media_file] = useState(null)
+  const [DimensionsH , dimensions_h] = useState(null)
+  const [DimensionsW , dimensions_w] = useState(null)
+  const [Opacity , opacity] = useState(null)
+  const [Orientation ,orientation] = useState(null)
+  const [TargetImageP , target_image] = useState(null)
+  const [Units , units] = useState(null)
+  const [SceneArray , scenes] = useState(null)
+
 
   useEffect(()=>{
     axios.get(API.BASE_URL+'scene_data_by_project'+'/'+id+'/')
@@ -236,11 +251,37 @@ const Target = () => {
         setShow(true);
       }
       else{
-        console.log(res.data.project_content[0].id)
         localStorage.setItem('ProjectContentID' , res.data.project_content[0].id)
+        const scene_data = res.data
+        const analyticsArray = scene_data.analytics
+        const background_soundArray = scene_data.background_sound
+        const project_contentArray = scene_data.project_content
+        scenes(scene_data.scenes)
+        for (let i = 0; i<analyticsArray.length; i+= 1){
+          console.log('---> analyticsArray' ,analyticsArray[i])
+          analytics_id(analyticsArray[i].id)
+          track_with(analyticsArray[i].track_with)
+        }
+        for (let i = 0; i<background_soundArray.length; i+= 1){
+          console.log('---> background_soundArray' ,background_soundArray[i] )
+          media_file(background_soundArray[i].media_file)
+        }
+        for (let i = 0; i<project_contentArray.length; i+= 1){
+          console.log('---> project_contentArray' ,project_contentArray[i] )
+          project_content_id(project_contentArray[i].id)
+          media_file(project_contentArray[i].media_file)
+          dimensions_h(project_contentArray[i].dimensions_h)
+          dimensions_w(project_contentArray[i].dimensions_w)
+          opacity(project_contentArray[i].opacity)
+          orientation(project_contentArray[i].orientation)
+          target_image(project_contentArray[i].target_image)
+        }
+
       }
     })
   },[])
+
+  // get SCENES DETAILS --------------------------------------------------------------------->
 
 const handleSubmit=()=>{
   const formdataScene = new FormData()
@@ -339,6 +380,121 @@ const twoDThreeD=(id)=>{
   }).then(function(res){}).catch(function(err){})
 }
 
+
+// Hnadle Next Scene Genration and Working :
+const getSceneData=(id)=>{
+  axios.get(API.BASE_URL+'scene_details/'+id)
+  .then(function (responseProject){
+    console.log(responseProject, id);
+    setButton(responseProject.data.data[0].button_data);
+    setText(responseProject.data.data[0].text_data);
+    setImage(responseProject.data.data[0].image_data);
+    setVideo(responseProject.data.data[0].video_data);
+    set3Dmodel(responseProject.data.data[0].ThreeDmodeldata);
+    setScene(responseProject.data.data[0].scene_data);
+    setProject(responseProject.data.data[0].project_content_data);
+    set2D3D(responseProject.data.data[0].twoD_threeD_data);
+
+    // Image Dimensions ----------------------------------------------------------------------------------------------------->
+
+    const DataImage = responseProject.data.data[0].image_data;
+    for (let i = 0; i < DataImage.length; i += 1) {
+      dimwidth(DataImage[i][0].image_transform.width);
+      dimheight(DataImage[i][0].image_transform.height);
+      dimdepth(DataImage[i][0].image_transform.depth);
+      dimposition_x(DataImage[i][0].image_transform.position_x);
+      dimposition_y(DataImage[i][0].image_transform.position_y);
+      dimposition_d(DataImage[i][0].image_transform.position_d);
+      dimRotation_x(DataImage[i][0].image_transform.Rotation_x);
+      dimRotation_y(DataImage[i][0].image_transform.Rotation_y);
+      dimRotation_z(DataImage[i][0].image_transform.Rotation_z);
+      // Image Appearance ------------->
+      A_border_color(DataImage[i][0].image_appearance.border_color);
+      A_border_width(DataImage[i][0].image_appearance.border_width);
+      A_corner_radius(DataImage[i][0].image_appearance.corner_radius);
+      A_frame_type(DataImage[i][0].image_appearance.frame_type);
+      A_opacity(DataImage[i][0].image_appearance.opacity);
+    }
+
+    // Video Dimensions ----------------------------------------------------------------------------------------------------->
+
+    const videoData = responseProject.data.data[0].video_data;
+    for (let i = 0; i < videoData.length; i++) {
+      setMirror(videoData[i][0].video_transform.Mirror);
+      setRotation_x(videoData[i][0].video_transform.Rotation_x);
+      setRotation_y(videoData[i][0].video_transform.Rotation_y);
+      setRotation_z(videoData[i][0].video_transform.Rotation_z);
+      setdepth(videoData[i][0].video_transform.depth);
+      setheight(videoData[i][0].video_transform.height);
+      setposition_d(videoData[i][0].video_transform.position_d);
+      setposition_x(videoData[i][0].video_transform.position_x);
+      setposition_y(videoData[i][0].video_transform.position_y);
+      setvideo_id(videoData[i][0].video_transform.video_id_id);
+      setwidthVideo(videoData[i][0].video_transform.video_id);
+      setprojectId(videoData[i][0].video_transform.width);
+    }
+
+    const sceneData = responseProject.data.data[0].scene_data;
+    for (let i = 0; i < sceneData.length; i++) {
+      scene_id(sceneData[i][0].scene_id);
+      setnameInScene(sceneData[i][0].scene_name);
+      delay(sceneData[i][0].scene_transition.delay);
+      duration(sceneData[i][0].scene_transition.duration);
+      scene_id_id(sceneData[i][0].scene_transition.scene_id_id);
+      s_Height(sceneData[i][0].scene_transition.height);
+      s_ID(sceneData[i][0].scene_transition.id);
+      transition_enter(sceneData[i][0].scene_transition.transition_enter);
+      transition_exit(sceneData[i][0].scene_transition.transition_exit);
+    }
+    const ProjectData = responseProject.data.data[0].project_content_data;
+    for (let i = 0; i < ProjectData.length; i++) {
+      Project_content_id(ProjectData[i][0].analytics_dict.id);
+      Project_content_project_content_id_id(
+        ProjectData[i][0].analytics_dict.project_content_id_id
+      );
+      Project_content_track_with(
+        ProjectData[i][0].analytics_dict.track_with
+      );
+      Back_Sound_id(ProjectData[i][0].background_sound.id);
+      Project_content_media_file(
+        ProjectData[i][0].background_sound.media_file
+      );
+      Project_content_project_content_id(
+        ProjectData[i][0].background_sound.project_content_id
+      );
+      Project_content_dimensions_h(ProjectData[i][0].dimensions_h);
+      Project_content_dimensions_w(ProjectData[i][0].dimensions_w);
+      Project_content_opacity(ProjectData[i][0].opacity);
+      Project_content_orientation(ProjectData[i][0].orientation);
+      Project_content_target_image(ProjectData[i][0].target_image);
+      Project_content_units(ProjectData[i][0].units);
+    }
+    const switchButtonDetails =
+      responseProject.data.data[0].twoD_threeD_data;
+    const checkStatus = document.getElementById("checkID");
+    for (let i = 0; i < switchButtonDetails.length; i++) {
+      lettwoDthreeDID(switchButtonDetails[i].switch_id);
+      if (switchButtonDetails[i].switch_value) {
+        checkStatus.checked = true;
+      } else {
+        checkStatus.checked = false;
+      }
+    }
+  }).catch(function(error){
+    console.log(error)
+  })
+}
+
+
+
+console.log("***************",getButton)
+console.log("***************",getText)
+console.log("***************",getImage)
+console.log("***************",getVideo)
+console.log("***************",get3Dmodel)
+console.log("***************",getScene)
+console.log("***************",getProject)
+console.log("***************",get2D3D)
   // GET Basic Details OF PROJECT ------------------------------------------------------------>
   useEffect(() => {
     WebFont.load({
@@ -365,6 +521,7 @@ const twoDThreeD=(id)=>{
 
   const handleDeleteClose = () => setbrowsemedia(false);
   const handleshowbrowsemedia = () => setbrowsemedia(true);
+
 
  /***********createvideomediapopup***************************** */
 
@@ -432,57 +589,9 @@ const twoDThreeD=(id)=>{
           setprojectId(videoData[i][0].video_transform.width);
         }
 
-        const sceneData = responseProject.data.data[0].scene_data;
-        for (let i = 0; i < sceneData.length; i++) {
-          scene_id(sceneData[i][0].scene_id);
-          setnameInScene(sceneData[i][0].scene_name);
-          delay(sceneData[i][0].scene_transition.delay);
-          duration(sceneData[i][0].scene_transition.duration);
-          scene_id_id(sceneData[i][0].scene_transition.scene_id_id);
-          s_Height(sceneData[i][0].scene_transition.height);
-          s_ID(sceneData[i][0].scene_transition.id);
-          transition_enter(sceneData[i][0].scene_transition.transition_enter);
-          transition_exit(sceneData[i][0].scene_transition.transition_exit);
-        }
-        const ProjectData = responseProject.data.data[0].project_content_data;
-        for (let i = 0; i < ProjectData.length; i++) {
-          Project_content_id(ProjectData[i][0].analytics_dict.id);
-          Project_content_project_content_id_id(
-            ProjectData[i][0].analytics_dict.project_content_id_id
-          );
-          Project_content_track_with(
-            ProjectData[i][0].analytics_dict.track_with
-          );
-          Back_Sound_id(ProjectData[i][0].background_sound.id);
-          Project_content_media_file(
-            ProjectData[i][0].background_sound.media_file
-          );
-          Project_content_project_content_id(
-            ProjectData[i][0].background_sound.project_content_id
-          );
-          Project_content_dimensions_h(ProjectData[i][0].dimensions_h);
-          Project_content_dimensions_w(ProjectData[i][0].dimensions_w);
-          Project_content_opacity(ProjectData[i][0].opacity);
-          Project_content_orientation(ProjectData[i][0].orientation);
-          Project_content_target_image(ProjectData[i][0].target_image);
-          Project_content_units(ProjectData[i][0].units);
-        }
-        const switchButtonDetails =
-          responseProject.data.data[0].twoD_threeD_data;
-        const checkStatus = document.getElementById("checkID");
-        for (let i = 0; i < switchButtonDetails.length; i++) {
-          lettwoDthreeDID(switchButtonDetails[i].switch_id);
-          if (switchButtonDetails[i].switch_value) {
-            checkStatus.checked = true;
-          } else {
-            checkStatus.checked = false;
-          }
-        }
       })
-      .catch((err) => {
-        toast.error("Connecting to Server !");
-      });
-  }, [toGetData, cont_orientation]);
+    },[])
+  
 
   // Image Upload API with all DATA ---------------------------------------------------------------------------------------------->
 
@@ -511,7 +620,7 @@ const twoDThreeD=(id)=>{
             toast.success("Image Uploaded!");
             imageDimensions(response.data.id, threeewidth, threeeheight);
             imageTransitionAPI(response.data.id);
-            imageAppearanceAPI(response.data.id);
+            // imageAppearanceAPI(response.data.id);
             imageActionAPI(response.data.id);
           })
           .catch(function (err) {
@@ -547,32 +656,32 @@ const twoDThreeD=(id)=>{
   };
 
   // post api function for image appearance
-  const imageAppearanceAPI = (id) => {
-    const formData = {
-      corner_radius: 0,
-      frame_type: 0,
-      opacity: 1,
-      border_width: 0,
-      border_colo: null,
-      image_id: id,
-    };
-    axios
-      .post(API.BASE_URL + "image_appearance/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(function (response) {
-        setborder_color(response.data.border_color);
-        setborder_width(response.data.border_width);
-        setcorner_radius(response.data.corner_radius);
-        setframe_type(response.data.frame_type);
-        setopacity(response.data.opacity);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
+  // const imageAppearanceAPI = (id) => {
+  //   const formData = {
+  //     corner_radius: 0,
+  //     frame_type: 0,
+  //     opacity: 1,
+  //     border_width: 0,
+  //     border_colo: null,
+  //     image_id: id,
+  //   };
+  //   axios
+  //     .post(API.BASE_URL + "image_appearance/", formData, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     })
+  //     .then(function (response) {
+  //       setborder_color(response.data.border_color);
+  //       setborder_width(response.data.border_width);
+  //       setcorner_radius(response.data.corner_radius);
+  //       setframe_type(response.data.frame_type);
+  //       setopacity(response.data.opacity);
+  //     })
+  //     .catch(function (err) {
+  //       console.log(err);
+  //     });
+  // };
 
   // post api function for image transition
   const imageTransitionAPI = (id) => {
@@ -7680,12 +7789,18 @@ const handleborderopacityValue = (event) => {
 
       <div className="scene-popup-div">
    
+
+       {/* <div className="scene-popup-div"> */}
         {/*  all scenes will be shown in this div */}
         {showScene && (
           <div className="scenes-list">
-             
-            {[...Array(count)].map((_, i) => (
-              <div className="scene1">
+          {SceneArray.map((scene, i) => {
+            const occurrences = SceneArray.filter((s) => s.name === scene.name);
+            const index = occurrences.indexOf(scene);
+        
+            if (occurrences.length > 1) {
+              return (
+                <div className="scene1" key={i} onClick={() =>getSceneData(scene.id)}>
                   <div className="dropdown-menu-svg" direction="bottom-left">
                               <button class="btn btn-dots" id="profile-dots" slot="toggle" onClick={ToggleButtonShow}>
                                 <svg xmlns="http://www.w3.org/2000/svg"  width="40"  height="40"  viewBox="0 0 40 40">
@@ -7702,14 +7817,56 @@ const handleborderopacityValue = (event) => {
                                 </ul>
                               )}
         </div>
+                  <h6 className="scene-txt">
+                    {scene.name}({index})
+                  </h6>
+                </div>
+              );
+            }
+        
+            return (
+              <div className="scene1" key={i} onClick={() =>getSceneData(scene.id)}>
+                <h6 className="scene-txt">{scene.name}</h6>
+              </div>
+            );
+          })} 
+          </div>
+        )} 
+        {/* {showScene && (
+          <div className="scenes-list">
+             
+            {SceneArray.map((scene, i) => (
+              const occurrences = SceneArray.filter((s) => s.name === scene.name);
+              const index = occurrences.indexOf(scene);
+
+              if (occurrences.length > 1) {
+                return (
+                  <div className="scene1">
+                  <div className="dropdown-menu-svg" direction="bottom-left">
+                              <button class="btn btn-dots" id="profile-dots" slot="toggle" onClick={ToggleButtonShow}>
+                                <svg xmlns="http://www.w3.org/2000/svg"  width="40"  height="40"  viewBox="0 0 40 40">
+                                <path  fillRule="evenodd"  d="M20 25a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0-6.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0-6.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"></path>
+                                </svg>
+                              </button>
+                              { ToggleButton && ( 
+                                <ul slot="body" class="profile-list">
+                                  <li class="edit-cover">Duplicate</li>
+                                  <li class="edit-cover">Rename</li>
+                                  <li class="danger">
+                                    Delete
+                                  </li>
+                                </ul>
+                )}
+              
+        </div>
                 <h6 className="scene-txt">Scene 1({i})</h6>
               </div>
             ))}
             {/* { [...Array(count)].map((_, i) => <h6>Scene 1({i})  </h6> )} */}
-          </div>
-        )}
+          {/* </div> */}
+        {/* )} */} 
         <div className="scene-inner-content">
-          <div className="scene-left-icon" onClick={() => setCount(count + 1)}>
+          <div className="scene-left-icon" onClick={(e) => {handleSubmit(e)}}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="19"
@@ -7742,7 +7899,7 @@ const handleborderopacityValue = (event) => {
                     >
                       <Accordion onClick={() => setshowScene((prev) => !prev)}>
                         <Accordion.Item eventKey="0">
-                          <Accordion.Header>Scene 1</Accordion.Header>
+                          <Accordion.Header>{nameInScene}</Accordion.Header>
                         </Accordion.Item>
                       </Accordion>
                     </Tab.Pane>

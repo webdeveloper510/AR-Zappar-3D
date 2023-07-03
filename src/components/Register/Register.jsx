@@ -13,90 +13,42 @@ import profileImg from "../../assets/images/profile.png"
 //    
 
 const RegisterPage =()=>{
-
     const navigate = useNavigate();
-
     //  First Name 
     const [firstName , UserFirstName]= useState(null)
-
     const handleFirstName = (e)=>{
         UserFirstName(e.target.value);
     }
-    // console.log("firstName----------->" , firstName)
-
     // Last Name
     const [LastName , UserLastName]= useState(null)
-
     const handleLastName = (e)=>{
         UserLastName(e.target.value);
     }
-    // console.log("LastName----------->" , LastName)
-
-
 //  Email Address
     const [email , userEmail] = useState(null)
     const handleEmail =(e)=>{
         userEmail(e.target.value)
     }
-    // console.log("email----------->" , email)
-
-
 //  Password
     const [password , userPassword] = useState(null)
 
     const handlePassword =(e)=>{
         userPassword(e.target.value)
     }
-    // console.log("password----------->" , password)
-
-
     // Proffession
     const [Proffession , selectProff] = useState(null)
 
     const handleSelect =(e)=>{
         selectProff(e.target.value)
     }
-
-   
-
-    // console.log("Proffession----------->" , Proffession)
-
 // Date picker
-const [selectedDate, setSelectedDate] = useState("");
+    const [selectedDate, setSelectedDate] = useState("");
 
-const handleDateChange = (event) => {
-  setSelectedDate(event.target.value);
-        console.log("Date----------->" , event.target.value)
+    const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+            console.log("Date----------->" , event.target.value)
 
-};
-
-    // Year Select
-    const [Year , selectYear] = useState(null)
-
-    const handleYear =(e)=>{
-        selectYear(e.target.value)
-    } 
-    // console.log("Year----------->" , Year)
-    
-
-    // Month Select
-    const [Month , selectMonth] = useState(null)
-
-    const handleMonth =(e)=>{
-        selectMonth(e.target.value)
-    } 
-    // console.log("Month----------->" , Month)
-    
-
-    // Date Select
-    const [Date , selectDate] = useState(null)
-    
-    const handleDate =(e)=>{
-        // console.log("Date----------->" , e.target.value)
-        selectDate(e.target.value)
-    }
-    // console.log("Date----------->" , Date)
-
+    };
     const MyDataObject = {
         "firstname" : firstName,
         "lastname" : LastName,
@@ -105,14 +57,9 @@ const handleDateChange = (event) => {
         "proffession": Proffession,
         "dateofbirth" : selectedDate,
     }
-    // console.log("MyDataObject----------->" , MyDataObject)
-
     const handelLogin =()=>{
         navigate('/')
     }
-
-    // let defaultImage='/home/codenomad/Desktop/Projects/copy2/AR-Zappar-3D/src/assets/images/UniversalAR.jpg'
-
     const handleRegister = ()=>{
         console.log(profileImg);
         if (MyDataObject){
@@ -145,79 +92,41 @@ const handleDateChange = (event) => {
             })
         }
     }
-
     return(
-    <div class="sign-up-page" id="sign-up-page">
-        <div class="container-fluid p-0 m-0">
-            <div class="row p-0 m-0 align-items-center sign-up-bgg">
-                <div class="col-md-12 sign-up-outer">
-                    <div class="text-center pb-2 sign-up-pg-container-left">
-                    <h3 class="creat-account"> Sign up</h3>
-
-                        <form class="sign-up-pg-form">
-                           
-                     
-                            <div class="row mb-2">
-                                <div class="col-6">
-                                    <label class="form-label fw-semibold">First Name</label>
-                                    <input type="text" class="form-control" value={firstName}   placeholder="Enter Your Fisrt Name" onChange={handleFirstName}/>
+    <div className="sign-up-page" id="sign-up-page">
+        <div className="container-fluid p-0 m-0">
+            <div className="row p-0 m-0 align-items-center sign-up-bgg">
+                <div className="col-md-12 sign-up-outer">
+                    <div className="text-center pb-2 sign-up-pg-container-left">
+                    <h3 className="creat-account"> Sign up</h3>
+                        <form className="sign-up-pg-form">     
+                            <div className="row mb-2">
+                                <div className="col-6">
+                                    <label className="form-label fw-semibold">First Name</label>
+                                    <input type="text" className="form-control" value={firstName}   placeholder="Enter Your Fisrt Name" onChange={handleFirstName}/>
                                 </div>
-                                <div class="col-6">
-                                    <label class="form-label fw-semibold">Last Name</label>
-                                    <input type="text" class="form-control"  value={LastName}  placeholder="Enter Your Last Name" onChange={handleLastName}/>
+                                <div className="col-6">
+                                    <label className="form-label fw-semibold">Last Name</label>
+                                    <input type="text" className="form-control"  value={LastName}  placeholder="Enter Your Last Name" onChange={handleLastName}/>
                                 </div>
                             </div>
 
-                            <div class="mb-2">
-                                <label class="form-label fw-semibold">Email</label>
-                                <input type="email" class="form-control" placeholder="Email" value={email} onChange={handleEmail}/>
+                            <div className="mb-2">
+                                <label className="form-label fw-semibold">Email</label>
+                                <input type="email" className="form-control" placeholder="Email" value={email} onChange={handleEmail}/>
                             </div>
-                            <div class="mb-2">
-                                <label class="form-label fw-semibold">Password</label>
-                                <input type="password" class="form-control" placeholder="Password" value={password} onChange={handlePassword}/>
-                            </div>
-
-                            <div class="mb-2 dob">
-                            <label class="form-label fw-semibold date-of-birth">Date of Birth</label>
-                            <input 
-                             type="date" 
-                             id="birthday" 
-                             name="birthday" 
-                             className="form-control"
-                             value={selectedDate} 
-                             onChange={handleDateChange} 
-                             />
+                            <div className="mb-2">
+                                <label className="form-label fw-semibold">Password</label>
+                                <input type="password" className="form-control" placeholder="Password" value={password} onChange={handlePassword}/>
                             </div>
 
-                           
-
-                            {/* <div class="row mb-2">
-                                <div class="col-4">
-                                    <label class="form-label fw-semibold">Year</label>
-                                    <select class="form-select" onChange={handleYear}>
-                                        <option selected>Select</option>
-                                        <option value="2000">2000</option>
-                                    </select>
-                                </div>  
-                                <div class="col-4">
-                                    <label class="form-label fw-semibold">Month</label>
-                                    <select class="form-select" onChange={handleMonth}>
-                                        <option selected>Select</option>
-                                        <option value="05">05</option>
-                                    </select>
-                                </div>
-                                <div class="col-4">
-                                    <label class="form-label fw-semibold">Date</label>
-                                    <select class="form-select" onChange={handleDate}>
-                                        <option selected>Select</option>
-                                        <option value="1">11</option>
-                                    </select>
-                                </div>
-                            </div> */}
-
-                            <div class="mb-2">
-                                <label class="form-label fw-semibold role">Role</label>
-                                <select class="form-select" onChange={handleSelect}>
+                            <div className="mb-2 dob">
+                            <label className="form-label fw-semibold date-of-birth">Date of Birth</label>
+                            <input type="date" id="birthday" name="birthday" className="form-control"value={selectedDate} onChange={handleDateChange} />
+                            </div>
+                            <div className="mb-2">
+                                <label className="form-label fw-semibold role">Role</label>
+                                <select className="form-select" onChange={handleSelect}>
                                     <option selected>Select Role</option>
                                     <option value={Proffession}>I am a Designer.</option>
                                     <option value={Proffession}>I am a Developer.</option>
@@ -228,24 +137,19 @@ const handleDateChange = (event) => {
                                     <option value={Proffession}>Something Else.</option>
                                 </select>
                             </div>
-
-                            <div class="d-grid gap-2 mt-2">
-                                <a class="btn btn-sign-in pt-2 pb-2" type="button"
+                            <div className="d-grid gap-2 mt-2">
+                                <a className="btn btn-sign-in pt-2 pb-2" type="button"
                                     onClick={handleRegister} id="signup-btn">Sign up</a>
                             </div>
-                            <p class="already-account">
-                            Already have an account ?<a class="fw-bolder btn-register btn btn-sign-in pt-2 pb-2" type="button"
+                            <p className="already-account">
+                            Already have an account ?<a className="fw-bolder btn-register btn btn-sign-in pt-2 pb-2" type="button"
                                     onClick={handelLogin}> Login</a></p>
-                            
                         </form>
                     </div>
-
-                    <div class="sign-up-pg-container-right">
-                <img class="login-pic" src={loginright} />
+                    <div className="sign-up-pg-container-right">
+                <img className="login-pic" src={loginright} />
                 </div>
                 </div>
-                {/* <div class="col-md-7 p-0 m-0 sign-up-page-bg"></div> */}
-
             </div>
         </div>
 
