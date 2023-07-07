@@ -1,5 +1,5 @@
 import * as THREE from '../node_modules/three/build/three.module'
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import {OrbitControls } from "../node_modules/three/examples/jsm/controls/OrbitControls.js"
 import { TransformControls} from '../node_modules/three/examples/jsm/controls/TransformControls'
 import { GLTFLoader } from '../node_modules/three/examples/jsm/loaders/GLTFLoader.js';
@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import svgHere from '../src/assets/images/svgviewer-output.svg'
 import svgHere2 from '../src/assets/images/Mediamodifier-Design.svg'
 import { DoubleSide } from 'three';
+import { contextObject } from './components/ContextStore/ContextApi';
 
 // import {DomEvents} from 'threex.domevents/threex.domevents'
 
@@ -35,14 +36,22 @@ const ModelAr =()=> {
         const [getScene , setScene] = useState(null)
         const [getProject , setProject] = useState(null)
         const [get2D3D, set2D3D] = useState(null);
+       
         const formdata = new FormData;
-        const {id} = useParams()
+        // const {id} = useParams()
+        const ctx=useContext(contextObject);
+        const id = ctx.scene_id;
         const PlaneTexture = [svgHere , svgHere2]
     // UseEffect Using ---------------------------------------------------------------------------------------->
+
+
         useEffect(() => {
  
+            if(!id){
+               
+                return;
+            }
             
-
     // boxModal Function Startes ------------------------------------------------------------------------------>
         const boxModal = () => {
 
@@ -135,12 +144,15 @@ const ModelAr =()=> {
 
                     // All Data Get for Image Tracking --------------------------------------------->
 
-                    axios.get(API.BASE_URL+"get_projectdata/"+id+"/")
+                    console.log(id,'<id from context-------------------');
+
+                    axios.get(API.BASE_URL+"getproject_contentdata/"+id+"/")
                     .then((responseProject)=>{
                         // if(!rendeR){
                             
                             // toast.success("Project Loaded Successfully !!!")
                         // }
+                      
                         setButton(responseProject.data.data[0].button_data)
                         setText(responseProject.data.data[0].text_data)
                         setImage(responseProject.data.data[0].image_data)
@@ -152,6 +164,7 @@ const ModelAr =()=> {
                         // rendeR=false
 
                     }).catch ((err)=>{
+                        console.log(err,'THIS IS RESPONSEPROJECT<----------');
                         toast.error("Connecting to Server !")
                     })
 
@@ -408,6 +421,6 @@ const ModelAr =()=> {
     }
     setTimeout(boxModal, 1000)
 
-        },[]);
+        },[id]);
 }
 export default ModelAr;

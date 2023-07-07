@@ -337,8 +337,8 @@ input {
     padding: 0; */
     float: left;
     width: 100%;
-    bottom: 0;
-    position: absolute;
+    /* bottom: 0; */
+    /* position: absolute; */
 }
 .right-tabs .nav-item .active svg path {
     fill: #fff;
@@ -2037,9 +2037,9 @@ p.m-0.third-head {
 h6.login-account.mt-3.text-center {
     width: 100%;
 }
-.flex-column.justify-content-between.tab-list.right-tabs.video-img-tabs.row {
+/* .flex-column.justify-content-between.tab-list.right-tabs.video-img-tabs.row {
     display: none;
-}
+} */
 h3.forgot-div {
     text-align: center;
 }
@@ -2141,4 +2141,7 @@ div#threedmodalpopup, div#browse-video-popup{
     background-color: #4a90e2 ;
     border-radius: 2px;
     border: 3px solid transparent;
+  }
+  .scene1.selected {
+    border: 2px solid rgb(94, 94, 245);
   }
