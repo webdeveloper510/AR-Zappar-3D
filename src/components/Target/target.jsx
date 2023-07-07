@@ -133,8 +133,8 @@ const Target = () => {
   const [border_color, setborder_color] = useState();
   const [border_width, setborder_width] = useState();
   const [corner_radius, setcorner_radius] = useState();
-  const [frame_type, setframe_type] = useState();
-  // const [opacity, setopacity] = useState();
+  const [frame_type, setframe_type] = useState(); 
+  const [opacityset, setopacity] = useState();
 
   // states for data for image action api
   const [image_action, setimage_action] = useState("");
@@ -215,8 +215,6 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "scene_data_by_project" + "/" + id + "/")
       .then(function (res) {
-        console.log(res.data,'<<<<<<<<<<<<<<<<<<<<<<res.data');
-        // scene_id(res.data.scenes[0].id);
         if (res.data.data=== "No data found") {
           setShow(true);
         } else {
@@ -277,6 +275,7 @@ const Target = () => {
           twoDThreeD(res.data.id);
         }
         setShow(false);
+        window.location.reload(true);
       })
       .catch(function (err) {
         console.log(err);
@@ -470,36 +469,11 @@ const Target = () => {
         console.log(error);
       });
   };
-
-  console.log("***************", getButton);
-  console.log("***************", getText);
-  console.log("***************", getImage);
-  console.log("***************", getVideo);
-  console.log("***************", get3Dmodel);
-  console.log("***************", getScene);
-  console.log("***************", getProject);
-  console.log("***************", get2D3D);
   // GET Basic Details OF PROJECT ------------------------------------------------------------>
   useEffect(() => {
     WebFont.load({
       google: {
-        families: [
-          "Henny Penny, cursive",
-          "Droid Sans",
-          "Chilanka",
-          "Orbitron",
-          "Sacramento",
-          "Roboto",
-          "Cookie",
-          "Comfortaa",
-          "Philosopher",
-          "Quicksand",
-          "Trocchi",
-          "Advent Pro",
-          "Henny Penny",
-          "Snowburst One",
-          "Wallpoet",
-        ],
+        families: ["Henny Penny, cursive","Droid Sans","Chilanka","Orbitron","Sacramento","Roboto","Cookie","Comfortaa","Philosopher","Quicksand","Trocchi","Advent Pro","Henny Penny","Snowburst One","Wallpoet"],
       },
     });
   }, []);
@@ -611,7 +585,7 @@ const Target = () => {
             toast.success("Image Uploaded!");
             imageDimensions(response.data.id, threeewidth, threeeheight);
             imageTransitionAPI(response.data.id);
-            // imageAppearanceAPI(response.data.id);
+            imageAppearanceAPI(response.data.id);
             imageActionAPI(response.data.id);
           })
           .catch(function (err) {
@@ -625,7 +599,7 @@ const Target = () => {
   // STATES FOR THE IMAGE DIMESNSIONS AND PROPERTIES ------------------------------------------------------------------------------->
   const imageDimensions = (id, threeewidth, threeeheight) => {
     const formData = new FormData();
-    formData.append("image_id", s_scene_id);
+    formData.append("image_id", id);
     formData.append("width", threeewidth);
     formData.append("height", threeeheight);
     formData.append("depth", 0);
@@ -647,32 +621,32 @@ const Target = () => {
   };
 
   // post api function for image appearance
-  // const imageAppearanceAPI = (id) => {
-  //   const formData = {
-  //     corner_radius: 0,
-  //     frame_type: 0,
-  //     opacity: 1,
-  //     border_width: 0,
-  //     border_colo: null,
-  //     image_id: id,
-  //   };
-  //   axios
-  //     .post(API.BASE_URL + "image_appearance/", formData, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //     })
-  //     .then(function (response) {
-  //       setborder_color(response.data.border_color);
-  //       setborder_width(response.data.border_width);
-  //       setcorner_radius(response.data.corner_radius);
-  //       setframe_type(response.data.frame_type);
-  //       setopacity(response.data.opacity);
-  //     })
-  //     .catch(function (err) {
-  //       console.log(err);
-  //     });
-  // };
+  const imageAppearanceAPI = (id) => {
+    const formData = {
+      corner_radius: 0,
+      frame_type: 0,
+      opacity: 1,
+      border_width: 0,
+      border_colo: null,
+      image_id: id,
+    };
+    axios
+      .post(API.BASE_URL + "image_appearance/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(function (response) {
+        setborder_color(response.data.border_color);
+        setborder_width(response.data.border_width);
+        setcorner_radius(response.data.corner_radius);
+        setframe_type(response.data.frame_type);
+        setopacity(response.data.opacity);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
 
   // post api function for image transition
   const imageTransitionAPI = (id) => {
@@ -753,7 +727,7 @@ const Target = () => {
 
   const setVideoData = (id, width, height) => {
     const formData = new FormData();
-    formData.append("video_id", s_scene_id);
+    formData.append("video_id", id);
     formData.append("width", width);
     formData.append("height", height);
     formData.append("depth", 0);
@@ -800,16 +774,9 @@ const Target = () => {
 
   // post api function for video transition
   const videoTransitionAPI = (id) => {
-    const formData = {
-      transition_enter: null,
-      transition_exit: null,
-      height: 0,
-      duration: 0,
-      delay: 0,
-      video_id: id,
-    };
+    const formData = {transition_enter: null,transition_exit: null,height: 0,duration: 0,delay: 0,video_id: id};
     axios
-      .put(API.BASE_URL + "video_transition/" + id + "/", formData, {
+      .post(API.BASE_URL + "video_transition/" + id + "/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -847,19 +814,7 @@ const Target = () => {
   // three model transform api
 
   const threeDmodelTransform = (id) => {
-    const formData = {
-      ThreeDModel_id: id,
-      width: 0,
-      height: 0,
-      depth: 0,
-      position_x: 0,
-      position_y: 0,
-      position_d: 0,
-      Rotation_x: 0,
-      Rotation_y: 0,
-      Rotation_z: 0,
-      Mirror: 0,
-    };
+    const formData = {ThreeDModel_id: id,width: 0,height: 0,depth: 0,position_x: 0,position_y: 0,position_d: 0,Rotation_x: 0,Rotation_y: 0,Rotation_z: 0,Mirror: 0};
     axios
       .post(API.BASE_URL + "threed-model_transform/", formData, {
         headers: {
@@ -876,14 +831,7 @@ const Target = () => {
 
   // three model transition api
   const threeDmodelTransition = (id) => {
-    const formData = {
-      transition_enter: null,
-      transition_exit: null,
-      height: 0,
-      duration: 0,
-      delay: 0,
-      ThreeDModel_id: id,
-    };
+    const formData = {transition_enter: null,transition_exit: null,height: 0,duration: 0,delay: 0,ThreeDModel_id: id};
     axios
       .post(API.BASE_URL + "threed-model_transition/", formData, {
         headers: {
@@ -1148,69 +1096,7 @@ const Target = () => {
     ButtonShow(!ToggleButton);
   };
 
-  // function to change password
-  // http://18.230.11.54:8001/changepassword/
-  // payload :-> old_password,new_password
-  const changePassword = (formData) => {
-    axios
-      .post(
-        API.BASE_URL + "changepassword/",
-        {
-          formData,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("Token")}`,
-          },
-        }
-      )
-      .then(function (response) {
-        console.log(response, "RESponSE from changePassword");
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
 
-  // function to update profile photo
-  // http://18.230.11.54:8001/editprofilephoto/
-
-  const updateProfilePhoto = (selectedImage) => {
-    axios
-      .post(
-        API.BASE_URL + "editprofilephoto/",
-        {
-          profile_photo: selectedImage,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("Token")}`,
-          },
-        }
-      )
-      .then(function (response) {
-        console.log(response, "RESponSE from updateProfilePhoto");
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  // function to update project
-  // http://18.230.11.54:8001/update-project/2/
-  // payload:->imagePro,ProTitle,projectIcon,projectTitle,FeaturedtrackerOption
-  const updateProject = (id, formData) => {
-    axios
-      .post(API.BASE_URL + "update-project/" + id, {
-        formData,
-      })
-      .then(function (response) {
-        console.log(response, "RESponSE from updateProject");
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
 
   // get data by scene id
   const getDataBySceneId = (id) => {
@@ -1378,8 +1264,6 @@ const Target = () => {
   console.log(cont_orientation);
 
   // -------------------------------------------------------------------------->
-  const [count, setCount] = useState(1);
-
   // To SELECT TARGET   ------------------------------------------------------------------->
   const [FeaturedtrackerOption, Featuredtracker] = useState(null);
   const handleSelectTarget = (event, type) => {

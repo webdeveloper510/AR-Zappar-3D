@@ -18,7 +18,7 @@ import { contextObject } from './components/ContextStore/ContextApi';
 
 
 
-// let rendeR=true;
+let rendeR=true;
 
 const ModelAr =()=> {
     // UseStates In Initialization State ---------------------------------------------------------------------->
@@ -144,10 +144,11 @@ const ModelAr =()=> {
 
                     // All Data Get for Image Tracking --------------------------------------------->
 
-                    console.log(id,'<id from context-------------------');
+                    console.log(id,'<id from context-----------');
 
-                    axios.get(API.BASE_URL+"getproject_contentdata/"+id+"/")
+                    axios.get(API.BASE_URL+"scene_details/"+id+"/")
                     .then((responseProject)=>{
+                        console.log(responseProject)
                         // if(!rendeR){
                             
                             // toast.success("Project Loaded Successfully !!!")
@@ -161,7 +162,7 @@ const ModelAr =()=> {
                         setScene(responseProject.data.data[0].scene_data)
                         setProject(responseProject.data.data[0].project_content_data);
                         set2D3D(responseProject.data.data[0].twoD_threeD_data)
-                        // rendeR=false
+                        rendeR=false
 
                     }).catch ((err)=>{
                         console.log(err,'THIS IS RESPONSEPROJECT<----------');
@@ -173,18 +174,20 @@ const ModelAr =()=> {
                     // Image Handler Function ------------------------------------------------------------------------------------------>
                     // var domEvents = new DomEvents(cameraPersp, renderer.domElement);
                     if (getImage){
-                        for (let i = 0; i < getImage.length  &&  getImage !== undefined; i++    ){
+                        for (let i = 0; i < getImage.length  &&  getImage !== undefined; i++){
                             const imageId = getImage[i][0].id
                             const imageData = getImage[i][0].image_url
                             const textureLoader = new THREE.TextureLoader()
                             const texturedf = textureLoader.load(imageData)
+                            // rendeR=false;
+                            console.log(imageData);
                             texturedf.minFilter = THREE.LinearFilter;
                             texturedf.magFilter = THREE.LinearFilter;
-                            const geometry = new THREE.PlaneGeometry(getImage[i][0].image_transform.width, getImage[i][0].image_transform.height)
+                            const geometry = new THREE.BoxGeometry(getImage[i][0].image_transform.width, getImage[i][0].image_transform.height,1)
                             const material = new THREE.MeshBasicMaterial({ map: texturedf, transparent: false })
                             const mesh = new THREE.Mesh(geometry, material);
-                            scene.add(mesh);
-                            mesh.position.set(getImage[i][0].image_transform.position_x, getImage[i][0].image_transform.position_y, getImage[i][0].image_transform.position_d)
+                            plane.add(mesh);
+                            mesh.position.set(Number(getImage[i][0].image_transform.position_x), Number(getImage[i][0].image_transform.position_y), Number(getImage[i][0].image_transform.position_d)+8)
                             mesh.rotation.x =getImage[i][0].image_transform.Rotation_x
                             mesh.rotation.y =getImage[i][0].image_transform.Rotation_y
                             mesh.rotation.z =getImage[i][0].image_transform.Rotation_z
@@ -192,10 +195,10 @@ const ModelAr =()=> {
                             mesh.userData.id = imageId;                           
                         }
                     }
+ 
 
 
-
-                    // Video Handler Function ------------------------------------------------------------------------------------------>
+                    // Video Handler Function --------------------------------------------------------------------------------->
 
                     if (getVideo){
                         for (let i = 0; i < getVideo.length  &&  getVideo !== undefined; i++    ){
@@ -421,6 +424,6 @@ const ModelAr =()=> {
     }
     setTimeout(boxModal, 1000)
 
-        },[id]);
+        },[rendeR,id]);
 }
 export default ModelAr;
