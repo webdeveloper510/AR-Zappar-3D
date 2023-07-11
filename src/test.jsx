@@ -193,7 +193,8 @@ const ModelAr =()=> {
                             mesh.rotation.y =getImage[i][0].image_transform.Rotation_y
                             mesh.rotation.z =getImage[i][0].image_transform.Rotation_z
                             mesh.userData.type = 'image';
-                            mesh.userData.id = imageId;         
+                            mesh.userData.id = imageId;
+                            // mesh.attach(control)
                             // mesh.isDraggable = true;                 
                         }
                     }
