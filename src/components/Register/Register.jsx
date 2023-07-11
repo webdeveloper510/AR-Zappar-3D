@@ -46,7 +46,7 @@ const RegisterPage =()=>{
 
     const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
-            console.log("Date----------->" , event.target.value)
+            // console.log("Date----------->" , event.target.value)
 
     };
     const MyDataObject = {
@@ -61,7 +61,7 @@ const RegisterPage =()=>{
         navigate('/')
     }
     const handleRegister = ()=>{
-        console.log(profileImg);
+        // console.log(profileImg);
         if (MyDataObject){
             const formData = new FormData();
             formData.append("firstname" , firstName,)
@@ -81,8 +81,8 @@ const RegisterPage =()=>{
                 },
               })
               .then(function (response) {
-                console.log(response,'sign up')
-                console.log('Registerd SuccessFully', response);
+                // console.log(response,'sign up')
+                // console.log('Registerd SuccessFully', response);
                 navigate('/')
                 toast.success('Registerd Successfully !')             
               })

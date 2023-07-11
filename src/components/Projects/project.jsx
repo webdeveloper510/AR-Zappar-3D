@@ -41,13 +41,13 @@ const Project =()=>{
   if(id?.length > 0){
   axios.get(API.BASE_URL+'project-list/'+id+'/')
     .then(function(response){
-      console.log('Response---------------------->',response)
+      // console.log('Response---------------------->',response)
       addTitle(response.data.ProTitle)
       ProImg(response.data.imagePro.toString())
       CreationDate(response.data.created_at)
     })
     .catch(function(error){
-      console.log(error)
+      // console.log(error)
     })
   }
  },[imgProject])
@@ -65,7 +65,7 @@ const Project =()=>{
     UserName(response.data.firstname)
    })
    .catch((error) => {
-     console.log(error, 'error');
+     // console.log(error, 'error');
    });
  },[])
 
@@ -87,7 +87,7 @@ const Project =()=>{
             'content-type': 'multipart/form-data'
       },
     }).then(function(response){
-      console.log("---------------------------------------------------------*************------>",response.data.data.imagepro)
+      // console.log("---------------------------------------------------------*************------>",response.data.data.imagepro)
       toast.success("Image Uploaded !")
       ProImg(response.data.data.imagepro.toString())
     }).catch(function(error){
@@ -100,7 +100,7 @@ const Project =()=>{
   const handleSubmit = () => {   
       const formData = new FormData();
       formData.append('ProTitle',titlePro)
-      console.log('Params Id', id)
+      // console.log('Params Id', id)
       axios.post(API.BASE_URL + 'update-project/'+id+'/', formData, {
         headers: {
           'accept': 'application/json',

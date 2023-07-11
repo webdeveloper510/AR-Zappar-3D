@@ -42,7 +42,7 @@ const UserProfile =()=>{
         UserInformation(response.data)
       })
       .catch((error) => {
-        console.log(error, 'error');
+        // console.log(error, 'error');
       });
     },[])
 
@@ -70,9 +70,9 @@ const UserProfile =()=>{
     const handleConfirmPassword = (e)=>{
       GetConfirmPassword(e.target.value)
     }
-    console.log(OldPassword);
-    console.log(NewPassword);
-    console.log(ConfirmPassword);
+    // console.log(OldPassword);
+    // console.log(NewPassword);
+    // console.log(ConfirmPassword);
 
     const handlepasswordClose = () => {
       if (NewPassword === ConfirmPassword) {

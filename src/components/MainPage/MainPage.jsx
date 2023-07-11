@@ -63,7 +63,7 @@ const MainPage =()=>{
     axios.get(API.BASE_URL+'projects/'+val+'/' )
     .then(function(response){
       setProInfo(response.data)
-      console.log(response.data)
+      // console.log(response.data)
     }).catch(function(error){
     })
   }, [])
@@ -91,7 +91,7 @@ const handleshowcreatelabel = () => setcreatelabel(true);
     }
 
     const handleDeleteShow = (id) => {
-    console.log(id)
+    // console.log(id)
     localStorage.setItem("deleteProject", id);
     setShowDelete(true);
     }
@@ -103,15 +103,15 @@ const handleshowcreatelabel = () => setcreatelabel(true);
 
 
     const handleProject = (id)=>{
-      console.log(id)
+      // console.log(id)
       // e.stopPropagation()
       axios.get(API.BASE_URL+'project-list/'+id+'/')
       .then(function(response){
-        console.log(response)
+        // console.log(response)
       navigate('/project/'+id+'/')
       })
       .catch(function(error){
-        console.log(error)
+        // console.log(error)
       })
     }
 
@@ -162,7 +162,7 @@ const handleshowcreatelabel = () => setcreatelabel(true);
     // Handle Cover Image Change ----------------------------------------------------------------------------------------------->
 
     const handleCoverimageShow = (id) =>{
-      console.log("COver Image ID -------------->",id)
+      // console.log("COver Image ID -------------->",id)
       localStorage.setItem("coverimage", id);
       setShowCover(true);
       
@@ -173,7 +173,7 @@ const handleshowcreatelabel = () => setcreatelabel(true);
       coverImage(e.target.files[0]);
       const file=e.target.files[0];
       setimgName(file.name)
-      console.log(file.name,'cover image changed from +cover');
+      // console.log(file.name,'cover image changed from +cover');
       const imgUrl=URL.createObjectURL(e.target.files[0]);
       setdraggedImage(imgUrl)
 
@@ -203,7 +203,7 @@ const handleshowcreatelabel = () => setcreatelabel(true);
       setimgName(null)
       const editableItem=proInfo.filter(item=>item.id===id);
       seteditableItem(editableItem)
-      console.log(editableItem,'editableItemeditableItemeditableItem');
+      // console.log(editableItem,'editableItemeditableItemeditableItem');
 
     }
 

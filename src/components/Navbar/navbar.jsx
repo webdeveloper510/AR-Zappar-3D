@@ -46,7 +46,7 @@ const NavBar =()=>{
      UserImage(response.data.profile_image)
     })
     .catch((error) => {
-      console.log(error, 'error');
+      // console.log(error, 'error');
     });
   },[])
     return(

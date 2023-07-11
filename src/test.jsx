@@ -53,6 +53,7 @@ const ModelAr =()=> {
             }
             
     // boxModal Function Startes ------------------------------------------------------------------------------>
+    // console.log('useEffectCalled useEffectCalled useEffectCalled');
         const boxModal = () => {
 
         // Variables ------------------------------------------------------------------------------------------->
@@ -98,7 +99,7 @@ const ModelAr =()=> {
             const plane = new THREE.Mesh(geometry,material );
             material.needsUpdate = false;
             scene.add(plane);
-            console.log(plane.material)
+            // console.log(plane.material)
             plane.position.set(0, 0, 0);
             plane.rotation.y = Math.PI;
             // Adding Light Effects ------------------------------------------------------------------------------->
@@ -138,19 +139,19 @@ const ModelAr =()=> {
 
 
 
-                 
-    
+
+
 // Model Data GET for Image Tracking---------------------------------------------------------------->
 
                     // All Data Get for Image Tracking --------------------------------------------->
 
-                    console.log(id,'<id from context-----------');
-
+                    // console.log(id,'<id from context-----------');
+                    // console.log('REQUEST SEND TO GET ALL DATA ');
                     axios.get(API.BASE_URL+"scene_details/"+id+"/")
                     .then((responseProject)=>{
-                        console.log(responseProject)
+                        // console.log(responseProject,'main response<--------((()))')
                         // if(!rendeR){
-                            
+                            ctx.setreRender(true);
                             // toast.success("Project Loaded Successfully !!!")
                         // }
                       
@@ -165,7 +166,7 @@ const ModelAr =()=> {
                         rendeR=false
 
                     }).catch ((err)=>{
-                        console.log(err,'THIS IS RESPONSEPROJECT<----------');
+                        // console.log(err,'THIS IS RESPONSEPROJECT<----------');
                         toast.error("Connecting to Server !")
                     })
 
@@ -179,8 +180,8 @@ const ModelAr =()=> {
                             const imageData = getImage[i][0].image_url
                             const textureLoader = new THREE.TextureLoader()
                             const texturedf = textureLoader.load(imageData)
-                            // rendeR=false;
-                            console.log(imageData);
+                            // rendeR=true;
+                            // console.log(imageData, 'this is image data this is image data this is image');
                             texturedf.minFilter = THREE.LinearFilter;
                             texturedf.magFilter = THREE.LinearFilter;
                             const geometry = new THREE.BoxGeometry(getImage[i][0].image_transform.width, getImage[i][0].image_transform.height,1)
@@ -195,6 +196,9 @@ const ModelAr =()=> {
                             mesh.userData.id = imageId;                           
                         }
                     }
+                    // else{
+                    //     ctx.setreRender((prev)=>!prev);
+                    // }
  
 
 
@@ -281,15 +285,7 @@ const ModelAr =()=> {
                         // getHeightd.addEventListener("change" , (event) =>{
                         //     setHeight(event.target.value)
                         // })  
-                        // console.log(getWidth,getHeight,getLength)
-
-
-
-            
-
-
-
-
+                        // // console.log(getWidth,getHeight,getLength)
 
         // Camera , Orbit Controls and Transform Controls extra Features -------------------------------------------------------------->  
                         
@@ -413,17 +409,21 @@ const ModelAr =()=> {
 
         // if (intersects.length > 0) {
 
-        //     console.log(intersects[0].object);
+        //     // console.log(intersects[0].object);
         // }       
 
         function render() {
             // requestAnimationFrame(render)
             renderer.render( scene, currentCamera );
         }
-        requestAnimationFrame(render);
     }
-    setTimeout(boxModal, 1000)
+    setTimeout(()=>{
+        // console.log('inside timeout test js file');
+        boxModal()
+    }, 100)
+    // boxModal()
+    // console.log('TEST JS FILE LAST');
 
-        },[rendeR,id]);
+        },[rendeR,id,ctx.reRender]);
 }
 export default ModelAr;

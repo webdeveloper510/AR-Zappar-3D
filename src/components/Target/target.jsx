@@ -78,7 +78,7 @@ const Target = () => {
   const [cont_target_image, Project_content_target_image] = useState(null);
   const [cont_units, Project_content_units] = useState(null);
 
-  console.log(cont_orientation, "<-------------------------------------");
+  // console.log(cont_orientation, "<-------------------------------------");
 
   // STATES for Video Data OF AN PROJECT ---------------------------------------------->
 
@@ -224,6 +224,7 @@ const Target = () => {
           const background_soundArray = scene_data.background_sound;
           const project_contentArray = scene_data.project_content;
           scenes(scene_data.scenes);
+          console.log(scene_data.scenes,'All scene');
           setnameSelectedScene(scene_data.scenes[0].name);
           scene_id(res.data.scenes[0].id);
           if (firstTime) {
@@ -231,16 +232,16 @@ const Target = () => {
           }
           firstTime = false;
           for (let i = 0; i < analyticsArray.length; i += 1) {
-            console.log("---> analyticsArray", analyticsArray[i]);
+            // console.log("---> analyticsArray", analyticsArray[i]);
             analytics_id(analyticsArray[i].id);
             track_with(analyticsArray[i].track_with);
           }
           for (let i = 0; i < background_soundArray.length; i += 1) {
-            console.log("---> background_soundArray", background_soundArray[i]);
+            // console.log("---> background_soundArray", background_soundArray[i]);
             media_file(background_soundArray[i].media_file);
           }
           for (let i = 0; i < project_contentArray.length; i += 1) {
-            console.log("---> project_contentArray", project_contentArray[i]);
+            // console.log("---> project_contentArray", project_contentArray[i]);
             project_content_id(project_contentArray[i].id);
             media_file(project_contentArray[i].media_file);
             dimensions_h(project_contentArray[i].dimensions_h);
@@ -267,7 +268,7 @@ const Target = () => {
     axios
       .post(API.BASE_URL + "scene/", formdataScene, {})
       .then(function (res) {
-        setreRender((prev) => !prev);
+        // setreRender((prev) => !prev);
         if (localStorage.getItem("ProjectContentID")) {
         } else {
           sceneTransitions(res.data.id);
@@ -278,7 +279,7 @@ const Target = () => {
         window.location.reload(true);
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
         toast.error("Connection Error");
       });
   };
@@ -292,7 +293,7 @@ const Target = () => {
       })
       .then(function (response) {})
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -314,7 +315,7 @@ const Target = () => {
         analyticsApi(project_content_id);
       })
       .catch(function (errorMessage) {
-        console.log(errorMessage);
+        // console.log(errorMessage);
       });
   };
 
@@ -330,7 +331,7 @@ const Target = () => {
       })
       .then(function (response) {})
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -343,10 +344,10 @@ const Target = () => {
         },
       })
       .then(function (response) {
-        console.log(response, "RESponSE from analyticsApi");
+        // console.log(response, "RESponSE from analyticsApi");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -369,7 +370,7 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "scene_details/" + s_scene_id)
       .then(function (responseProject) {
-        console.log(responseProject, id);
+        console.log(responseProject, 'ImageUploaded<-----------------');
         setButton(responseProject.data.data[0].button_data);
         setText(responseProject.data.data[0].text_data);
         setImage(responseProject.data.data[0].image_data);
@@ -382,6 +383,7 @@ const Target = () => {
         // Image Dimensions ----------------------------------------------------------------------------------------------------->
 
         const DataImage = responseProject.data.data[0].image_data;
+        // console.log(DataImage);
         for (let i = 0; i < DataImage.length; i += 1) {
           dimwidth(DataImage[i][0].image_transform.width);
           dimheight(DataImage[i][0].image_transform.height);
@@ -466,7 +468,7 @@ const Target = () => {
         }
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
       });
   };
   // GET Basic Details OF PROJECT ------------------------------------------------------------>
@@ -583,6 +585,7 @@ const Target = () => {
           .post(API.BASE_URL + "upload-image/", formData)
           .then(function (response) {
             toast.success("Image Uploaded!");
+            ctx.setreRender(false);
             imageDimensions(response.data.id, threeewidth, threeeheight);
             imageTransitionAPI(response.data.id);
             imageAppearanceAPI(response.data.id);
@@ -613,10 +616,10 @@ const Target = () => {
     axios
       .post(API.BASE_URL + "/image_transform/", formData)
       .then(function (response) {
-        console.log(response, "resoonsere-------------------------->>>>");
+        // console.log(response, "resoonsere-------------------------->>>>");
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
       });
   };
 
@@ -644,7 +647,7 @@ const Target = () => {
         setopacity(response.data.opacity);
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -674,7 +677,7 @@ const Target = () => {
         setTraNtransition_exit(response.data.transition_exit);
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -691,7 +694,7 @@ const Target = () => {
         setimage_action(response.data.image_action);
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -748,7 +751,7 @@ const Target = () => {
         settoGetData((prev) => !prev);
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -762,13 +765,13 @@ const Target = () => {
         },
       })
       .then(function (response) {
-        console.log(
-          response.data.video_action,
-          "RESPONSE from VIDEO ACTION <<<<============"
-        );
+        // console.log(
+        //   response.data.video_action,
+        //   "RESPONSE from VIDEO ACTION <<<<============"
+        // );
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -782,13 +785,13 @@ const Target = () => {
         },
       })
       .then(function (response) {
-        console.log(
-          response.data,
-          "RESPONSE video Transition<<<<============"
-        );
+        // console.log(
+        //   response.data,
+        //   "RESPONSE video Transition<<<<============"
+        // );
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -825,7 +828,7 @@ const Target = () => {
         settoGetData((prev) => !prev);
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -842,7 +845,7 @@ const Target = () => {
         settoGetData((prev) => !prev);
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -859,7 +862,7 @@ const Target = () => {
         settoGetData((prev) => !prev);
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -871,7 +874,7 @@ const Target = () => {
       .put(API.BASE_URL + "twod_threed/" + twoDthreeDID + "/", formdata, {})
       .then(function (res) {})
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -881,10 +884,10 @@ const Target = () => {
     axios
       .post(API.BASE_URL + "GetButtondata/" + s_scene_id)
       .then(function (response) {
-        console.log(response, "RESponSE from get data from button");
+        // console.log(response, "RESponSE from get data from button");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -894,10 +897,10 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "GetButtondata/" + s_scene_id)
       .then(function (response) {
-        console.log(response, "RESponSE from DELETE data from button");
+        // console.log(response, "RESponSE from DELETE data from button");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -908,10 +911,10 @@ const Target = () => {
     axios
       .post(API.BASE_URL + "get-all-text-data/" + s_scene_id)
       .then(function (response) {
-        console.log(response, "RESponSE from get all text data by id");
+        // console.log(response, "RESponSE from get all text data by id");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -922,10 +925,10 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "get-all-text-data/" + s_scene_id)
       .then(function (response) {
-        console.log(response, "RESponSE from DELETE text data by id");
+        // console.log(response, "RESponSE from DELETE text data by id");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -936,10 +939,10 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "get-image-data/" + s_scene_id)
       .then(function (response) {
-        console.log(response, "RESponSE from get image data by id");
+        // console.log(response, "RESponSE from get image data by id");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -950,10 +953,10 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "get-image-data/" +s_scene_id )
       .then(function (response) {
-        console.log(response, "RESponSE from DELETE image data by id");
+        // console.log(response, "RESponSE from DELETE image data by id");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -964,10 +967,10 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "get-video-data/" + s_scene_id)
       .then(function (response) {
-        console.log(response, "RESponSE from get video data by id");
+        // console.log(response, "RESponSE from get video data by id");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -978,10 +981,10 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "get-video-data/" + s_scene_id)
       .then(function (response) {
-        console.log(response, "RESponSE from DELETE video data by id");
+        // console.log(response, "RESponSE from DELETE video data by id");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -992,10 +995,10 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "get-threed-model-Data/" +s_scene_id )
       .then(function (response) {
-        console.log(response, "RESponSE from get three D model data by id");
+        // console.log(response, "RESponSE from get three D model data by id");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -1006,10 +1009,10 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "get-threed-model-Data/" + id)
       .then(function (response) {
-        console.log(response, "RESponSE from DELETE three D model data by id");
+        // console.log(response, "RESponSE from DELETE three D model data by id");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -1020,10 +1023,10 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "get-scene-data/" + s_scene_id)
       .then(function (response) {
-        console.log(response, "RESponSE from get scene data by id");
+        // console.log(response, "RESponSE from get scene data by id");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -1034,10 +1037,10 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "get-scene-data/" + s_scene_id)
       .then(function (response) {
-        console.log(response, "RESponSE from DELETE scene data by id");
+        // console.log(response, "RESponSE from DELETE scene data by id");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -1048,10 +1051,10 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "getproject-contentdata/" + id)
       .then(function (response) {
-        console.log(response, "RESponSE from get project content data by id");
+        // console.log(response, "RESponSE from get project content data by id");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -1061,13 +1064,13 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "getproject-contentdata/" + s_scene_id)
       .then(function (response) {
-        console.log(
-          response,
-          "RESponSE from DELETE project content data by id"
-        );
+        // console.log(
+        //   response,
+        //   "RESponSE from DELETE project content data by id"
+        // );
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -1082,10 +1085,10 @@ const Target = () => {
         },
       })
       .then(function (response) {
-        console.log(response, "RESponSE from getUserProfile");
+        // console.log(response, "RESponSE from getUserProfile");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -1103,10 +1106,10 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "scene_details/" + s_scene_id)
       .then(function (response) {
-        console.log(response, "RESponSE from getDataBySceneId");
+        // console.log(response, "RESponSE from getDataBySceneId");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -1115,10 +1118,10 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "scene_details/" + s_scene_id)
       .then(function (response) {
-        console.log(response, "RESponSE from deleteDataBySceneId");
+        // console.log(response, "RESponSE from deleteDataBySceneId");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -1128,10 +1131,10 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "scene_data_by_project/" + id)
       .then(function (response) {
-        console.log(response, "RESponSE from getAllSceneByProjectId");
+        // console.log(response, "RESponSE from getAllSceneByProjectId");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -1212,7 +1215,7 @@ const Target = () => {
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(
     Url
   )}&size=200x200`;
-  console.log(qrCodeUrl);
+  // console.log(qrCodeUrl);
 
   const handleBack = (event) => {
     navigate("/home");
@@ -1254,14 +1257,14 @@ const Target = () => {
         },
       })
       .then(function (res) {
-        console.log(res, "<==========================================");
+        // console.log(res, "<==========================================");
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   };
 
-  console.log(cont_orientation);
+  // console.log(cont_orientation);
 
   // -------------------------------------------------------------------------->
   // To SELECT TARGET   ------------------------------------------------------------------->
@@ -1290,6 +1293,7 @@ const Target = () => {
     setnameInScene(name);
     getSceneData(sceneId);
   };
+  
 
   return (
     <div className="targetPage" ref={containerRef}>
@@ -7691,6 +7695,7 @@ const Target = () => {
         {/*  all scenes will be shown in this div */}
         {showScene && (
           <div className="scenes-list">
+          {  console.log(SceneArray,'this is sceneArray')}
             {SceneArray.map((scene, i) => {
               const occurrences = SceneArray.filter(
                 (s) => s.name === scene.name
