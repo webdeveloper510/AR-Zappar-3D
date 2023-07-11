@@ -1295,6 +1295,15 @@ const Target = () => {
   };
   
 
+  const [fontselected, Selectedfont] = useState(null);
+  const handleFontStyle=(e , type)=>{
+    Selectedfont(type);
+    e.currentTarget.classList.add("selected");
+  }
+  const applyfont = () => {
+    console.log("applyfont" ,fontselected)
+  }
+
   return (
     <div className="targetPage" ref={containerRef}>
       <div className="navbar taget-navbar">
@@ -2391,134 +2400,20 @@ const Target = () => {
                     <h6 className="btn-target-left mt-3">Basic buttons</h6>
                     <hr />
                     <div className="Grid--v4HT5">
-                      <div
-                        id="1d3f034a-16b5-4754-9763-7bbabfce9095"
-                        style={{
-                          width: "100px",
-                          height: "36px",
-                          color: "white",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          cursor: "pointer",
-                          backgroundColor: "rgb(150, 191, 239)",
-                        }}
-                      >
-                        Abc
-                      </div>
-                      <div
-                        id="ee7d490e-21d2-4f1d-a51e-0546f4a40353"
-                        style={{
-                          width: "100px",
-                          height: "36px",
-                          color: "rgb(150, 191, 239)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          cursor: "pointer",
-                          backgroundColor: "transparent",
-                          border: "2px solid rgb(150, 191, 239)",
-                        }}
-                      >
-                        Abc
-                      </div>
-                      <div
-                        id="d89f4b83-667d-46e8-b095-5eecc601a8e0"
-                        style={{
-                          width: "100px",
-                          height: "36px",
-                          color: "white",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          cursor: "pointer",
-                          backgroundColor: "rgb(150, 191, 239)",
-                        }}
-                      >
-                        Abc
-                      </div>
-                      <div
-                        id="9c3c290e-3f02-48e8-9862-711e33f6ef42"
-                        style={{
-                          width: "100px",
-                          height: "36px",
-                          color: "rgb(150, 191, 239)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          cursor: "pointer",
-                          backgroundColor: "transparent",
-                          borderRadius: "6px",
-                          border: "2px solid rgb(150, 191, 239)",
-                        }}
-                      >
-                        Abc
-                      </div>
-                      <div
-                        id="5115829b-42a0-4328-9dcb-9ab1a19719c7"
-                        style={{
-                          width: "100px",
-                          height: "36px",
-                          color: "white",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          cursor: "pointer",
-                          backgroundColor: " rgb(150, 191, 239)",
-                          borderRadius: "36px",
-                        }}
-                      >
-                        Abc
-                      </div>
-                      <div
-                        id="daf7cdff-ee9c-4873-a336-cbc5e4bc2bf3"
-                        style={{
-                          width: "100px",
-                          height: "36px",
-                          color: " rgb(150, 191, 239)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          cursor: "pointer",
-                          backgroundColor: "transparent",
-                          borderRadius: "36px",
-                          border: "2px solid rgb(150, 191, 239)",
-                        }}
-                      >
-                        Abc
-                      </div>
+                      <div id="1d3f034a-16b5-4754-9763-7bbabfce9095" style={{   width: "100px",   height: "36px",   color: "white",   display: "flex",   alignItems: "center",   justifyContent: "center",   cursor: "pointer",   backgroundColor: "rgb(150, 191, 239)", }} >Abc</div>
+                      <div id="ee7d490e-21d2-4f1d-a51e-0546f4a40353" style={{   width: "100px",   height: "36px",   color: "rgb(150, 191, 239)",   display: "flex",   alignItems: "center",   justifyContent: "center",   cursor: "pointer",   backgroundColor: "transparent",   border: "2px solid rgb(150, 191, 239)", }} >Abc</div>
+                      <div id="d89f4b83-667d-46e8-b095-5eecc601a8e0" style={{   width: "100px",   height: "36px",   color: "white",   display: "flex",   alignItems: "center",   justifyContent: "center",   cursor: "pointer",   backgroundColor: "rgb(150, 191, 239)", }} >Abc</div>
+                      <div id="9c3c290e-3f02-48e8-9862-711e33f6ef42" style={{   width: "100px",   height: "36px",   color: "rgb(150, 191, 239)",   display: "flex",   alignItems: "center",   justifyContent: "center",   cursor: "pointer",   backgroundColor: "transparent",   borderRadius: "6px",   border: "2px solid rgb(150, 191, 239)", }}>Abc</div>
+                      <div id="5115829b-42a0-4328-9dcb-9ab1a19719c7" style={{   width: "100px",   height: "36px",   color: "white",   display: "flex",   alignItems: "center",   justifyContent: "center",   cursor: "pointer",   backgroundColor: " rgb(150, 191, 239)",   borderRadius: "36px", }} >  Abc</div>
+                      <div id="daf7cdff-ee9c-4873-a336-cbc5e4bc2bf3" style={{   width: "100px",   height: "36px",   color: " rgb(150, 191, 239)",   display: "flex",   alignItems: "center",   justifyContent: "center",   cursor: "pointer",   backgroundColor: "transparent",   borderRadius: "36px",   border: "2px solid rgb(150, 191, 239)", }} >  Abc</div>
                     </div>
                     <div className="Title--29AmM">
                       Social buttons
-                      <div
-                        className="TitleDivider--2R3vH"
-                        style={{
-                          borderTop: "1px solid rgb(178, 196, 215)",
-                          height: "auto",
-                          width: "100%",
-                        }}
-                      >
+                      <div className="TitleDivider--2R3vH" style={{   borderTop: "1px solid rgb(178, 196, 215)",   height: "auto",   width: "100%", }}>
                         <div className="Grid--1NhFW">
                           {imageObject.map((img, i) => {
                             return (
-                              <div
-                                id={i}
-                                draggable={true}
-                                style={{
-                                  display: "flex",
-                                  cursor: "pointer",
-                                  backgroundRepeat: "no-repeat",
-                                  backgroundPosition: "50% 50%",
-                                  backgroundSize: "contain",
-                                  marginRight: "auto",
-                                  marginLeft: "auto",
-                                  backgroundImage: `url(${img})`,
-                                  width: "38px",
-                                  height: "38px",
-                                  marginTop: "0px",
-                                }}
-                                data-texture={img}
-                              ></div>
+                              <div id={i} draggable={true} style={{   display: "flex",   cursor: "pointer",   backgroundRepeat: "no-repeat",   backgroundPosition: "50% 50%",   backgroundSize: "contain",   marginRight: "auto",   marginLeft: "auto",   backgroundImage: `url(${img})`,   width: "38px",   height: "38px",   marginTop: "0px", }} data-texture={img}></div>
                             );
                           })}
                         </div>
@@ -2526,61 +2421,41 @@ const Target = () => {
                       <div className="Grid--r1Nnn">
                         {imageObject2.map((img2, i) => {
                           return (
-                            <div
-                              className="96d04a62-6acd-454f-b9fc"
-                              id="96d04a62-6acd-454f-b9fc-bf348626c305"
-                              style={{
-                                display: "flex",
-                                cursor: "pointer",
-                                backgroundRepeat: "no-repeat",
-                                backgroundPosition: "50% 50%",
-                                backgroundSize: "contain",
-                                backgroundImage: `url(${img2})`,
-                                width: "110px",
-                                height: "39px",
-                              }}
-                              data-texture={img2}
-                            ></div>
+                            <div className="96d04a62-6acd-454f-b9fc" id="96d04a62-6acd-454f-b9fc-bf348626c305" style={{   display: "flex",   cursor: "pointer",   backgroundRepeat: "no-repeat",   backgroundPosition: "50% 50%",   backgroundSize: "contain",   backgroundImage: `url(${img2})`,   width: "110px",   height: "39px", }} data-texture={img2}></div>
                           );
                         })}
                       </div>
                     </div>
-                    <img
-                      src=""
-                      id="social-icon"
-                      className="social-icon"
-                      alt=""
-                    ></img>
+                    <img src="" id="social-icon" className="social-icon" alt=""></img>
                   </Tab.Pane>
 
                   <Tab.Pane
                     eventKey={isOpen ? "second" : null}
-                    onClick={() => setisOpen(!isOpen)}
+                    // onClick={() => setisOpen(!isOpen)}
                     className="bg-light p-4 tab-content"
                   >
                     <p className="m-0">Text</p>
                     <p className="m-0 pt-2">Text Hierarchy</p>
                     <hr />
 
-                    <p className="m-0 first-head">Add a heading</p>
-                    <p className="m-0 second-head">Add a subheading</p>
-                    <p className="m-0 third-head">Add a paragraph </p>
+                    <p className={`m-0 first-head ${fontselected === 'hading' ? 'selected' : ''}`}  onClick={(e)=>{handleFontStyle(e, 'hading')}}>Add a heading</p>
+                    <p className={`m-0 second-head ${fontselected === 'sub-hading' ? 'selected' : ''}`}  onClick={(e)=>{handleFontStyle(e, 'sub-hading')}}>Add a subheading</p>
+                    <p className={`m-0 third-head ${fontselected === 'para' ? 'selected' : ''}`}  onClick={(e)=>{handleFontStyle(e, 'para')}}>Add a paragraph </p>
                     <br />
                     <p className="thene-txted">Themed text</p>
                     <hr />
                     <div className="buttons text-side-btn">
-                      <p className="Standard-title">Standard title</p>
-                      <p className="square Rounded-title">Rounded title</p>
-                      <p className="ellipse Elegant-title">Elegant title</p>
-                      <p className="ellipse Classic-title">Classic title</p>
-                      <p className="round Modern-title">Modern title</p>
-                      <p className="round Futuristic-title">Futuristic title</p>
-                      <p className="round Handwritten-title">
-                        Handwritten title
-                      </p>
-                      <p className="round Magic-title-2">Magic title 2</p>
-                      <p className="round Funky-title"> Funky title</p>
+                      <p className={`Standard-title ${fontselected === 'standard' ? 'selected' : ''}`}  onClick={(e)=>{handleFontStyle(e, 'standard')}}>Standard title</p>
+                      <p className={`square Rounded-title ${fontselected === 'rounded' ? 'selected' : ''}`}  onClick={(e)=>{handleFontStyle(e, 'rounded')}}>Rounded title</p>
+                      <p className={`ellipse Elegant-title ${fontselected === 'elegant' ? 'selected' : ''}`}  onClick={(e)=>{handleFontStyle(e, 'elegant')}}>Elegant title</p>
+                      <p className={`ellipse Classic-title ${fontselected === 'classic' ? 'selected' : ''}`}  onClick={(e)=>{handleFontStyle(e, 'classic')}}>Classic title</p>
+                      <p className={`round Modern-title ${fontselected === 'modern' ? 'selected' : ''}`}  onClick={(e)=>{handleFontStyle(e, 'modern')}}>Modern title</p>
+                      <p className={`round Futuristic-title ${fontselected === 'futuristic' ? 'selected' : ''}`}  onClick={(e)=>{handleFontStyle(e, 'futuristic')}}>Futuristic title</p>
+                      <p className={`round Handwritten-title ${fontselected === 'handwritten' ? 'selected' : ''}`}  onClick={(e)=>{handleFontStyle(e, 'handwritten')}}>Handwritten title</p>
+                      <p className={`round Magic-title-2 ${fontselected === 'magic' ? 'selected' : ''}`}  onClick={(e)=>{handleFontStyle(e, 'magic')}}>Magic title 2</p>
+                      <p className={`round Funky-title ${fontselected === 'funky' ? 'selected' : ''}`}  onClick={(e)=>{handleFontStyle(e, 'funky')}}> Funky title</p>
                     </div>
+                    <button className="applybutton" onClick={applyfont}>Apply</button>
                   </Tab.Pane>
 
                   <Tab.Pane

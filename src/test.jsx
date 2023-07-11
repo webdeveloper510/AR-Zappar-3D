@@ -11,9 +11,12 @@ import { toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import svgHere from '../src/assets/images/svgviewer-output.svg'
 import svgHere2 from '../src/assets/images/Mediamodifier-Design.svg'
-import { DoubleSide } from 'three';
+import { TTFLoader } from '../node_modules/three/examples/jsm/loaders/TTFLoader'
+import { FontLoader } from '../node_modules/three/examples/jsm/loaders/FontLoader'
+import { TextGeometry } from '../node_modules/three/examples/jsm/geometries/TextGeometry'
 import { contextObject } from './components/ContextStore/ContextApi';
-
+import font from '../node_modules/three/examples/fonts/droid/droid_sans_bold.typeface.json'
+import WebFont from 'webfontloader';
 // import {DomEvents} from 'threex.domevents/threex.domevents'
 
 
@@ -42,6 +45,8 @@ const ModelAr =()=> {
         const ctx=useContext(contextObject);
         const id = ctx.scene_id;
         const PlaneTexture = [svgHere , svgHere2]
+        const [selectedElement, setSelectedElement] = useState(null);
+
     // UseEffect Using ---------------------------------------------------------------------------------------->
 
 
@@ -58,7 +63,7 @@ const ModelAr =()=> {
 
         // Variables ------------------------------------------------------------------------------------------->
             let cameraPersp, cameraOrtho, currentCamera
-            let scene, renderer, control, orbit , control2 , control3 , control4 , control5 , control6 , plane  , Videomesh , Imagesocial , gltf , plane2,mesh
+            let scene, renderer, control, orbit , plane  , Videomesh , Imagesocial , gltf , plane2,mesh
             let selectedModel = null;
 
             var ModelsArray = []
@@ -122,11 +127,6 @@ const ModelAr =()=> {
             // TransFormControls Added ----------------------------------------------------------------------------->
 
                 control = new TransformControls( currentCamera, renderer.domElement );
-                control2 = new TransformControls( currentCamera, renderer.domElement );
-                control3 = new TransformControls( currentCamera, renderer.domElement );
-                control4 = new TransformControls( currentCamera, renderer.domElement );
-                control5 = new TransformControls( currentCamera, renderer.domElement );
-                control6 = new TransformControls( currentCamera, renderer.domElement );
 
                         control.addEventListener( 'change', render );
 
@@ -135,7 +135,7 @@ const ModelAr =()=> {
                         orbit.enabled = ! event.value;
 
                     } );
-                plane.add( control );
+                scene.add( control );
 
 
 
@@ -193,7 +193,8 @@ const ModelAr =()=> {
                             mesh.rotation.y =getImage[i][0].image_transform.Rotation_y
                             mesh.rotation.z =getImage[i][0].image_transform.Rotation_z
                             mesh.userData.type = 'image';
-                            mesh.userData.id = imageId;                           
+                            mesh.userData.id = imageId;         
+                            // mesh.isDraggable = true;                 
                         }
                     }
                     // else{
@@ -226,6 +227,7 @@ const ModelAr =()=> {
                             Videomesh = new THREE.Mesh(Videogeometry, Videomaterial);
                             scene.add(Videomesh);
                             Videomesh.userData.name="Video Material"
+                            // Videomesh.isDraggable = true;
                         }
                     }
 
@@ -240,18 +242,18 @@ const ModelAr =()=> {
                             loader.load(gltfContent, (gltf) => {
                                 gltf.scene.position.set(1, 2, 0);
                                 scene.add(gltf.scene);
-                                gltf.scene.addEventListener('click', () => {
-                                    // Remove transform controls from the previously selected model, if any
-                                    if (selectedModel) {
-                                        control.detach();
-                                    }
+                                // gltf.scene.addEventListener('click', () => {
+                                //     // Remove transform controls from the previously selected model, if any
+                                //     if (selectedModel) {
+                                //         control.detach();
+                                //     }
                             
-                                    // Set the newly clicked model as the selected model
-                                    selectedModel = gltf.scene;
+                                //     // Set the newly clicked model as the selected model
+                                //     selectedModel = gltf.scene;
                             
                                     // Show transform controls for the selected model
-                                    control.attach(selectedModel);
-                                });
+                                    // control.attach(selectedModel);
+                                // });
                             })
                         }
                     }
@@ -265,12 +267,77 @@ const ModelAr =()=> {
                             }else{
                                 orbit.enabled=false
                                 control.detach(mesh);
-                                control2.detach(Videomesh);
+                                // control2.detach(Videomesh);
                             }
                         }
                     }
 
-                                                                
+
+                    // Create a FontLoader
+                        var loader = new FontLoader();
+
+                        var hash;
+                        var url = 'https://fonts.gstatic.com/s/cookie/v8/syky-y18lb0tSbf9kgqU.woff'
+                        var myJson = {};
+                        var hashes = url.slice(url.indexOf('?') + 1).split('&');
+                        for (var i = 0; i < hashes.length; i++) {
+                            hash = hashes[i].split('=');
+                            myJson[hash[0]] = hash[1];
+                            // If you want to get in native datatypes
+                            // myJson[hash[0]] = JSON.parse(hash[1]); 
+                        }
+                        // Load the WOFF font file
+                        loader.load(myJson, function (font) {
+
+                        // Use the loaded font in your 3D objects
+                        var textGeometry = new TextGeometry('Hello Three.js', {
+                            font: font,
+                            size: 100,
+                            height: 100,
+                            curveSegments: 120,
+                            bevelEnabled: false
+                        });
+
+                        var textMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+                        var textMesh = new THREE.Mesh(textGeometry, textMaterial);
+                        scene.add(textMesh);
+                        textMesh.position.set(0,0,20)
+                        });
+
+                    
+                    // WebFont.load({
+                    //     google: {
+                    //       families: ["Henny Penny, cursive", "Droid Sans", "Chilanka", "Orbitron", "Sacramento", "Roboto", "Cookie", "Comfortaa", "Philosopher", "Quicksand", "Trocchi", "Advent Pro", "Henny Penny", "Snowburst One", "Wallpoet"],
+                    //     },
+                    //     active: () => {
+
+                    //     const fontLoader = new FontLoader();
+                    //     fontLoader.load('Henny Penny, cursive', (font) => {
+                    //       // Create text geometry with the loaded font
+                    //       const textgeometry = new TextGeometry('Hello World', {
+                    //         font: font,
+                    //         size: 10,
+                    //         height: 2,
+                    //       });
+                      
+                    //       // Create material with the desired font family
+                    //       const textmaterial = new THREE.MeshBasicMaterial();
+                      
+                    //       // Create text mesh using the geometry and material
+                    //       const textMesh = new THREE.Mesh(textgeometry, textmaterial);
+                      
+                    //       // Add the text mesh to the scene
+                    //       scene.add(textMesh);
+                      
+                    //       // Set the position of the text mesh
+                    //       textMesh.position.set(0, 0, -10);
+                    //         });
+                    //     },
+                    // });
+                    
+                      
+                      // Set up camera position
+                    //   camera.position.z = 5;                                  
                                         // ADJUSTMENTT FEATURES
 
                         // var getWidthd = document.getElementById('GetWidth') 
@@ -285,7 +352,138 @@ const ModelAr =()=> {
                         // getHeightd.addEventListener("change" , (event) =>{
                         //     setHeight(event.target.value)
                         // })  
+
                         // // console.log(getWidth,getHeight,getLength)
+
+                        // console.log(getWidth,getHeight,getLength)
+
+                        // const raycaster = new THREE.Raycaster();
+                        // const mouse = new THREE.Vector2();
+                        
+                        // document.addEventListener('mousemove', onMouseMove);
+
+                        // function onMouseMove(event) {
+                        //   // Calculate normalized device coordinates (NDC) of the mouse click
+                        //   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                        //   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+                        
+                        //   // Update the raycaster with the normalized device coordinates
+                        //   raycaster.setFromCamera(mouse, cameraPersp);
+                        
+                        //   // Perform raycasting on the scene to check for intersected objects
+                        //   const intersects = raycaster.intersectObjects(scene.children, true);
+                        
+                        //   // Check if any objects were intersected
+                        //   if (intersects.length > 0) {
+                        //     const hoveredObject = intersects[0].object;
+                        //     const meshName = hoveredObject.userData.name;
+                        //     const meshType = hoveredObject.userData.type;
+                        //         console.log('Hovered mesh name:', meshName, '---', meshType);
+                        //   }
+                        // }
+                        // function onClick(event) {
+                        //     // Calculate normalized device coordinates (NDC) of the mouse click
+                        //     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                        //     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+                          
+                        //     // Update the raycaster with the normalized device coordinates
+                        //     raycaster.setFromCamera(mouse, cameraPersp);
+                          
+                        //     // Perform raycasting on the scene to check for intersected objects
+                        //     const intersects = raycaster.intersectObjects(scene.children, true);
+                          
+                        //     // Check if any objects were intersected
+                        //     if (intersects.length > 0) {
+                        //       const clickedObject = intersects[0].object;
+                        //       const meshType = clickedObject.userData.type;
+                          
+                        //       // Check the mesh type to determine if it's a model or image
+                        //       if (meshType === 'model') {
+                        //         // Attach transform controls to the clicked object
+                        //         transformControls.attach(clickedObject);
+                        //         transformControls.enabled = true;
+                        //       } else if (meshType === 'image') {
+                        //         // Attach transform controls to the parent of the clicked object (assuming the parent represents the image)
+                        //         transformControls.attach(clickedObject.parent);
+                        //         transformControls.enabled = true;
+                        //       }
+                        //     } else {
+                        //       // No object was clicked, deselect and disable transform controls
+                        //       transformControls.detach();
+                        //       transformControls.enabled = false;
+                        //     }
+                        //   }
+                        
+// Example for images
+// const images = document.querySelectorAll('.image-element');
+// images.forEach((image) => {
+//   image.addEventListener('click', () => handleElementClick(image));
+// });
+
+// // Example for videos
+// const videos = document.querySelectorAll('.video-element');
+// videos.forEach((video) => {
+//   video.addEventListener('click', () => handleElementClick(video));
+// });
+
+// // Example for 3D models
+// const models = scene.children.filter((child) => child.userData.type === 'model');
+// models.forEach((model) => {
+//   model.addEventListener('click', () => handleElementClick(model));
+// });
+// const handleElementClick = (element) => {
+//     setSelectedElement(element);
+//     control.attach(element);
+//     control.enabled = true;
+//   };
+// const handleDeselect = () => {
+// setSelectedElement(null);
+// transformControls.detach();
+// transformControls.enabled = false;
+// };
+   
+            
+// let draggableObject;
+// const clickMouse = new THREE.Vector2();
+// const raycaster = new THREE.Raycaster();
+
+// window.addEventListener('click', event => {
+//     // If 'holding' object on-click, set container to <undefined> to 'drop’ the object.
+//     if (draggableObject) {
+//       draggableObject= undefined;
+//       return;
+//     }
+  
+//     // If NOT 'holding' object on-click, set container to <object> to 'pick up' the object.
+//     clickMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+//     clickMouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+//     raycaster.setFromCamera(clickMouse, cameraPersp);
+//     const found = raycaster.intersectObjects(scene.children, true);
+//     if (found.length && found[0].object.isDraggable) {
+//       draggableObject = found[0].object;
+//     }
+//   });
+//   window.addEventListener('mousemove', event => {
+//     moveMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+//     moveMouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+//   });
+//   function dragObject() {
+//     // If 'holding' an object, move the object
+//     if (draggableObject) {
+//     const found = raycaster.intersectObjects(scene.children);
+//     // `found` is the metadata of the objects, not the objetcs themsevles  
+//       if (found.length) {
+//         for (let obj3d of found) {
+//           if (!obj3d.object.isDraggablee) {
+//             draggableObject.position.x = obj3d.point.x;
+//             draggableObject.position.z = obj3d.point.z;
+//             break;
+//           }
+//         }
+//       }
+//     }
+//   };
+
 
         // Camera , Orbit Controls and Transform Controls extra Features -------------------------------------------------------------->  
                         
@@ -415,6 +613,7 @@ const ModelAr =()=> {
         function render() {
             // requestAnimationFrame(render)
             renderer.render( scene, currentCamera );
+            // control.update();
         }
     }
     setTimeout(()=>{

@@ -2145,3 +2145,22 @@ div#threedmodalpopup, div#browse-video-popup{
   .scene1.selected {
     border: 2px solid rgb(94, 94, 245);
   }
+.selected {
+    outline: 1px solid #5089c7;
+    padding: 12px 20px;
+}
+button.applybutton {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    background: #ef5332;
+    color: #fff;
+    outline: 1px solid #fff;
+    padding: 6px 8px;
+    transition: .9s;
+    cursor: pointer;
+}
+button.applybutton:hover {
+background-color: #e7735b;
+}
