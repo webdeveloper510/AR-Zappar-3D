@@ -78,7 +78,6 @@ const Target = () => {
   const [cont_target_image, Project_content_target_image] = useState(null);
   const [cont_units, Project_content_units] = useState(null);
 
-  // console.log(cont_orientation, "<-------------------------------------");
 
   // STATES for Video Data OF AN PROJECT ---------------------------------------------->
 
@@ -251,6 +250,7 @@ const Target = () => {
 
   const [selectedFile, setselectedFile] = useState(null);
   const [selectedVideo, setselectedVideo] = useState(null);
+   const [change,setchange]=useState(true)
 
   // set the title of popups
 
@@ -260,7 +260,12 @@ const Target = () => {
   const [EventKey, setEventKey] = useState(null);
   const [showPopHandle, setshowPopHandle] = useState(false);
 
-  console.log(selectedFile, selectedVideo, "from target file");
+  // state to store fullname of user
+  const [userFullName,setuserFullName]=useState('User');
+
+
+  
+
   // to get user project details
   const getUserProjectDetail = async () => {
     try {
@@ -273,22 +278,7 @@ const Target = () => {
       setimgesArray(response.data.data.image_designs);
       setvideosArray(response.data.data.upload_videos);
       setDmodelArray(response.data.data.three_d_model_files);
-
-      console.log(
-        "response in get user details response.data.data.image_designs",
-        response.data.data.image_designs
-      );
-      console.log(
-        "response in get user details response.data.data.upload_videos",
-        response.data.data.upload_videos
-      );
-
-      console.log(
-        "response in get user details response.data.data.three_d_model_files",
-        response.data.data.three_d_model_files
-      );
     } catch (err) {
-      console.log("error in get user data", err);
     }
   };
   useEffect(() => {
@@ -311,7 +301,6 @@ const Target = () => {
           const background_soundArray = scene_data.background_sound;
           const project_contentArray = scene_data.project_content;
           scenes(scene_data.scenes);
-          console.log(scene_data.scenes, "All scene");
           setnameSelectedScene(scene_data.scenes[0].name);
           scene_id(res.data.scenes[0].id);
           if (firstTime) {
@@ -319,16 +308,13 @@ const Target = () => {
           }
           firstTime = false;
           for (let i = 0; i < analyticsArray.length; i += 1) {
-            // console.log("---> analyticsArray", analyticsArray[i]);
             analytics_id(analyticsArray[i].id);
             track_with(analyticsArray[i].track_with);
           }
           for (let i = 0; i < background_soundArray.length; i += 1) {
-            // console.log("---> background_soundArray", background_soundArray[i]);
             media_file(background_soundArray[i].media_file);
           }
           for (let i = 0; i < project_contentArray.length; i += 1) {
-            // console.log("---> project_contentArray", project_contentArray[i]);
             project_content_id(project_contentArray[i].id);
             media_file(project_contentArray[i].media_file);
             dimensions_h(project_contentArray[i].dimensions_h);
@@ -366,7 +352,6 @@ const Target = () => {
         window.location.reload(true);
       })
       .catch(function (err) {
-        // console.log(err);
         toast.error("Connection Error");
       });
   };
@@ -387,7 +372,6 @@ const Target = () => {
       })
       .then(function (response) {})
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -417,7 +401,6 @@ const Target = () => {
         analyticsApi(project_content_id);
       })
       .catch(function (errorMessage) {
-        // console.log(errorMessage);
       });
   };
 
@@ -433,7 +416,6 @@ const Target = () => {
       })
       .then(function (response) {})
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -446,10 +428,8 @@ const Target = () => {
         },
       })
       .then(function (response) {
-        // console.log(response, "RESponSE from analyticsApi");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -472,7 +452,6 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "scene_details/" + s_scene_id)
       .then(function (responseProject) {
-        console.log(responseProject, "ImageUploaded<-----------------");
         setButton(responseProject.data.data[0].button_data);
         setText(responseProject.data.data[0].text_data);
         setImage(responseProject.data.data[0].image_data);
@@ -485,7 +464,6 @@ const Target = () => {
         // Image Dimensions ----------------------------------------------------------------------------------------------------->
 
         const DataImage = responseProject.data.data[0].image_data;
-        // console.log(DataImage);
         for (let i = 0; i < DataImage.length; i += 1) {
           dimwidth(DataImage[i][0].image_transform.width);
           dimheight(DataImage[i][0].image_transform.height);
@@ -570,7 +548,6 @@ const Target = () => {
         }
       })
       .catch(function (error) {
-        // console.log(error);
       });
   };
   // GET Basic Details OF PROJECT ------------------------------------------------------------>
@@ -622,6 +599,9 @@ const Target = () => {
 
   const handlethreedDeleteClose = () => setthreedmodal(false);
   const handleshowthreedmodal = () => setthreedmodal(true);
+
+  //  to set the condition for any tyoe of file can be uploaded
+  const [uploadAll,setuploadAll]=useState(true);
 
   // Get All Project Data --------------------------------------------------------------------------->
   useEffect(() => {
@@ -682,6 +662,11 @@ const Target = () => {
 
   const handleImageInput = (e) => {
     const file = e.target.files[0];
+    const typeOfFile = file.type.split('/')[0]
+    if(typeOfFile!=='image'){
+      return;
+    }
+    console.log(typeOfFile,'typetypetypetypetypetypetypetypetype');
     const reader = new FileReader();
     reader.onload = (event) => {
       const image = new Image();
@@ -734,10 +719,8 @@ const Target = () => {
     axios
       .post(API.BASE_URL + "/image_transform/", formData)
       .then(function (response) {
-        // console.log(response, "resoonsere-------------------------->>>>");
       })
       .catch(function (error) {
-        // console.log(error);
       });
   };
 
@@ -765,7 +748,6 @@ const Target = () => {
         setopacity(response.data.opacity);
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -795,7 +777,6 @@ const Target = () => {
         setTraNtransition_exit(response.data.transition_exit);
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -812,13 +793,17 @@ const Target = () => {
         setimage_action(response.data.image_action);
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
   // VIdeo Data Of Video with all data --------------------------------------------------------------------------------------->
   const handleInputChange = (event) => {
     const videoFile = event.target.files[0];
+    const typeOfFile = videoFile.type.split('/')[0]
+    if(typeOfFile!=='video'){
+      return;
+    }
+    console.log(typeOfFile,'videoFilevideoFilevideoFilevideoFile');
     const videoElement = document.createElement("video");
     videoElement.src = URL.createObjectURL(videoFile);
     const formData = new FormData();
@@ -841,7 +826,6 @@ const Target = () => {
           videoActionAPI(response.data.id);
         })
         .catch(function (err) {
-          console.log(err);
         });
     };
   };
@@ -869,7 +853,6 @@ const Target = () => {
         settoGetData((prev) => !prev);
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -883,13 +866,8 @@ const Target = () => {
         },
       })
       .then(function (response) {
-        // console.log(
-        //   response.data.video_action,
-        //   "RESPONSE from VIDEO ACTION <<<<============"
-        // );
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -910,13 +888,8 @@ const Target = () => {
         },
       })
       .then(function (response) {
-        // console.log(
-        //   response.data,
-        //   "RESPONSE video Transition<<<<============"
-        // );
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -924,20 +897,35 @@ const Target = () => {
 
   const handle3Dmodel = (e) => {
     const formData = new FormData();
+    console.log(e.target.files[0].type,'3333333333DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+
+   if(e.target.files[0].type!==''){
+        return;
+   }
+
     formData.append("File", e.target.files[0]);
     formData.append("scene_id", s_scene_id);
     axios
       .post(API.BASE_URL + "upload-threed-model-file/", formData)
       .then(function (response) {
         toast.success("Modal Uploaded !");
-        threeDmodelTransform(response.data.data.id);
-        threeDmodelTransition(response.data.data.id);
-        threeDmodelAction(response.data.data.id);
+        threeDmodelTransform(response.data.id);
+        threeDmodelTransition(response.data.id);
+        threeDmodelAction(response.data.id);
       })
       .catch(function (err) {
-        toast.error("Image not Uploaded !");
+        console.log(err,'inside upload 3D model function');
+        toast.error("Modal not Uploaded !");
       });
   };
+
+  //  input function calling function
+
+  const inputCallingFunction = (e) => {
+    handleImageInput(e);
+    handleInputChange(e);
+    handle3Dmodel(e);
+  }
 
   // three model transform api
 
@@ -965,7 +953,6 @@ const Target = () => {
         settoGetData((prev) => !prev);
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -989,7 +976,6 @@ const Target = () => {
         settoGetData((prev) => !prev);
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1006,7 +992,6 @@ const Target = () => {
         settoGetData((prev) => !prev);
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1018,7 +1003,6 @@ const Target = () => {
       .put(API.BASE_URL + "twod_threed/" + twoDthreeDID + "/", formdata, {})
       .then(function (res) {})
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1028,10 +1012,8 @@ const Target = () => {
     axios
       .post(API.BASE_URL + "GetButtondata/" + s_scene_id)
       .then(function (response) {
-        // console.log(response, "RESponSE from get data from button");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1041,10 +1023,8 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "GetButtondata/" + s_scene_id)
       .then(function (response) {
-        // console.log(response, "RESponSE from DELETE data from button");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1055,10 +1035,8 @@ const Target = () => {
     axios
       .post(API.BASE_URL + "get-all-text-data/" + s_scene_id)
       .then(function (response) {
-        // console.log(response, "RESponSE from get all text data by id");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1069,10 +1047,8 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "get-all-text-data/" + s_scene_id)
       .then(function (response) {
-        // console.log(response, "RESponSE from DELETE text data by id");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1083,10 +1059,8 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "get-image-data/" + s_scene_id)
       .then(function (response) {
-        // console.log(response, "RESponSE from get image data by id");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1097,10 +1071,8 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "get-image-data/" + s_scene_id)
       .then(function (response) {
-        // console.log(response, "RESponSE from DELETE image data by id");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1111,10 +1083,8 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "get-video-data/" + s_scene_id)
       .then(function (response) {
-        // console.log(response, "RESponSE from get video data by id");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1125,10 +1095,8 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "get-video-data/" + s_scene_id)
       .then(function (response) {
-        // console.log(response, "RESponSE from DELETE video data by id");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1139,10 +1107,8 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "get-threed-model-Data/" + s_scene_id)
       .then(function (response) {
-        // console.log(response, "RESponSE from get three D model data by id");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1153,10 +1119,8 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "get-threed-model-Data/" + id)
       .then(function (response) {
-        // console.log(response, "RESponSE from DELETE three D model data by id");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1167,10 +1131,8 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "get-scene-data/" + s_scene_id)
       .then(function (response) {
-        // console.log(response, "RESponSE from get scene data by id");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1181,10 +1143,8 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "get-scene-data/" + s_scene_id)
       .then(function (response) {
-        // console.log(response, "RESponSE from DELETE scene data by id");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1195,10 +1155,8 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "getproject-contentdata/" + id)
       .then(function (response) {
-        // console.log(response, "RESponSE from get project content data by id");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1208,33 +1166,11 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "getproject-contentdata/" + s_scene_id)
       .then(function (response) {
-        // console.log(
-        //   response,
-        //   "RESponSE from DELETE project content data by id"
-        // );
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
-  // function to get user profile
-  // http://18.230.11.54:8001/userprofile/
-
-  const getUserProfile = () => {
-    axios
-      .post(API.BASE_URL + "userprofile/", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("Token")}`,
-        },
-      })
-      .then(function (response) {
-        // console.log(response, "RESponSE from getUserProfile");
-      })
-      .catch(function (err) {
-        // console.log(err);
-      });
-  };
 
   const [ToggleButton, ButtonShow] = useState(false);
   const ToggleButtonShow = (e) => {
@@ -1248,10 +1184,8 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "scene_details/" + s_scene_id)
       .then(function (response) {
-        // console.log(response, "RESponSE from getDataBySceneId");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1260,10 +1194,8 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "scene_details/" + s_scene_id)
       .then(function (response) {
-        // console.log(response, "RESponSE from deleteDataBySceneId");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1273,10 +1205,8 @@ const Target = () => {
     axios
       .get(API.BASE_URL + "scene_data_by_project/" + id)
       .then(function (response) {
-        // console.log(response, "RESponSE from getAllSceneByProjectId");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
@@ -1333,6 +1263,9 @@ const Target = () => {
       })
       .then(function (response) {
         ProfileImage(response.data.profile_image);
+        console.log(response.data.firstname,'from target jsx file');
+        console.log(response.data.lastname,'from target jsx file');
+        setuserFullName(`${response.data.firstname} ${response.data.lastname}`)
       })
       .catch((error) => {});
   }, []);
@@ -1357,7 +1290,6 @@ const Target = () => {
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(
     Url
   )}&size=200x200`;
-  // console.log(qrCodeUrl);
 
   const handleBack = (event) => {
     navigate("/home");
@@ -1399,14 +1331,11 @@ const Target = () => {
         },
       })
       .then(function (res) {
-        // console.log(res, "<==========================================");
       })
       .catch(function (err) {
-        // console.log(err);
       });
   };
 
-  // console.log(cont_orientation);
 
   // -------------------------------------------------------------------------->
   // To SELECT TARGET   ------------------------------------------------------------------->
@@ -1446,6 +1375,8 @@ const Target = () => {
   };
 
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>;
+
+  
 
   return (
     <div className="targetPage" ref={containerRef}>
@@ -2300,7 +2231,7 @@ const Target = () => {
                         width="430"
                         height="208"
                         style={{
-                          display: "block",
+                          display: "none",
                           width: "430px",
                           height: "208.75px",
                           cursor: "default",
@@ -2336,7 +2267,6 @@ const Target = () => {
                         <Nav.Link
                           eventKey="first"
                           // onClick={() =>{ setisOpen(!isOpen);console.log('clicking on Button');}}
-                          className="border border-danger"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -2409,9 +2339,6 @@ const Target = () => {
                             // settitlePopups("Image");
                             settypePopup("browse-media-popup");
                             setEventKey("third");
-                            if(typePopup==="browse-media-popup"){
-                              setisOpen(!isOpen)
-                            }
                           }}
                         >
                           <svg
@@ -2440,6 +2367,7 @@ const Target = () => {
                           >
                             Image11
                           </a>
+                          
                         </Nav.Link>
                       </Nav.Item>
 
@@ -2451,7 +2379,6 @@ const Target = () => {
                             // settitlePopups("Video");
                             settypePopup("browse-video-popup");
                             setEventKey("fourth");
-                            console.log("clicking on video");
                           }}
                         >
                           <svg
@@ -2498,7 +2425,6 @@ const Target = () => {
                             // settitlePopups("3D");
                             settypePopup("threedmodalpopup");
                             setEventKey("fifth");
-                            console.log("clicked on 3D12");
                           }}
                         >
                           <svg
@@ -2766,7 +2692,6 @@ const Target = () => {
                                 }}
                                 data-texture={img}
                                 onClick={() => {
-                                  console.log("clicked", i);
                                 }}
                               ></div>
                             );
@@ -2791,7 +2716,6 @@ const Target = () => {
                               }}
                               data-texture={img2}
                               onClick={() => {
-                                console.log("clicked", i);
                               }}
                             ></div>
                           );
@@ -2947,11 +2871,10 @@ const Target = () => {
                   </Tab.Pane>
 
                   <Tab.Pane
-                    // eventKey="third"
-                    eventKey={isOpen ? "third" : null}
+                    eventKey="third"
+                    // eventKey={isOpen ? "third" : null}
                     onClick={() => {
                       // setisOpen(!isOpen);
-                      console.log("setIsOpen called");
                     }}
                     className="bg-light p-4 tab-content"
                   >
@@ -2996,11 +2919,21 @@ const Target = () => {
                           <input
                             type="file"
                             id="img-upload"
-                            onChange={handleImageInput}
+                            // onChange={handleImageInput}
+                            onChange={inputCallingFunction}
                           />
                         </div>
                       </div>
                     </div>
+
+                    <div className="row mt-3">
+                      {ctx.selectedImage.map((image, index) => (
+                        <div className="col-md-6" key={index}>
+                          <img src={image[0].image_url} alt={`Image ${index + 1}`} className="img-fluid"  style={{ width: "100%", height: "160px", marginTop: "10px"  }}/>
+                        </div>
+                      ))}
+                    </div>
+
                   </Tab.Pane>
 
                   <Tab.Pane
@@ -3023,7 +2956,6 @@ const Target = () => {
                             // onClick={handleshowvideomedia}
                             onClick={() => {
                               setshowPopHandle(true);
-                              console.log("clicked v123");
                             }}
                           >
                             Browse media library v123
@@ -3052,11 +2984,29 @@ const Target = () => {
                             class="video-upload"
                             type="file"
                             id="img-upload"
-                            onChange={handleInputChange}
+                            onChange={inputCallingFunction}
                           />
                         </div>
                       </div>
                     </div>
+
+                    <div className="row mt-3">
+                      {ctx.selectedVideos.map((video, index) => (
+                        <div className="col-md-12" key={index}>
+                          <video
+                            // controls
+                            style={{ width: "100%", height: "auto", marginTop: "10px" }}
+                            onMouseOver={(e) => e.target.play()}
+                            onMouseOut={(e) => e.target.pause()}
+                          >
+                            <source src={video[0].video_url} type="video/mp4" />
+                          </video>
+                        </div>
+                      ))}
+                    </div>
+
+
+
                   </Tab.Pane>
 
                   <Tab.Pane
@@ -3076,7 +3026,6 @@ const Target = () => {
                             // onClick={handleshowthreedmodal}
                             onClick={() => {
                               setshowPopHandle(true);
-                              console.log("clicked 3D");
                             }}
                           >
                             Browse media library 3D 33
@@ -3105,11 +3054,23 @@ const Target = () => {
                             class="3D-modal-upload"
                             type="file"
                             id="img-upload"
-                            onChange={handle3Dmodel}
+                            // onChange={handle3Dmodel}
+                            onChange={(e)=>inputCallingFunction(e)}
                           />
                         </div>
                       </div>
                     </div>
+
+                    <div className="row mt-3">
+                      {ctx.selected3D.map((image, index) => (
+                        <div className="col-md-6" key={index}>
+                          <img src={image[0].file_url} alt={`Image ${index + 1}`} className="img-fluid"  style={{ width: "100%", height: "160px", marginTop: "10px"  }}/>
+                        </div>
+                      ))}
+                    </div>
+
+
+
                   </Tab.Pane>
                   <Tab.Pane
                     eventKey="sixth"
@@ -3176,7 +3137,7 @@ const Target = () => {
                   setisContent(false);
                 }}
                 style={{
-                  zIndex: isOpen || isContent ? "1" : "-1",
+                  // zIndex: isOpen || isContent ? "1" : "-1",
                   backgroundColor: "transparent",
                   touchAction: "auto",
                 }}
@@ -5427,7 +5388,7 @@ const Target = () => {
                                             className="btn-upload DrawerBtn--bdcva Open--EFZA8 "
                                           >
                                             <div className="TitleContainer--2xD-b">
-                                              {" "}
+                                             
                                               Cancel
                                             </div>
                                           </button>
@@ -8003,7 +7964,7 @@ const Target = () => {
                                               className="btn-action-cancel action-btn-cancel"
                                             >
                                               <div className="Title-action-cancel">
-                                                {" "}
+                                               
                                                 Cancel
                                               </div>
                                             </button>
@@ -8090,7 +8051,6 @@ const Target = () => {
         {/*  all scenes will be shown in this div */}
         {showScene && (
           <div className="scenes-list">
-            {console.log(SceneArray, "this is sceneArray")}
             {SceneArray.map((scene, i) => {
               const occurrences = SceneArray.filter(
                 (s) => s.name === scene.name
@@ -8314,14 +8274,11 @@ const Target = () => {
       {/*start of modal***popup**for**browsse**media**/}
       <Modal
         id={typePopup}
-        // show={showthreedmodal}
-        // show={showvideomedia}
         show={showPopHandle}
-        // onHide={handlethreedDeleteClose}
-        // onHide={handlevideoDeleteClose}
         onHide={() => setshowPopHandle(false)}
       >
         <Modal.Header closeButton>
+       
           <Modal.Title>Create browse media popup</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -8330,9 +8287,29 @@ const Target = () => {
               <div className="input-wrapper" id="drop-media-files">
                 <span>Choose files or drop here to upload</span>
                 <input
+                accept={
+               (()=>{
+                if(uploadAll){
+                  return ""
+                }
+                  if(typePopup==="browse-media-popup"){
+                    return "image/*"
+                  }
+                  if(typePopup==="browse-video-popup"){
+                    return "video/*"
+                  }
+                  if(typePopup==="threedmodalpopup"){
+                    return ".gltf, model/*"
+                  }
+                 
+                 })()
+                }
                   type="file"
                   id="img-upload-popup"
-                  onChange={handleImageInput}
+                  onChange={(e)=>{
+                    inputCallingFunction(e)
+                  }
+                }
                 />
               </div>
             </div>
@@ -8393,7 +8370,10 @@ const Target = () => {
                 id="browse-media-tabs"
                 className="mt-3"
               >
-                <Tab eventKey="tab1" title="All">
+                {/* <Tab eventKey="tab1" title="All"> */}
+                {/* setuploadAll(true) */}
+                {/* {<span onClick={()=>settypePopup("browse-media-popup")}>Images++++</span>} */}
+                <Tab eventKey="tab1" title= {<span onClick={()=>setuploadAll(true)}>All++</span>}>
                   <p>
                     <div className="browse-inner-images">
                       {/* 1 image */}
@@ -8426,8 +8406,11 @@ const Target = () => {
                               allowfullscreen
                               // controls
                               onClick={() => {
-                                setselectedVideo(video);
+                                setselectedVideo(null);
                                 setselectedFile(null);
+                                setTimeout(()=>{
+                                  setselectedVideo(video);
+                                },[0])
                               }}
                             >
                               <source src={video} type="video/mp4"></source>
@@ -8449,7 +8432,7 @@ const Target = () => {
                     </div>
                   </p>
                 </Tab>
-                <Tab eventKey="tab2" title="Image">
+                <Tab eventKey="tab2"  title={<span onClick={()=>{settypePopup("browse-media-popup");setuploadAll(false)}}>Images++++</span>}>
                   <p>
                     <div className="browse-inner-images">
                       {imgesArray.map((img) => {
@@ -8468,7 +8451,7 @@ const Target = () => {
                     </div>
                   </p>
                 </Tab>
-                <Tab eventKey="tab3" title="Video">
+                <Tab eventKey="tab3" title={<span onClick={()=>{settypePopup("browse-video-popup");setuploadAll(false)}}>Video++++</span>}>
                   <p>
                     <div className="browse-inner-images">
                       {videosArray.map((video) => {
@@ -8498,7 +8481,7 @@ const Target = () => {
                     </div>
                   </p>
                 </Tab>
-                <Tab eventKey="tab4" title="3D">
+                <Tab eventKey="tab4" title={<span onClick={()=>{settypePopup("threedmodalpopup");setuploadAll(false)}}>3D++++</span>}>
                   <p>
                     <div className="browse-inner-images">
                       {DmodelArray.map((model) => (
@@ -8556,6 +8539,7 @@ const Target = () => {
                   controls
                 >
                   <source src={selectedVideo} type="video/mp4"></source>
+                  
                 </video>
               )}
               {!selectedFile && !selectedVideo && (
@@ -8583,14 +8567,30 @@ const Target = () => {
                           <Accordion>
                             <Accordion.Item eventKey="0">
                               <Accordion.Header> File Info</Accordion.Header>
-                              <Accordion.Body>
+                              {((selectedFile || selectedVideo) && <Accordion.Body>
                                 <div className="flex acenter preview-row">
                                   <p>Category</p>
-                                  <p className="f1 jc-end">Image</p>
+                                  <p className="f1 jc-end">{selectedFile ? 'Image' : ''}{selectedVideo ? 'Video':''}</p>
                                 </div>
                                 <div className="flex acenter preview-row">
                                   <p>Type</p>
-                                  <p className="f1 jc-end">Image</p>
+                                  <p className="f1 jc-end ">{
+                                   selectedFile && (()=>{
+                                    const splitArray=selectedFile.split('.');
+                                    return splitArray[splitArray.length-1]
+                                   })()
+                                  }
+                                  {
+                                   
+                                    selectedVideo && (()=>{
+                                      const splitArray= selectedVideo.split('.');
+                                     
+                                      return splitArray[splitArray.length-1]
+                                    })()
+                                    
+                                  }
+                                 
+                                  </p>
                                 </div>
                                 <div className="flex acenter preview-row">
                                   <p>Date uploaded</p>
@@ -8599,7 +8599,7 @@ const Target = () => {
                                 <div className="flex acenter preview-row">
                                   <p>Uploaded by</p>
                                   <p className="f1 jc-end ellipsis">
-                                    Web Developer
+                                  {userFullName}
                                   </p>
                                 </div>
                                 <hr />
@@ -8616,7 +8616,7 @@ const Target = () => {
                                     Delete file
                                   </span>
                                 </div>
-                              </Accordion.Body>
+                              </Accordion.Body>)}
                             </Accordion.Item>
                           </Accordion>
                         </Tab.Pane>
@@ -8632,9 +8632,13 @@ const Target = () => {
           <button
             variant="secondary"
             className="btn-cancel-popup"
-            onClick={handlethreedDeleteClose}
+            // onClick={()=>setShow(false)}
+            onClick={()=>{
+              setshowPopHandle(false);
+              handlethreedDeleteClose();
+            }}
           >
-            Cancel
+            Cancel222
           </button>
           <button
             variant="primary"

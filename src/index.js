@@ -10,12 +10,10 @@ import ContextProvider from './components/ContextStore/ContextApi';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
   <ContextProvider>
   <HashRouter hashType="noslash">
     <App />
   </HashRouter>
   </ContextProvider>
-  </React.StrictMode>
 );
 reportWebVitals();

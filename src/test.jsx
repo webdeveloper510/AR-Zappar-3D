@@ -163,7 +163,12 @@ const ModelAr =()=> {
                         setScene(responseProject.data.data[0].scene_data)
                         setProject(responseProject.data.data[0].project_content_data);
                         set2D3D(responseProject.data.data[0].twoD_threeD_data)
+                        ctx.setselectedImage(responseProject.data.data[0].image_data);
+                        ctx.setselectedVideos(responseProject.data.data[0].video_data);
+                        ctx.setselected3D(responseProject.data.data[0].ThreeDmodeldata)
+
                         rendeR=false
+
 
                     }).catch ((err)=>{
                         // console.log(err,'THIS IS RESPONSEPROJECT<----------');

@@ -12,7 +12,8 @@ import loginright from '../../assets/images/login-banner.png';
 const LoginPage =()=>{
 const navigate = useNavigate();
 //  Email Address
-const [email , userEmail] = useState(null)
+const [email , userEmail] = useState(null);
+
 const handleEmail =(e)=>{
     userEmail(e.target.value)
 }
@@ -28,9 +29,6 @@ const handleLogin = ()=>{
           }).then(function (response) {
             navigate('/home')
             toast.success("Login Successfully !")
-            // console.log(response)
-            // console.log('Login SuccessFully', response);
-            // console.log(response.data)
             localStorage.setItem('token',response.data.token.access)
             localStorage.setItem('id',response.data.data.id)         
           })
