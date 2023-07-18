@@ -31,6 +31,9 @@ import imgScene from "../../assets/images/facetracking.png";
 import { Tabs } from "react-bootstrap";
 import { contextObject } from "../ContextStore/ContextApi";
 
+import Box from "@material-ui/core/Box";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 // import Button from 'react-bootstrap/Button';
 
 let firstTime = true;
@@ -148,6 +151,10 @@ const Target = () => {
   //  state to render getProject detail function
 
   const [renderGetProjact, setrenderGetProjact] = useState(true);
+
+  // state for progress
+  const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   // array of scene Images
   let arrayOfSceneImages = [imgScene];
@@ -270,35 +277,35 @@ const Target = () => {
 
   // states for closing image popup
 
-  const [isImagePopup,setisImagePopup]=useState(false);
+  const [isImagePopup, setisImagePopup] = useState(false);
 
-    // states for closing video popup
+  // states for closing video popup
 
-    const [isVideoPopup,setisVideoPopup]=useState(false);
+  const [isVideoPopup, setisVideoPopup] = useState(false);
 
-      // states for closing 3D model popup
+  // states for closing 3D model popup
 
-  const [isModelPopup,setisModelPopup]=useState(false);
+  const [isModelPopup, setisModelPopup] = useState(false);
 
   // states to show name on hover
 
   const [hoveredImg, setHoveredImg] = useState(null);
 
   // for searching
-  const [searchTerm, setSearchTerm] = useState('');
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
-  const [arrImg,setarrImg]=useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [arrImg, setarrImg] = useState([]);
 
-
+  const idOfProjectObj = useParams();
+  const idOfProject = idOfProjectObj.id;
 
   const getImgName = (imgUrl) => {
-      const splittedArray=imgUrl.split('/')
-      return splittedArray[splittedArray.length-1]
+    const splittedArray = imgUrl.split("/");
+    return splittedArray[splittedArray.length - 1];
   };
 
-
   useEffect(() => {
-    const delay = 500; 
+    const delay = 500;
 
     const timeoutId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
@@ -309,28 +316,19 @@ const Target = () => {
     };
   }, [searchTerm]);
 
-
-
- 
-
   useEffect(() => {
     setisImagePopup(false);
-
-  }, [isVideoPopup,isModelPopup])
+  }, [isVideoPopup, isModelPopup]);
 
   useEffect(() => {
     setisVideoPopup(false);
-
-  }, [isImagePopup,isModelPopup])
+  }, [isImagePopup, isModelPopup]);
 
   useEffect(() => {
     setisModelPopup(false);
+  }, [isVideoPopup, isImagePopup]);
 
-  }, [isVideoPopup,isImagePopup])
-
- //  End code to add functionality to show and hide popup
-  
-
+  //  End code to add functionality to show and hide popup
 
   // to get user project details
   const getUserProjectDetail = async () => {
@@ -508,7 +506,7 @@ const Target = () => {
   };
 
   // Hnadle Next Scene Genration and Working :
-  const getSceneData = (id) => {
+  const getSceneData = () => {
     axios
       .get(API.BASE_URL + "scene_details/" + s_scene_id)
       .then(function (responseProject) {
@@ -520,7 +518,6 @@ const Target = () => {
         setScene(responseProject.data.data[0].scene_data);
         setProject(responseProject.data.data[0].project_content_data);
         set2D3D(responseProject.data.data[0].twoD_threeD_data);
-
 
         // Image Dimensions ----------------------------------------------------------------------------------------------------->
 
@@ -676,7 +673,10 @@ const Target = () => {
         setScene(responseProject.data.data[0].scene_data);
         setProject(responseProject.data.data[0].project_content_data);
         set2D3D(responseProject.data.data[0].twoD_threeD_data);
-        console.log(responseProject.data,'<-------------datataatatatata---------------');
+        console.log(
+          responseProject.data,
+          "<-------------datataatatatata---------------"
+        );
 
         // Image Dimensions ----------------------------------------------------------------------------------------------------->
 
@@ -717,7 +717,7 @@ const Target = () => {
           setprojectId(videoData[i][0].video_transform.width);
         }
       });
-  }, [firstTime]);
+  }, [firstTime, renderGetProjact]);
 
   // Image Upload API with all DATA ---------------------------------------------------------------------------------------------->
 
@@ -727,7 +727,6 @@ const Target = () => {
     if (typeOfFile !== "image") {
       return;
     }
-    console.log(typeOfFile, "typetypetypetypetypetypetypetypetype");
     const reader = new FileReader();
     reader.onload = (event) => {
       const image = new Image();
@@ -868,6 +867,8 @@ const Target = () => {
       const width = videoElement.videoWidth / 10;
       const height = videoElement.videoHeight / 10;
 
+      setUploading(true);
+
       // Upload the video with additional information
       const FormData = { video: videoFile, scene_id: s_scene_id };
       axios
@@ -875,15 +876,25 @@ const Target = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          onUploadProgress: (progressEvent) => {
+            const uploadPercentage = Math.round(
+              (progressEvent.loaded / progressEvent.total) * 100
+            );
+            setProgress(uploadPercentage);
+          },
         })
         .then(function (response) {
           toast.success("video uploaded successfully");
+          ctx.setreRender(false);
           setVideoData(response.data.id, width, height);
           videoTransitionAPI(response.data.id);
           videoActionAPI(response.data.id);
           setrenderGetProjact((prev) => !prev);
         })
-        .catch(function (err) {});
+        .catch(function (err) {})
+        .finally(() => {
+          setUploading(false);
+        });
     };
   };
 
@@ -949,11 +960,6 @@ const Target = () => {
 
   const handle3Dmodel = (e) => {
     const formData = new FormData();
-    console.log(
-      e.target.files[0].type,
-      "3333333333DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
-    );
-
     if (e.target.files[0].type !== "") {
       return;
     }
@@ -964,6 +970,7 @@ const Target = () => {
       .post(API.BASE_URL + "upload-threed-model-file/", formData)
       .then(function (response) {
         toast.success("Modal Uploaded !");
+        ctx.setreRender(false);
         threeDmodelTransform(response.data.id);
         threeDmodelTransition(response.data.id);
         threeDmodelAction(response.data.id);
@@ -1466,7 +1473,35 @@ const Target = () => {
                     <a onClick={handlepreviewshow}>Preview</a>
                   </button>
                   <button className="btn btn-2 publish-btn">
-                    <a onClick={handlepublishshow}>Publish</a>
+                    <a
+                      onClick={() => {
+                        (() => {
+                          return axios
+                            .patch(
+                              API.BASE_URL + "update-project/" + idOfProject,
+                              { publish_key: 1 },
+                              {
+                                headers: {
+                                  accept: "application/json",
+                                  "content-type": "multipart/form-data",
+                                },
+                              }
+                            )
+                            .then((res) => {
+                              console.log(res, "response<--------->");
+                              handlepublishshow();
+                              navigate("/project/" + res.data.id);
+                              toast.success("Project Published Successfully");
+                            })
+                            .catch((err) => {
+                              console.log(err, "error<----------->");
+                              toast.error("Not able to create project !");
+                            });
+                        })();
+                      }}
+                    >
+                      Publish
+                    </a>
                   </button>
                 </div>
               </div>
@@ -1558,13 +1593,47 @@ const Target = () => {
                   <buttonBootstrap
                     variant="primary"
                     className="btn-publish-preview"
-                    onClick={handlepreviewClose}
+                    onClick={() => {
+                      handlepreviewClose();
+                      (() => {
+                        return axios
+                          .patch(
+                            API.BASE_URL + "update-project/" + idOfProject,
+                            { publish_key: 1 },
+                            {
+                              headers: {
+                                accept: "application/json",
+                                "content-type": "multipart/form-data",
+                              },
+                            }
+                          )
+                          .then((res) => {
+                            console.log(res, "response<--------->");
+                            navigate("/project/" + res.data.id);
+                            toast.success("Project Published Successfully");
+                          })
+                          .catch((err) => {
+                            console.log(err, "error<----------->");
+                            toast.error("Not able to create project !");
+                          });
+                      })();
+                    }}
                   >
-                    Publish
+                    Publish12345
                   </buttonBootstrap>
                 </div>
               </Modal.Footer>
             </Modal>
+
+            <div style={{ position: "fixed", bottom: "20px", right: "20px" }}>
+              {uploading && <h6>video is uploading</h6>}
+              {uploading && (
+                <Box display="flex" alignItems="center" justifyContent="center">
+                  <CircularProgress variant="determinate" value={progress} />
+                  <Box ml={2}>{`${progress}%`}</Box>
+                </Box>
+              )}
+            </div>
 
             {/* End preview Model  */}
 
@@ -2278,7 +2347,7 @@ const Target = () => {
                       <Nav.Item>
                         <Nav.Link
                           eventKey="first"
-                          onClick={(e) =>console.log(e,'clicking on Button')}
+                          onClick={(e) => console.log(e, "clicking on Button")}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -2313,7 +2382,7 @@ const Target = () => {
                         <Nav.Link
                           eventKey="second"
                           // onClick={() => {setisOpen(!isOpen);console.log('Clicking on text');}}
-                          onClick={(e) =>console.log(e,'clicking on Button')}
+                          onClick={(e) => console.log(e, "clicking on Button")}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -2378,7 +2447,7 @@ const Target = () => {
                             href="#tab3"
                             className="nav-link p-0 m-0 fw-bold link-dark"
                           >
-                            Image11
+                            Image
                           </a>
                         </Nav.Link>
                       </Nav.Item>
@@ -2423,7 +2492,7 @@ const Target = () => {
                             href="#tab4"
                             className="nav-link p-0 m-0 fw-bold link-dark"
                           >
-                            Video11
+                            Video
                           </a>
                         </Nav.Link>
                       </Nav.Item>
@@ -2457,7 +2526,7 @@ const Target = () => {
                               href="#tab3"
                               className="nav-link p-0 m-0 fw-bold link-dark"
                             >
-                              3D11
+                              3D
                             </a>
                             <input
                               id="3dmodel"
@@ -2886,12 +2955,11 @@ const Target = () => {
                     // eventKey={isImagePopup ? "third" : null}
                     onClick={() => {
                       // setisOpen(!isOpen);
-                    
                     }}
                     className="bg-light p-4 tab-content"
                   >
                     <p className="m-0 fs-4 fw-semibold ">
-                      Image33
+                      Image
                       <i className="bi bi-question-circle text-muted fs-6"></i>
                     </p>
                     <div className="mt-3">
@@ -2907,7 +2975,6 @@ const Target = () => {
                             }}
                           >
                             <i className="bi bi-upload"></i>Browse media library
-                            11
                           </button>
                         </div>
                         <div className="upload-btn-outer">
@@ -2980,7 +3047,7 @@ const Target = () => {
                               setuploadAll(true);
                             }}
                           >
-                            Browse media library v123
+                            Browse media library
                           </button>
                         </div>
                         <div className="upload-btn-outer">
@@ -3052,7 +3119,7 @@ const Target = () => {
                               setuploadAll(true);
                             }}
                           >
-                            Browse media library 3D 33
+                            Browse media library
                           </button>
                         </div>
                         <div className="upload-btn-outer">
@@ -3113,42 +3180,76 @@ const Target = () => {
                       <div class="screen-layer">
                         <span>Screen Layer</span>
                       </div>
-                      {      
-                      getImage?.map((itm)=>{
+                      {getImage?.map((itm) => {
                         return (
+                          <div class="video_file">
+                            <span class="videp_file_txt">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
+                              >
+                                <g
+                                  fill="none"
+                                  fill-rule="evenodd"
+                                  stroke="none"
+                                  stroke-width="1"
+                                >
+                                  <path
+                                    fill="#344B60"
+                                    fill-rule="nonzero"
+                                    d="M14.5 27a1.5 1.5 0 011.415 1H29.5a.5.5 0 01.09.992L29.5 29H15.914a1.5 1.5 0 01-2.828 0H10.5a.5.5 0 01-.09-.992L10.5 28h2.585a1.5 1.5 0 011.415-1zm0 1a.5.5 0 100 1 .5.5 0 000-1zM29 10a1 1 0 011 1v13a1 1 0 01-1 1H11a1 1 0 01-1-1V11a1 1 0 011-1h18zm0 1H11v13h18V11zm-11.566 2.5a.91.91 0 01.464.127l5.131 3.034a.985.985 0 010 1.678l-5.131 3.033a.918.918 0 01-1.275-.36.992.992 0 01-.123-.479v-6.066c0-.534.418-.967.934-.967zm-.059 1v6l5.25-3-5.25-3z"
+                                    transform="translate(-10 -10)"
+                                  ></path>
+                                </g>
+                              </svg>
+
+                              {
+                                itm[0].image_url.split("/")[
+                                  itm[0].image_url.split("/").length - 1
+                                ]
+                              }
+                            </span>
+                          </div>
+                        );
+                      })}
 
 
-                      <div class="video_file">
-                        <span class="videp_file_txt">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 20 20"
-                          >
-                            <g
-                              fill="none"
-                              fill-rule="evenodd"
-                              stroke="none"
-                              stroke-width="1"
-                            >
-                              <path
-                                fill="#344B60"
-                                fill-rule="nonzero"
-                                d="M14.5 27a1.5 1.5 0 011.415 1H29.5a.5.5 0 01.09.992L29.5 29H15.914a1.5 1.5 0 01-2.828 0H10.5a.5.5 0 01-.09-.992L10.5 28h2.585a1.5 1.5 0 011.415-1zm0 1a.5.5 0 100 1 .5.5 0 000-1zM29 10a1 1 0 011 1v13a1 1 0 01-1 1H11a1 1 0 01-1-1V11a1 1 0 011-1h18zm0 1H11v13h18V11zm-11.566 2.5a.91.91 0 01.464.127l5.131 3.034a.985.985 0 010 1.678l-5.131 3.033a.918.918 0 01-1.275-.36.992.992 0 01-.123-.479v-6.066c0-.534.418-.967.934-.967zm-.059 1v6l5.25-3-5.25-3z"
-                                transform="translate(-10 -10)"
-                              ></path>
-                            </g>
-                          </svg>
-                       
-                          {  itm[0].image_url.split('/')[itm[0].image_url.split('/').length-1]}
-                    
-                             
-                          </span>
-                      </div>
-                         )
-                       })
-                      }
+                                                    {getVideo?.map((itm) => {
+                                                          return (
+                                                            <div class="video_file">
+                                                              <span class="videp_file_txt">
+                                                                <svg
+                                                                  xmlns="http://www.w3.org/2000/svg"
+                                                                  width="20"
+                                                                  height="20"
+                                                                  viewBox="0 0 20 20"
+                                                                >
+                                                                  <g
+                                                                    fill="none"
+                                                                    fill-rule="evenodd"
+                                                                    stroke="none"
+                                                                    stroke-width="1"
+                                                                  >
+                                                                    <path
+                                                                      fill="#344B60"
+                                                                      fill-rule="nonzero"
+                                                                      d="M14.5 27a1.5 1.5 0 011.415 1H29.5a.5.5 0 01.09.992L29.5 29H15.914a1.5 1.5 0 01-2.828 0H10.5a.5.5 0 01-.09-.992L10.5 28h2.585a1.5 1.5 0 011.415-1zm0 1a.5.5 0 100 1 .5.5 0 000-1zM29 10a1 1 0 011 1v13a1 1 0 01-1 1H11a1 1 0 01-1-1V11a1 1 0 011-1h18zm0 1H11v13h18V11zm-11.566 2.5a.91.91 0 01.464.127l5.131 3.034a.985.985 0 010 1.678l-5.131 3.033a.918.918 0 01-1.275-.36.992.992 0 01-.123-.479v-6.066c0-.534.418-.967.934-.967zm-.059 1v6l5.25-3-5.25-3z"
+                                                                      transform="translate(-10 -10)"
+                                                                    ></path>
+                                                                  </g>
+                                                                </svg>
+
+                                                                {
+                                                                  itm[0].video_url.split("/")[
+                                                                    itm[0].video_url.split("/").length - 1
+                                                                  ]
+                                                                }
+                                                              </span>
+                                                            </div>
+                                                          );
+                                                        })}
 
                       <div class="AR_layer_div">
                         <div class="screen-layer">
@@ -3246,7 +3347,7 @@ const Target = () => {
                               href="#tab2"
                               className="nav-link p-0 m-0 fw-bold link-dark target-bar-text"
                             >
-                              Project123
+                              Project
                             </a>
                           </Nav.Link>
                         </Nav.Item>
@@ -8315,7 +8416,11 @@ const Target = () => {
       <Modal
         id={typePopup}
         show={showPopHandle}
-        onHide={() =>{ setshowPopHandle(false);setselectedVideo(null);setselectedFile(null);}}
+        onHide={() => {
+          setshowPopHandle(false);
+          setselectedVideo(null);
+          setselectedFile(null);
+        }}
       >
         <Modal.Header closeButton>
           <Modal.Title>Create browse media popup</Modal.Title>
@@ -8350,7 +8455,12 @@ const Target = () => {
             </div>
             <div className="field f1 search-browse">
               <div className="input-wrapper">
-                <input type="search" placeholder="Search labels" value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)} />
+                <input
+                  type="search"
+                  placeholder="Search labels"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="40"
@@ -8410,7 +8520,7 @@ const Target = () => {
                 {/* {<span onClick={()=>settypePopup("browse-media-popup")}>Images++++</span>} */}
                 <Tab
                   eventKey="tab1"
-                  title={<span onClick={() => setuploadAll(true)}>All++</span>}
+                  title={<span onClick={() => setuploadAll(true)}>All</span>}
                 >
                   <p>
                     <div className="browse-inner-images">
@@ -8429,48 +8539,62 @@ const Target = () => {
                         );
                       })} */}
                       {/* this is image array 1234567890 */}
-                      {debouncedSearchTerm.trim()==='' && imgesArray.map((img) => {
-                        return (
-                          <div className="browse-inner-images-height" key={img}>
-                            <img
-                              src={img}
-                              alt="Image"
-                              onMouseEnter={() => setHoveredImg(img)}
-                              onMouseLeave={() => setHoveredImg(null)}
-                              onClick={() => {
-                                setselectedFile(img);
-                                setselectedVideo(null);
-                              }}
-                            />
-                            {hoveredImg === img && <div className="image-name" 
-                            >{getImgName(img)}</div>}
-                          </div>
-                        );
-                      })}
-                      {
-                       debouncedSearchTerm.trim() !== '' &&
-                       imgesArray
-                         .filter((image) => image.split('/')[image.split('/').length-1].includes(debouncedSearchTerm))
-                         .map((img) => (
-                           <div className="browse-inner-images-height" key={img}>
-                             <img
-                               src={img}
-                               alt="Image"
-                               onMouseEnter={() => setHoveredImg(img)}
-                               onMouseLeave={() => setHoveredImg(null)}
-                               onClick={() => {
-                                 setselectedFile(img);
-                                 setselectedVideo(null);
-                               }}
-                             />
-                             {hoveredImg === img && (
-                               <div className="image-name">{getImgName(img)}</div>
-                             )}
-                           </div>
-                         ))
-                             }
-                      
-
+                      {debouncedSearchTerm.trim() === "" &&
+                        imgesArray.map((img) => {
+                          return (
+                            <div
+                              className="browse-inner-images-height"
+                              key={img}
+                            >
+                              <img
+                                src={img}
+                                alt="Image"
+                                onMouseEnter={() => setHoveredImg(img)}
+                                onMouseLeave={() => setHoveredImg(null)}
+                                onClick={() => {
+                                  setselectedFile(img);
+                                  setselectedVideo(null);
+                                }}
+                              />
+                              {hoveredImg === img && (
+                                <div className="image-name">
+                                  {getImgName(img)}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      {debouncedSearchTerm.trim() !== "" &&
+                        imgesArray
+                          .filter((image) =>
+                            image
+                              .split("/")
+                              [image.split("/").length - 1].includes(
+                                debouncedSearchTerm
+                              )
+                          )
+                          .map((img) => (
+                            <div
+                              className="browse-inner-images-height"
+                              key={img}
+                            >
+                              <img
+                                src={img}
+                                alt="Image"
+                                onMouseEnter={() => setHoveredImg(img)}
+                                onMouseLeave={() => setHoveredImg(null)}
+                                onClick={() => {
+                                  setselectedFile(img);
+                                  setselectedVideo(null);
+                                }}
+                              />
+                              {hoveredImg === img && (
+                                <div className="image-name">
+                                  {getImgName(img)}
+                                </div>
+                              )}
+                            </div>
+                          ))}
 
                       {/* {videosArray.map((video) => {
                         return (
@@ -8505,73 +8629,80 @@ const Target = () => {
                         );
                       })} */}
 
-          {debouncedSearchTerm.trim()==='' && videosArray.map((video) => {
-                                  return (
-                                    <div className="browse-inner-images-height" key={video}>
-                                      <video
-                                        width="460"
-                                        height="145"
-                                        title="YouTube video player"
-                                        frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        allowfullscreen
-                                        className=""
-                                        onMouseEnter={() => setHoveredImg(video)}
-                                        onMouseLeave={() => setHoveredImg(null)}
-                                        // controls
-                                        onClick={() => {
-                                          setselectedVideo(null);
-                                          setselectedFile(null);
-                                          setTimeout(() => {
-                                            setselectedVideo(video);
-                                          }, [0]);
-                                        }}
-                                      >
-                                        <source src={video} type="video/mp4" />
-                                      </video>
-                                      {hoveredImg === video && <span className="" 
-                                      >{getImgName(video)}</span>}
-                                    </div>
-                                  );
-                                })}
-                                {
-                                debouncedSearchTerm.trim() !== '' &&
-                                videosArray
-                                  .filter((video) => video.split('/')[video.split('/').length-1].includes(debouncedSearchTerm))
-                                  .map((vdo) => (
-                                    <div className="browse-inner-images-height" key={vdo}>
-                                      <video
-                                        width="460"
-                                        height="145"
-                                        title="YouTube video player"
-                                        frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        allowfullscreen
-                                        className=""
-                                        onMouseEnter={() => setHoveredImg(vdo)}
-                                        onMouseLeave={() => setHoveredImg(null)}
-                                        // controls
-                                        onClick={() => {
-                                          setselectedVideo(null);
-                                          setselectedFile(null);
-                                          setTimeout(() => {
-                                            setselectedVideo(vdo);
-                                          }, [0]);
-                                        }}
-                                      >
-                                        <source src={vdo} type="video/mp4" />
-                                      </video>
-                                      {hoveredImg === vdo && <span className="" 
-                                      >{getImgName(vdo)}</span>}
-                                    </div>
-                                  ))
-                                      }
-
-
-
-
-
-
+                      {debouncedSearchTerm.trim() === "" &&
+                        videosArray.map((video) => {
+                          return (
+                            <div
+                              className="browse-inner-images-height"
+                              key={video}
+                            >
+                              <video
+                                width="460"
+                                height="145"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                                className=""
+                                onMouseEnter={() => setHoveredImg(video)}
+                                onMouseLeave={() => setHoveredImg(null)}
+                                // controls
+                                onClick={() => {
+                                  setselectedVideo(null);
+                                  setselectedFile(null);
+                                  setTimeout(() => {
+                                    setselectedVideo(video);
+                                  }, [0]);
+                                }}
+                              >
+                                <source src={video} type="video/mp4" />
+                              </video>
+                              {hoveredImg === video && (
+                                <span className="">{getImgName(video)}</span>
+                              )}
+                            </div>
+                          );
+                        })}
+                      {debouncedSearchTerm.trim() !== "" &&
+                        videosArray
+                          .filter((video) =>
+                            video
+                              .split("/")
+                              [video.split("/").length - 1].includes(
+                                debouncedSearchTerm
+                              )
+                          )
+                          .map((vdo) => (
+                            <div
+                              className="browse-inner-images-height"
+                              key={vdo}
+                            >
+                              <video
+                                width="460"
+                                height="145"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                                className=""
+                                onMouseEnter={() => setHoveredImg(vdo)}
+                                onMouseLeave={() => setHoveredImg(null)}
+                                // controls
+                                onClick={() => {
+                                  setselectedVideo(null);
+                                  setselectedFile(null);
+                                  setTimeout(() => {
+                                    setselectedVideo(vdo);
+                                  }, [0]);
+                                }}
+                              >
+                                <source src={vdo} type="video/mp4" />
+                              </video>
+                              {hoveredImg === vdo && (
+                                <span className="">{getImgName(vdo)}</span>
+                              )}
+                            </div>
+                          ))}
 
                       {DmodelArray.map((model) => (
                         <div className="browse-inner-images-height" key={model}>
@@ -8595,14 +8726,12 @@ const Target = () => {
                         setuploadAll(false);
                       }}
                     >
-                      Images++++
+                      Images
                     </span>
                   }
                 >
                   <p>
                     <div className="browse-inner-images">
-
-
                       {/* {imgesArray.map((img) => {
                         return (
                           <div className="browse-inner-images-height" key={img}>
@@ -8620,53 +8749,62 @@ const Target = () => {
                         );
                       })} */}
 
-
-
-                    {debouncedSearchTerm.trim()==='' && imgesArray.map((img) => {
-                        return (
-                          <div className="browse-inner-images-height" key={img}>
-                            <img
-                              src={img}
-                              alt="Image"
-                              onMouseEnter={() => setHoveredImg(img)}
-                              onMouseLeave={() => setHoveredImg(null)}
-                              onClick={() => {
-                                setselectedFile(img);
-                                setselectedVideo(null);
-                              }}
-                            />
-                            {hoveredImg === img && <div className="image-name" 
-                            >{getImgName(img)}</div>}
-                          </div>
-                        );
-                      })}
-                      {
-                       debouncedSearchTerm.trim() !== '' &&
-                       imgesArray
-                         .filter((image) =>  image.split('/')[image.split('/').length-1].includes(debouncedSearchTerm))
-                         .map((img) => (
-                           <div className="browse-inner-images-height" key={img}>
-                             <img
-                               src={img}
-                               alt="Image"
-                               onMouseEnter={() => setHoveredImg(img)}
-                               onMouseLeave={() => setHoveredImg(null)}
-                               onClick={() => {
-                                 setselectedFile(img);
-                                 setselectedVideo(null);
-                               }}
-                             />
-                             {hoveredImg === img && (
-                               <div className="image-name">{getImgName(img)}</div>
-                             )}
-                           </div>
-                         ))
-                     
-                             }
-
-
-
-
+                      {debouncedSearchTerm.trim() === "" &&
+                        imgesArray.map((img) => {
+                          return (
+                            <div
+                              className="browse-inner-images-height"
+                              key={img}
+                            >
+                              <img
+                                src={img}
+                                alt="Image"
+                                onMouseEnter={() => setHoveredImg(img)}
+                                onMouseLeave={() => setHoveredImg(null)}
+                                onClick={() => {
+                                  setselectedFile(img);
+                                  setselectedVideo(null);
+                                }}
+                              />
+                              {hoveredImg === img && (
+                                <div className="image-name">
+                                  {getImgName(img)}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      {debouncedSearchTerm.trim() !== "" &&
+                        imgesArray
+                          .filter((image) =>
+                            image
+                              .split("/")
+                              [image.split("/").length - 1].includes(
+                                debouncedSearchTerm
+                              )
+                          )
+                          .map((img) => (
+                            <div
+                              className="browse-inner-images-height"
+                              key={img}
+                            >
+                              <img
+                                src={img}
+                                alt="Image"
+                                onMouseEnter={() => setHoveredImg(img)}
+                                onMouseLeave={() => setHoveredImg(null)}
+                                onClick={() => {
+                                  setselectedFile(img);
+                                  setselectedVideo(null);
+                                }}
+                              />
+                              {hoveredImg === img && (
+                                <div className="image-name">
+                                  {getImgName(img)}
+                                </div>
+                              )}
+                            </div>
+                          ))}
                     </div>
                   </p>
                 </Tab>
@@ -8679,73 +8817,86 @@ const Target = () => {
                         setuploadAll(false);
                       }}
                     >
-                      Video++++
+                      Video
                     </span>
                   }
                 >
                   <p>
                     <div className="browse-inner-images">
-                    {debouncedSearchTerm.trim()==='' && videosArray.map((video) => {
-                        return (
-                          <div className="browse-inner-images-height" key={video}>
-                            <video
-                              width="460"
-                              height="145"
-                              title="YouTube video player"
-                              frameborder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                              allowfullscreen
-                              className=""
-                              onMouseEnter={() => setHoveredImg(video)}
-                              onMouseLeave={() => setHoveredImg(null)}
-                              // controls
-                              onClick={() => {
-                                setselectedVideo(null);
-                                setselectedFile(null);
-                                setTimeout(() => {
-                                  setselectedVideo(video);
-                                }, [0]);
-                              }}
+                      {debouncedSearchTerm.trim() === "" &&
+                        videosArray.map((video) => {
+                          return (
+                            <div
+                              className="browse-inner-images-height"
+                              key={video}
                             >
-                              <source src={video} type="video/mp4" />
-                            </video>
-                            {hoveredImg === video && <span className="" 
-                            >{getImgName(video)}</span>}
-                          </div>
-                        );
-                      })}
-                      {
-                       debouncedSearchTerm.trim() !== '' &&
-                       videosArray
-                         .filter((video) => video.split('/')[video.split('/').length-1].includes(debouncedSearchTerm))
-                         .map((vdo) => (
-                           <div className="browse-inner-images-height" key={vdo}>
-                            <video
-                              width="460"
-                              height="145"
-                              title="YouTube video player"
-                              frameborder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                              allowfullscreen
-                              className=""
-                              onMouseEnter={() => setHoveredImg(vdo)}
-                              onMouseLeave={() => setHoveredImg(null)}
-                              // controls
-                              onClick={() => {
-                                setselectedVideo(null);
-                                setselectedFile(null);
-                                setTimeout(() => {
-                                  setselectedVideo(vdo);
-                                }, [0]);
-                              }}
+                              <video
+                                width="460"
+                                height="145"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                                className=""
+                                onMouseEnter={() => setHoveredImg(video)}
+                                onMouseLeave={() => setHoveredImg(null)}
+                                // controls
+                                onClick={() => {
+                                  setselectedVideo(null);
+                                  setselectedFile(null);
+                                  setTimeout(() => {
+                                    setselectedVideo(video);
+                                  }, [0]);
+                                }}
+                              >
+                                <source src={video} type="video/mp4" />
+                              </video>
+                              {hoveredImg === video && (
+                                <span className="">{getImgName(video)}</span>
+                              )}
+                            </div>
+                          );
+                        })}
+                      {debouncedSearchTerm.trim() !== "" &&
+                        videosArray
+                          .filter((video) =>
+                            video
+                              .split("/")
+                              [video.split("/").length - 1].includes(
+                                debouncedSearchTerm
+                              )
+                          )
+                          .map((vdo) => (
+                            <div
+                              className="browse-inner-images-height"
+                              key={vdo}
                             >
-                              <source src={vdo} type="video/mp4" />
-                            </video>
-                            {hoveredImg === vdo && <span className="" 
-                            >{getImgName(vdo)}</span>}
-                           </div>
-                         ))
-                             }
+                              <video
+                                width="460"
+                                height="145"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                                className=""
+                                onMouseEnter={() => setHoveredImg(vdo)}
+                                onMouseLeave={() => setHoveredImg(null)}
+                                // controls
+                                onClick={() => {
+                                  setselectedVideo(null);
+                                  setselectedFile(null);
+                                  setTimeout(() => {
+                                    setselectedVideo(vdo);
+                                  }, [0]);
+                                }}
+                              >
+                                <source src={vdo} type="video/mp4" />
+                              </video>
+                              {hoveredImg === vdo && (
+                                <span className="">{getImgName(vdo)}</span>
+                              )}
+                            </div>
+                          ))}
                     </div>
                   </p>
                 </Tab>
@@ -8758,7 +8909,7 @@ const Target = () => {
                         setuploadAll(false);
                       }}
                     >
-                      3D++++
+                      3D
                     </span>
                   }
                 >
@@ -8822,31 +8973,26 @@ const Target = () => {
                 </video>
               )}
               {!selectedFile && !selectedVideo && (
-                <span>No media selected123</span>
+                <span>No media selected</span>
               )}
-              {
-                selectedFile && (
-                  <span>{
-                   (()=>{
-                    const splittedArray=selectedFile?.split('/')
-                    
-                    return splittedArray[splittedArray.length-1]
-                   })()
-                    }</span>
-                )
-              }
-              {
-                (selectedVideo &&  (
-                  <span>{
-                   (()=>{
-                    const splittedArray=selectedVideo?.split('/')
-                  
-                    return splittedArray[splittedArray.length-1]
-                   })()
-                    }</span>
-                )
-                )
-              }
+              {selectedFile && (
+                <span>
+                  {(() => {
+                    const splittedArray = selectedFile?.split("/");
+
+                    return splittedArray[splittedArray.length - 1];
+                  })()}
+                </span>
+              )}
+              {selectedVideo && (
+                <span>
+                  {(() => {
+                    const splittedArray = selectedVideo?.split("/");
+
+                    return splittedArray[splittedArray.length - 1];
+                  })()}
+                </span>
+              )}
             </div>
             <div className="when-media-selected">
               <div className="select-file-btn-outer">
@@ -8949,7 +9095,7 @@ const Target = () => {
               setselectedFile(null);
             }}
           >
-            Cancel222
+            Cancel
           </button>
           <button
             variant="primary"
