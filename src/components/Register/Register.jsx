@@ -15,28 +15,28 @@ import profileImg from "../../assets/images/profile.png"
 const RegisterPage =()=>{
     const navigate = useNavigate();
     //  First Name 
-    const [firstName , UserFirstName]= useState(null)
+    const [firstName , UserFirstName]= useState('')
     const handleFirstName = (e)=>{
         UserFirstName(e.target.value);
     }
     // Last Name
-    const [LastName , UserLastName]= useState(null)
+    const [LastName , UserLastName]= useState('')
     const handleLastName = (e)=>{
         UserLastName(e.target.value);
     }
 //  Email Address
-    const [email , userEmail] = useState(null)
+    const [email , userEmail] = useState('')
     const handleEmail =(e)=>{
         userEmail(e.target.value)
     }
 //  Password
-    const [password , userPassword] = useState(null)
+    const [password , userPassword] = useState('')
 
     const handlePassword =(e)=>{
         userPassword(e.target.value)
     }
     // Proffession
-    const [Proffession , selectProff] = useState(null)
+    const [Proffession , selectProff] = useState('')
 
     const handleSelect =(e)=>{
         selectProff(e.target.value)
@@ -60,8 +60,44 @@ const RegisterPage =()=>{
     const handelLogin =()=>{
         navigate('/')
     }
+
+    // error object
+    const [firstNameError,setfirstNameError]=useState(false)
+    const [LastNameError,setLastNameError]=useState(false)
+    const [PassError,setPassError]=useState(false)
+    const [emailError,setemailError]=useState(false)
+    const [DOBError,setDOBError]=useState(false)
+    const [RoleError,setRoleError]=useState(false)
+
+
+
     const handleRegister = ()=>{
-        // console.log(profileImg);
+        setfirstNameError(false);
+        setLastNameError(false);
+        setPassError(false);
+        setemailError(false)
+        setDOBError(false)
+        setRoleError(false)
+
+        if(firstName===''){
+        setfirstNameError(true);
+        }
+        if(LastName===''){
+        setLastNameError(true);
+        }
+        if(password===''){
+        setPassError(true);
+        }
+        // if(!Proffession){
+        //     setRoleError(true)
+        // }
+
+        if(LastNameError || firstNameError || PassError){
+            console.log(LastNameError, firstNameError,PassError,'this is pass error');
+            toast.error('Please fill all the require fields');
+            // return;
+        }
+        
         if (MyDataObject){
             const formData = new FormData();
             formData.append("firstname" , firstName,)
@@ -87,7 +123,20 @@ const RegisterPage =()=>{
                 toast.success('Registerd Successfully !')             
               })
               .catch(function(err) {
-                console.error('Error Registrations !', err);
+                console.log('Error Registrations !', err.response.data);
+                if(err.response.data.email){
+                    const errMsg=err.response.data.email[0]
+                    setemailError(true);
+                    if(errMsg){
+                        toast.error(errMsg)
+                    }
+                }
+                if(err.response.data.dateofbirth){
+                    setDOBError(true);
+                }
+                if(err.response.data.proffession){
+                    setRoleError(true);
+                }
               });
             })
         }
@@ -103,38 +152,51 @@ const RegisterPage =()=>{
                             <div className="row mb-2">
                                 <div className="col-6">
                                     <label className="form-label fw-semibold">First Name</label>
-                                    <input type="text" className="form-control" value={firstName}   placeholder="Enter Your Fisrt Name" onChange={handleFirstName}/>
+                                    <input type="text" className="form-control" value={firstName}   placeholder="Enter Your Fisrt Name" onChange={handleFirstName} 
+                                    style={{border:firstNameError ? '0.5px solid red' : ''}}
+                                    />
                                 </div>
                                 <div className="col-6">
                                     <label className="form-label fw-semibold">Last Name</label>
-                                    <input type="text" className="form-control"  value={LastName}  placeholder="Enter Your Last Name" onChange={handleLastName}/>
+                                    <input type="text" className="form-control"  value={LastName}  placeholder="Enter Your Last Name" onChange={handleLastName} 
+                                     style={{border:LastNameError ? '0.5px solid red' : ''}}
+                                    />
                                 </div>
                             </div>
 
                             <div className="mb-2">
                                 <label className="form-label fw-semibold">Email</label>
-                                <input type="email" className="form-control" placeholder="Email" value={email} onChange={handleEmail}/>
+                                <input type="email" className="form-control" placeholder="Email" value={email} onChange={handleEmail}
+                                style={{border:emailError ? '0.5px solid red' : ''}}
+                                />
                             </div>
                             <div className="mb-2">
                                 <label className="form-label fw-semibold">Password</label>
-                                <input type="password" className="form-control" placeholder="Password" value={password} onChange={handlePassword}/>
+                                <input type="password" className="form-control" placeholder="Password" value={password} onChange={handlePassword} 
+                                style={{border:PassError ? '0.5px solid red' : ''}}
+                                />
                             </div>
 
                             <div className="mb-2 dob">
                             <label className="form-label fw-semibold date-of-birth">Date of Birth</label>
-                            <input type="date" id="birthday" name="birthday" className="form-control"value={selectedDate} onChange={handleDateChange} />
+                            <input type="date" id="birthday" name="birthday" className="form-control"value={selectedDate} onChange={handleDateChange}
+                            // DOBError
+                            style={{border:DOBError ? '0.5px solid red' : ''}}
+                            />
                             </div>
                             <div className="mb-2">
                                 <label className="form-label fw-semibold role">Role</label>
-                                <select className="form-select" onChange={handleSelect}>
-                                    <option selected>Select Role</option>
-                                    <option value={Proffession}>I am a Designer.</option>
-                                    <option value={Proffession}>I am a Developer.</option>
-                                    <option value={Proffession}>I am a Marketer.</option>
-                                    <option value={Proffession}>I am a 3D Artist.</option>
-                                    <option value={Proffession}>I am an Educator.</option>
-                                    <option value={Proffession}>I am working in Learning and Development.</option>
-                                    <option value={Proffession}>Something Else.</option>
+                                <select className="form-select" onChange={handleSelect} 
+                                style={{border:RoleError ? '0.5px solid red' :''}}
+                                >
+                                    <option  value={''} selected>Select Role</option>
+                                    <option value={'I am a Designer.'}>I am a Designer.</option>
+                                    <option value={'I am a Developer.'}>I am a Developer.</option>
+                                    <option value={'I am a Marketer.'}>I am a Marketer.</option>
+                                    <option value={'I am a 3D Artist.'}>I am a 3D Artist.</option>
+                                    <option value={'I am an Educator.'}>I am an Educator.</option>
+                                    <option value={'I am working in Learning and Development.'}>I am working in Learning and Development.</option>
+                                    <option value={'Something Else.'}>Something Else.</option>
                                 </select>
                             </div>
                             <div className="d-grid gap-2 mt-2">

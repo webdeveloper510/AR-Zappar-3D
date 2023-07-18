@@ -78,7 +78,6 @@ const Target = () => {
   const [cont_target_image, Project_content_target_image] = useState(null);
   const [cont_units, Project_content_units] = useState(null);
 
-
   // STATES for Video Data OF AN PROJECT ---------------------------------------------->
 
   const [Mirror, setMirror] = useState();
@@ -145,6 +144,10 @@ const Target = () => {
   const [showScene, setshowScene] = useState(false);
   const [isOpen, setisOpen] = useState(false);
   const [isContent, setisContent] = useState(true);
+
+  //  state to render getProject detail function
+
+  const [renderGetProjact, setrenderGetProjact] = useState(true);
 
   // array of scene Images
   let arrayOfSceneImages = [imgScene];
@@ -250,7 +253,7 @@ const Target = () => {
 
   const [selectedFile, setselectedFile] = useState(null);
   const [selectedVideo, setselectedVideo] = useState(null);
-   const [change,setchange]=useState(true)
+  const [change, setchange] = useState(true);
 
   // set the title of popups
 
@@ -260,11 +263,74 @@ const Target = () => {
   const [EventKey, setEventKey] = useState(null);
   const [showPopHandle, setshowPopHandle] = useState(false);
 
+  //  start code to add functionality to show and hide popup
+
   // state to store fullname of user
-  const [userFullName,setuserFullName]=useState('User');
+  const [userFullName, setuserFullName] = useState("User");
+
+  // states for closing image popup
+
+  const [isImagePopup,setisImagePopup]=useState(false);
+
+    // states for closing video popup
+
+    const [isVideoPopup,setisVideoPopup]=useState(false);
+
+      // states for closing 3D model popup
+
+  const [isModelPopup,setisModelPopup]=useState(false);
+
+  // states to show name on hover
+
+  const [hoveredImg, setHoveredImg] = useState(null);
+
+  // for searching
+  const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [arrImg,setarrImg]=useState([]);
 
 
+
+  const getImgName = (imgUrl) => {
+      const splittedArray=imgUrl.split('/')
+      return splittedArray[splittedArray.length-1]
+  };
+
+
+  useEffect(() => {
+    const delay = 500; 
+
+    const timeoutId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [searchTerm]);
+
+
+
+ 
+
+  useEffect(() => {
+    setisImagePopup(false);
+
+  }, [isVideoPopup,isModelPopup])
+
+  useEffect(() => {
+    setisVideoPopup(false);
+
+  }, [isImagePopup,isModelPopup])
+
+  useEffect(() => {
+    setisModelPopup(false);
+
+  }, [isVideoPopup,isImagePopup])
+
+ //  End code to add functionality to show and hide popup
   
+
 
   // to get user project details
   const getUserProjectDetail = async () => {
@@ -278,12 +344,11 @@ const Target = () => {
       setimgesArray(response.data.data.image_designs);
       setvideosArray(response.data.data.upload_videos);
       setDmodelArray(response.data.data.three_d_model_files);
-    } catch (err) {
-    }
+    } catch (err) {}
   };
   useEffect(() => {
     getUserProjectDetail();
-  }, []);
+  }, [renderGetProjact]);
 
   useEffect(() => {
     axios
@@ -371,8 +436,7 @@ const Target = () => {
         },
       })
       .then(function (response) {})
-      .catch(function (err) {
-      });
+      .catch(function (err) {});
   };
 
   // --------------------------------------------------------CreateProject Content--------------------------------->
@@ -400,8 +464,7 @@ const Target = () => {
         backgroundSoundApi(project_content_id);
         analyticsApi(project_content_id);
       })
-      .catch(function (errorMessage) {
-      });
+      .catch(function (errorMessage) {});
   };
 
   // function for post api background sound
@@ -415,8 +478,7 @@ const Target = () => {
         },
       })
       .then(function (response) {})
-      .catch(function (err) {
-      });
+      .catch(function (err) {});
   };
 
   const analyticsApi = (idee) => {
@@ -427,10 +489,8 @@ const Target = () => {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   //// -------------------------------------------------------Two-D Three-D Switch ------------------------------>
@@ -460,6 +520,7 @@ const Target = () => {
         setScene(responseProject.data.data[0].scene_data);
         setProject(responseProject.data.data[0].project_content_data);
         set2D3D(responseProject.data.data[0].twoD_threeD_data);
+
 
         // Image Dimensions ----------------------------------------------------------------------------------------------------->
 
@@ -547,8 +608,7 @@ const Target = () => {
           }
         }
       })
-      .catch(function (error) {
-      });
+      .catch(function (error) {});
   };
   // GET Basic Details OF PROJECT ------------------------------------------------------------>
   useEffect(() => {
@@ -601,7 +661,7 @@ const Target = () => {
   const handleshowthreedmodal = () => setthreedmodal(true);
 
   //  to set the condition for any tyoe of file can be uploaded
-  const [uploadAll,setuploadAll]=useState(true);
+  const [uploadAll, setuploadAll] = useState(true);
 
   // Get All Project Data --------------------------------------------------------------------------->
   useEffect(() => {
@@ -616,6 +676,7 @@ const Target = () => {
         setScene(responseProject.data.data[0].scene_data);
         setProject(responseProject.data.data[0].project_content_data);
         set2D3D(responseProject.data.data[0].twoD_threeD_data);
+        console.log(responseProject.data,'<-------------datataatatatata---------------');
 
         // Image Dimensions ----------------------------------------------------------------------------------------------------->
 
@@ -662,11 +723,11 @@ const Target = () => {
 
   const handleImageInput = (e) => {
     const file = e.target.files[0];
-    const typeOfFile = file.type.split('/')[0]
-    if(typeOfFile!=='image'){
+    const typeOfFile = file.type.split("/")[0];
+    if (typeOfFile !== "image") {
       return;
     }
-    console.log(typeOfFile,'typetypetypetypetypetypetypetypetype');
+    console.log(typeOfFile, "typetypetypetypetypetypetypetypetype");
     const reader = new FileReader();
     reader.onload = (event) => {
       const image = new Image();
@@ -693,6 +754,7 @@ const Target = () => {
             imageTransitionAPI(response.data.id);
             imageAppearanceAPI(response.data.id);
             imageActionAPI(response.data.id);
+            setrenderGetProjact((prev) => !prev);
           })
           .catch(function (err) {
             toast.error("Image not Uploaded!");
@@ -718,10 +780,8 @@ const Target = () => {
     formData.append("Mirror", null);
     axios
       .post(API.BASE_URL + "/image_transform/", formData)
-      .then(function (response) {
-      })
-      .catch(function (error) {
-      });
+      .then(function (response) {})
+      .catch(function (error) {});
   };
 
   // post api function for image appearance
@@ -747,8 +807,7 @@ const Target = () => {
         setframe_type(response.data.frame_type);
         setopacity(response.data.opacity);
       })
-      .catch(function (err) {
-      });
+      .catch(function (err) {});
   };
 
   // post api function for image transition
@@ -776,8 +835,7 @@ const Target = () => {
         setTraNtransition_enter(response.data.transition_enter);
         setTraNtransition_exit(response.data.transition_exit);
       })
-      .catch(function (err) {
-      });
+      .catch(function (err) {});
   };
 
   // post api function for image action
@@ -792,18 +850,17 @@ const Target = () => {
       .then(function (response) {
         setimage_action(response.data.image_action);
       })
-      .catch(function (err) {
-      });
+      .catch(function (err) {});
   };
 
   // VIdeo Data Of Video with all data --------------------------------------------------------------------------------------->
   const handleInputChange = (event) => {
     const videoFile = event.target.files[0];
-    const typeOfFile = videoFile.type.split('/')[0]
-    if(typeOfFile!=='video'){
+    const typeOfFile = videoFile.type.split("/")[0];
+    if (typeOfFile !== "video") {
       return;
     }
-    console.log(typeOfFile,'videoFilevideoFilevideoFilevideoFile');
+    console.log(typeOfFile, "videoFilevideoFilevideoFilevideoFile");
     const videoElement = document.createElement("video");
     videoElement.src = URL.createObjectURL(videoFile);
     const formData = new FormData();
@@ -824,9 +881,9 @@ const Target = () => {
           setVideoData(response.data.id, width, height);
           videoTransitionAPI(response.data.id);
           videoActionAPI(response.data.id);
+          setrenderGetProjact((prev) => !prev);
         })
-        .catch(function (err) {
-        });
+        .catch(function (err) {});
     };
   };
 
@@ -852,8 +909,7 @@ const Target = () => {
       .then(function (response) {
         settoGetData((prev) => !prev);
       })
-      .catch(function (err) {
-      });
+      .catch(function (err) {});
   };
 
   // post api function for video action
@@ -865,10 +921,8 @@ const Target = () => {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   // post api function for video transition
@@ -887,21 +941,22 @@ const Target = () => {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   // HANDLE 3Dmodel CHANGE ------------------------------------------------------------------------------------------------>
 
   const handle3Dmodel = (e) => {
     const formData = new FormData();
-    console.log(e.target.files[0].type,'3333333333DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+    console.log(
+      e.target.files[0].type,
+      "3333333333DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
+    );
 
-   if(e.target.files[0].type!==''){
-        return;
-   }
+    if (e.target.files[0].type !== "") {
+      return;
+    }
 
     formData.append("File", e.target.files[0]);
     formData.append("scene_id", s_scene_id);
@@ -912,9 +967,10 @@ const Target = () => {
         threeDmodelTransform(response.data.id);
         threeDmodelTransition(response.data.id);
         threeDmodelAction(response.data.id);
+        setrenderGetProjact((prev) => !prev);
       })
       .catch(function (err) {
-        console.log(err,'inside upload 3D model function');
+        console.log(err, "inside upload 3D model function");
         toast.error("Modal not Uploaded !");
       });
   };
@@ -925,7 +981,7 @@ const Target = () => {
     handleImageInput(e);
     handleInputChange(e);
     handle3Dmodel(e);
-  }
+  };
 
   // three model transform api
 
@@ -952,8 +1008,7 @@ const Target = () => {
       .then(function (response) {
         settoGetData((prev) => !prev);
       })
-      .catch(function (err) {
-      });
+      .catch(function (err) {});
   };
 
   // three model transition api
@@ -975,8 +1030,7 @@ const Target = () => {
       .then(function (response) {
         settoGetData((prev) => !prev);
       })
-      .catch(function (err) {
-      });
+      .catch(function (err) {});
   };
 
   // three model action api
@@ -991,8 +1045,7 @@ const Target = () => {
       .then(function (response) {
         settoGetData((prev) => !prev);
       })
-      .catch(function (err) {
-      });
+      .catch(function (err) {});
   };
 
   // change the Two D and Three D value onChange Function ---------------------------------------------------->
@@ -1002,8 +1055,7 @@ const Target = () => {
     axios
       .put(API.BASE_URL + "twod_threed/" + twoDthreeDID + "/", formdata, {})
       .then(function (res) {})
-      .catch(function (err) {
-      });
+      .catch(function (err) {});
   };
 
   // api function get button data by id
@@ -1011,10 +1063,8 @@ const Target = () => {
   const getBtnDataById = () => {
     axios
       .post(API.BASE_URL + "GetButtondata/" + s_scene_id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   // api function DELETE button data by id
@@ -1022,10 +1072,8 @@ const Target = () => {
   const deleteBtnDataById = () => {
     axios
       .delete(API.BASE_URL + "GetButtondata/" + s_scene_id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   //  api function to get all text data by id
@@ -1034,10 +1082,8 @@ const Target = () => {
   const getTextDataById = () => {
     axios
       .post(API.BASE_URL + "get-all-text-data/" + s_scene_id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   //  api function to DELETE all text data by id
@@ -1046,10 +1092,8 @@ const Target = () => {
   const deleteTextDataById = () => {
     axios
       .delete(API.BASE_URL + "get-all-text-data/" + s_scene_id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   // function to get image data by id
@@ -1058,10 +1102,8 @@ const Target = () => {
   const getImageDataById = () => {
     axios
       .get(API.BASE_URL + "get-image-data/" + s_scene_id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   // function to DELETE image data by id
@@ -1070,10 +1112,8 @@ const Target = () => {
   const deleteImageDataById = () => {
     axios
       .delete(API.BASE_URL + "get-image-data/" + s_scene_id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   //  function to get video data by id
@@ -1082,10 +1122,8 @@ const Target = () => {
   const getVideoDataById = () => {
     axios
       .get(API.BASE_URL + "get-video-data/" + s_scene_id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   //  function to DELETE video data by id
@@ -1094,10 +1132,8 @@ const Target = () => {
   const deleteVideoDataById = () => {
     axios
       .delete(API.BASE_URL + "get-video-data/" + s_scene_id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   // function to get three D model data by id
@@ -1106,10 +1142,8 @@ const Target = () => {
   const getThreeDModelDataById = () => {
     axios
       .get(API.BASE_URL + "get-threed-model-Data/" + s_scene_id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   // function to DELETE three D model data by id
@@ -1118,10 +1152,8 @@ const Target = () => {
   const deleteThreeDModelDataById = (id) => {
     axios
       .delete(API.BASE_URL + "get-threed-model-Data/" + id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   // function to get scene data by Id
@@ -1130,10 +1162,8 @@ const Target = () => {
   const getSceneDataById = () => {
     axios
       .get(API.BASE_URL + "get-scene-data/" + s_scene_id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   // function to DELETE scene data by Id
@@ -1142,10 +1172,8 @@ const Target = () => {
   const deleteSceneDataById = () => {
     axios
       .delete(API.BASE_URL + "get-scene-data/" + s_scene_id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   // function to get project content data by Id
@@ -1154,10 +1182,8 @@ const Target = () => {
   const getProjectContentDataById = (id) => {
     axios
       .get(API.BASE_URL + "getproject-contentdata/" + id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   // function to DELETE project content data by Id
@@ -1165,12 +1191,9 @@ const Target = () => {
   const deleteProjectContentDataById = (id) => {
     axios
       .delete(API.BASE_URL + "getproject-contentdata/" + s_scene_id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
-
 
   const [ToggleButton, ButtonShow] = useState(false);
   const ToggleButtonShow = (e) => {
@@ -1183,20 +1206,16 @@ const Target = () => {
   const getDataBySceneId = (id) => {
     axios
       .get(API.BASE_URL + "scene_details/" + s_scene_id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   // delete data by scene id
   const deleteDataBySceneId = (id) => {
     axios
       .delete(API.BASE_URL + "scene_details/" + s_scene_id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   // get all scene by project id
@@ -1204,10 +1223,8 @@ const Target = () => {
   const getAllSceneByProjectId = (id) => {
     axios
       .get(API.BASE_URL + "scene_data_by_project/" + id)
-      .then(function (response) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (response) {})
+      .catch(function (err) {});
   };
 
   // Create SCENE WHEN THE PROJECT IS LOADED :------------------------------------------------------------------------->
@@ -1263,9 +1280,9 @@ const Target = () => {
       })
       .then(function (response) {
         ProfileImage(response.data.profile_image);
-        console.log(response.data.firstname,'from target jsx file');
-        console.log(response.data.lastname,'from target jsx file');
-        setuserFullName(`${response.data.firstname} ${response.data.lastname}`)
+        console.log(response.data.firstname, "from target jsx file");
+        console.log(response.data.lastname, "from target jsx file");
+        setuserFullName(`${response.data.firstname} ${response.data.lastname}`);
       })
       .catch((error) => {});
   }, []);
@@ -1330,12 +1347,9 @@ const Target = () => {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then(function (res) {
-      })
-      .catch(function (err) {
-      });
+      .then(function (res) {})
+      .catch(function (err) {});
   };
-
 
   // -------------------------------------------------------------------------->
   // To SELECT TARGET   ------------------------------------------------------------------->
@@ -1375,8 +1389,6 @@ const Target = () => {
   };
 
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>;
-
-  
 
   return (
     <div className="targetPage" ref={containerRef}>
@@ -2261,12 +2273,12 @@ const Target = () => {
                       // className={`flex-column side-main ${
                       //   isOpen ? "target-pills" : ""
                       // }`}
-                       className="flex-column side-main target-pills"
+                      className="flex-column side-main target-pills"
                     >
                       <Nav.Item>
                         <Nav.Link
                           eventKey="first"
-                          // onClick={() =>{ setisOpen(!isOpen);console.log('clicking on Button');}}
+                          onClick={(e) =>console.log(e,'clicking on Button')}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -2301,6 +2313,7 @@ const Target = () => {
                         <Nav.Link
                           eventKey="second"
                           // onClick={() => {setisOpen(!isOpen);console.log('Clicking on text');}}
+                          onClick={(e) =>console.log(e,'clicking on Button')}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -2338,7 +2351,7 @@ const Target = () => {
                           onClick={() => {
                             // settitlePopups("Image");
                             settypePopup("browse-media-popup");
-                            setEventKey("third");
+                            // setEventKey("third");
                           }}
                         >
                           <svg
@@ -2367,7 +2380,6 @@ const Target = () => {
                           >
                             Image11
                           </a>
-                          
                         </Nav.Link>
                       </Nav.Item>
 
@@ -2691,8 +2703,7 @@ const Target = () => {
                                   marginTop: "0px",
                                 }}
                                 data-texture={img}
-                                onClick={() => {
-                                }}
+                                onClick={() => {}}
                               ></div>
                             );
                           })}
@@ -2715,8 +2726,7 @@ const Target = () => {
                                 height: "39px",
                               }}
                               data-texture={img2}
-                              onClick={() => {
-                              }}
+                              onClick={() => {}}
                             ></div>
                           );
                         })}
@@ -2873,8 +2883,10 @@ const Target = () => {
                   <Tab.Pane
                     eventKey="third"
                     // eventKey={isOpen ? "third" : null}
+                    // eventKey={isImagePopup ? "third" : null}
                     onClick={() => {
                       // setisOpen(!isOpen);
+                    
                     }}
                     className="bg-light p-4 tab-content"
                   >
@@ -2891,6 +2903,7 @@ const Target = () => {
                             // onClick={handleshowbrowsemedia}
                             onClick={() => {
                               setshowPopHandle(true);
+                              setuploadAll(true);
                             }}
                           >
                             <i className="bi bi-upload"></i>Browse media library
@@ -2929,11 +2942,19 @@ const Target = () => {
                     <div className="row mt-3">
                       {ctx.selectedImage.map((image, index) => (
                         <div className="col-md-6" key={index}>
-                          <img src={image[0].image_url} alt={`Image ${index + 1}`} className="img-fluid"  style={{ width: "100%", height: "160px", marginTop: "10px"  }}/>
+                          <img
+                            src={image[0].image_url}
+                            alt={`Image ${index + 1}`}
+                            className="img-fluid"
+                            style={{
+                              width: "100%",
+                              height: "160px",
+                              marginTop: "10px",
+                            }}
+                          />
                         </div>
                       ))}
                     </div>
-
                   </Tab.Pane>
 
                   <Tab.Pane
@@ -2956,6 +2977,7 @@ const Target = () => {
                             // onClick={handleshowvideomedia}
                             onClick={() => {
                               setshowPopHandle(true);
+                              setuploadAll(true);
                             }}
                           >
                             Browse media library v123
@@ -2995,7 +3017,11 @@ const Target = () => {
                         <div className="col-md-12" key={index}>
                           <video
                             // controls
-                            style={{ width: "100%", height: "auto", marginTop: "10px" }}
+                            style={{
+                              width: "100%",
+                              height: "auto",
+                              marginTop: "10px",
+                            }}
                             onMouseOver={(e) => e.target.play()}
                             onMouseOut={(e) => e.target.pause()}
                           >
@@ -3004,9 +3030,6 @@ const Target = () => {
                         </div>
                       ))}
                     </div>
-
-
-
                   </Tab.Pane>
 
                   <Tab.Pane
@@ -3026,6 +3049,7 @@ const Target = () => {
                             // onClick={handleshowthreedmodal}
                             onClick={() => {
                               setshowPopHandle(true);
+                              setuploadAll(true);
                             }}
                           >
                             Browse media library 3D 33
@@ -3055,7 +3079,7 @@ const Target = () => {
                             type="file"
                             id="img-upload"
                             // onChange={handle3Dmodel}
-                            onChange={(e)=>inputCallingFunction(e)}
+                            onChange={(e) => inputCallingFunction(e)}
                           />
                         </div>
                       </div>
@@ -3064,13 +3088,19 @@ const Target = () => {
                     <div className="row mt-3">
                       {ctx.selected3D.map((image, index) => (
                         <div className="col-md-6" key={index}>
-                          <img src={image[0].file_url} alt={`Image ${index + 1}`} className="img-fluid"  style={{ width: "100%", height: "160px", marginTop: "10px"  }}/>
+                          <img
+                            src={image[0].file_url}
+                            alt={`Image ${index + 1}`}
+                            className="img-fluid"
+                            style={{
+                              width: "100%",
+                              height: "160px",
+                              marginTop: "10px",
+                            }}
+                          />
                         </div>
                       ))}
                     </div>
-
-
-
                   </Tab.Pane>
                   <Tab.Pane
                     eventKey="sixth"
@@ -3083,6 +3113,11 @@ const Target = () => {
                       <div class="screen-layer">
                         <span>Screen Layer</span>
                       </div>
+                      {      
+                      getImage?.map((itm)=>{
+                        return (
+
+
                       <div class="video_file">
                         <span class="videp_file_txt">
                           <svg
@@ -3105,9 +3140,16 @@ const Target = () => {
                               ></path>
                             </g>
                           </svg>
-                          file_example_MP4_480_1_5MG.mp4 (2)
-                        </span>
+                       
+                          {  itm[0].image_url.split('/')[itm[0].image_url.split('/').length-1]}
+                    
+                             
+                          </span>
                       </div>
+                         )
+                       })
+                      }
+
                       <div class="AR_layer_div">
                         <div class="screen-layer">
                           <span>AR Layer</span>
@@ -5388,7 +5430,6 @@ const Target = () => {
                                             className="btn-upload DrawerBtn--bdcva Open--EFZA8 "
                                           >
                                             <div className="TitleContainer--2xD-b">
-                                             
                                               Cancel
                                             </div>
                                           </button>
@@ -7964,7 +8005,6 @@ const Target = () => {
                                               className="btn-action-cancel action-btn-cancel"
                                             >
                                               <div className="Title-action-cancel">
-                                               
                                                 Cancel
                                               </div>
                                             </button>
@@ -8275,10 +8315,9 @@ const Target = () => {
       <Modal
         id={typePopup}
         show={showPopHandle}
-        onHide={() => setshowPopHandle(false)}
+        onHide={() =>{ setshowPopHandle(false);setselectedVideo(null);setselectedFile(null);}}
       >
         <Modal.Header closeButton>
-       
           <Modal.Title>Create browse media popup</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -8287,35 +8326,31 @@ const Target = () => {
               <div className="input-wrapper" id="drop-media-files">
                 <span>Choose files or drop here to upload</span>
                 <input
-                accept={
-               (()=>{
-                if(uploadAll){
-                  return ""
-                }
-                  if(typePopup==="browse-media-popup"){
-                    return "image/*"
-                  }
-                  if(typePopup==="browse-video-popup"){
-                    return "video/*"
-                  }
-                  if(typePopup==="threedmodalpopup"){
-                    return ".gltf, model/*"
-                  }
-                 
-                 })()
-                }
+                  accept={(() => {
+                    if (uploadAll) {
+                      return "";
+                    }
+                    if (typePopup === "browse-media-popup") {
+                      return "image/*";
+                    }
+                    if (typePopup === "browse-video-popup") {
+                      return "video/*";
+                    }
+                    if (typePopup === "threedmodalpopup") {
+                      return ".gltf, model/*";
+                    }
+                  })()}
                   type="file"
                   id="img-upload-popup"
-                  onChange={(e)=>{
-                    inputCallingFunction(e)
-                  }
-                }
+                  onChange={(e) => {
+                    inputCallingFunction(e);
+                  }}
                 />
               </div>
             </div>
             <div className="field f1 search-browse">
               <div className="input-wrapper">
-                <input type="search" placeholder="Search labels" />
+                <input type="search" placeholder="Search labels" value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)} />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="40"
@@ -8373,11 +8408,14 @@ const Target = () => {
                 {/* <Tab eventKey="tab1" title="All"> */}
                 {/* setuploadAll(true) */}
                 {/* {<span onClick={()=>settypePopup("browse-media-popup")}>Images++++</span>} */}
-                <Tab eventKey="tab1" title= {<span onClick={()=>setuploadAll(true)}>All++</span>}>
+                <Tab
+                  eventKey="tab1"
+                  title={<span onClick={() => setuploadAll(true)}>All++</span>}
+                >
                   <p>
                     <div className="browse-inner-images">
                       {/* 1 image */}
-                      {imgesArray.map((img) => {
+                      {/* {imgesArray.map((img) => {
                         return (
                           <div className="browse-inner-images-height" key={img}>
                             <img
@@ -8389,9 +8427,52 @@ const Target = () => {
                             ></img>
                           </div>
                         );
+                      })} */}
+                      {/* this is image array 1234567890 */}
+                      {debouncedSearchTerm.trim()==='' && imgesArray.map((img) => {
+                        return (
+                          <div className="browse-inner-images-height" key={img}>
+                            <img
+                              src={img}
+                              alt="Image"
+                              onMouseEnter={() => setHoveredImg(img)}
+                              onMouseLeave={() => setHoveredImg(null)}
+                              onClick={() => {
+                                setselectedFile(img);
+                                setselectedVideo(null);
+                              }}
+                            />
+                            {hoveredImg === img && <div className="image-name" 
+                            >{getImgName(img)}</div>}
+                          </div>
+                        );
                       })}
+                      {
+                       debouncedSearchTerm.trim() !== '' &&
+                       imgesArray
+                         .filter((image) => image.split('/')[image.split('/').length-1].includes(debouncedSearchTerm))
+                         .map((img) => (
+                           <div className="browse-inner-images-height" key={img}>
+                             <img
+                               src={img}
+                               alt="Image"
+                               onMouseEnter={() => setHoveredImg(img)}
+                               onMouseLeave={() => setHoveredImg(null)}
+                               onClick={() => {
+                                 setselectedFile(img);
+                                 setselectedVideo(null);
+                               }}
+                             />
+                             {hoveredImg === img && (
+                               <div className="image-name">{getImgName(img)}</div>
+                             )}
+                           </div>
+                         ))
+                             }
+                      
 
-                      {videosArray.map((video) => {
+
+                      {/* {videosArray.map((video) => {
                         return (
                           <div
                             className="browse-inner-images-height"
@@ -8404,20 +8485,93 @@ const Target = () => {
                               frameborder="0"
                               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                               allowfullscreen
+                              className=""
+                              onMouseEnter={() => setHoveredImg(video)}
+                              onMouseLeave={() => setHoveredImg(null)}
                               // controls
                               onClick={() => {
                                 setselectedVideo(null);
                                 setselectedFile(null);
-                                setTimeout(()=>{
+                                setTimeout(() => {
                                   setselectedVideo(video);
-                                },[0])
+                                }, [0]);
                               }}
                             >
-                              <source src={video} type="video/mp4"></source>
+                              <source src={video} type="video/mp4" />
                             </video>
+                              {hoveredImg === video && <span className="" 
+                            >{getImgName(video)}</span>}
                           </div>
                         );
-                      })}
+                      })} */}
+
+          {debouncedSearchTerm.trim()==='' && videosArray.map((video) => {
+                                  return (
+                                    <div className="browse-inner-images-height" key={video}>
+                                      <video
+                                        width="460"
+                                        height="145"
+                                        title="YouTube video player"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowfullscreen
+                                        className=""
+                                        onMouseEnter={() => setHoveredImg(video)}
+                                        onMouseLeave={() => setHoveredImg(null)}
+                                        // controls
+                                        onClick={() => {
+                                          setselectedVideo(null);
+                                          setselectedFile(null);
+                                          setTimeout(() => {
+                                            setselectedVideo(video);
+                                          }, [0]);
+                                        }}
+                                      >
+                                        <source src={video} type="video/mp4" />
+                                      </video>
+                                      {hoveredImg === video && <span className="" 
+                                      >{getImgName(video)}</span>}
+                                    </div>
+                                  );
+                                })}
+                                {
+                                debouncedSearchTerm.trim() !== '' &&
+                                videosArray
+                                  .filter((video) => video.split('/')[video.split('/').length-1].includes(debouncedSearchTerm))
+                                  .map((vdo) => (
+                                    <div className="browse-inner-images-height" key={vdo}>
+                                      <video
+                                        width="460"
+                                        height="145"
+                                        title="YouTube video player"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowfullscreen
+                                        className=""
+                                        onMouseEnter={() => setHoveredImg(vdo)}
+                                        onMouseLeave={() => setHoveredImg(null)}
+                                        // controls
+                                        onClick={() => {
+                                          setselectedVideo(null);
+                                          setselectedFile(null);
+                                          setTimeout(() => {
+                                            setselectedVideo(vdo);
+                                          }, [0]);
+                                        }}
+                                      >
+                                        <source src={vdo} type="video/mp4" />
+                                      </video>
+                                      {hoveredImg === vdo && <span className="" 
+                                      >{getImgName(vdo)}</span>}
+                                    </div>
+                                  ))
+                                      }
+
+
+
+
+
+
 
                       {DmodelArray.map((model) => (
                         <div className="browse-inner-images-height" key={model}>
@@ -8432,34 +8586,108 @@ const Target = () => {
                     </div>
                   </p>
                 </Tab>
-                <Tab eventKey="tab2"  title={<span onClick={()=>{settypePopup("browse-media-popup");setuploadAll(false)}}>Images++++</span>}>
+                <Tab
+                  eventKey="tab2"
+                  title={
+                    <span
+                      onClick={() => {
+                        settypePopup("browse-media-popup");
+                        setuploadAll(false);
+                      }}
+                    >
+                      Images++++
+                    </span>
+                  }
+                >
                   <p>
                     <div className="browse-inner-images">
-                      {imgesArray.map((img) => {
+
+
+                      {/* {imgesArray.map((img) => {
                         return (
                           <div className="browse-inner-images-height" key={img}>
                             <img
                               src={img}
+                              onMouseEnter={() => setHoveredImg(img)}
+                              onMouseLeave={() => setHoveredImg(null)}
                               onClick={() => {
                                 setselectedFile(img);
                                 setselectedVideo(null);
                               }}
                             ></img>
+                             {hoveredImg === img && <div className="image-name">{getImgName(img)}</div>}
+                          </div>
+                        );
+                      })} */}
+
+
+
+                    {debouncedSearchTerm.trim()==='' && imgesArray.map((img) => {
+                        return (
+                          <div className="browse-inner-images-height" key={img}>
+                            <img
+                              src={img}
+                              alt="Image"
+                              onMouseEnter={() => setHoveredImg(img)}
+                              onMouseLeave={() => setHoveredImg(null)}
+                              onClick={() => {
+                                setselectedFile(img);
+                                setselectedVideo(null);
+                              }}
+                            />
+                            {hoveredImg === img && <div className="image-name" 
+                            >{getImgName(img)}</div>}
                           </div>
                         );
                       })}
+                      {
+                       debouncedSearchTerm.trim() !== '' &&
+                       imgesArray
+                         .filter((image) =>  image.split('/')[image.split('/').length-1].includes(debouncedSearchTerm))
+                         .map((img) => (
+                           <div className="browse-inner-images-height" key={img}>
+                             <img
+                               src={img}
+                               alt="Image"
+                               onMouseEnter={() => setHoveredImg(img)}
+                               onMouseLeave={() => setHoveredImg(null)}
+                               onClick={() => {
+                                 setselectedFile(img);
+                                 setselectedVideo(null);
+                               }}
+                             />
+                             {hoveredImg === img && (
+                               <div className="image-name">{getImgName(img)}</div>
+                             )}
+                           </div>
+                         ))
+                     
+                             }
+
+
+
+
                     </div>
                   </p>
                 </Tab>
-                <Tab eventKey="tab3" title={<span onClick={()=>{settypePopup("browse-video-popup");setuploadAll(false)}}>Video++++</span>}>
+                <Tab
+                  eventKey="tab3"
+                  title={
+                    <span
+                      onClick={() => {
+                        settypePopup("browse-video-popup");
+                        setuploadAll(false);
+                      }}
+                    >
+                      Video++++
+                    </span>
+                  }
+                >
                   <p>
                     <div className="browse-inner-images">
-                      {videosArray.map((video) => {
+                    {debouncedSearchTerm.trim()==='' && videosArray.map((video) => {
                         return (
-                          <div
-                            className="browse-inner-images-height"
-                            key={video}
-                          >
+                          <div className="browse-inner-images-height" key={video}>
                             <video
                               width="460"
                               height="145"
@@ -8467,21 +8695,73 @@ const Target = () => {
                               frameborder="0"
                               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                               allowfullscreen
+                              className=""
+                              onMouseEnter={() => setHoveredImg(video)}
+                              onMouseLeave={() => setHoveredImg(null)}
                               // controls
                               onClick={() => {
-                                setselectedVideo(video);
+                                setselectedVideo(null);
                                 setselectedFile(null);
+                                setTimeout(() => {
+                                  setselectedVideo(video);
+                                }, [0]);
                               }}
                             >
-                              <source src={video} type="video/mp4"></source>
+                              <source src={video} type="video/mp4" />
                             </video>
+                            {hoveredImg === video && <span className="" 
+                            >{getImgName(video)}</span>}
                           </div>
                         );
                       })}
+                      {
+                       debouncedSearchTerm.trim() !== '' &&
+                       videosArray
+                         .filter((video) => video.split('/')[video.split('/').length-1].includes(debouncedSearchTerm))
+                         .map((vdo) => (
+                           <div className="browse-inner-images-height" key={vdo}>
+                            <video
+                              width="460"
+                              height="145"
+                              title="YouTube video player"
+                              frameborder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              allowfullscreen
+                              className=""
+                              onMouseEnter={() => setHoveredImg(vdo)}
+                              onMouseLeave={() => setHoveredImg(null)}
+                              // controls
+                              onClick={() => {
+                                setselectedVideo(null);
+                                setselectedFile(null);
+                                setTimeout(() => {
+                                  setselectedVideo(vdo);
+                                }, [0]);
+                              }}
+                            >
+                              <source src={vdo} type="video/mp4" />
+                            </video>
+                            {hoveredImg === vdo && <span className="" 
+                            >{getImgName(vdo)}</span>}
+                           </div>
+                         ))
+                             }
                     </div>
                   </p>
                 </Tab>
-                <Tab eventKey="tab4" title={<span onClick={()=>{settypePopup("threedmodalpopup");setuploadAll(false)}}>3D++++</span>}>
+                <Tab
+                  eventKey="tab4"
+                  title={
+                    <span
+                      onClick={() => {
+                        settypePopup("threedmodalpopup");
+                        setuploadAll(false);
+                      }}
+                    >
+                      3D++++
+                    </span>
+                  }
+                >
                   <p>
                     <div className="browse-inner-images">
                       {DmodelArray.map((model) => (
@@ -8539,12 +8819,34 @@ const Target = () => {
                   controls
                 >
                   <source src={selectedVideo} type="video/mp4"></source>
-                  
                 </video>
               )}
               {!selectedFile && !selectedVideo && (
                 <span>No media selected123</span>
               )}
+              {
+                selectedFile && (
+                  <span>{
+                   (()=>{
+                    const splittedArray=selectedFile?.split('/')
+                    
+                    return splittedArray[splittedArray.length-1]
+                   })()
+                    }</span>
+                )
+              }
+              {
+                (selectedVideo &&  (
+                  <span>{
+                   (()=>{
+                    const splittedArray=selectedVideo?.split('/')
+                  
+                    return splittedArray[splittedArray.length-1]
+                   })()
+                    }</span>
+                )
+                )
+              }
             </div>
             <div className="when-media-selected">
               <div className="select-file-btn-outer">
@@ -8567,56 +8869,63 @@ const Target = () => {
                           <Accordion>
                             <Accordion.Item eventKey="0">
                               <Accordion.Header> File Info</Accordion.Header>
-                              {((selectedFile || selectedVideo) && <Accordion.Body>
-                                <div className="flex acenter preview-row">
-                                  <p>Category</p>
-                                  <p className="f1 jc-end">{selectedFile ? 'Image' : ''}{selectedVideo ? 'Video':''}</p>
-                                </div>
-                                <div className="flex acenter preview-row">
-                                  <p>Type</p>
-                                  <p className="f1 jc-end ">{
-                                   selectedFile && (()=>{
-                                    const splitArray=selectedFile.split('.');
-                                    return splitArray[splitArray.length-1]
-                                   })()
-                                  }
-                                  {
-                                   
-                                    selectedVideo && (()=>{
-                                      const splitArray= selectedVideo.split('.');
-                                     
-                                      return splitArray[splitArray.length-1]
-                                    })()
-                                    
-                                  }
-                                 
-                                  </p>
-                                </div>
-                                <div className="flex acenter preview-row">
-                                  <p>Date uploaded</p>
-                                  <p className="f1 jc-end">Jun 19, 2023</p>
-                                </div>
-                                <div className="flex acenter preview-row">
-                                  <p>Uploaded by</p>
-                                  <p className="f1 jc-end ellipsis">
-                                  {userFullName}
-                                  </p>
-                                </div>
-                                <hr />
-                                <div className="delete-files-btn">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="40"
-                                    height="40"
-                                    viewBox="0 0 40 40"
-                                  >
-                                    <path d="M21.714 10c1.263 0 2.286.895 2.286 2v1h4.526c.262 0 .474.224.474.5 0 .245-.168.45-.389.492l-.085.008h-1.581l-.672 12.235C26.157 28.349 24.523 30 22.546 30h-5.092c-1.977 0-3.611-1.65-3.727-3.765L13.055 14h-1.581a.487.487 0 01-.474-.5c0-.245.168-.45.389-.492l.085-.008H16v-1c0-1.105 1.023-2 2.286-2h3.428zm4.296 4H13.99l.668 12.176c.084 1.527 1.224 2.732 2.632 2.819l.164.005h5.092c1.428 0 2.617-1.148 2.781-2.65l.015-.174L26.01 14zm-8.51 4a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L17 24.5v-6a.5.5 0 01.5-.5zm5 0a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L22 24.5v-6a.5.5 0 01.5-.5zm-.7-7h-3.6c-.615 0-1.123.386-1.192.883L17 12v1h6v-1c0-.513-.463-.936-1.06-.993L21.8 11z"></path>
-                                  </svg>
-                                  <span className="delete-file-txt">
-                                    Delete file
-                                  </span>
-                                </div>
-                              </Accordion.Body>)}
+                              {(selectedFile || selectedVideo) && (
+                                <Accordion.Body>
+                                  <div className="flex acenter preview-row">
+                                    <p>Category</p>
+                                    <p className="f1 jc-end">
+                                      {selectedFile ? "Image" : ""}
+                                      {selectedVideo ? "Video" : ""}
+                                    </p>
+                                  </div>
+                                  <div className="flex acenter preview-row">
+                                    <p>Type</p>
+                                    <p className="f1 jc-end ">
+                                      {selectedFile &&
+                                        (() => {
+                                          const splitArray =
+                                            selectedFile.split(".");
+                                          return splitArray[
+                                            splitArray.length - 1
+                                          ];
+                                        })()}
+                                      {selectedVideo &&
+                                        (() => {
+                                          const splitArray =
+                                            selectedVideo.split(".");
+
+                                          return splitArray[
+                                            splitArray.length - 1
+                                          ];
+                                        })()}
+                                    </p>
+                                  </div>
+                                  <div className="flex acenter preview-row">
+                                    <p>Date uploaded</p>
+                                    <p className="f1 jc-end">Jun 19, 2023</p>
+                                  </div>
+                                  <div className="flex acenter preview-row">
+                                    <p>Uploaded by</p>
+                                    <p className="f1 jc-end ellipsis">
+                                      {userFullName}
+                                    </p>
+                                  </div>
+                                  <hr />
+                                  <div className="delete-files-btn">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="40"
+                                      height="40"
+                                      viewBox="0 0 40 40"
+                                    >
+                                      <path d="M21.714 10c1.263 0 2.286.895 2.286 2v1h4.526c.262 0 .474.224.474.5 0 .245-.168.45-.389.492l-.085.008h-1.581l-.672 12.235C26.157 28.349 24.523 30 22.546 30h-5.092c-1.977 0-3.611-1.65-3.727-3.765L13.055 14h-1.581a.487.487 0 01-.474-.5c0-.245.168-.45.389-.492l.085-.008H16v-1c0-1.105 1.023-2 2.286-2h3.428zm4.296 4H13.99l.668 12.176c.084 1.527 1.224 2.732 2.632 2.819l.164.005h5.092c1.428 0 2.617-1.148 2.781-2.65l.015-.174L26.01 14zm-8.51 4a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L17 24.5v-6a.5.5 0 01.5-.5zm5 0a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L22 24.5v-6a.5.5 0 01.5-.5zm-.7-7h-3.6c-.615 0-1.123.386-1.192.883L17 12v1h6v-1c0-.513-.463-.936-1.06-.993L21.8 11z"></path>
+                                    </svg>
+                                    <span className="delete-file-txt">
+                                      Delete file
+                                    </span>
+                                  </div>
+                                </Accordion.Body>
+                              )}
                             </Accordion.Item>
                           </Accordion>
                         </Tab.Pane>
@@ -8633,9 +8942,11 @@ const Target = () => {
             variant="secondary"
             className="btn-cancel-popup"
             // onClick={()=>setShow(false)}
-            onClick={()=>{
+            onClick={() => {
               setshowPopHandle(false);
               handlethreedDeleteClose();
+              setselectedVideo(null);
+              setselectedFile(null);
             }}
           >
             Cancel222
