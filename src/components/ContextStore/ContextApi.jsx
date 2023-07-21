@@ -8,6 +8,7 @@ const ContextProvider=(props)=>{
     const [selectedImage,setselectedImage]=useState([]);
     const [selectedVideos,setselectedVideos]=useState([]);
     const [selected3D,setselected3D]=useState([]);
+    const [loader,setloader]=useState(false);
 
     const contextValue={
         scene_id,
@@ -20,6 +21,9 @@ const ContextProvider=(props)=>{
         setselectedVideos,
         selected3D,
         setselected3D,
+        loader,
+        setloader,
+
     }
     return (
         <contextObject.Provider value={contextValue}>{props.children}</contextObject.Provider>

@@ -37,6 +37,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 // import Button from 'react-bootstrap/Button';
 
 let firstTime = true;
+let toReload=false;
 const Target = () => {
   // HANDLE GET USER-ID FROM LOCALSTORAGE ------------------------------------------------------------------------------------------------------------------
   const paramData = useParams();
@@ -296,6 +297,13 @@ const Target = () => {
 
   const [hoveredImg, setHoveredImg] = useState(null);
 
+  // states for changing size
+  const [widthImgVdo,setwidthImgVdo]=useState(null);
+
+  const [heightImgVdo,setheightImgVdo]=useState(null);
+
+  const [depthImgVdo,setdepthImgVdo]=useState(null);
+
   // for searching
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -337,6 +345,7 @@ const Target = () => {
 
   // to get user project details
   const getUserProjectDetail = async () => {
+    ctx.setloader(true)
     try {
       const response = await axios.get(
         API.BASE_URL +
@@ -348,12 +357,16 @@ const Target = () => {
       setvideosArray(response.data.data.upload_videos);
       setDmodelArray(response.data.data.three_d_model_files);
     } catch (err) {}
+    finally{
+      ctx.setloader(false)
+    }
   };
   useEffect(() => {
     getUserProjectDetail();
   }, [renderGetProjact]);
 
   useEffect(() => {
+    ctx.setloader(true)
     axios
       .get(API.BASE_URL + "scene_data_by_project" + "/" + id + "/")
       .then(function (res) {
@@ -392,12 +405,16 @@ const Target = () => {
             target_image(project_contentArray[i].target_image);
           }
         }
-      });
+      })
+      .catch((e)=>console.log(e))
+      .finally(()=> ctx.setloader(false))
+      ;
   }, [reRender]);
 
   // get SCENES DETAILS --------------------------------------------------------------------->
 
   const handleSubmit = (sceneName) => {
+    ctx.setloader(true)
     const formdataScene = new FormData();
     formdataScene.append("project_id", id);
     formdataScene.append("name", sceneName);
@@ -417,13 +434,16 @@ const Target = () => {
           twoDThreeD(res.data.id);
         }
         setShow(false);
-        window.location.reload(true);
+        // window.location.reload(true);
+        setreRender((prev)=>!prev)
       })
       .catch(function (err) {
         toast.error("Connection Error");
-      });
+      }).finally(()=> ctx.setloader(false))
+      ;
   };
   const sceneTransitions = (id) => {
+    ctx.setloader(true)
     const formData = {
       scene_id: id,
       transition_enter: null,
@@ -439,12 +459,15 @@ const Target = () => {
         },
       })
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=> ctx.setloader(false))
+      ;
   };
 
   // --------------------------------------------------------CreateProject Content--------------------------------->
 
   const CreateProject = (id) => {
+    ctx.setloader(true)
     const formData = {
       target_image: null,
       project_id: id,
@@ -467,12 +490,14 @@ const Target = () => {
         backgroundSoundApi(project_content_id);
         analyticsApi(project_content_id);
       })
-      .catch(function (errorMessage) {});
+      .catch(function (errorMessage) {}).finally(()=> ctx.setloader(false))
+      ;
   };
 
   // function for post api background sound
 
   const backgroundSoundApi = (idee) => {
+    ctx.setloader(false)
     const formData = { project_content_id: idee, media_file: null };
     axios
       .post(API.BASE_URL + "background_sound/", formData, {
@@ -481,10 +506,12 @@ const Target = () => {
         },
       })
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=> ctx.setloader(false));
   };
 
   const analyticsApi = (idee) => {
+    ctx.setloader(true)
     const formData = { project_content_id: idee, track_with: null };
     axios
       .post(API.BASE_URL + "analytics/", formData, {
@@ -493,12 +520,15 @@ const Target = () => {
         },
       })
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=> ctx.setloader(false))
+      ;
   };
 
   //// -------------------------------------------------------Two-D Three-D Switch ------------------------------>
 
   const twoDThreeD = (id) => {
+    ctx.setloader(false)
     const formData = { scene_id: id, value: "True" };
     axios
       .post(API.BASE_URL + "twod_threed/", formData, {
@@ -507,11 +537,13 @@ const Target = () => {
         },
       })
       .then(function (res) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=> ctx.setloader(false));
   };
 
   // Hnadle Next Scene Genration and Working :
   const getSceneData = () => {
+    ctx.setloader(true)
     axios
       .get(API.BASE_URL + "scene_details/" + s_scene_id)
       .then(function (responseProject) {
@@ -610,7 +642,9 @@ const Target = () => {
           }
         }
       })
-      .catch(function (error) {});
+      .catch(function (error) {})
+      .finally(()=>ctx.setloader(true))
+      ;
   };
   // GET Basic Details OF PROJECT ------------------------------------------------------------>
   useEffect(() => {
@@ -637,12 +671,15 @@ const Target = () => {
     });
   }, []);
   useEffect(() => {
+    ctx.setloader(true)
     axios
       .get(API.BASE_URL + "project-list/" + id + "/")
       .then(function (response) {
         title(response.data.ProTitle);
       })
-      .catch(function (error) {});
+      .catch(function (error) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   }, []);
   const [showbrowsemedia, setbrowsemedia] = useState(false);
   const [showvideomedia, setvideomedia] = useState(false);
@@ -667,6 +704,7 @@ const Target = () => {
 
   // Get All Project Data --------------------------------------------------------------------------->
   useEffect(() => {
+    ctx.setloader(true)
     axios
       .get(API.BASE_URL + "scene_details/" + s_scene_id + "/")
       .then((responseProject) => {
@@ -721,8 +759,9 @@ const Target = () => {
           setwidthVideo(videoData[i][0].video_transform.video_id);
           setprojectId(videoData[i][0].video_transform.width);
         }
-      });
-  }, [firstTime, renderGetProjact]);
+      }).catch((e)=>{})
+      .finally(()=>ctx.setloader(false))
+  }, [firstTime, renderGetProjact,reRender]);
 
   // Image Upload API with all DATA ---------------------------------------------------------------------------------------------->
 
@@ -749,6 +788,7 @@ const Target = () => {
         const formData = new FormData();
         formData.append("image", file);
         formData.append("scene_id", s_scene_id);
+        ctx.setloader(true)
         axios
           .post(API.BASE_URL + "upload-image/", formData)
           .then(function (response) {
@@ -762,7 +802,9 @@ const Target = () => {
           })
           .catch(function (err) {
             toast.error("Image not Uploaded!");
-          });
+          })
+          .finally(()=>ctx.setloader(false))
+          ;
       };
     };
     reader.readAsDataURL(file);
@@ -793,9 +835,9 @@ const Target = () => {
   const imageDimentionUpdate = () => {
     const payload = {
       id: contentImgVdo[0].image_transform.id,
-      width:  contentImgVdo && contentImgVdo[0]?.image_transform?.width,
-      height:  contentImgVdo && contentImgVdo[0]?.image_transform?.height,
-      depth: contentImgVdo && contentImgVdo[0]?.image_transform?.depth,
+      width: widthImgVdo || contentImgVdo && contentImgVdo[0]?.image_transform?.width,
+      height:heightImgVdo ||  contentImgVdo && contentImgVdo[0]?.image_transform?.height,
+      depth:depthImgVdo || contentImgVdo && contentImgVdo[0]?.image_transform?.depth,
       position_x:
         contentImgVdo && contentImgVdo[0]?.image_transform?.position_x,
       position_y:
@@ -811,6 +853,7 @@ const Target = () => {
       Mirror: contentImgVdo && contentImgVdo[0]?.image_transform?.Mirror,
       image_id_id: contentImgVdo[0].image_id,
     };
+    // ctx.setloader(true)
     axios
       .put(
         API.BASE_URL +
@@ -820,15 +863,17 @@ const Target = () => {
         payload
       )
       .then((res) => console.log(res, "response from image transform API"))
-      .catch((err) => console.log(err, "err in catch block "));
+      .catch((err) => console.log(err, "err in catch block "))
+      // .finally(()=>ctx.setloader(false))
+      ;
   };
 
   const videoDimentionUpdate = () => {
     const payload = {
       id: contentImgVdo[0].video_transform.id,
-      width: contentImgVdo && contentImgVdo[0]?.video_transform?.width,
-      height: contentImgVdo && contentImgVdo[0]?.video_transform?.height,
-      depth: contentImgVdo && contentImgVdo[0]?.video_transform?.depth,
+      width:widthImgVdo || contentImgVdo && contentImgVdo[0]?.video_transform?.width,
+      height:heightImgVdo || contentImgVdo && contentImgVdo[0]?.video_transform?.height,
+      depth:depthImgVdo || contentImgVdo && contentImgVdo[0]?.video_transform?.depth,
       position_x:
         contentImgVdo && contentImgVdo[0]?.video_transform?.position_x,
       position_y:
@@ -844,6 +889,7 @@ const Target = () => {
       Mirror: contentImgVdo && contentImgVdo[0]?.video_transform?.Mirror,
       video_id_id: contentImgVdo[0].video_id,
     };
+    // ctx.setloader(true)
     axios
       .put(
         API.BASE_URL +
@@ -853,7 +899,9 @@ const Target = () => {
         payload
       )
       .then((res) => console.log(res, "response from video transform API"))
-      .catch((err) => console.log(err, "err in video catch block "));
+      .catch((err) => console.log(err, "err in video catch block "))
+      // .finally(()=>ctx.setloader(false))
+      ;
   };
 
   // contentImgVdo[0].image_transform.id
@@ -869,6 +917,7 @@ const Target = () => {
       border_colo: null,
       image_id: id,
     };
+    ctx.setloader(true)
     axios
       .post(API.BASE_URL + "image_appearance/", formData, {
         headers: {
@@ -882,7 +931,9 @@ const Target = () => {
         setframe_type(response.data.frame_type);
         setopacity(response.data.opacity);
       })
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   // post api function for image transition
@@ -895,6 +946,7 @@ const Target = () => {
       delay: 0,
       image_id: id,
     };
+    ctx.setloader(true)
     axios
       .post(API.BASE_URL + "image_transition/", formData, {
         headers: {
@@ -910,12 +962,15 @@ const Target = () => {
         setTraNtransition_enter(response.data.transition_enter);
         setTraNtransition_exit(response.data.transition_exit);
       })
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   // post api function for image action
   const imageActionAPI = (id) => {
     const formData = { image_action: null, image_id: id };
+    ctx.setloader(true)
     axios
       .post(API.BASE_URL + "image_action/", formData, {
         headers: {
@@ -925,7 +980,9 @@ const Target = () => {
       .then(function (response) {
         setimage_action(response.data.image_action);
       })
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   // VIdeo Data Of Video with all data --------------------------------------------------------------------------------------->
@@ -987,6 +1044,7 @@ const Target = () => {
     formData.append("Rotation_y", 0);
     formData.append("Rotation_z", 0);
     formData.append("Mirror", null);
+    ctx.setloader(true)
     axios
       .post(API.BASE_URL + "video_transform/", formData, {
         headers: {
@@ -996,12 +1054,15 @@ const Target = () => {
       .then(function (response) {
         settoGetData((prev) => !prev);
       })
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   // post api function for video action
   const videoActionAPI = (id) => {
     const formData = { video_id: id, video_action: null };
+    ctx.setloader(true)
     axios
       .post(API.BASE_URL + "video_action/", formData, {
         headers: {
@@ -1009,7 +1070,9 @@ const Target = () => {
         },
       })
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   // post api function for video transition
@@ -1022,6 +1085,7 @@ const Target = () => {
       delay: 0,
       video_id: id,
     };
+    ctx.setloader(true)
     axios
       .post(API.BASE_URL + "video_transition/" + id + "/", formData, {
         headers: {
@@ -1029,7 +1093,9 @@ const Target = () => {
         },
       })
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   // HANDLE 3Dmodel CHANGE ------------------------------------------------------------------------------------------------>
@@ -1042,6 +1108,7 @@ const Target = () => {
 
     formData.append("File", e.target.files[0]);
     formData.append("scene_id", s_scene_id);
+    ctx.setloader(true)
     axios
       .post(API.BASE_URL + "upload-threed-model-file/", formData)
       .then(function (response) {
@@ -1055,7 +1122,9 @@ const Target = () => {
       .catch(function (err) {
         console.log(err, "inside upload 3D model function");
         toast.error("Modal not Uploaded !");
-      });
+      })
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   //  input function calling function
@@ -1082,6 +1151,7 @@ const Target = () => {
       Rotation_z: 0,
       Mirror: 0,
     };
+    ctx.setloader(true)
     axios
       .post(API.BASE_URL + "threed-model_transform/", formData, {
         headers: {
@@ -1091,7 +1161,9 @@ const Target = () => {
       .then(function (response) {
         settoGetData((prev) => !prev);
       })
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   // three model transition api
@@ -1104,6 +1176,7 @@ const Target = () => {
       delay: 0,
       ThreeDModel_id: id,
     };
+    ctx.setloader(true)
     axios
       .post(API.BASE_URL + "threed-model_transition/", formData, {
         headers: {
@@ -1113,12 +1186,15 @@ const Target = () => {
       .then(function (response) {
         settoGetData((prev) => !prev);
       })
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   // three model action api
   const threeDmodelAction = (id) => {
     const formData = { ThreeDModel_id: id, action: null };
+    ctx.setloader(true)
     axios
       .post(API.BASE_URL + "threed-model_action/", formData, {
         headers: {
@@ -1128,65 +1204,85 @@ const Target = () => {
       .then(function (response) {
         settoGetData((prev) => !prev);
       })
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   // change the Two D and Three D value onChange Function ---------------------------------------------------->
 
   const thecheckfunction = (e) => {
     const formdata = { value: e.target.checked };
+    ctx.setloader(true)
     axios
       .put(API.BASE_URL + "twod_threed/" + twoDthreeDID + "/", formdata, {})
       .then(function (res) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   // api function get button data by id
 
   const getBtnDataById = () => {
+    ctx.setloader(true)
     axios
       .post(API.BASE_URL + "GetButtondata/" + s_scene_id)
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   // api function DELETE button data by id
 
   const deleteBtnDataById = () => {
+    ctx.setloader(true)
     axios
       .delete(API.BASE_URL + "GetButtondata/" + s_scene_id)
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   //  api function to get all text data by id
   // http://18.230.11.54:8001/get-all-text-data/1/
 
   const getTextDataById = () => {
+    ctx.setloader(true)
     axios
       .post(API.BASE_URL + "get-all-text-data/" + s_scene_id)
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   //  api function to DELETE all text data by id
   // http://18.230.11.54:8001/get-all-text-data/1/
 
   const deleteTextDataById = () => {
+    ctx.setloader(true)
     axios
       .delete(API.BASE_URL + "get-all-text-data/" + s_scene_id)
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   // function to get image data by id
   // http://18.230.11.54:8001/get-image-data/1/
 
   const getImageDataById = () => {
+    ctx.setloader(true)
     axios
       .get(API.BASE_URL + "get-image-data/" + s_scene_id)
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   // function to DELETE image data by id
@@ -1194,6 +1290,7 @@ const Target = () => {
 
   const deleteImageDataById = (id) => {
     console.log('send request');
+    ctx.setloader(true)
     axios
       .delete(API.BASE_URL + "get-image-data/" +id+'/')
       .then(function (response) {
@@ -1203,13 +1300,16 @@ const Target = () => {
       })
       .catch(function (err) {
         console.log('ERROR in DELETING',err);
-      });
+      })
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   //  function to get video data by id
   // http://18.230.11.54:8001/get-video-data/1/
 
   const deleteVideoDataById = (id) => {
+    ctx.setloader(true)
     axios
       .delete(API.BASE_URL + "get-video-data/" + id +'/')
       .then(function (response) {
@@ -1217,76 +1317,93 @@ const Target = () => {
         setrenderGetProjact((prev) => !prev);
         setcontentImgVdo(null)
       })
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   //  function to DELETE video data by id
   // http://18.230.11.54:8001/get-video-data/1/
 
   const getVideoDataById = () => {
+    ctx.setloader(true)
     axios
       .get(API.BASE_URL + "get-video-data/" + s_scene_id)
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false))
+      ;
   };
 
   // function to get three D model data by id
   // http://18.230.11.54:8001/get-threed-model-Data/1/
 
   const getThreeDModelDataById = () => {
+    ctx.setloader(true)
     axios
       .get(API.BASE_URL + "get-threed-model-Data/" + s_scene_id)
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false));
   };
 
   // function to DELETE three D model data by id
   // http://18.230.11.54:8001/get-threed-model-Data/1/
 
   const deleteThreeDModelDataById = (id) => {
+    ctx.setloader(true)
     axios
       .delete(API.BASE_URL + "get-threed-model-Data/" + id)
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false));
   };
 
   // function to get scene data by Id
   // http://18.230.11.54:8001/get-scene-data/1/
 
   const getSceneDataById = () => {
+    ctx.setloader(true)
     axios
       .get(API.BASE_URL + "get-scene-data/" + s_scene_id)
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false));
   };
 
   // function to DELETE scene data by Id
   // http://18.230.11.54:8001/get-scene-data/1/
 
   const deleteSceneDataById = () => {
+    ctx.setloader(true)
     axios
       .delete(API.BASE_URL + "get-scene-data/" + s_scene_id)
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false));
   };
 
   // function to get project content data by Id
   // http://18.230.11.54:8001/get-scene-data/1/
 
   const getProjectContentDataById = (id) => {
+    ctx.setloader(true)
     axios
       .get(API.BASE_URL + "getproject-contentdata/" + id)
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false));
   };
 
   // function to DELETE project content data by Id
   // http://18.230.11.54:8001/get-scene-data/1/
   const deleteProjectContentDataById = (id) => {
+    ctx.setloader(true)
     axios
       .delete(API.BASE_URL + "getproject-contentdata/" + s_scene_id)
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false));
   };
 
   const [ToggleButton, ButtonShow] = useState(false);
@@ -1298,27 +1415,33 @@ const Target = () => {
 
   // get data by scene id
   const getDataBySceneId = (id) => {
+    ctx.setloader(true)
     axios
       .get(API.BASE_URL + "scene_details/" + s_scene_id)
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {}) 
+      .finally(()=>ctx.setloader(false));
   };
 
   // delete data by scene id
   const deleteDataBySceneId = (id) => {
+    ctx.setloader(true)  
     axios
       .delete(API.BASE_URL + "scene_details/" + s_scene_id)
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false));
   };
 
   // get all scene by project id
   // {{Base_url}}/scene_data_by_project/24ff7120-43b3-4d65-a391-e44b39e96cef/
   const getAllSceneByProjectId = (id) => {
+    ctx.setloader(true)  
     axios
       .get(API.BASE_URL + "scene_data_by_project/" + id)
       .then(function (response) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false));
   };
 
   // Create SCENE WHEN THE PROJECT IS LOADED :------------------------------------------------------------------------->
@@ -1366,6 +1489,7 @@ const Target = () => {
 
   const token = localStorage.getItem("token");
   useEffect(() => {
+    ctx.setloader(true)
     axios
       .post(API.BASE_URL + "userprofile/", null, {
         headers: {
@@ -1378,7 +1502,8 @@ const Target = () => {
         console.log(response.data.lastname, "from target jsx file");
         setuserFullName(`${response.data.firstname} ${response.data.lastname}`);
       })
-      .catch((error) => {});
+      .catch((error) => {})
+      .finally(()=>ctx.setloader(false));
   }, []);
 
   window.addEventListener("pageshow", function (event) {
@@ -1404,7 +1529,10 @@ const Target = () => {
 
   const handleBack = (event) => {
     navigate("/home");
-    window.location.reload();
+    // window.location.reload();
+    setTimeout(()=>{
+      window.location.reload();
+    },0)
     localStorage.removeItem("ProjectContentID");
   };
 
@@ -1412,7 +1540,9 @@ const Target = () => {
     localStorage.clear();
     toast.success("Log Out Successfully !");
     navigate("/");
-    window.location.reload();
+    setTimeout(()=>{
+      window.location.reload();
+    },0)
   };
   const handleSelectOption = (event, type) => {
     if (type === "Mobile View") {
@@ -1435,6 +1565,7 @@ const Target = () => {
 
   const handleSelectOrientation = (e, type) => {
     const formdata = { orientation: type };
+    ctx.setloader(true)
     axios
       .put(API.BASE_URL + "project_content/" + id + "/", formdata, {
         headers: {
@@ -1442,7 +1573,8 @@ const Target = () => {
         },
       })
       .then(function (res) {})
-      .catch(function (err) {});
+      .catch(function (err) {})
+      .finally(()=>ctx.setloader(false));
   };
 
   // -------------------------------------------------------------------------->
@@ -1483,10 +1615,39 @@ const Target = () => {
   };
 
 
+  useEffect(() => {
+    
+    return () => {
+      if(!firstTime){
+        setTimeout(()=>{
+          window.location.reload();
+        },0)
+      }
+    }
+  }, [window.location.href.toString()]);
+
+  //  useEffect for sending request in 5 millisend;
+
+  useEffect(() => {
+    const delay = 500;
+
+    const timeoutId = setTimeout(() => {
+      if(contentImgVdo && contentImgVdo[0].image_transform){imageDimentionUpdate()}
+      if(contentImgVdo && contentImgVdo[0].video_transform){videoDimentionUpdate()}
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [widthImgVdo,heightImgVdo,depthImgVdo]);
+  
+
+
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>;
 
   return (
     <div className="targetPage" ref={containerRef}>
+      
       <div className="navbar taget-navbar">
         <div className="container-fluid">
           <div className="d-flex align-items-center justify-content-between w-100 navbar-top">
@@ -1568,6 +1729,7 @@ const Target = () => {
                     <a
                       onClick={() => {
                         (() => {
+                          ctx.setloader(true)
                           return axios
                             .patch(
                               API.BASE_URL + "update-project/" + idOfProject,
@@ -1588,7 +1750,8 @@ const Target = () => {
                             .catch((err) => {
                               console.log(err, "error<----------->");
                               toast.error("Not able to create project !");
-                            });
+                            })
+                            .finally(()=>ctx.setloader(false));
                         })();
                       }}
                     >
@@ -1688,6 +1851,7 @@ const Target = () => {
                     onClick={() => {
                       handlepreviewClose();
                       (() => {
+                        ctx.setloader(true)
                         return axios
                           .patch(
                             API.BASE_URL + "update-project/" + idOfProject,
@@ -1707,7 +1871,9 @@ const Target = () => {
                           .catch((err) => {
                             console.log(err, "error<----------->");
                             toast.error("Not able to create project !");
-                          });
+                          })
+                          .finally(()=>ctx.setloader(false))
+                          ;
                       })();
                     }}
                   >
@@ -3396,11 +3562,11 @@ const Target = () => {
                   setisOpen(false);
                   setisContent(false);
                 }}
-                style={{
-                  zIndex: isOpen || isContent ? "1" : "-1",
-                  backgroundColor: "transparent",
-                  touchAction: "auto",
-                }}
+                // style={{
+                //   zIndex: isOpen || isContent ? "1" : "-1",
+                //   backgroundColor: "transparent",
+                //   touchAction: "auto",
+                // }}
               >
               <ModelAr />
                 </canvas>
@@ -7339,8 +7505,8 @@ const Target = () => {
                                                       type="number"
                                                       data-testid="NumericalInput"
                                                       id="GetWidth"
-                                                      // value={contentImgVdo[0]?.image_transform.width || (contentImgVdo && contentImgVdo[0]?.video_transform.width) || 0}
                                                       value={
+                                                        widthImgVdo ||
                                                         (contentImgVdo &&
                                                           contentImgVdo[0]
                                                             ?.image_transform
@@ -7351,6 +7517,7 @@ const Target = () => {
                                                             ?.width) ||
                                                         0
                                                       }
+                                                      onChange={(e)=>setwidthImgVdo(e.target.value)}
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
@@ -7380,6 +7547,7 @@ const Target = () => {
                                                       data-testid="NumericalInput"
                                                       id="GetHeight"
                                                       value={
+                                                        heightImgVdo ||
                                                         (contentImgVdo &&
                                                           contentImgVdo[0]
                                                             ?.image_transform
@@ -7390,6 +7558,8 @@ const Target = () => {
                                                             ?.height) ||
                                                         0
                                                       }
+                                                      onChange={(e)=>setheightImgVdo(e.target.value)}
+
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
@@ -7415,6 +7585,7 @@ const Target = () => {
                                                       data-testid="NumericalInput"
                                                       id="GetLength"
                                                       value={
+                                                        depthImgVdo ||
                                                         (contentImgVdo &&
                                                           contentImgVdo[0]
                                                             ?.image_transform
@@ -7425,6 +7596,7 @@ const Target = () => {
                                                             ?.depth) ||
                                                         0
                                                       }
+                                                      onChange={(e)=>setdepthImgVdo(e.target.value)}
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
@@ -9247,8 +9419,8 @@ const Target = () => {
                                     >
                                       <path d="M21.714 10c1.263 0 2.286.895 2.286 2v1h4.526c.262 0 .474.224.474.5 0 .245-.168.45-.389.492l-.085.008h-1.581l-.672 12.235C26.157 28.349 24.523 30 22.546 30h-5.092c-1.977 0-3.611-1.65-3.727-3.765L13.055 14h-1.581a.487.487 0 01-.474-.5c0-.245.168-.45.389-.492l.085-.008H16v-1c0-1.105 1.023-2 2.286-2h3.428zm4.296 4H13.99l.668 12.176c.084 1.527 1.224 2.732 2.632 2.819l.164.005h5.092c1.428 0 2.617-1.148 2.781-2.65l.015-.174L26.01 14zm-8.51 4a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L17 24.5v-6a.5.5 0 01.5-.5zm5 0a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L22 24.5v-6a.5.5 0 01.5-.5zm-.7-7h-3.6c-.615 0-1.123.386-1.192.883L17 12v1h6v-1c0-.513-.463-.936-1.06-.993L21.8 11z"></path>
                                     </svg>
-                                    <span className="delete-file-txt">
-                                      Delete file
+                                    <span className="delete-file-txt border border-danger">
+                                      Delete file123
                                     </span>
                                   </div>
                                 </Accordion.Body>
