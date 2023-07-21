@@ -156,6 +156,11 @@ const Target = () => {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
 
+  //  state for image or video select and send to content part
+  const [contentImgVdo, setcontentImgVdo] = useState(null);
+
+  const contentImgVdoRef = useRef(contentImgVdo);
+
   // array of scene Images
   let arrayOfSceneImages = [imgScene];
   const canvasRef = useRef(null);
@@ -783,6 +788,77 @@ const Target = () => {
       .catch(function (error) {});
   };
 
+  // image transition update API
+  // contentImgVdo
+  const imageDimentionUpdate = () => {
+    const payload = {
+      id: contentImgVdo[0].image_transform.id,
+      width:  contentImgVdo && contentImgVdo[0]?.image_transform?.width,
+      height:  contentImgVdo && contentImgVdo[0]?.image_transform?.height,
+      depth: contentImgVdo && contentImgVdo[0]?.image_transform?.depth,
+      position_x:
+        contentImgVdo && contentImgVdo[0]?.image_transform?.position_x,
+      position_y:
+        contentImgVdo && contentImgVdo[0]?.image_transform?.position_y,
+      position_d:
+        contentImgVdo && contentImgVdo[0]?.image_transform?.position_d,
+      Rotation_x:
+        contentImgVdo && contentImgVdo[0]?.image_transform?.Rotation_x,
+      Rotation_y:
+        contentImgVdo && contentImgVdo[0]?.image_transform?.Rotation_y,
+      Rotation_z:
+        contentImgVdo && contentImgVdo[0]?.image_transform?.Rotation_z,
+      Mirror: contentImgVdo && contentImgVdo[0]?.image_transform?.Mirror,
+      image_id_id: contentImgVdo[0].image_id,
+    };
+    axios
+      .put(
+        API.BASE_URL +
+          "/image_transform/" +
+          contentImgVdo[0].image_transform.id +
+          "/",
+        payload
+      )
+      .then((res) => console.log(res, "response from image transform API"))
+      .catch((err) => console.log(err, "err in catch block "));
+  };
+
+  const videoDimentionUpdate = () => {
+    const payload = {
+      id: contentImgVdo[0].video_transform.id,
+      width: contentImgVdo && contentImgVdo[0]?.video_transform?.width,
+      height: contentImgVdo && contentImgVdo[0]?.video_transform?.height,
+      depth: contentImgVdo && contentImgVdo[0]?.video_transform?.depth,
+      position_x:
+        contentImgVdo && contentImgVdo[0]?.video_transform?.position_x,
+      position_y:
+        contentImgVdo && contentImgVdo[0]?.video_transform?.position_y,
+      position_d:
+        contentImgVdo && contentImgVdo[0]?.video_transform?.position_d,
+      Rotation_x:
+        contentImgVdo && contentImgVdo[0]?.video_transform?.Rotation_x,
+      Rotation_y:
+        contentImgVdo && contentImgVdo[0]?.video_transform?.Rotation_y,
+      Rotation_z:
+        contentImgVdo && contentImgVdo[0]?.video_transform?.Rotation_z,
+      Mirror: contentImgVdo && contentImgVdo[0]?.video_transform?.Mirror,
+      video_id_id: contentImgVdo[0].video_id,
+    };
+    axios
+      .put(
+        API.BASE_URL +
+          "/video_transform/" +
+          contentImgVdo[0].video_transform.id +
+          "/",
+        payload
+      )
+      .then((res) => console.log(res, "response from video transform API"))
+      .catch((err) => console.log(err, "err in video catch block "));
+  };
+
+  // contentImgVdo[0].image_transform.id
+  // contentImgVdo[0].image_id
+
   // post api function for image appearance
   const imageAppearanceAPI = (id) => {
     const formData = {
@@ -1116,29 +1192,40 @@ const Target = () => {
   // function to DELETE image data by id
   // http://18.230.11.54:8001/get-image-data/1/
 
-  const deleteImageDataById = () => {
+  const deleteImageDataById = (id) => {
+    console.log('send request');
     axios
-      .delete(API.BASE_URL + "get-image-data/" + s_scene_id)
-      .then(function (response) {})
-      .catch(function (err) {});
+      .delete(API.BASE_URL + "get-image-data/" +id+'/')
+      .then(function (response) {
+        console.log('successfully deleted');
+        setrenderGetProjact((prev) => !prev);
+        setcontentImgVdo(null)
+      })
+      .catch(function (err) {
+        console.log('ERROR in DELETING',err);
+      });
   };
 
   //  function to get video data by id
   // http://18.230.11.54:8001/get-video-data/1/
 
-  const getVideoDataById = () => {
+  const deleteVideoDataById = (id) => {
     axios
-      .get(API.BASE_URL + "get-video-data/" + s_scene_id)
-      .then(function (response) {})
+      .delete(API.BASE_URL + "get-video-data/" + id +'/')
+      .then(function (response) {
+        console.log('Deleted video successfully');
+        setrenderGetProjact((prev) => !prev);
+        setcontentImgVdo(null)
+      })
       .catch(function (err) {});
   };
 
   //  function to DELETE video data by id
   // http://18.230.11.54:8001/get-video-data/1/
 
-  const deleteVideoDataById = () => {
+  const getVideoDataById = () => {
     axios
-      .delete(API.BASE_URL + "get-video-data/" + s_scene_id)
+      .get(API.BASE_URL + "get-video-data/" + s_scene_id)
       .then(function (response) {})
       .catch(function (err) {});
   };
@@ -1395,6 +1482,7 @@ const Target = () => {
     console.log("applyfont", fontselected);
   };
 
+
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>;
 
   return (
@@ -1405,7 +1493,11 @@ const Target = () => {
             <div className="text-white target-text">
               <h4 className="d-flex align-items-center mb-0 target-heading">
                 <svg
-                  onClick={handleBack}
+                  onClick={() => {
+                    if(contentImgVdo && contentImgVdo[0].image_transform){imageDimentionUpdate()}
+                    if(contentImgVdo && contentImgVdo[0].video_transform){videoDimentionUpdate()}
+                    handleBack();
+                  }}
                   xmlns="http://www.w3.org/2000/svg"
                   xmlnsXlink="http://www.w3.org/1999/xlink"
                   width="17"
@@ -1855,7 +1947,7 @@ const Target = () => {
                 viewBox="0 0 19 20"
               >
                 <g
-                  fill="#344B60"
+                   fill={contentImgVdo ? '#344B60' : '#C5C5C5'}
                   fillRule="nonzero"
                   transform="translate(-715 -202) translate(472 191) translate(232) matrix(1 0 0 -1 11 31)"
                 >
@@ -1876,7 +1968,8 @@ const Target = () => {
               >
                 <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
                   <path
-                    fill="#344B60"
+                    // fill="#344B60"
+                    fill={contentImgVdo ? '#344B60' : '#C5C5C5'}
                     fillRule="nonzero"
                     d="M19.74 11.006a4.984 4.984 0 015.212 4.503H23.95a3.994 3.994 0 00-4.21-3.467 3.993 3.993 0 00-3.746 3.961v2.878h9.205a1.912 1.912 0 011.8 1.923V27.2A1.798 1.798 0 0125.2 29H14.801a1.8 1.8 0 01-1.8-1.799v-6.397a1.912 1.912 0 011.8-1.923h.202v-2.878a4.983 4.983 0 014.738-4.997zm5.37 9H14.912a.799.799 0 00-.799.798V27.2c0 .441.358.798.8.798h10.195a.799.799 0 00.8-.798v-6.397a.799.799 0 00-.8-.798zM20 23.008a.495.495 0 01.495.494v2.001a.495.495 0 01-.99 0v-2c0-.274.222-.495.495-.495z"
                     transform="translate(-13 -11)"
@@ -1886,8 +1979,16 @@ const Target = () => {
             </button>
             <button
               className="ContextMenuButton--3ysdL ContextMenuButton--p-6XR"
+              
               title="Delete"
-              onClick={(event) => handleSelectOption(event, "Delete")}
+              onClick={(event) =>{ handleSelectOption(event, "Delete");console.log('CLICKED');
+            if(contentImgVdo[0].image_id){
+              deleteImageDataById(contentImgVdo[0].image_id)
+            }
+            if(contentImgVdo[0].video_id){
+              deleteVideoDataById(contentImgVdo[0].video_id)
+            }
+            }}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -1897,7 +1998,9 @@ const Target = () => {
               >
                 <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
                   <path
-                    fill="#344B60"
+                    // fill="#344B60"
+                    fill={contentImgVdo ? '#344B60' : '#C5C5C5'}
+                   
                     fillRule="nonzero"
                     d="M21.714 10c1.263 0 2.286.895 2.286 2v1h4.526c.262 0 .474.224.474.5 0 .245-.168.45-.389.492l-.085.008h-1.581l-.672 12.235C26.157 28.349 24.523 30 22.546 30h-5.092c-1.977 0-3.611-1.65-3.727-3.765L13.055 14h-1.581a.487.487 0 01-.474-.5c0-.245.168-.45.389-.492l.085-.008H16v-1c0-1.105 1.023-2 2.286-2h3.428zm4.296 4H13.99l.668 12.176c.084 1.527 1.224 2.732 2.632 2.819l.164.005h5.092c1.428 0 2.617-1.148 2.781-2.65l.015-.174L26.01 14zm-8.51 4a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L17 24.5v-6a.5.5 0 01.5-.5zm5 0a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L22 24.5v-6a.5.5 0 01.5-.5zm-.7-7h-3.6c-.615 0-1.123.386-1.192.883L17 12v1h6v-1c0-.513-.463-.936-1.06-.993L21.8 11z"
                     transform="translate(-11 -10)"
@@ -1928,7 +2031,7 @@ const Target = () => {
                 viewBox="6 6 26 26"
               >
                 <path
-                  fill="#344B60"
+                   fill={contentImgVdo ? '#344B60' : '#C5C5C5'}
                   fillRule="evenodd"
                   d="M23.5 23l.034.003.039-.003h5.854c.307 0 .573.224.573.5l-.01.088c-.048.229-.282.412-.563.412H24.79l5.047 5.047a.556.556 0 01-.708.85l-.077-.064L24 24.78v4.646c0 .276-.181.52-.419.565L23.5 30l-.088-.01c-.229-.048-.412-.282-.412-.563v-5.854l.001-.042L23 23.5l.01-.088a.484.484 0 01.14-.247.47.47 0 01.35-.165zm-7 0c.136 0 .259.064.349.166a.477.477 0 01.142.246L17 23.5l-.001.031.001.042v5.854c0 .281-.183.515-.412.564L16.5 30c-.276 0-.5-.266-.5-.573V24.78l-5.052 5.053-.077.064a.556.556 0 01-.708-.85L15.209 24h-4.636c-.281 0-.515-.183-.564-.412L10 23.5c0-.276.266-.5.573-.5h5.854l.038.003L16.5 23zm3.5-4a1 1 0 110 2 1 1 0 010-2zm3.5-9c.276 0 .5.266.5.573v4.641l5.052-5.051.077-.065a.556.556 0 01.708.85L24.784 16h4.643c.281 0 .515.183.564.412L30 16.5c0 .276-.266.5-.573.5h-5.854l-.039-.004L23.5 17a.467.467 0 01-.349-.166.477.477 0 01-.142-.246L23 16.5l.001-.031a.631.631 0 01-.001-.042v-5.854c0-.281.183-.515.412-.564L23.5 10zm-7 0l.088.01c.229.048.412.282.412.563v5.854l-.001.042.001.031-.01.088a.484.484 0 01-.14.247.47.47 0 01-.35.165l-.035-.004-.038.004h-5.854c-.307 0-.573-.224-.573-.5l.01-.088c.048-.229.282-.412.563-.412h4.642l-5.052-5.052a.556.556 0 01.708-.85l.077.065L16 15.215v-4.642c0-.276.181-.52.419-.565L16.5 10z"
                 ></path>
@@ -1946,13 +2049,13 @@ const Target = () => {
                 viewBox="0 0 20 20"
               >
                 <path
-                  fill="#344B60"
+                  fill={contentImgVdo ? '#344B60' : '#C5C5C5'}
                   fillRule="evenodd"
                   d="M11.707 9.908l7.056 3.321L10 17.87l-8.763-4.64 6.834-3.216-.534-.854L.81 12.324a1 1 0 00-.042 1.789l8.763 4.64a1 1 0 00.936 0l8.763-4.64a1 1 0 00-.042-1.789l-7.008-3.298-.474.882z"
-                  clipRule="evenodd"
+                  clipRule="evenodd"  
                 ></path>
                 <path
-                  fill="#344B60"
+                  fill={contentImgVdo ? '#344B60' : '#C5C5C5'}
                   d="M10.457 13.456a.7.7 0 01-1.21 0L6.096 8.053A.7.7 0 016.7 7l1.154.001L7.852 1.7a.7.7 0 01.605-.694L8.552 1h2.6a.7.7 0 01.7.7V7h1.152a.7.7 0 01.693.604l.007.095a.7.7 0 01-.096.353l-3.151 5.403zm-.604-.948L12.482 8h-1.63V2h-2v6h-1.63l2.63 4.508z"
                 ></path>
               </svg>
@@ -3183,7 +3286,13 @@ const Target = () => {
                       {getImage?.map((itm) => {
                         return (
                           <div class="video_file">
-                            <span class="videp_file_txt">
+                            <span
+                              class="videp_file_txt"
+                              onClick={() => {
+                                setisContent(false);
+                                setcontentImgVdo(itm);
+                              }}
+                            >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="20"
@@ -3215,41 +3324,49 @@ const Target = () => {
                         );
                       })}
 
+                      {getVideo?.map((itm) => {
+                        return (
+                          <div class="video_file">
+                            <span
+                              class="videp_file_txt"
+                              onClick={() => {
+                                setisContent(false);
+                                setcontentImgVdo(null);
+                                setTimeout(() => {
+                                  setcontentImgVdo(itm);
+                                }, 0);
+                              }}
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
+                              >
+                                <g
+                                  fill="none"
+                                  fill-rule="evenodd"
+                                  stroke="none"
+                                  stroke-width="1"
+                                >
+                                  <path
+                                    fill="#344B60"
+                                    fill-rule="nonzero"
+                                    d="M14.5 27a1.5 1.5 0 011.415 1H29.5a.5.5 0 01.09.992L29.5 29H15.914a1.5 1.5 0 01-2.828 0H10.5a.5.5 0 01-.09-.992L10.5 28h2.585a1.5 1.5 0 011.415-1zm0 1a.5.5 0 100 1 .5.5 0 000-1zM29 10a1 1 0 011 1v13a1 1 0 01-1 1H11a1 1 0 01-1-1V11a1 1 0 011-1h18zm0 1H11v13h18V11zm-11.566 2.5a.91.91 0 01.464.127l5.131 3.034a.985.985 0 010 1.678l-5.131 3.033a.918.918 0 01-1.275-.36.992.992 0 01-.123-.479v-6.066c0-.534.418-.967.934-.967zm-.059 1v6l5.25-3-5.25-3z"
+                                    transform="translate(-10 -10)"
+                                  ></path>
+                                </g>
+                              </svg>
 
-                                                    {getVideo?.map((itm) => {
-                                                          return (
-                                                            <div class="video_file">
-                                                              <span class="videp_file_txt">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="20"
-                                                                  height="20"
-                                                                  viewBox="0 0 20 20"
-                                                                >
-                                                                  <g
-                                                                    fill="none"
-                                                                    fill-rule="evenodd"
-                                                                    stroke="none"
-                                                                    stroke-width="1"
-                                                                  >
-                                                                    <path
-                                                                      fill="#344B60"
-                                                                      fill-rule="nonzero"
-                                                                      d="M14.5 27a1.5 1.5 0 011.415 1H29.5a.5.5 0 01.09.992L29.5 29H15.914a1.5 1.5 0 01-2.828 0H10.5a.5.5 0 01-.09-.992L10.5 28h2.585a1.5 1.5 0 011.415-1zm0 1a.5.5 0 100 1 .5.5 0 000-1zM29 10a1 1 0 011 1v13a1 1 0 01-1 1H11a1 1 0 01-1-1V11a1 1 0 011-1h18zm0 1H11v13h18V11zm-11.566 2.5a.91.91 0 01.464.127l5.131 3.034a.985.985 0 010 1.678l-5.131 3.033a.918.918 0 01-1.275-.36.992.992 0 01-.123-.479v-6.066c0-.534.418-.967.934-.967zm-.059 1v6l5.25-3-5.25-3z"
-                                                                      transform="translate(-10 -10)"
-                                                                    ></path>
-                                                                  </g>
-                                                                </svg>
-
-                                                                {
-                                                                  itm[0].video_url.split("/")[
-                                                                    itm[0].video_url.split("/").length - 1
-                                                                  ]
-                                                                }
-                                                              </span>
-                                                            </div>
-                                                          );
-                                                        })}
+                              {
+                                itm[0].video_url.split("/")[
+                                  itm[0].video_url.split("/").length - 1
+                                ]
+                              }
+                            </span>
+                          </div>
+                        );
+                      })}
 
                       <div class="AR_layer_div">
                         <div class="screen-layer">
@@ -3271,7 +3388,7 @@ const Target = () => {
               }}
             >
               <canvas
-                id="myCanvas"
+                id="canvas"
                 width={window.innerWidth}
                 height={window.innerHeight}
                 onClick={(e) => {
@@ -3280,12 +3397,13 @@ const Target = () => {
                   setisContent(false);
                 }}
                 style={{
-                  // zIndex: isOpen || isContent ? "1" : "-1",
+                  zIndex: isOpen || isContent ? "1" : "-1",
                   backgroundColor: "transparent",
                   touchAction: "auto",
                 }}
-              ></canvas>
+              >
               <ModelAr />
+                </canvas>
             </div>
             <div
               className="col-md-2 p-0 m-0 target-right"
@@ -5632,15 +5750,14 @@ const Target = () => {
                           data-testid="InspectorMenu"
                         >
                           {!isContent && (
-                            <Accordion>
+                            <Accordion defaultActiveKey="0">
                               <div className="ShelfContainer--1Ad4O">
                                 <div style={{ width: "100%" }}>
                                   {/* start Content show hide content  */}
                                   <div className="TitleContainer--2xD-b title-content">
                                     <Accordion.Item eventKey="0">
                                       <Accordion.Header>
-                                        {" "}
-                                        Content{" "}
+                                        Content
                                       </Accordion.Header>
                                       <Accordion.Body>
                                         <div
@@ -5656,15 +5773,36 @@ const Target = () => {
                                                 height: "170px",
                                               }}
                                             >
-                                              <img
-                                                src={targetImage}
-                                                style={{
-                                                  width: "100%",
-                                                  height: "100%",
-                                                  display: "flex",
-                                                  objectFit: "cover",
-                                                }}
-                                              />
+                                              {contentImgVdo &&
+                                                contentImgVdo[0].image_url && (
+                                                  <img
+                                                    src={
+                                                      contentImgVdo[0].image_url
+                                                    }
+                                                    style={{
+                                                      width: "100%",
+                                                      height: "100%",
+                                                      display: "flex",
+                                                      objectFit: "cover",
+                                                    }}
+                                                  />
+                                                )}
+                                              {contentImgVdo &&
+                                                contentImgVdo[0].video_url && (
+                                                  <video
+                                                    width="100%"
+                                                    height="100%"
+                                                    controls
+                                                  >
+                                                    <source
+                                                      src={
+                                                        contentImgVdo[0]
+                                                          .video_url
+                                                      }
+                                                      type="video/mp4"
+                                                    />
+                                                  </video>
+                                                )}
                                               <div className="HoverDiv--jI34Q ">
                                                 <button
                                                   style={{
@@ -7201,12 +7339,27 @@ const Target = () => {
                                                       type="number"
                                                       data-testid="NumericalInput"
                                                       id="GetWidth"
-                                                      value={dwidth}
+                                                      // value={contentImgVdo[0]?.image_transform.width || (contentImgVdo && contentImgVdo[0]?.video_transform.width) || 0}
+                                                      value={
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.image_transform
+                                                            ?.width) ||
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.video_transform
+                                                            ?.width) ||
+                                                        0
+                                                      }
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
                                                       style={{ color: "grey" }}
                                                     >
+                                                      {console.log(
+                                                        contentImgVdo,
+                                                        "this is content vdo img"
+                                                      )}
                                                       W
                                                     </label>
                                                   </div>
@@ -7226,7 +7379,17 @@ const Target = () => {
                                                       type="number"
                                                       data-testid="NumericalInput"
                                                       id="GetHeight"
-                                                      value={dwidth}
+                                                      value={
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.image_transform
+                                                            ?.height) ||
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.video_transform
+                                                            ?.height) ||
+                                                        0
+                                                      }
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
@@ -7251,7 +7414,17 @@ const Target = () => {
                                                       type="number"
                                                       data-testid="NumericalInput"
                                                       id="GetLength"
-                                                      value={ddepth}
+                                                      value={
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.image_transform
+                                                            ?.depth) ||
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.video_transform
+                                                            ?.depth) ||
+                                                        0
+                                                      }
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
@@ -7272,7 +7445,17 @@ const Target = () => {
                                                     <input
                                                       type="number"
                                                       data-testid="NumericalInput"
-                                                      value={dposition_x}
+                                                      value={
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.image_transform
+                                                            ?.position_x) ||
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.video_transform
+                                                            ?.position_x) ||
+                                                        0
+                                                      }
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
@@ -7296,7 +7479,17 @@ const Target = () => {
                                                     <input
                                                       type="number"
                                                       data-testid="NumericalInput"
-                                                      value={dposition_y}
+                                                      value={
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.image_transform
+                                                            ?.position_y) ||
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.video_transform
+                                                            ?.position_y) ||
+                                                        0
+                                                      }
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
@@ -7320,7 +7513,17 @@ const Target = () => {
                                                     <input
                                                       type="number"
                                                       data-testid="NumericalInput"
-                                                      value={dposition_d}
+                                                      value={
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.image_transform
+                                                            ?.position_d) ||
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.video_transform
+                                                            ?.position_d) ||
+                                                        0
+                                                      }
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
@@ -7341,7 +7544,17 @@ const Target = () => {
                                                     <input
                                                       type="number"
                                                       data-testid="NumericalInput"
-                                                      value={dRotation_x}
+                                                      value={
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.image_transform
+                                                            ?.Rotation_x) ||
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.video_transform
+                                                            ?.Rotation_x) ||
+                                                        0
+                                                      }
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
@@ -7365,7 +7578,17 @@ const Target = () => {
                                                     <input
                                                       type="number"
                                                       data-testid="NumericalInput"
-                                                      value={dRotation_y}
+                                                      value={
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.image_transform
+                                                            ?.Rotation_y) ||
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.video_transform
+                                                            ?.Rotation_y) ||
+                                                        0
+                                                      }
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
@@ -7389,7 +7612,17 @@ const Target = () => {
                                                     <input
                                                       type="number"
                                                       data-testid="NumericalInput"
-                                                      value={dRotation_z}
+                                                      value={
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.image_transform
+                                                            ?.Rotation_z) ||
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.video_transform
+                                                            ?.Rotation_z) ||
+                                                        0
+                                                      }
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
@@ -7424,7 +7657,17 @@ const Target = () => {
                                                 </div>
                                                 <div className="InputRow--1bROy InputRow--2M9c1">
                                                   <div className="InputRowTitle--6kOLL InputRowTitle--DDSWz">
-                                                    <span>Mirror</span>
+                                                    <span>
+                                                      {(contentImgVdo &&
+                                                        contentImgVdo[0]
+                                                          ?.image_transform
+                                                          ?.Mirror) ||
+                                                        (contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.video_transform
+                                                            ?.Mirror) ||
+                                                        "Mirror"}
+                                                    </span>
                                                   </div>
                                                   <button data-testid="TransformsMirrorHorizontal"></button>
                                                   <button data-testid="TransformsMirrorVertical"></button>
@@ -8524,21 +8767,7 @@ const Target = () => {
                 >
                   <p>
                     <div className="browse-inner-images">
-                      {/* 1 image */}
-                      {/* {imgesArray.map((img) => {
-                        return (
-                          <div className="browse-inner-images-height" key={img}>
-                            <img
-                              src={img}
-                              onClick={() => {
-                                setselectedFile(img);
-                                setselectedVideo(null);
-                              }}
-                            ></img>
-                          </div>
-                        );
-                      })} */}
-                      {/* this is image array 1234567890 */}
+                     
                       {debouncedSearchTerm.trim() === "" &&
                         imgesArray.map((img) => {
                           return (
@@ -8570,7 +8799,7 @@ const Target = () => {
                             image
                               .split("/")
                               [image.split("/").length - 1].includes(
-                                debouncedSearchTerm
+                                debouncedSearchTerm.trim()
                               )
                           )
                           .map((img) => (
@@ -8596,39 +8825,7 @@ const Target = () => {
                             </div>
                           ))}
 
-                      {/* {videosArray.map((video) => {
-                        return (
-                          <div
-                            className="browse-inner-images-height"
-                            key={video}
-                          >
-                            <video
-                              width="460"
-                              height="145"
-                              title="YouTube video player"
-                              frameborder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                              allowfullscreen
-                              className=""
-                              onMouseEnter={() => setHoveredImg(video)}
-                              onMouseLeave={() => setHoveredImg(null)}
-                              // controls
-                              onClick={() => {
-                                setselectedVideo(null);
-                                setselectedFile(null);
-                                setTimeout(() => {
-                                  setselectedVideo(video);
-                                }, [0]);
-                              }}
-                            >
-                              <source src={video} type="video/mp4" />
-                            </video>
-                              {hoveredImg === video && <span className="" 
-                            >{getImgName(video)}</span>}
-                          </div>
-                        );
-                      })} */}
-
+                     
                       {debouncedSearchTerm.trim() === "" &&
                         videosArray.map((video) => {
                           return (
@@ -8669,7 +8866,7 @@ const Target = () => {
                             video
                               .split("/")
                               [video.split("/").length - 1].includes(
-                                debouncedSearchTerm
+                                debouncedSearchTerm.trim()
                               )
                           )
                           .map((vdo) => (
@@ -8732,23 +8929,7 @@ const Target = () => {
                 >
                   <p>
                     <div className="browse-inner-images">
-                      {/* {imgesArray.map((img) => {
-                        return (
-                          <div className="browse-inner-images-height" key={img}>
-                            <img
-                              src={img}
-                              onMouseEnter={() => setHoveredImg(img)}
-                              onMouseLeave={() => setHoveredImg(null)}
-                              onClick={() => {
-                                setselectedFile(img);
-                                setselectedVideo(null);
-                              }}
-                            ></img>
-                             {hoveredImg === img && <div className="image-name">{getImgName(img)}</div>}
-                          </div>
-                        );
-                      })} */}
-
+                    
                       {debouncedSearchTerm.trim() === "" &&
                         imgesArray.map((img) => {
                           return (
@@ -8780,7 +8961,7 @@ const Target = () => {
                             image
                               .split("/")
                               [image.split("/").length - 1].includes(
-                                debouncedSearchTerm
+                                debouncedSearchTerm.trim()
                               )
                           )
                           .map((img) => (
@@ -8863,7 +9044,7 @@ const Target = () => {
                             video
                               .split("/")
                               [video.split("/").length - 1].includes(
-                                debouncedSearchTerm
+                                debouncedSearchTerm.trim()
                               )
                           )
                           .map((vdo) => (

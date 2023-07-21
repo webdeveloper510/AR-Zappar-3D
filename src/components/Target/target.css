@@ -353,7 +353,6 @@ input {
     text-align: center;
     width: 100%;
     display: block;
-
 }
 .ContextMenuButton--p-6XR svg path:hover {
     fill: #5089c7;
@@ -2164,4 +2163,6 @@ button.applybutton {
 button.applybutton:hover {
 background-color: #e7735b;
 }
-
+.row.col-md-12.justify-content-between {
+    background: #f2f2f2;
+}
