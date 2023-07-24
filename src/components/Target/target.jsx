@@ -1659,15 +1659,63 @@ const Target = () => {
     getSceneData(sceneId);
   };
 
-  const [fontselected, Selectedfont] = useState(null);
-  const handleFontStyle = (e, type) => {
-    Selectedfont(type);
-    e.currentTarget.classList.add("selected");
-  };
-  const applyfont = () => {
-    console.log("applyfont", fontselected);
-  };
+    const [fontselected, Selectedfont] = useState(null);
+    const handleFontStyle = (e, type) => {
+      Selectedfont(e.target);    
+      e.currentTarget.classList.add("selected");
+    };
+    const applyfont = (e) => {
+      const fontStyle = fontselected.style.fontFamily
+      const textVal = fontselected.textContent
+      const formData = {
+        'scene_id' : s_scene_id,
+        'Text_name' : textVal
+      }
+      axios.post(API.BASE_URL+'create-text/', formData,{
+      }).then(function(response){
+        console.log(response)
+        const textId = response.data.id
+        textTransformation(textId);
+        textAction(textId);
+        textTransition(textId);
+        textTextFeature(textId , fontStyle , textVal);
+      }).catch(function(error){console.log(error)})
+    };
 
+
+    const textTransformation=(textId)=>{
+      const formData = {text_id :textId ,width : 0,height : 0,depth : 0,position_x : 0,position_y :0 ,position_d : 0,Rotation_x : 0,Rotation_y : 0,Rotation_z : 0,Mirror : null}
+      axios.post(API.BASE_URL+"text_transform/", formData,{}).then(function(res){
+        console.log("textTransformation(textId);", res.data)
+      }).catch(function(error){
+        console.log('Not Done ------------> textTransformation(textId);', error)
+      })
+    }
+    const textAction=(textId)=>{
+      const formData = {text_id :textId ,text_action : null}
+      axios.post(API.BASE_URL+"text_action/", formData,{}).then(function(res){
+        console.log("textAction(textId);", res.data)
+      }).catch(function(error){
+        console.log('Not Done ------------> textAction(textId);', error)
+      })
+    }
+    const textTransition=(textId)=>{
+      const formData = {text_id :textId ,transition_enter : null,transition_exit :null ,height :0 ,duration : 0,delay : 0}
+      axios.post(API.BASE_URL+"text_transition/", formData,{}).then(function(res){
+        console.log("textTransition(textId);", res.data)
+      }).catch(function(error){
+        console.log('Not Done ------------> textTransition(textId);', error)
+      })
+    }
+    const textTextFeature=(textId , fontStyle ,textVal)=>{
+      console.log(textId , fontStyle ,textVal)
+      const formData = {text_id :textId ,text :textVal ,text_size :0 ,text_font :fontStyle ,link :null ,text_color : '#344B60',alignment : 'left'}
+      axios.post(API.BASE_URL+"text_text/", formData,{}).then(function(res){
+        console.log("textTextFeature(textId , fontStyle);", res.data)
+      }).catch(function(error){
+        console.log('Not Done ------------> textTextFeature(textId , fontStyle);', error)
+      })
+    } 
 
   useEffect(() => {
     
@@ -3178,14 +3226,7 @@ const Target = () => {
                     <p className="thene-txted">Themed text</p>
                     <hr />
                     <div className="buttons text-side-btn">
-                      <p
-                        className={`Standard-title ${
-                          fontselected === "standard" ? "selected" : ""
-                        }`}
-                        onClick={(e) => {
-                          handleFontStyle(e, "standard");
-                        }}
-                      >
+                      <p className={`Standard-title ${ fontselected === "standard" ? "selected" : ""}`} onClick={(e) => { handleFontStyle(e, "standard"); }} style={{fontFamily:'Roboto'}}>
                         Standard title
                       </p>
                       <p
@@ -3194,7 +3235,7 @@ const Target = () => {
                         }`}
                         onClick={(e) => {
                           handleFontStyle(e, "rounded");
-                        }}
+                        }} style={{fontFamily:'Comfortaa'}}
                       >
                         Rounded title
                       </p>
@@ -3204,7 +3245,7 @@ const Target = () => {
                         }`}
                         onClick={(e) => {
                           handleFontStyle(e, "elegant");
-                        }}
+                        }} style={{fontFamily:'Cookie'}}
                       >
                         Elegant title
                       </p>
@@ -3214,7 +3255,7 @@ const Target = () => {
                         }`}
                         onClick={(e) => {
                           handleFontStyle(e, "classic");
-                        }}
+                        }} style={{fontFamily:'Philosopher'}}
                       >
                         Classic title
                       </p>
@@ -3224,7 +3265,7 @@ const Target = () => {
                         }`}
                         onClick={(e) => {
                           handleFontStyle(e, "modern");
-                        }}
+                        }} style={{fontFamily:'Quicksand'}}
                       >
                         Modern title
                       </p>
@@ -3234,7 +3275,7 @@ const Target = () => {
                         }`}
                         onClick={(e) => {
                           handleFontStyle(e, "futuristic");
-                        }}
+                        }} style={{fontFamily:'Orbitron'}}
                       >
                         Futuristic title
                       </p>
@@ -3244,7 +3285,7 @@ const Target = () => {
                         }`}
                         onClick={(e) => {
                           handleFontStyle(e, "handwritten");
-                        }}
+                        }} style={{fontFamily:'Sacramento'}}
                       >
                         Handwritten title
                       </p>
@@ -3254,7 +3295,7 @@ const Target = () => {
                         }`}
                         onClick={(e) => {
                           handleFontStyle(e, "magic");
-                        }}
+                        }} style={{fontFamily:'Snowburst One'}}
                       >
                         Magic title 2
                       </p>
@@ -3264,7 +3305,7 @@ const Target = () => {
                         }`}
                         onClick={(e) => {
                           handleFontStyle(e, "funky");
-                        }}
+                        }} style={{fontFamily:'Wallpoet'}}
                       >
                         {" "}
                         Funky title

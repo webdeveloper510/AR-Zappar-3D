@@ -15,8 +15,9 @@ import { TTFLoader } from '../node_modules/three/examples/jsm/loaders/TTFLoader'
 import { FontLoader } from '../node_modules/three/examples/jsm/loaders/FontLoader'
 import { TextGeometry } from '../node_modules/three/examples/jsm/geometries/TextGeometry'
 import { contextObject } from './components/ContextStore/ContextApi';
-import font from '../node_modules/three/examples/fonts/droid/droid_sans_bold.typeface.json'
 import WebFont from 'webfontloader';
+import { CSS3DRenderer, CSS3DObject } from '../node_modules/three/examples/jsm/renderers/CSS3DRenderer'
+import { CssBaseline } from '@material-ui/core';
 // import {DomEvents} from 'threex.domevents/threex.domevents'
 
 
@@ -47,6 +48,37 @@ const ModelAr =()=> {
         const PlaneTexture = [svgHere , svgHere2]
         const [selectedElement, setSelectedElement] = useState(null);
 
+
+        const [text_name , text_nameget] = useState(null)
+        const [text_action , text_actionGet] = useState(null)
+        const [text_actionID , text_actionIDGet] = useState(null)
+
+        const [alignment , alignmentGet] = useState(null)
+        const [link , linkGet] = useState(null)
+        const [textFeatureID , textFeatureIDGet] = useState(null)
+        const [text_text , text_textget] = useState(null)
+        const [text_color , text_colorget] = useState(null)
+        const [text_font , text_fontget] = useState(null)
+        const [text_size , text_sizeget] = useState(null)
+
+        const [Mirror , MirrorGet] = useState(null)
+        const [Rotation_x , Rotation_xGet] = useState(null)
+        const [Rotation_y , Rotation_yGet] = useState(null)
+        const [Rotation_z , Rotation_zGet] = useState(null)
+        const [depth , depthGet] = useState(null)
+        const [height , heightGet] = useState(null)
+        const [position_d , position_dGet] = useState(null)
+        const [position_x , position_xGet] = useState(null)
+        const [position_y , position_yGet] = useState(null)
+        const [width , widthGet] = useState(null)
+        const [transformID , transformIDGet] = useState(null)
+
+        const [delay, delayGet] = useState(null)
+        const [duration, durationGet] = useState(null)
+        const [transitionheight, transitionheightGet] = useState(null)
+        const [transitionID, transitionIDGet] = useState(null)
+        const [transition_enter, transition_enterGet] = useState(null)
+        const [transition_exit, transition_exitGet] = useState(null)
     // UseEffect Using ---------------------------------------------------------------------------------------->
 
     const IndecatorImages= [
@@ -69,7 +101,7 @@ const ModelAr =()=> {
         const boxModal = () => {
 
         // Variables ------------------------------------------------------------------------------------------->
-            let cameraPersp, cameraOrtho, currentCamera, canvas 
+            let cameraPersp, cameraOrtho, currentCamera, canvas ,labelRenderer
             let scene, renderer, control, orbit , plane  , Videomesh , Imagesocial , gltf , plane2,mesh
             let selectedModel = null;
 
@@ -180,7 +212,12 @@ const ModelAr =()=> {
 
 
 
-
+                // var ctx = canvas.getContext('2d');
+                // ctx.font = 'italic 18px Arial';
+                // ctx.textAlign = 'center';
+                // ctx.textBaseline = 'middle';
+                // ctx.fileStyle = 'red';
+                // ctx.fileText('Your Text' ,20000,10000)
 
 // Model Data GET for Image Tracking---------------------------------------------------------------->
 
@@ -253,7 +290,7 @@ const ModelAr =()=> {
                     // Video Handler Function --------------------------------------------------------------------------------->
 
                     if (getVideo){
-                        for (let i = 0; i < getVideo.length  &&  getVideo !== undefined; i++    ){
+                        for (let i = 0; i < getVideo.length  &&  getVideo !== undefined; i++){
                             console.log(getVideo)
                             const video = document.createElement('video');
                             video.autoplay = true;
@@ -321,68 +358,71 @@ const ModelAr =()=> {
                         }
                     }
 
+                    // States for Text Featres ------------------------------------------------------------------------------------------------>
+             
 
-                    // Create a FontLoader
-                        var loader = new FontLoader();
+                    // HTML CSS2DRENDERER ---------------------------------------------------------------->
+                    if (getText){
+                        for (let i = 0; i < getText.length; i++){
+                            // text_nameget(getText[i][0].button_name)
+                            // text_actionGet(getText[i][0].text_action.text_action)
+                            // text_actionIDGet(getText[i][0].text_action.id)
 
-                        var hash;
-                        var url = 'https://fonts.gstatic.com/s/cookie/v8/syky-y18lb0tSbf9kgqU.woff'
-                        var myJson = {};
-                        var hashes = url.slice(url.indexOf('?') + 1).split('&');
-                        for (var i = 0; i < hashes.length; i++) {
-                            hash = hashes[i].split('=');
-                            myJson[hash[0]] = hash[1];
-                            // If you want to get in native datatypes
-                            // myJson[hash[0]] = JSON.parse(hash[1]); 
+                            // alignmentGet(getText[i][0].text_text.alignment)
+                            // textFeatureIDGet(getText[i][0].text_text.id)
+                            // linkGet(getText[i][0].text_text.link)
+                            // text_textget(getText[i][0].text_text.text)
+                            // text_colorget(getText[i][0].text_text.text_color)
+                            // text_fontget(getText[i][0].text_text.text_font)
+                            // text_sizeget(getText[i][0].text_text.text_size)
+
+                            // MirrorGet(getText[i][0].text_transform.Mirror)
+                            // Rotation_xGet(getText[i][0].text_transform.Rotation_x)
+                            // Rotation_yGet(getText[i][0].text_transform.Rotation_y)
+                            // Rotation_zGet(getText[i][0].text_transform.Rotation_z)
+                            // depthGet(getText[i][0].text_transform.depth)
+                            // heightGet(getText[i][0].text_transform.height)
+                            // position_dGet(getText[i][0].text_transform.position_d)
+                            // position_xGet(getText[i][0].text_transform.position_x)
+                            // position_yGet(getText[i][0].text_transition.position_y)
+                            // widthGet(getText[i][0].text_transition.width)
+                            // transformIDGet(getText[i][0].text_transition.id)
+
+                            // delayGet(getText[i][0].text_transition.dealy)
+                            // durationGet(getText[i][0].text_transition.duration)
+                            // transitionheightGet(getText[i][0].text_transition.transitionheight)
+                            // transitionIDGet(getText[i][0].text_transition.id)
+                            // transition_enterGet(getText[i][0].text_transition.transition_enter)
+                            // transition_exitGet(getText[i][0].text_transition.transition_exit)
+
+                            labelRenderer = new CSS3DRenderer() 
+                            labelRenderer.setSize(window.innerWidth, window.innerHeight);
+                            labelRenderer.domElement.style.top = '0px';
+                            labelRenderer.domElement.style.position = 'fixed';
+                            labelRenderer.domElement.style.pointerEvents = 'none';
+                            document.body.appendChild(labelRenderer.domElement) 
+                            const p = document.createElement('h1');
+                            p.textContent = getText[i][0].button_name;
+                            p.style.color = getText[i][0].text_text.text_color;
+                            p.style.fontSize = '24px';
+                            p.style.fontWeight = 'bold';
+                            p.style.fontFamily = getText[i][0].text_text.text_font;
+                            const cPointLable = new CSS3DObject(p);
+                            scene.add(cPointLable)
+                            cPointLable.position.set(0,0,8)
+                            cPointLable.position.set(Number(getText[i][0].text_transform.position_x), Number(getText[i][0].text_transform.position_y), Number(getText[i][0].text_transform.position_d)+8)
+                            cPointLable.rotation.y = Math.PI;
+                            // cPointLable.rotation.x =getText[i][0].text_transform.Rotation_x
+                            // cPointLable.rotation.y =getText[i][0].text_transform.Rotation_y
+                            // cPointLable.rotation.z =getText[i][0].text_transform.Rotation_z
+                            console.log('Here is the Point Label------------>',cPointLable);
                         }
-                        // Load the WOFF font file
-                        loader.load(myJson, function (font) {
+                    }
 
-                        // Use the loaded font in your 3D objects
-                        var textGeometry = new TextGeometry('Hello Three.js', {
-                            font: font,
-                            size: 100,
-                            height: 100,
-                            curveSegments: 120,
-                            bevelEnabled: false
-                        });
+                 
 
-                        var textMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
-                        var textMesh = new THREE.Mesh(textGeometry, textMaterial);
-                        scene.add(textMesh);
-                        textMesh.position.set(0,0,20)
-                        });
 
-                    
-                    // WebFont.load({
-                    //     google: {
-                    //       families: ["Henny Penny, cursive", "Droid Sans", "Chilanka", "Orbitron", "Sacramento", "Roboto", "Cookie", "Comfortaa", "Philosopher", "Quicksand", "Trocchi", "Advent Pro", "Henny Penny", "Snowburst One", "Wallpoet"],
-                    //     },
-                    //     active: () => {
-
-                    //     const fontLoader = new FontLoader();
-                    //     fontLoader.load('Henny Penny, cursive', (font) => {
-                    //       // Create text geometry with the loaded font
-                    //       const textgeometry = new TextGeometry('Hello World', {
-                    //         font: font,
-                    //         size: 10,
-                    //         height: 2,
-                    //       });
-                      
-                    //       // Create material with the desired font family
-                    //       const textmaterial = new THREE.MeshBasicMaterial();
-                      
-                    //       // Create text mesh using the geometry and material
-                    //       const textMesh = new THREE.Mesh(textgeometry, textmaterial);
-                      
-                    //       // Add the text mesh to the scene
-                    //       scene.add(textMesh);
-                      
-                    //       // Set the position of the text mesh
-                    //       textMesh.position.set(0, 0, -10);
-                    //         });
-                    //     },
-                    // });
+                   
                     
                       
                       // Set up camera position
@@ -632,6 +672,7 @@ const ModelAr =()=> {
             cameraOrtho.right = cameraOrtho.top * aspect;
             cameraOrtho.updateProjectionMatrix();
             renderer.setSize( window.innerWidth, window.innerHeight );
+            labelRenderer.setSize( window.innerWidth, window.innerHeight );
             // render();
         }
 
@@ -665,6 +706,7 @@ const ModelAr =()=> {
 
             onWindowResize()
             renderer.render( scene, currentCamera );
+            labelRenderer.render( scene, currentCamera);
             // control.update();
         }
     }
