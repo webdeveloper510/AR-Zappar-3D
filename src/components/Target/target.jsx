@@ -856,17 +856,17 @@ const Target = () => {
       height:heightImgVdo ||  contentImgVdo && contentImgVdo[0]?.image_transform?.height,
       depth:depthImgVdo || contentImgVdo && contentImgVdo[0]?.image_transform?.depth,
       position_x:
-        contentImgVdo && contentImgVdo[0]?.image_transform?.position_x,
-      position_y:
-        contentImgVdo && contentImgVdo[0]?.image_transform?.position_y,
+      dposition_x || contentImgVdo && contentImgVdo[0]?.image_transform?.position_x,
+      position_y: 
+      dposition_y || contentImgVdo && contentImgVdo[0]?.image_transform?.position_y,
       position_d:
-        contentImgVdo && contentImgVdo[0]?.image_transform?.position_d,
+      dposition_d || contentImgVdo && contentImgVdo[0]?.image_transform?.position_d,
       Rotation_x:
-        contentImgVdo && contentImgVdo[0]?.image_transform?.Rotation_x,
+      dRotation_x || contentImgVdo && contentImgVdo[0]?.image_transform?.Rotation_x,
       Rotation_y:
-        contentImgVdo && contentImgVdo[0]?.image_transform?.Rotation_y,
+      dRotation_y || contentImgVdo && contentImgVdo[0]?.image_transform?.Rotation_y,
       Rotation_z:
-        contentImgVdo && contentImgVdo[0]?.image_transform?.Rotation_z,
+      dRotation_z || contentImgVdo && contentImgVdo[0]?.image_transform?.Rotation_z,
       Mirror: contentImgVdo && contentImgVdo[0]?.image_transform?.Mirror,
       image_id_id: contentImgVdo[0].image_id,
     };
@@ -1693,7 +1693,7 @@ const Target = () => {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [widthImgVdo,heightImgVdo,depthImgVdo]);
+  }, [widthImgVdo,heightImgVdo,depthImgVdo,dposition_x,dposition_y,dposition_d,dRotation_x,dRotation_y,dRotation_z]);
   
 
 
@@ -3345,6 +3345,9 @@ const Target = () => {
                               marginTop: "10px",
                             }}
                           />
+                          {
+                            console.log(image[0].image_url,'image[0].image_urlTHIS')
+                          }
                         </div>
                       ))}
                     </div>
@@ -7642,15 +7645,15 @@ const Target = () => {
                                                       data-testid="NumericalInput"
                                                       id="GetLength"
                                                       value={
-                                                        depthImgVdo ||
-                                                        (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.image_transform
-                                                            ?.depth) ||
-                                                        (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.video_transform
-                                                            ?.depth) ||
+                                                        // depthImgVdo ||
+                                                        // (contentImgVdo &&
+                                                        //   contentImgVdo[0]
+                                                        //     ?.image_transform
+                                                        //     ?.depth) ||
+                                                        // (contentImgVdo &&
+                                                        //   contentImgVdo[0]
+                                                        //     ?.video_transform
+                                                        //     ?.depth) ||
                                                         0
                                                       }
                                                       onChange={(e)=>setdepthImgVdo(e.target.value)}
@@ -7675,7 +7678,7 @@ const Target = () => {
                                                       type="number"
                                                       data-testid="NumericalInput"
                                                       value={
-                                                        (contentImgVdo &&
+                                                        dposition_x || (contentImgVdo &&
                                                           contentImgVdo[0]
                                                             ?.image_transform
                                                             ?.position_x) ||
@@ -7685,12 +7688,19 @@ const Target = () => {
                                                             ?.position_x) ||
                                                         0
                                                       }
+                                                      onChange={(e)=>dimposition_x(e.target.value)}
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
                                                       style={{ color: "red" }}
                                                     >
                                                       X
+                                                      {
+                                                        console.log(contentImgVdo &&
+                                                          contentImgVdo[0]
+                                                            ?.image_transform
+                                                            ?.position_x,'<this is positon XXXXXXXXXXX')
+                                                      }
                                                     </label>
                                                   </div>
                                                   <div
@@ -7709,7 +7719,7 @@ const Target = () => {
                                                       type="number"
                                                       data-testid="NumericalInput"
                                                       value={
-                                                        (contentImgVdo &&
+                                                        dposition_y || (contentImgVdo &&
                                                           contentImgVdo[0]
                                                             ?.image_transform
                                                             ?.position_y) ||
@@ -7719,6 +7729,7 @@ const Target = () => {
                                                             ?.position_y) ||
                                                         0
                                                       }
+                                                      onChange={(e)=>dimposition_y(e.target.value)}
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
@@ -7743,7 +7754,7 @@ const Target = () => {
                                                       type="number"
                                                       data-testid="NumericalInput"
                                                       value={
-                                                        (contentImgVdo &&
+                                                        dposition_d || (contentImgVdo &&
                                                           contentImgVdo[0]
                                                             ?.image_transform
                                                             ?.position_d) ||
@@ -7753,6 +7764,7 @@ const Target = () => {
                                                             ?.position_d) ||
                                                         0
                                                       }
+                                                      onChange={(e)=>dimposition_d(e.target.value)}
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
@@ -7774,7 +7786,7 @@ const Target = () => {
                                                       type="number"
                                                       data-testid="NumericalInput"
                                                       value={
-                                                        (contentImgVdo &&
+                                                        dRotation_x || (contentImgVdo &&
                                                           contentImgVdo[0]
                                                             ?.image_transform
                                                             ?.Rotation_x) ||
@@ -7784,6 +7796,7 @@ const Target = () => {
                                                             ?.Rotation_x) ||
                                                         0
                                                       }
+                                                      onChange={(e)=>dimRotation_x(e.target.value)}
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
@@ -7808,7 +7821,7 @@ const Target = () => {
                                                       type="number"
                                                       data-testid="NumericalInput"
                                                       value={
-                                                        (contentImgVdo &&
+                                                        dRotation_y || (contentImgVdo &&
                                                           contentImgVdo[0]
                                                             ?.image_transform
                                                             ?.Rotation_y) ||
@@ -7818,6 +7831,7 @@ const Target = () => {
                                                             ?.Rotation_y) ||
                                                         0
                                                       }
+                                                      onChange={(e)=>dimRotation_y(e.target.value)}
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
@@ -7842,7 +7856,7 @@ const Target = () => {
                                                       type="number"
                                                       data-testid="NumericalInput"
                                                       value={
-                                                        (contentImgVdo &&
+                                                        dRotation_z || (contentImgVdo &&
                                                           contentImgVdo[0]
                                                             ?.image_transform
                                                             ?.Rotation_z) ||
@@ -7852,6 +7866,7 @@ const Target = () => {
                                                             ?.Rotation_z) ||
                                                         0
                                                       }
+                                                      onChange={(e)=>dimRotation_z(e.target.value)}
                                                     />
                                                     <label
                                                       data-testid="NumericalInputLabel"
@@ -8932,6 +8947,10 @@ const Target = () => {
                   placeholder="Search labels"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  onClick={()=>{
+                    console.log(imgesArray,
+                      videosArray,'this is image and video array ')
+                  }}
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -9002,21 +9021,21 @@ const Target = () => {
                           return (
                             <div
                               className="browse-inner-images-height"
-                              key={img}
+                              key={img.image_url}
                             >
                               <img
-                                src={img}
+                                src={img.image_url}
                                 alt="Image"
-                                onMouseEnter={() => setHoveredImg(img)}
+                                onMouseEnter={() => setHoveredImg(img.image_url)}
                                 onMouseLeave={() => setHoveredImg(null)}
                                 onClick={() => {
-                                  setselectedFile(img);
+                                  setselectedFile(img.image_url);
                                   setselectedVideo(null);
                                 }}
                               />
-                              {hoveredImg === img && (
+                              {hoveredImg === img.image_url && (
                                 <div className="image-name">
-                                  {getImgName(img)}
+                                  {getImgName(img.image_url)}
                                 </div>
                               )}
                             </div>
@@ -9025,9 +9044,9 @@ const Target = () => {
                       {debouncedSearchTerm.trim() !== "" &&
                         imgesArray
                           .filter((image) =>
-                            image
+                            image.image_url
                               .split("/")
-                              [image.split("/").length - 1].includes(
+                              [image.image_url.split("/").length - 1].includes(
                                 debouncedSearchTerm.trim()
                               )
                           )
@@ -9037,18 +9056,18 @@ const Target = () => {
                               key={img}
                             >
                               <img
-                                src={img}
+                                src={img.image_url}
                                 alt="Image"
-                                onMouseEnter={() => setHoveredImg(img)}
+                                onMouseEnter={() => setHoveredImg(img.image_url)}
                                 onMouseLeave={() => setHoveredImg(null)}
                                 onClick={() => {
-                                  setselectedFile(img);
+                                  setselectedFile(img.image_url);
                                   setselectedVideo(null);
                                 }}
                               />
-                              {hoveredImg === img && (
+                              {hoveredImg === img.image_url && (
                                 <div className="image-name">
-                                  {getImgName(img)}
+                                  {getImgName(img.image_url)}
                                 </div>
                               )}
                             </div>
@@ -9070,21 +9089,21 @@ const Target = () => {
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen
                                 className=""
-                                onMouseEnter={() => setHoveredImg(video)}
+                                onMouseEnter={() => setHoveredImg(video.video_url)}
                                 onMouseLeave={() => setHoveredImg(null)}
                                 // controls
                                 onClick={() => {
                                   setselectedVideo(null);
                                   setselectedFile(null);
                                   setTimeout(() => {
-                                    setselectedVideo(video);
+                                    setselectedVideo(video.video_url);
                                   }, [0]);
                                 }}
                               >
-                                <source src={video} type="video/mp4" />
+                                <source src={video.video_url} type="video/mp4" />
                               </video>
-                              {hoveredImg === video && (
-                                <span className="">{getImgName(video)}</span>
+                              {hoveredImg === video.video_url && (
+                                <span className="">{getImgName(video.video_url)}</span>
                               )}
                             </div>
                           );
@@ -9092,16 +9111,16 @@ const Target = () => {
                       {debouncedSearchTerm.trim() !== "" &&
                         videosArray
                           .filter((video) =>
-                            video
+                            video.video_url
                               .split("/")
-                              [video.split("/").length - 1].includes(
+                              [video.video_url.split("/").length - 1].includes(
                                 debouncedSearchTerm.trim()
                               )
                           )
                           .map((vdo) => (
                             <div
                               className="browse-inner-images-height"
-                              key={vdo}
+                              key={vdo.video_url}
                             >
                               <video
                                 width="460"
@@ -9111,21 +9130,21 @@ const Target = () => {
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen
                                 className=""
-                                onMouseEnter={() => setHoveredImg(vdo)}
+                                onMouseEnter={() => setHoveredImg(vdo.video_url)}
                                 onMouseLeave={() => setHoveredImg(null)}
                                 // controls
                                 onClick={() => {
                                   setselectedVideo(null);
                                   setselectedFile(null);
                                   setTimeout(() => {
-                                    setselectedVideo(vdo);
+                                    setselectedVideo(vdo.video_url);
                                   }, [0]);
                                 }}
                               >
-                                <source src={vdo} type="video/mp4" />
+                                <source src={vdo.video_url} type="video/mp4" />
                               </video>
-                              {hoveredImg === vdo && (
-                                <span className="">{getImgName(vdo)}</span>
+                              {hoveredImg === vdo.video_url && (
+                                <span className="">{getImgName(vdo.video_url)}</span>
                               )}
                             </div>
                           ))}
@@ -9167,18 +9186,18 @@ const Target = () => {
                               key={img}
                             >
                               <img
-                                src={img}
+                                src={img.image_url}
                                 alt="Image"
-                                onMouseEnter={() => setHoveredImg(img)}
+                                onMouseEnter={() => setHoveredImg(img.image_url)}
                                 onMouseLeave={() => setHoveredImg(null)}
                                 onClick={() => {
-                                  setselectedFile(img);
+                                  setselectedFile(img.image_url);
                                   setselectedVideo(null);
                                 }}
                               />
-                              {hoveredImg === img && (
+                              {hoveredImg === img.image_url && (
                                 <div className="image-name">
-                                  {getImgName(img)}
+                                  {getImgName(img.image_url)}
                                 </div>
                               )}
                             </div>
@@ -9187,9 +9206,9 @@ const Target = () => {
                       {debouncedSearchTerm.trim() !== "" &&
                         imgesArray
                           .filter((image) =>
-                            image
+                            image.image_url
                               .split("/")
-                              [image.split("/").length - 1].includes(
+                              [image.image_url.split("/").length - 1].includes(
                                 debouncedSearchTerm.trim()
                               )
                           )
@@ -9199,18 +9218,18 @@ const Target = () => {
                               key={img}
                             >
                               <img
-                                src={img}
+                                src={img.image_url}
                                 alt="Image"
-                                onMouseEnter={() => setHoveredImg(img)}
+                                onMouseEnter={() => setHoveredImg(img.image_url)}
                                 onMouseLeave={() => setHoveredImg(null)}
                                 onClick={() => {
-                                  setselectedFile(img);
+                                  setselectedFile(img.image_url);
                                   setselectedVideo(null);
                                 }}
                               />
-                              {hoveredImg === img && (
+                              {hoveredImg === img.image_url && (
                                 <div className="image-name">
-                                  {getImgName(img)}
+                                  {getImgName(img.image_url)}
                                 </div>
                               )}
                             </div>
@@ -9248,21 +9267,21 @@ const Target = () => {
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen
                                 className=""
-                                onMouseEnter={() => setHoveredImg(video)}
+                                onMouseEnter={() => setHoveredImg(video.video_url)}
                                 onMouseLeave={() => setHoveredImg(null)}
                                 // controls
                                 onClick={() => {
                                   setselectedVideo(null);
                                   setselectedFile(null);
                                   setTimeout(() => {
-                                    setselectedVideo(video);
+                                    setselectedVideo(video.video_url)
                                   }, [0]);
                                 }}
                               >
-                                <source src={video} type="video/mp4" />
+                                <source src={video.video_url} type="video/mp4" />
                               </video>
-                              {hoveredImg === video && (
-                                <span className="">{getImgName(video)}</span>
+                              {hoveredImg === video.video_url && (
+                                <span className="">{getImgName(video.video_url)}</span>
                               )}
                             </div>
                           );
@@ -9270,9 +9289,9 @@ const Target = () => {
                       {debouncedSearchTerm.trim() !== "" &&
                         videosArray
                           .filter((video) =>
-                            video
+                            video.video_url
                               .split("/")
-                              [video.split("/").length - 1].includes(
+                              [video.video_url.split("/").length - 1].includes(
                                 debouncedSearchTerm.trim()
                               )
                           )
@@ -9289,21 +9308,21 @@ const Target = () => {
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen
                                 className=""
-                                onMouseEnter={() => setHoveredImg(vdo)}
+                                onMouseEnter={() => setHoveredImg(vdo.video_url)}
                                 onMouseLeave={() => setHoveredImg(null)}
                                 // controls
                                 onClick={() => {
                                   setselectedVideo(null);
                                   setselectedFile(null);
                                   setTimeout(() => {
-                                    setselectedVideo(vdo);
+                                    setselectedVideo(vdo.video_url);
                                   }, [0]);
                                 }}
                               >
-                                <source src={vdo} type="video/mp4" />
+                                <source src={vdo.video_url} type="video/mp4" />
                               </video>
-                              {hoveredImg === vdo && (
-                                <span className="">{getImgName(vdo)}</span>
+                              {hoveredImg === vdo.video_url && (
+                                <span className="">{getImgName(vdo.video_url)}</span>
                               )}
                             </div>
                           ))}
