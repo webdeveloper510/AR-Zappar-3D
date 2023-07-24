@@ -358,7 +358,7 @@ const Target = () => {
       setDmodelArray(response.data.data.three_d_model_files);
     } catch (err) {}
     finally{
-      ctx.setloader(false)
+      setTimeout(()=>ctx.setloader(false))
     }
   };
   useEffect(() => {
@@ -407,7 +407,9 @@ const Target = () => {
         }
       })
       .catch((e)=>console.log(e))
-      .finally(()=> ctx.setloader(false))
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
       ;
   }, [reRender]);
 
@@ -439,8 +441,10 @@ const Target = () => {
       })
       .catch(function (err) {
         toast.error("Connection Error");
-      }).finally(()=> ctx.setloader(false))
-      ;
+      })
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
   const sceneTransitions = (id) => {
     ctx.setloader(true)
@@ -460,8 +464,9 @@ const Target = () => {
       })
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=> ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // --------------------------------------------------------CreateProject Content--------------------------------->
@@ -490,7 +495,9 @@ const Target = () => {
         backgroundSoundApi(project_content_id);
         analyticsApi(project_content_id);
       })
-      .catch(function (errorMessage) {}).finally(()=> ctx.setloader(false))
+      .catch(function (errorMessage) {}).finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
       ;
   };
 
@@ -507,7 +514,9 @@ const Target = () => {
       })
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=> ctx.setloader(false));
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   const analyticsApi = (idee) => {
@@ -521,8 +530,9 @@ const Target = () => {
       })
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=> ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   //// -------------------------------------------------------Two-D Three-D Switch ------------------------------>
@@ -538,7 +548,9 @@ const Target = () => {
       })
       .then(function (res) {})
       .catch(function (err) {})
-      .finally(()=> ctx.setloader(false));
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // Hnadle Next Scene Genration and Working :
@@ -643,8 +655,9 @@ const Target = () => {
         }
       })
       .catch(function (error) {})
-      .finally(()=>ctx.setloader(true))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
   // GET Basic Details OF PROJECT ------------------------------------------------------------>
   useEffect(() => {
@@ -678,8 +691,9 @@ const Target = () => {
         title(response.data.ProTitle);
       })
       .catch(function (error) {})
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   }, []);
   const [showbrowsemedia, setbrowsemedia] = useState(false);
   const [showvideomedia, setvideomedia] = useState(false);
@@ -760,7 +774,9 @@ const Target = () => {
           setprojectId(videoData[i][0].video_transform.width);
         }
       }).catch((e)=>{})
-      .finally(()=>ctx.setloader(false))
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   }, [firstTime, renderGetProjact,reRender]);
 
   // Image Upload API with all DATA ---------------------------------------------------------------------------------------------->
@@ -803,8 +819,9 @@ const Target = () => {
           .catch(function (err) {
             toast.error("Image not Uploaded!");
           })
-          .finally(()=>ctx.setloader(false))
-          ;
+          .finally(()=>{
+            setTimeout(()=>{ ctx.setloader(false)},0)
+           });
       };
     };
     reader.readAsDataURL(file);
@@ -932,8 +949,9 @@ const Target = () => {
         setopacity(response.data.opacity);
       })
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // post api function for image transition
@@ -963,8 +981,9 @@ const Target = () => {
         setTraNtransition_exit(response.data.transition_exit);
       })
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // post api function for image action
@@ -1055,8 +1074,9 @@ const Target = () => {
         settoGetData((prev) => !prev);
       })
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // post api function for video action
@@ -1094,8 +1114,9 @@ const Target = () => {
       })
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // HANDLE 3Dmodel CHANGE ------------------------------------------------------------------------------------------------>
@@ -1123,8 +1144,9 @@ const Target = () => {
         console.log(err, "inside upload 3D model function");
         toast.error("Modal not Uploaded !");
       })
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   //  input function calling function
@@ -1162,8 +1184,9 @@ const Target = () => {
         settoGetData((prev) => !prev);
       })
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // three model transition api
@@ -1187,8 +1210,9 @@ const Target = () => {
         settoGetData((prev) => !prev);
       })
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // three model action api
@@ -1205,8 +1229,9 @@ const Target = () => {
         settoGetData((prev) => !prev);
       })
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // change the Two D and Three D value onChange Function ---------------------------------------------------->
@@ -1218,8 +1243,9 @@ const Target = () => {
       .put(API.BASE_URL + "twod_threed/" + twoDthreeDID + "/", formdata, {})
       .then(function (res) {})
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // api function get button data by id
@@ -1230,8 +1256,9 @@ const Target = () => {
       .post(API.BASE_URL + "GetButtondata/" + s_scene_id)
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // api function DELETE button data by id
@@ -1242,8 +1269,9 @@ const Target = () => {
       .delete(API.BASE_URL + "GetButtondata/" + s_scene_id)
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   //  api function to get all text data by id
@@ -1255,8 +1283,9 @@ const Target = () => {
       .post(API.BASE_URL + "get-all-text-data/" + s_scene_id)
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   //  api function to DELETE all text data by id
@@ -1281,8 +1310,9 @@ const Target = () => {
       .get(API.BASE_URL + "get-image-data/" + s_scene_id)
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // function to DELETE image data by id
@@ -1318,8 +1348,9 @@ const Target = () => {
         setcontentImgVdo(null)
       })
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   //  function to DELETE video data by id
@@ -1331,8 +1362,9 @@ const Target = () => {
       .get(API.BASE_URL + "get-video-data/" + s_scene_id)
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // function to get three D model data by id
@@ -1344,7 +1376,9 @@ const Target = () => {
       .get(API.BASE_URL + "get-threed-model-Data/" + s_scene_id)
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false));
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // function to DELETE three D model data by id
@@ -1356,7 +1390,9 @@ const Target = () => {
       .delete(API.BASE_URL + "get-threed-model-Data/" + id)
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false));
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // function to get scene data by Id
@@ -1368,7 +1404,9 @@ const Target = () => {
       .get(API.BASE_URL + "get-scene-data/" + s_scene_id)
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false));
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // function to DELETE scene data by Id
@@ -1380,7 +1418,9 @@ const Target = () => {
       .delete(API.BASE_URL + "get-scene-data/" + s_scene_id)
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false));
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // function to get project content data by Id
@@ -1392,7 +1432,9 @@ const Target = () => {
       .get(API.BASE_URL + "getproject-contentdata/" + id)
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false));
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // function to DELETE project content data by Id
@@ -1403,7 +1445,9 @@ const Target = () => {
       .delete(API.BASE_URL + "getproject-contentdata/" + s_scene_id)
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false));
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   const [ToggleButton, ButtonShow] = useState(false);
@@ -1420,7 +1464,9 @@ const Target = () => {
       .get(API.BASE_URL + "scene_details/" + s_scene_id)
       .then(function (response) {})
       .catch(function (err) {}) 
-      .finally(()=>ctx.setloader(false));
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // delete data by scene id
@@ -1430,7 +1476,9 @@ const Target = () => {
       .delete(API.BASE_URL + "scene_details/" + s_scene_id)
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false));
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // get all scene by project id
@@ -1441,7 +1489,9 @@ const Target = () => {
       .get(API.BASE_URL + "scene_data_by_project/" + id)
       .then(function (response) {})
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false));
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   };
 
   // Create SCENE WHEN THE PROJECT IS LOADED :------------------------------------------------------------------------->
@@ -1503,7 +1553,9 @@ const Target = () => {
         setuserFullName(`${response.data.firstname} ${response.data.lastname}`);
       })
       .catch((error) => {})
-      .finally(()=>ctx.setloader(false));
+      .finally(()=>{
+        setTimeout(()=>{ ctx.setloader(false)},0)
+       });
   }, []);
 
   window.addEventListener("pageshow", function (event) {
@@ -1574,7 +1626,9 @@ const Target = () => {
       })
       .then(function (res) {})
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false));
+      .finally(()=>{
+       setTimeout(()=>{ ctx.setloader(false)},0)
+      });
   };
 
   // -------------------------------------------------------------------------->
@@ -1751,7 +1805,9 @@ const Target = () => {
                               console.log(err, "error<----------->");
                               toast.error("Not able to create project !");
                             })
-                            .finally(()=>ctx.setloader(false));
+                            .finally(()=>{
+                              setTimeout(()=>{ ctx.setloader(false)},0)
+                             });
                         })();
                       }}
                     >
@@ -1872,8 +1928,9 @@ const Target = () => {
                             console.log(err, "error<----------->");
                             toast.error("Not able to create project !");
                           })
-                          .finally(()=>ctx.setloader(false))
-                          ;
+                          .finally(()=>{
+                            setTimeout(()=>{ ctx.setloader(false)},0)
+                           });
                       })();
                     }}
                   >
