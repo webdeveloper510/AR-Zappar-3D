@@ -3634,6 +3634,28 @@ const Target = () => {
                           </div>
                         );
                       })}
+                      {getText?.map((text)=>(
+                        <div className="textfield">
+                          <span className="text-format">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="6%"
+                            height="6%"
+                            viewBox="0 0 15 20"
+                          >
+                            <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
+                              <path
+                                fill="#073158"
+                                fillRule="nonzero"
+                                d="M27.4694534 11.225L21.2234727 11.225 21.2234727 30 19.812701 30 19.812701 11.225 13 11.225 13 10 28 10 28 11.225z"
+                                transform="translate(-13 -10)"
+                              ></path>
+                            </g>
+                          </svg>
+                            {text[0].button_name}
+                          </span>
+                        </div>
+                      ))}
 
                       <div class="AR_layer_div">
                         <div class="screen-layer">

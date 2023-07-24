@@ -291,7 +291,7 @@ const ModelAr =()=> {
 
                     if (getVideo){
                         for (let i = 0; i < getVideo.length  &&  getVideo !== undefined; i++){
-                            console.log(getVideo)
+                            console.log(getVideo[i])
                             const video = document.createElement('video');
                             video.autoplay = true;
                             video.crossOrigin="anonymous"
@@ -308,10 +308,10 @@ const ModelAr =()=> {
                             Videotexture.minFilter = THREE.LinearFilter;
                             Videotexture.magFilter = THREE.LinearFilter;
                             Videotexture.format = THREE.RGBAFormat;
-                            const Videogeometry = new THREE.BoxGeometry(getVideo[i].video_transform.width,getVideo[i].video_transform.height,1);
+                            const Videogeometry = new THREE.BoxGeometry(getVideo[i][0].video_transform.width,getVideo[i][0].video_transform.height,1);
                             Videomesh = new THREE.Mesh(Videogeometry, Videomaterial);
                             scene.add(Videomesh);
-                            Videomesh.position.set(0,0,8)
+                            Videomesh.position.set(0,0,-10)
                             Videomesh.userData.name="Video Material"
                             // Videomesh.isDraggable = true;
                         }
@@ -404,13 +404,13 @@ const ModelAr =()=> {
                             const p = document.createElement('h1');
                             p.textContent = getText[i][0].button_name;
                             p.style.color = getText[i][0].text_text.text_color;
-                            p.style.fontSize = '24px';
+                            p.style.fontSize = '10px';
                             p.style.fontWeight = 'bold';
                             p.style.fontFamily = getText[i][0].text_text.text_font;
                             const cPointLable = new CSS3DObject(p);
                             scene.add(cPointLable)
                             cPointLable.position.set(0,0,8)
-                            cPointLable.position.set(Number(getText[i][0].text_transform.position_x), Number(getText[i][0].text_transform.position_y), Number(getText[i][0].text_transform.position_d)+8)
+                            cPointLable.position.set(Number(getText[i][0].text_transform.position_x), Number(getText[i][0].text_transform.position_y), Number(getText[i][0].text_transform.position_d)-8)
                             cPointLable.rotation.y = Math.PI;
                             // cPointLable.rotation.x =getText[i][0].text_transform.Rotation_x
                             // cPointLable.rotation.y =getText[i][0].text_transform.Rotation_y

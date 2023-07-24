@@ -2063,6 +2063,7 @@ span.videp_file_txt {
     white-space: nowrap;
     width: 260px;
     display: block;
+    transition: none;
 }
 span.videp_file_txt svg {
     margin-right: 20px;
@@ -2156,4 +2157,30 @@ background-color: #e7735b;
 }
 .row.col-md-12.justify-content-between {
     background: #f2f2f2;
+}
+span.text-format svg {
+    margin-right: 20px;
+    margin-left: 10px;
+}
+span.text-format {
+    margin-left: 16px;
+    margin-right: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 260px;
+    display: block;
+    transition: none;
+}
+span:hover{
+    background: #EBF6FE;
+    color: #4A90E2;
+    border-left: 3px solid #4A90E2;
+    padding: 10px 10px;
+}
+
+.textfield {
+    float: left;
+    width: 100%;
+    margin-top: 15px;
 }
