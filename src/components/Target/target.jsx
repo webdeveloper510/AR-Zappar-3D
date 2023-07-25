@@ -30,14 +30,12 @@ import "./target.css";
 import imgScene from "../../assets/images/facetracking.png";
 import { Tabs } from "react-bootstrap";
 import { contextObject } from "../ContextStore/ContextApi";
-
 import Box from "@material-ui/core/Box";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 // import Button from 'react-bootstrap/Button';
 
 let firstTime = true;
-let toReload=false;
 const Target = () => {
   // HANDLE GET USER-ID FROM LOCALSTORAGE ------------------------------------------------------------------------------------------------------------------
   const paramData = useParams();
@@ -98,9 +96,6 @@ const Target = () => {
   const [widthVideo, setwidthVideo] = useState();
 
   // States for the Two-D and Three-D Switch ---------------------------------------------->
-
-  const [pro_switch_valueF, switch_value_false] = useState(null);
-  const [pro_switch_valueT, switch_value_true] = useState(null);
   const [twoDthreeDID, lettwoDthreeDID] = useState(null);
   /*******************  Start --- tab close state ***************** */
   const containerRef = useRef(null);
@@ -163,7 +158,7 @@ const Target = () => {
   const contentImgVdoRef = useRef(contentImgVdo);
 
   // array of scene Images
-  let arrayOfSceneImages = [imgScene];
+
   const canvasRef = useRef(null);
   const ctx = useContext(contextObject);
   useEffect(() => {
@@ -1728,6 +1723,27 @@ const Target = () => {
     }
   }, [window.location.href.toString()]);
 
+  const AddButton=(event)=>{
+    const datafull = document.getElementById(selectedBtn)
+    const  text =datafull.innerHTML
+    const BackColor = datafull.style.backgroundColor
+    const button_width = datafull.style.width
+    const height = datafull.style.height
+    const color = datafull.style.color
+    const align = datafull.style.alignItems
+    const justify = datafull.style.justifyContent
+    const formData = {
+      'scene_id':s_scene_id,
+      'Button_name': text
+    }
+    axios.post(API.BASE_URL + "buttons/",formData,{}).then(function (res){
+      console.log(res)
+    }).catch(function(err){
+      console.log(err)
+    })
+  }
+
+
   //  useEffect for sending request in 5 millisend;
 
   useEffect(() => {
@@ -3181,6 +3197,9 @@ const Target = () => {
                       className="social-icon"
                       alt=""
                     ></img>
+                        <button className="applybutton" onClick={AddButton}>
+                          Apply
+                        </button>
                   </Tab.Pane>
 
                   <Tab.Pane
@@ -3557,7 +3576,7 @@ const Target = () => {
                               class="videp_file_txt"
                               onClick={() => {
                                 setisContent(false);
-                                setcontentImgVdo(itm);
+                                setcontentImgVdo( );
                               }}
                             >
                               <svg

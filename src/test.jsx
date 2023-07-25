@@ -5,20 +5,14 @@ import { TransformControls} from '../node_modules/three/examples/jsm/controls/Tr
 import { GLTFLoader } from '../node_modules/three/examples/jsm/loaders/GLTFLoader.js';
 import axios from 'axios';
 import { API } from './config/api';
-import { useParams } from 'react-router-dom';
 import React,{useState ,useRef} from 'react';
 import { toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import svgHere from '../src/assets/images/svgviewer-output.svg'
 import svgHere2 from '../src/assets/images/Mediamodifier-Design.svg'
-import { TTFLoader } from '../node_modules/three/examples/jsm/loaders/TTFLoader'
-import { FontLoader } from '../node_modules/three/examples/jsm/loaders/FontLoader'
-import { TextGeometry } from '../node_modules/three/examples/jsm/geometries/TextGeometry'
 import { contextObject } from './components/ContextStore/ContextApi';
-import WebFont from 'webfontloader';
 import { CSS3DRenderer, CSS3DObject } from '../node_modules/three/examples/jsm/renderers/CSS3DRenderer'
-import { CssBaseline } from '@material-ui/core';
-// import {DomEvents} from 'threex.domevents/threex.domevents'
+
 
 
 
@@ -42,7 +36,6 @@ const ModelAr =()=> {
         const [get2D3D, set2D3D] = useState(null);
        
         const formdata = new FormData;
-        // const {id} = useParams()
         const ctx=useContext(contextObject);
         const id = ctx.scene_id;
         const PlaneTexture = [svgHere , svgHere2]
@@ -97,7 +90,6 @@ const ModelAr =()=> {
             }
             
     // boxModal Function Startes ------------------------------------------------------------------------------>
-    // console.log('useEffectCalled useEffectCalled useEffectCalled');
         const boxModal = () => {
 
         // Variables ------------------------------------------------------------------------------------------->
@@ -114,19 +106,25 @@ const ModelAr =()=> {
 
             canvas = document.getElementById( 'canvas' );
             // Initialize The Project View Model---------------------------------------------------------------->
+
+
             renderer = new THREE.WebGLRenderer({canvas:canvas,antialias: true});
             renderer.setPixelRatio( window.devicePixelRatio );
             renderer.setSize( window.innerWidth, window.innerHeight );
             renderer.useLegacyLights = false;
             document.body.appendChild( renderer.domElement );
             
+
+
             // Camera SetUp For the Project View Model----------------------------------------------------------->
+
                 const aspect = window.innerWidth / window.innerHeight;
                 cameraPersp = new THREE.PerspectiveCamera( 55, aspect, 0.11, 1000 );
                 const camera = new THREE.Camera( 30, aspect, 0.11, 1000 );
                 cameraOrtho = new THREE.OrthographicCamera( - 600 * aspect, 600 * aspect, 600, - 600, 0.01, 3000 );
                 currentCamera = cameraPersp;
                 currentCamera.position.set(  0 , 0, -500);
+
 
             // Creating Scene View ------------------------------------------------------------------------------->
 
@@ -149,6 +147,7 @@ const ModelAr =()=> {
 
 
             // Threjs Plane Helper for OrbitControler Indecator ------------------------------------------------------->
+
             const boxorbitIndictor = new THREE.BoxGeometry(50,50,50);
             const IndecatorTexture = new THREE.TextureLoader();
             const IndecatorTextures = IndecatorImages.map(imageUrl => {
@@ -162,24 +161,8 @@ const ModelAr =()=> {
             scene.add(Indecator);
             Indecator.position.set(-300,-250,0 )
 
-            
-            // AxesHelper for threejs ----------------------------------------------------------------------------------->
-            // var axesHelper = new THREE.AxesHelper( 100 );
-            // var colors = axesHelper.geometry.attributes.color;
-            
-            // colors.setXYZ( 0, 1, 0, 0 ); // index, R, G, B
-            // colors.setXYZ( 1, 1, 0, 0 ); // red
-            // colors.setXYZ( 2, 0, 1, 0 );
-            // colors.setXYZ( 3, 0, 1, 0 ); // green
-            // colors.setXYZ( 4, 0, 0, 1 );
-            // colors.setXYZ( 5, 0, 0, 1 ); // blue    
-            
-            // axesHelper.position.copy(Indecator.position);
-            // scene.add(axesHelper);
-            // scene.add(new THREE.AxesHelper(100));
 
             // Adding Light Effects ------------------------------------------------------------------------------->
-           
 
                 const light = new THREE.DirectionalLight( 0xffffff, 5 );
                 light.position.set( 1, 1, 1 );
@@ -195,44 +178,25 @@ const ModelAr =()=> {
                 orbit.touches.TWO = THREE.TOUCH.DOLLY_ROTATE;
                 orbit.target = plane.position;
 
-                const controls2 = new OrbitControls(camera, renderer.domElement);
-                controls2.target = Indecator.position;
+
+
             // TransFormControls Added ----------------------------------------------------------------------------->
 
                 control = new TransformControls( currentCamera, renderer.domElement );
-
                         control.addEventListener( 'change', render );
-
                         control.addEventListener( 'dragging-changed', function ( event ) {
-
                         orbit.enabled = ! event.value;
-
                     } );
                 scene.add( control );
 
 
 
-                // var ctx = canvas.getContext('2d');
-                // ctx.font = 'italic 18px Arial';
-                // ctx.textAlign = 'center';
-                // ctx.textBaseline = 'middle';
-                // ctx.fileStyle = 'red';
-                // ctx.fileText('Your Text' ,20000,10000)
-
-// Model Data GET for Image Tracking---------------------------------------------------------------->
 
                     // All Data Get for Image Tracking --------------------------------------------->
 
-                    // console.log(id,'<id from context-----------');
-                    // console.log('REQUEST SEND TO GET ALL DATA ');
                     axios.get(API.BASE_URL+"scene_details/"+id+"/")
                     .then((responseProject)=>{
-                        // console.log(responseProject,'main response<--------((()))')
-                        // if(!rendeR){
-                            ctx.setreRender(true);
-                            // toast.success("Project Loaded Successfully !!!")
-                        // }
-                      
+                            ctx.setreRender(true);   
                         setButton(responseProject.data.data[0].button_data)
                         setText(responseProject.data.data[0].text_data)
                         setImage(responseProject.data.data[0].image_data)
@@ -249,22 +213,20 @@ const ModelAr =()=> {
 
 
                     }).catch ((err)=>{
-                        // console.log(err,'THIS IS RESPONSEPROJECT<----------');
                         toast.error("Connecting to Server !")
                     })
 
 
                    
                     // Image Handler Function ------------------------------------------------------------------------------------------>
-                    // var domEvents = new DomEvents(cameraPersp, renderer.domElement);
+
                     if (getImage){
                         for (let i = 0; i < getImage.length  &&  getImage !== undefined; i++){
                             const imageId = getImage[i][0].id
                             const imageData = getImage[i][0].image_url
                             const textureLoader = new THREE.TextureLoader()
                             const texturedf = textureLoader.load(imageData)
-                            // rendeR=true;
-                            // console.log(imageData, 'this is image data this is image data this is image');
+
                             texturedf.minFilter = THREE.LinearFilter;
                             texturedf.magFilter = THREE.LinearFilter;
                             const geometry = new THREE.BoxGeometry(getImage[i][0].image_transform.width, getImage[i][0].image_transform.height,1)
@@ -276,15 +238,10 @@ const ModelAr =()=> {
                             mesh.rotation.y =getImage[i][0].image_transform.Rotation_y
                             mesh.rotation.z =getImage[i][0].image_transform.Rotation_z
                             mesh.userData.type = 'image';
-                            mesh.userData.id = imageId;
-                            // mesh.attach(control)
-                            // mesh.isDraggable = true;                 
+                            mesh.userData.id = imageId;              
                         }
                     }
-                    // else{
-                    //     ctx.setreRender((prev)=>!prev);
-                    // }
- 
+
 
 
                     // Video Handler Function --------------------------------------------------------------------------------->
@@ -313,7 +270,6 @@ const ModelAr =()=> {
                             scene.add(Videomesh);
                             Videomesh.position.set(0,0,-10)
                             Videomesh.userData.name="Video Material"
-                            // Videomesh.isDraggable = true;
                         }
                     }
 
@@ -328,18 +284,6 @@ const ModelAr =()=> {
                             loader.load(gltfContent, (gltf) => {
                                 gltf.scene.position.set(1, 2, 0);
                                 scene.add(gltf.scene);
-                                // gltf.scene.addEventListener('click', () => {
-                                //     // Remove transform controls from the previously selected model, if any
-                                //     if (selectedModel) {
-                                //         control.detach();
-                                //     }
-                            
-                                //     // Set the newly clicked model as the selected model
-                                //     selectedModel = gltf.scene;
-                            
-                                    // Show transform controls for the selected model
-                                    // control.attach(selectedModel);
-                                // });
                             })
                         }
                     }
@@ -352,55 +296,54 @@ const ModelAr =()=> {
                                 orbit.enabled=true
                             }else{
                                 orbit.enabled=false
-                                control.detach(mesh);
-                                // control2.detach(Videomesh);
+
                             }
                         }
                     }
 
                     // States for Text Featres ------------------------------------------------------------------------------------------------>
              
+                    labelRenderer = new CSS3DRenderer() 
+                    labelRenderer.domElement.style.top = '0px';
+                    labelRenderer.domElement.style.position = 'absolute';
+                    labelRenderer.domElement.style.pointerEvents = 'none';
+                    document.body.appendChild(labelRenderer.domElement) 
 
                     // HTML CSS2DRENDERER ---------------------------------------------------------------->
                     if (getText){
                         for (let i = 0; i < getText.length; i++){
-                            // text_nameget(getText[i][0].button_name)
-                            // text_actionGet(getText[i][0].text_action.text_action)
-                            // text_actionIDGet(getText[i][0].text_action.id)
+                            text_nameget(getText[i][0].button_name)
+                            text_actionGet(getText[i][0].text_action.text_action)
+                            text_actionIDGet(getText[i][0].text_action.id)
 
-                            // alignmentGet(getText[i][0].text_text.alignment)
-                            // textFeatureIDGet(getText[i][0].text_text.id)
-                            // linkGet(getText[i][0].text_text.link)
-                            // text_textget(getText[i][0].text_text.text)
-                            // text_colorget(getText[i][0].text_text.text_color)
-                            // text_fontget(getText[i][0].text_text.text_font)
-                            // text_sizeget(getText[i][0].text_text.text_size)
+                            alignmentGet(getText[i][0].text_text.alignment)
+                            textFeatureIDGet(getText[i][0].text_text.id)
+                            linkGet(getText[i][0].text_text.link)
+                            text_textget(getText[i][0].text_text.text)
+                            text_colorget(getText[i][0].text_text.text_color)
+                            text_fontget(getText[i][0].text_text.text_font)
+                            text_sizeget(getText[i][0].text_text.text_size)
 
-                            // MirrorGet(getText[i][0].text_transform.Mirror)
-                            // Rotation_xGet(getText[i][0].text_transform.Rotation_x)
-                            // Rotation_yGet(getText[i][0].text_transform.Rotation_y)
-                            // Rotation_zGet(getText[i][0].text_transform.Rotation_z)
-                            // depthGet(getText[i][0].text_transform.depth)
-                            // heightGet(getText[i][0].text_transform.height)
-                            // position_dGet(getText[i][0].text_transform.position_d)
-                            // position_xGet(getText[i][0].text_transform.position_x)
-                            // position_yGet(getText[i][0].text_transition.position_y)
-                            // widthGet(getText[i][0].text_transition.width)
-                            // transformIDGet(getText[i][0].text_transition.id)
+                            MirrorGet(getText[i][0].text_transform.Mirror)
+                            Rotation_xGet(getText[i][0].text_transform.Rotation_x)
+                            Rotation_yGet(getText[i][0].text_transform.Rotation_y)
+                            Rotation_zGet(getText[i][0].text_transform.Rotation_z)
+                            depthGet(getText[i][0].text_transform.depth)
+                            heightGet(getText[i][0].text_transform.height)
+                            position_dGet(getText[i][0].text_transform.position_d)
+                            position_xGet(getText[i][0].text_transform.position_x)
+                            position_yGet(getText[i][0].text_transition.position_y)
+                            widthGet(getText[i][0].text_transition.width)
+                            transformIDGet(getText[i][0].text_transition.id)
 
-                            // delayGet(getText[i][0].text_transition.dealy)
-                            // durationGet(getText[i][0].text_transition.duration)
-                            // transitionheightGet(getText[i][0].text_transition.transitionheight)
-                            // transitionIDGet(getText[i][0].text_transition.id)
-                            // transition_enterGet(getText[i][0].text_transition.transition_enter)
-                            // transition_exitGet(getText[i][0].text_transition.transition_exit)
+                            delayGet(getText[i][0].text_transition.dealy)
+                            durationGet(getText[i][0].text_transition.duration)
+                            transitionheightGet(getText[i][0].text_transition.transitionheight)
+                            transitionIDGet(getText[i][0].text_transition.id)
+                            transition_enterGet(getText[i][0].text_transition.transition_enter)
+                            transition_exitGet(getText[i][0].text_transition.transition_exit)
 
-                            labelRenderer = new CSS3DRenderer() 
-                            labelRenderer.setSize(window.innerWidth, window.innerHeight);
-                            labelRenderer.domElement.style.top = '0px';
-                            labelRenderer.domElement.style.position = 'fixed';
-                            labelRenderer.domElement.style.pointerEvents = 'none';
-                            document.body.appendChild(labelRenderer.domElement) 
+
                             const p = document.createElement('h1');
                             p.textContent = getText[i][0].button_name;
                             p.style.color = getText[i][0].text_text.text_color;
@@ -409,13 +352,30 @@ const ModelAr =()=> {
                             p.style.fontFamily = getText[i][0].text_text.text_font;
                             const cPointLable = new CSS3DObject(p);
                             scene.add(cPointLable)
-                            cPointLable.position.set(0,0,8)
                             cPointLable.position.set(Number(getText[i][0].text_transform.position_x), Number(getText[i][0].text_transform.position_y), Number(getText[i][0].text_transform.position_d)-8)
-                            cPointLable.rotation.y = Math.PI;
-                            // cPointLable.rotation.x =getText[i][0].text_transform.Rotation_x
-                            // cPointLable.rotation.y =getText[i][0].text_transform.Rotation_y
-                            // cPointLable.rotation.z =getText[i][0].text_transform.Rotation_z
+                            cPointLable.rotation.x =getText[i][0].text_transform.Rotation_x
+                            cPointLable.rotation.y =getText[i][0].text_transform.Rotation_y + Math.PI
+                            cPointLable.rotation.z =getText[i][0].text_transform.Rotation_z
                             console.log('Here is the Point Label------------>',cPointLable);
+                        }
+                    }
+
+                    // Button APIs ------------------------------------------------------------>
+
+                    if (getButton){
+                        for (let i = 0; i <getButton.length; i++){
+                            console.log(getButton[i][0].button_name)
+                            const buttonEle = document.createElement('div')
+                            buttonEle.textContent = getButton[i][0].button_name
+                            buttonEle.style.backgroundColor = 'rgb(150, 191, 239)'
+                            buttonEle.style.width = '10px'
+                            buttonEle.style.height = '3.6px'
+                            buttonEle.style.color = 'white'
+                            buttonEle.style.alignItems = 'center'
+                            buttonEle.style.justifyContent = 'center'
+                            const buttonpoint = new CSS3DObject(buttonEle)
+                            scene.add(buttonpoint)
+                            buttonpoint.position.set(0,0,8)
                         }
                     }
 
@@ -423,156 +383,7 @@ const ModelAr =()=> {
 
 
                    
-                    
-                      
-                      // Set up camera position
-                    //   camera.position.z = 5;                                  
-                                        // ADJUSTMENTT FEATURES
-
-                        // var getWidthd = document.getElementById('GetWidth') 
-                        // getWidthd.addEventListener("change" , (event) =>{
-                        //     setWidth(event.target.value)
-                        // })
-                        // var getLengthd = document.getElementById('GetLength')
-                        // getLengthd.addEventListener("change" , (event) =>{
-                        //     setLength(event.target.value)
-                        // })
-                        // var getHeightd = document.getElementById('GetHeight')
-                        // getHeightd.addEventListener("change" , (event) =>{
-                        //     setHeight(event.target.value)
-                        // })  
-
-                        // // console.log(getWidth,getHeight,getLength)
-
-                        // console.log(getWidth,getHeight,getLength)
-
-                        // const raycaster = new THREE.Raycaster();
-                        // const mouse = new THREE.Vector2();
-                        
-                        // document.addEventListener('mousemove', onMouseMove);
-
-                        // function onMouseMove(event) {
-                        //   // Calculate normalized device coordinates (NDC) of the mouse click
-                        //   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-                        //   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-                        
-                        //   // Update the raycaster with the normalized device coordinates
-                        //   raycaster.setFromCamera(mouse, cameraPersp);
-                        
-                        //   // Perform raycasting on the scene to check for intersected objects
-                        //   const intersects = raycaster.intersectObjects(scene.children, true);
-                        
-                        //   // Check if any objects were intersected
-                        //   if (intersects.length > 0) {
-                        //     const hoveredObject = intersects[0].object;
-                        //     const meshName = hoveredObject.userData.name;
-                        //     const meshType = hoveredObject.userData.type;
-                        //         console.log('Hovered mesh name:', meshName, '---', meshType);
-                        //   }
-                        // }
-                        // function onClick(event) {
-                        //     // Calculate normalized device coordinates (NDC) of the mouse click
-                        //     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-                        //     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-                          
-                        //     // Update the raycaster with the normalized device coordinates
-                        //     raycaster.setFromCamera(mouse, cameraPersp);
-                          
-                        //     // Perform raycasting on the scene to check for intersected objects
-                        //     const intersects = raycaster.intersectObjects(scene.children, true);
-                          
-                        //     // Check if any objects were intersected
-                        //     if (intersects.length > 0) {
-                        //       const clickedObject = intersects[0].object;
-                        //       const meshType = clickedObject.userData.type;
-                          
-                        //       // Check the mesh type to determine if it's a model or image
-                        //       if (meshType === 'model') {
-                        //         // Attach transform controls to the clicked object
-                        //         transformControls.attach(clickedObject);
-                        //         transformControls.enabled = true;
-                        //       } else if (meshType === 'image') {
-                        //         // Attach transform controls to the parent of the clicked object (assuming the parent represents the image)
-                        //         transformControls.attach(clickedObject.parent);
-                        //         transformControls.enabled = true;
-                        //       }
-                        //     } else {
-                        //       // No object was clicked, deselect and disable transform controls
-                        //       transformControls.detach();
-                        //       transformControls.enabled = false;
-                        //     }
-                        //   }
-                        
-// Example for images
-// const images = document.querySelectorAll('.image-element');
-// images.forEach((image) => {
-//   image.addEventListener('click', () => handleElementClick(image));
-// });
-
-// // Example for videos
-// const videos = document.querySelectorAll('.video-element');
-// videos.forEach((video) => {
-//   video.addEventListener('click', () => handleElementClick(video));
-// });
-
-// // Example for 3D models
-// const models = scene.children.filter((child) => child.userData.type === 'model');
-// models.forEach((model) => {
-//   model.addEventListener('click', () => handleElementClick(model));
-// });
-// const handleElementClick = (element) => {
-//     setSelectedElement(element);
-//     control.attach(element);
-//     control.enabled = true;
-//   };
-// const handleDeselect = () => {
-// setSelectedElement(null);
-// transformControls.detach();
-// transformControls.enabled = false;
-// };
-   
-            
-// let draggableObject;
-// const clickMouse = new THREE.Vector2();
-// const raycaster = new THREE.Raycaster();
-
-// window.addEventListener('click', event => {
-//     // If 'holding' object on-click, set container to <undefined> to 'drop’ the object.
-//     if (draggableObject) {
-//       draggableObject= undefined;
-//       return;
-//     }
-  
-//     // If NOT 'holding' object on-click, set container to <object> to 'pick up' the object.
-//     clickMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-//     clickMouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-//     raycaster.setFromCamera(clickMouse, cameraPersp);
-//     const found = raycaster.intersectObjects(scene.children, true);
-//     if (found.length && found[0].object.isDraggable) {
-//       draggableObject = found[0].object;
-//     }
-//   });
-//   window.addEventListener('mousemove', event => {
-//     moveMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-//     moveMouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-//   });
-//   function dragObject() {
-//     // If 'holding' an object, move the object
-//     if (draggableObject) {
-//     const found = raycaster.intersectObjects(scene.children);
-//     // `found` is the metadata of the objects, not the objetcs themsevles  
-//       if (found.length) {
-//         for (let obj3d of found) {
-//           if (!obj3d.object.isDraggablee) {
-//             draggableObject.position.x = obj3d.point.x;
-//             draggableObject.position.z = obj3d.point.z;
-//             break;
-//           }
-//         }
-//       }
-//     }
-//   };
-
+                   
 
         // Camera , Orbit Controls and Transform Controls extra Features -------------------------------------------------------------->  
                         
@@ -652,14 +463,7 @@ const ModelAr =()=> {
                     break;
             }
         } );
-        // Declare the function containing the event listener outside of any other functions
-
-
-        }
-
-
-
-
+    }
 
         // Window Resize Functions -------------------------------------------------------------------------------------------------------->
 
@@ -673,50 +477,20 @@ const ModelAr =()=> {
             cameraOrtho.updateProjectionMatrix();
             renderer.setSize( window.innerWidth, window.innerHeight );
             labelRenderer.setSize( window.innerWidth, window.innerHeight );
-            // render();
         }
 
-        // Rendering The Function ------------------------------------------------------------------------------------------------------------->
 
-
-        // const vector = new THREE.Vector2();
-        // const rayCaster = new THREE.Raycaster();
-        // window.addEventListener('mousemove', onMouseMove, false);
-
-        // function onMouseMove( event ) {
-
-        //     // calculate pointer position in normalized device coordinates
-        //     // (-1 to +1) for both components
-        
-        //     vector.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-        //     vector.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-        //     rayCaster.setFromCamera( vector, cameraPersp );
-        // }
-        
-        // var intersects = rayCaster.intersectObjects(scene.children);
-
-        // if (intersects.length > 0) {
-
-        //     // console.log(intersects[0].object);
-        // }       
 
         function render() {
             // requestAnimationFrame(render)
-            // Indecator.rotation.copy(plane.rotation);
-
             onWindowResize()
             renderer.render( scene, currentCamera );
             labelRenderer.render( scene, currentCamera);
-            // control.update();
         }
     }
-    setTimeout(()=>{
-        // console.log('inside timeout test js file');
-        boxModal()
-    }, 100)
-    // boxModal()
-    // console.log('TEST JS FILE LAST');
-
+            setTimeout(()=>{
+                boxModal()
+            }, 100)
         },[rendeR,id,ctx.reRender]);
 }
 export default ModelAr;
