@@ -139,6 +139,8 @@ const Target = () => {
   // state for unts like centimeter, milimeter
   const [selectedUnit, setselectedUnit] = useState(null);
 
+  const [deletedItem,setdeletedItem]=useState(null);
+
   // state to show and hide all scenes
   const [showScene, setshowScene] = useState(false);
   const [isOpen, setisOpen] = useState(false);
@@ -299,6 +301,9 @@ const Target = () => {
 
   const [depthImgVdo,setdepthImgVdo]=useState(null);
 
+  // states for text to showing on sidebar
+  const [selectedText,setselectedText]=useState(null);
+
   // for searching
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -423,7 +428,6 @@ const Target = () => {
     axios
       .post(API.BASE_URL + "scene/", formdataScene, {})
       .then(function (res) {
-        // setreRender((prev) => !prev);
         if (localStorage.getItem("ProjectContentID")) {
         } else {
           sceneTransitions(res.data.id);
@@ -725,10 +729,7 @@ const Target = () => {
         setScene(responseProject.data.data[0].scene_data);
         setProject(responseProject.data.data[0].project_content_data);
         set2D3D(responseProject.data.data[0].twoD_threeD_data);
-        console.log(
-          responseProject.data,
-          "<-------------datataatatatata---------------"
-        );
+       
 
         // Image Dimensions ----------------------------------------------------------------------------------------------------->
 
@@ -874,9 +875,9 @@ const Target = () => {
           "/",
         payload
       )
-      .then((res) => console.log(res, "response from image transform API"))
+      .then((res) => ctx.setloadContent((prev)=>!prev))
       .catch((err) => console.log(err, "err in catch block "))
-      // .finally(()=>ctx.setloader(false))
+      .finally(()=>ctx.setloader(false))
       ;
   };
 
@@ -910,7 +911,7 @@ const Target = () => {
           "/",
         payload
       )
-      .then((res) => console.log(res, "response from video transform API"))
+      .then((res) =>  ctx.setloadContent((prev)=>!prev))
       .catch((err) => console.log(err, "err in video catch block "))
       // .finally(()=>ctx.setloader(false))
       ;
@@ -1233,13 +1234,13 @@ const Target = () => {
 
   const thecheckfunction = (e) => {
     const formdata = { value: e.target.checked };
-    ctx.setloader(true)
+    // ctx.setloader(true)
     axios
       .put(API.BASE_URL + "twod_threed/" + twoDthreeDID + "/", formdata, {})
       .then(function (res) {})
       .catch(function (err) {})
       .finally(()=>{
-        setTimeout(()=>{ ctx.setloader(false)},0)
+        // setTimeout(()=>{ ctx.setloader(false)},0)
        });
   };
 
@@ -1314,20 +1315,23 @@ const Target = () => {
   // http://18.230.11.54:8001/get-image-data/1/
 
   const deleteImageDataById = (id) => {
-    console.log('send request');
     ctx.setloader(true)
     axios
       .delete(API.BASE_URL + "get-image-data/" +id+'/')
       .then(function (response) {
         console.log('successfully deleted');
         setrenderGetProjact((prev) => !prev);
-        setcontentImgVdo(null)
+        setcontentImgVdo(null);
+        setselectedVideo(null);
+        setselectedFile(null);
+        setreRender((prev)=>!prev);
+         setTimeout(()=>{ ctx.setloader(true)},0)
       })
       .catch(function (err) {
         console.log('ERROR in DELETING',err);
       })
       .finally(()=>ctx.setloader(false))
-      ;
+      
   };
 
   //  function to get video data by id
@@ -1340,7 +1344,11 @@ const Target = () => {
       .then(function (response) {
         console.log('Deleted video successfully');
         setrenderGetProjact((prev) => !prev);
-        setcontentImgVdo(null)
+        setcontentImgVdo(null);
+        setselectedVideo(null);
+        setselectedFile(null);
+        setreRender((prev)=>!prev);
+        setTimeout(()=>{ ctx.setloader(true)},0)
       })
       .catch(function (err) {})
       .finally(()=>{
@@ -1543,8 +1551,6 @@ const Target = () => {
       })
       .then(function (response) {
         ProfileImage(response.data.profile_image);
-        console.log(response.data.firstname, "from target jsx file");
-        console.log(response.data.lastname, "from target jsx file");
         setuserFullName(`${response.data.firstname} ${response.data.lastname}`);
       })
       .catch((error) => {})
@@ -1674,6 +1680,7 @@ const Target = () => {
         textAction(textId);
         textTransition(textId);
         textTextFeature(textId , fontStyle , textVal);
+        ctx.setreRender(false)
       }).catch(function(error){console.log(error)})
     };
 
@@ -2268,7 +2275,7 @@ const Target = () => {
               className="ContextMenuButton--3ysdL ContextMenuButton--p-6XR"
               
               title="Delete"
-              onClick={(event) =>{ handleSelectOption(event, "Delete");console.log('CLICKED');
+              onClick={(event) =>{ handleSelectOption(event, "Delete");
             if(contentImgVdo[0].image_id){
               deleteImageDataById(contentImgVdo[0].image_id)
             }
@@ -3405,9 +3412,6 @@ const Target = () => {
                               marginTop: "10px",
                             }}
                           />
-                          {
-                            console.log(image[0].image_url,'image[0].image_urlTHIS')
-                          }
                         </div>
                       ))}
                     </div>
@@ -3576,7 +3580,8 @@ const Target = () => {
                               class="videp_file_txt"
                               onClick={() => {
                                 setisContent(false);
-                                setcontentImgVdo( );
+                                // setselectedText(null);
+                                setcontentImgVdo( itm );
                               }}
                             >
                               <svg
@@ -3653,8 +3658,15 @@ const Target = () => {
                           </div>
                         );
                       })}
+
                       {getText?.map((text)=>(
-                        <div className="textfield">
+                        <div className="textfield" 
+                        // onClick={()=>{
+                        //   setcontentImgVdo(null)
+                        //   setselectedText(text[0].button_name);
+
+                        // }}
+                        >
                           <span className="text-format">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -7623,7 +7635,6 @@ const Target = () => {
                                     <div className="TitleContainer--2xD-b title-content">
                                       <Accordion.Item eventKey="5">
                                         <Accordion.Header>
-                                          {" "}
                                           Transforms
                                         </Accordion.Header>
                                         <Accordion.Body>
@@ -7777,12 +7788,6 @@ const Target = () => {
                                                       style={{ color: "red" }}
                                                     >
                                                       X
-                                                      {
-                                                        console.log(contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.image_transform
-                                                            ?.position_x,'<this is positon XXXXXXXXXXX')
-                                                      }
                                                     </label>
                                                   </div>
                                                   <div
@@ -9112,6 +9117,7 @@ const Target = () => {
                                 onMouseLeave={() => setHoveredImg(null)}
                                 onClick={() => {
                                   setselectedFile(img.image_url);
+                                  setdeletedItem(img)
                                   setselectedVideo(null);
                                 }}
                               />
@@ -9144,6 +9150,7 @@ const Target = () => {
                                 onMouseLeave={() => setHoveredImg(null)}
                                 onClick={() => {
                                   setselectedFile(img.image_url);
+                                  setdeletedItem(img)
                                   setselectedVideo(null);
                                 }}
                               />
@@ -9177,8 +9184,10 @@ const Target = () => {
                                 onClick={() => {
                                   setselectedVideo(null);
                                   setselectedFile(null);
+                                  setdeletedItem(null)
                                   setTimeout(() => {
                                     setselectedVideo(video.video_url);
+                                    setdeletedItem(video)
                                   }, [0]);
                                 }}
                               >
@@ -9218,8 +9227,10 @@ const Target = () => {
                                 onClick={() => {
                                   setselectedVideo(null);
                                   setselectedFile(null);
+                                  setdeletedItem(null);
                                   setTimeout(() => {
                                     setselectedVideo(vdo.video_url);
+                                    setdeletedItem(vdo)
                                   }, [0]);
                                 }}
                               >
@@ -9274,6 +9285,7 @@ const Target = () => {
                                 onMouseLeave={() => setHoveredImg(null)}
                                 onClick={() => {
                                   setselectedFile(img.image_url);
+                                  setdeletedItem(img)
                                   setselectedVideo(null);
                                 }}
                               />
@@ -9306,6 +9318,7 @@ const Target = () => {
                                 onMouseLeave={() => setHoveredImg(null)}
                                 onClick={() => {
                                   setselectedFile(img.image_url);
+                                  setdeletedItem(img)
                                   setselectedVideo(null);
                                 }}
                               />
@@ -9355,8 +9368,10 @@ const Target = () => {
                                 onClick={() => {
                                   setselectedVideo(null);
                                   setselectedFile(null);
+                                  setdeletedItem(null)
                                   setTimeout(() => {
                                     setselectedVideo(video.video_url)
+                                    setdeletedItem(video)
                                   }, [0]);
                                 }}
                               >
@@ -9396,8 +9411,10 @@ const Target = () => {
                                 onClick={() => {
                                   setselectedVideo(null);
                                   setselectedFile(null);
+                                  setdeletedItem(null);
                                   setTimeout(() => {
                                     setselectedVideo(vdo.video_url);
+                                    setdeletedItem(vdo)
                                   }, [0]);
                                 }}
                               >
@@ -9405,6 +9422,7 @@ const Target = () => {
                               </video>
                               {hoveredImg === vdo.video_url && (
                                 <span className="">{getImgName(vdo.video_url)}</span>
+                               
                               )}
                             </div>
                           ))}
@@ -9577,7 +9595,17 @@ const Target = () => {
                                     >
                                       <path d="M21.714 10c1.263 0 2.286.895 2.286 2v1h4.526c.262 0 .474.224.474.5 0 .245-.168.45-.389.492l-.085.008h-1.581l-.672 12.235C26.157 28.349 24.523 30 22.546 30h-5.092c-1.977 0-3.611-1.65-3.727-3.765L13.055 14h-1.581a.487.487 0 01-.474-.5c0-.245.168-.45.389-.492l.085-.008H16v-1c0-1.105 1.023-2 2.286-2h3.428zm4.296 4H13.99l.668 12.176c.084 1.527 1.224 2.732 2.632 2.819l.164.005h5.092c1.428 0 2.617-1.148 2.781-2.65l.015-.174L26.01 14zm-8.51 4a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L17 24.5v-6a.5.5 0 01.5-.5zm5 0a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L22 24.5v-6a.5.5 0 01.5-.5zm-.7-7h-3.6c-.615 0-1.123.386-1.192.883L17 12v1h6v-1c0-.513-.463-.936-1.06-.993L21.8 11z"></path>
                                     </svg>
-                                    <span className="delete-file-txt border border-danger">
+                                    <span className="delete-file-txt border border-danger" 
+                                    onClick={()=>{
+                                      console.log(deletedItem.image_id,'deletedItem[0].image_urldeletedItem[0].image_url')
+                                      if(deletedItem.image_id){
+                                        deleteImageDataById(  deletedItem.image_id   )
+                                      }
+                                      if(deletedItem.video_id){
+                                        deleteVideoDataById(deletedItem.video_id)
+                                      }
+                                    }}
+                                    >
                                       Delete file123
                                     </span>
                                   </div>

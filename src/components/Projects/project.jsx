@@ -34,6 +34,8 @@ const Project =()=>{
   const [SceneType , selectSceneType] = useState(null);
   const [FeaturedtrackerOption,Featuredtracker] = useState(null);
   const [showcreatelabel, setcreatelabel] = useState(false);
+
+
   
 
  // USE EFFECT FOR ID ------------------------------------------------------------------->
@@ -41,7 +43,6 @@ const Project =()=>{
   if(id?.length > 0){
   axios.get(API.BASE_URL+'project-list/'+id+'/')
     .then(function(response){
-      // console.log('Response---------------------->',response)
       addTitle(response.data.ProTitle)
       ProImg(response.data.imagePro.toString())
       CreationDate(response.data.created_at)
@@ -67,7 +68,19 @@ const Project =()=>{
    .catch((error) => {
      // console.log(error, 'error');
    });
- },[])
+ },[]);
+
+
+ const deleteProject = () => {
+  axios.delete(API.BASE_URL+'project-list/'+id+'/')
+  .then(function(response){
+    console.log(response,'PROJECT deleted<-------------------');
+    navigate('/home')
+  })
+  .catch(function(error){
+    // console.log(error)
+  })
+ }
 
 
  // Title  ------------------------------------------------------------------->
@@ -188,9 +201,9 @@ return(
                             <li><a className="dropdown-item">
                          Get deep link ID</a></li>
                             <li><hr className="dropdown-divider"/></li>
-                            <li><a className="dropdown-item">
-                          Unpublish</a></li>
-                          <li><a className="dropdown-item">Delete</a></li>
+                            <li ><button className="dropdown-item" disabled>
+                          Unpublish</button></li>
+                          <li onClick={deleteProject}><a className="dropdown-item">Delete</a></li>
                           </ul>
                         </div>
 

@@ -491,6 +491,6 @@ const ModelAr =()=> {
             setTimeout(()=>{
                 boxModal()
             }, 100)
-        },[rendeR,id,ctx.reRender]);
+        },[rendeR,id,ctx.reRender,ctx.loadContent,ctx.loader]);
 }
 export default ModelAr;
