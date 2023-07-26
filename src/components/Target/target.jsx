@@ -574,8 +574,8 @@ const Target = () => {
           dimwidth(DataImage[i][0].image_transform.width);
           dimheight(DataImage[i][0].image_transform.height);
           dimdepth(DataImage[i][0].image_transform.depth);
-          dimposition_x(DataImage[i][0].image_transform.position_x);
-          dimposition_y(DataImage[i][0].image_transform.position_y);
+          // dimposition_x(DataImage[i][0].image_transform.position_x);
+          // dimposition_y(DataImage[i][0].image_transform.position_y);
           dimposition_d(DataImage[i][0].image_transform.position_d);
           dimRotation_x(DataImage[i][0].image_transform.Rotation_x);
           dimRotation_y(DataImage[i][0].image_transform.Rotation_y);
@@ -738,8 +738,8 @@ const Target = () => {
           dimwidth(DataImage[i][0].image_transform.width);
           dimheight(DataImage[i][0].image_transform.height);
           dimdepth(DataImage[i][0].image_transform.depth);
-          dimposition_x(DataImage[i][0].image_transform.position_x);
-          dimposition_y(DataImage[i][0].image_transform.position_y);
+          // dimposition_x(DataImage[i][0].image_transform.position_x);
+          // dimposition_y(DataImage[i][0].image_transform.position_y);
           dimposition_d(DataImage[i][0].image_transform.position_d);
           dimRotation_x(DataImage[i][0].image_transform.Rotation_x);
           dimRotation_y(DataImage[i][0].image_transform.Rotation_y);
@@ -913,6 +913,42 @@ const Target = () => {
       )
       .then((res) =>  ctx.setloadContent((prev)=>!prev))
       .catch((err) => console.log(err, "err in video catch block "))
+      // .finally(()=>ctx.setloader(false))
+      ;
+  };
+
+  const textDimentionUpdate = () => {
+    const payload = {
+      id: contentImgVdo[0].text_transform.id,
+      width:widthImgVdo || contentImgVdo && contentImgVdo[0]?.text_transform?.width,
+      height:heightImgVdo || contentImgVdo && contentImgVdo[0]?.text_transform?.height,
+      depth:depthImgVdo || contentImgVdo && contentImgVdo[0]?.text_transform?.depth,
+      position_x:
+        contentImgVdo && contentImgVdo[0]?.text_transform?.position_x,
+      position_y:
+        contentImgVdo && contentImgVdo[0]?.text_transform?.position_y,
+      position_d:
+        contentImgVdo && contentImgVdo[0]?.text_transform?.position_d,
+      Rotation_x:
+        contentImgVdo && contentImgVdo[0]?.text_transform?.Rotation_x,
+      Rotation_y:
+        contentImgVdo && contentImgVdo[0]?.text_transform?.Rotation_y,
+      Rotation_z:
+        contentImgVdo && contentImgVdo[0]?.text_transform?.Rotation_z,
+      Mirror: contentImgVdo && contentImgVdo[0]?.text_transform?.Mirror,
+      text_id_id: contentImgVdo[0].text_id,
+    };
+    // ctx.setloader(true)
+    axios
+      .put(
+        API.BASE_URL +
+          "/text_transform/" +
+          contentImgVdo[0].text_transform.id +
+          "/",
+        payload
+      )
+      .then((res) =>  ctx.setloadContent((prev)=>!prev))
+      .catch((err) => console.log(err, "err in text catch block "))
       // .finally(()=>ctx.setloader(false))
       ;
   };
@@ -1325,7 +1361,7 @@ const Target = () => {
         setselectedVideo(null);
         setselectedFile(null);
         setreRender((prev)=>!prev);
-         setTimeout(()=>{ ctx.setloader(true)},0)
+        setTimeout(()=>{ ctx.setloader(true)},0)
       })
       .catch(function (err) {
         console.log('ERROR in DELETING',err);
@@ -1680,6 +1716,7 @@ const Target = () => {
         textAction(textId);
         textTransition(textId);
         textTextFeature(textId , fontStyle , textVal);
+        setreRender(prev=>!prev)
         ctx.setreRender(false)
       }).catch(function(error){console.log(error)})
     };
@@ -1759,6 +1796,7 @@ const Target = () => {
     const timeoutId = setTimeout(() => {
       if(contentImgVdo && contentImgVdo[0].image_transform){imageDimentionUpdate()}
       if(contentImgVdo && contentImgVdo[0].video_transform){videoDimentionUpdate()}
+      if(contentImgVdo && contentImgVdo[0].text_transform){textDimentionUpdate()}
     }, delay);
 
     return () => {
@@ -1782,6 +1820,7 @@ const Target = () => {
                   onClick={() => {
                     if(contentImgVdo && contentImgVdo[0].image_transform){imageDimentionUpdate()}
                     if(contentImgVdo && contentImgVdo[0].video_transform){videoDimentionUpdate()}
+                    if(contentImgVdo && contentImgVdo[0].text_transform){textDimentionUpdate()}
                     handleBack();
                   }}
                   xmlns="http://www.w3.org/2000/svg"
@@ -3580,7 +3619,7 @@ const Target = () => {
                               class="videp_file_txt"
                               onClick={() => {
                                 setisContent(false);
-                                // setselectedText(null);
+                                setselectedText(null);
                                 setcontentImgVdo( itm );
                               }}
                             >
@@ -3623,6 +3662,7 @@ const Target = () => {
                               onClick={() => {
                                 setisContent(false);
                                 setcontentImgVdo(null);
+                                setselectedText(null);
                                 setTimeout(() => {
                                   setcontentImgVdo(itm);
                                 }, 0);
@@ -3661,11 +3701,12 @@ const Target = () => {
 
                       {getText?.map((text)=>(
                         <div className="textfield" 
-                        // onClick={()=>{
-                        //   setcontentImgVdo(null)
-                        //   setselectedText(text[0].button_name);
-
-                        // }}
+                        onClick={()=>{
+                          setcontentImgVdo(text);
+                          setisContent(false)
+                          // setselectedText(text[0].button_name);
+                          console.log(contentImgVdo,'this is text <---------------------------------------')
+                        }}
                         >
                           <span className="text-format">
                           <svg
@@ -6076,8 +6117,10 @@ const Target = () => {
                                   {/* start Content show hide content  */}
                                   <div className="TitleContainer--2xD-b title-content">
                                     <Accordion.Item eventKey="0">
-                                      <Accordion.Header>
-                                        Content
+                                      <Accordion.Header >
+                                       <p style={{
+                                        color:contentImgVdo && contentImgVdo[0].button_name ? 'rgb(91 89 89 / 35%)' : 'black'
+                                      }}> Content</p>
                                       </Accordion.Header>
                                       <Accordion.Body>
                                         <div
@@ -6086,12 +6129,13 @@ const Target = () => {
                                           style={{ overflow: "visible" }}
                                         >
                                           <div>
-                                            <div
-                                              className="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO "
+                                           { !contentImgVdo[0].button_name && (<div
+                                              className="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO border border-danger"
                                               style={{
                                                 width: "100%",
                                                 height: "170px",
                                               }}
+                                             
                                             >
                                               {contentImgVdo &&
                                                 contentImgVdo[0].image_url && (
@@ -6123,6 +6167,11 @@ const Target = () => {
                                                     />
                                                   </video>
                                                 )}
+                                                {/* {
+                                                   selectedText && ( <p>
+                                                    {'selectedText[0].button_name'}
+                                                   </p> )
+                                                } */}
                                               <div className="HoverDiv--jI34Q ">
                                                 <button
                                                   style={{
@@ -6131,7 +6180,7 @@ const Target = () => {
                                                   }}
                                                 >
                                                   <div className="SubBtn--26RUV TrkImgUploadButton--3e-ZC">
-                                                    Replace
+                                                    Replace123
                                                   </div>
                                                 </button>
                                                 <input
@@ -6147,16 +6196,16 @@ const Target = () => {
                                               </div>
                                               <div className="HoverDiv--2gksf ">
                                                 <button className="ActionBtn--1x70k">
-                                                  <div className="EntityReplaceBtn--V4byk">
+                                                  {/* <div className="EntityReplaceBtn--V4byk">
                                                     Replace
-                                                  </div>
+                                                  </div> */}
                                                 </button>
                                                 <input
                                                   type="file"
                                                   style={{ display: "none" }}
                                                 />
                                               </div>
-                                            </div>
+                                            </div>)}
                                           </div>
                                         </div>
                                       </Accordion.Body>
@@ -7668,6 +7717,12 @@ const Target = () => {
                                                           contentImgVdo[0]
                                                             ?.video_transform
                                                             ?.width) ||
+                                                            
+                                                              (contentImgVdo &&
+                                                                contentImgVdo[0]
+                                                                  ?.text_transform
+                                                                  ?.width)
+                                                             ||
                                                         0
                                                       }
                                                       onChange={(e)=>setwidthImgVdo(e.target.value)}
@@ -7676,10 +7731,6 @@ const Target = () => {
                                                       data-testid="NumericalInputLabel"
                                                       style={{ color: "grey" }}
                                                     >
-                                                      {console.log(
-                                                        contentImgVdo,
-                                                        "this is content vdo img"
-                                                      )}
                                                       W
                                                     </label>
                                                   </div>
@@ -7709,7 +7760,13 @@ const Target = () => {
                                                           contentImgVdo[0]
                                                             ?.video_transform
                                                             ?.height) ||
-                                                        0
+                                                            
+                                                              (contentImgVdo &&
+                                                                contentImgVdo[0]
+                                                                  ?.text_transform
+                                                                  ?.height)
+                                                             ||
+                                                        10
                                                       }
                                                       onChange={(e)=>setheightImgVdo(e.target.value)}
 
@@ -7779,6 +7836,11 @@ const Target = () => {
                                                           contentImgVdo[0]
                                                             ?.video_transform
                                                             ?.position_x) ||
+                                                              (contentImgVdo &&
+                                                                contentImgVdo[0]
+                                                                  ?.text_transform
+                                                                  ?.position_x)
+                                                             ||
                                                         0
                                                       }
                                                       onChange={(e)=>dimposition_x(e.target.value)}
@@ -7814,6 +7876,11 @@ const Target = () => {
                                                           contentImgVdo[0]
                                                             ?.video_transform
                                                             ?.position_y) ||
+                                                              (contentImgVdo &&
+                                                                contentImgVdo[0]
+                                                                  ?.text_transform
+                                                                  ?.position_y)
+                                                             ||
                                                         0
                                                       }
                                                       onChange={(e)=>dimposition_y(e.target.value)}
@@ -7849,6 +7916,11 @@ const Target = () => {
                                                           contentImgVdo[0]
                                                             ?.video_transform
                                                             ?.position_d) ||
+                                                            (contentImgVdo &&
+                                                              contentImgVdo[0]
+                                                                ?.text_transform
+                                                                ?.position_d)
+                                                           ||
                                                         0
                                                       }
                                                       onChange={(e)=>dimposition_d(e.target.value)}
@@ -7881,6 +7953,11 @@ const Target = () => {
                                                           contentImgVdo[0]
                                                             ?.video_transform
                                                             ?.Rotation_x) ||
+                                                            (contentImgVdo &&
+                                                              contentImgVdo[0]
+                                                                ?.text_transform
+                                                                ?.Rotation_x)
+                                                           ||
                                                         0
                                                       }
                                                       onChange={(e)=>dimRotation_x(e.target.value)}
@@ -7916,6 +7993,10 @@ const Target = () => {
                                                           contentImgVdo[0]
                                                             ?.video_transform
                                                             ?.Rotation_y) ||
+                                                            (contentImgVdo &&
+                                                              contentImgVdo[0]
+                                                                ?.text_transform
+                                                                ?.Rotation_y) ||
                                                         0
                                                       }
                                                       onChange={(e)=>dimRotation_y(e.target.value)}
@@ -7951,6 +8032,10 @@ const Target = () => {
                                                           contentImgVdo[0]
                                                             ?.video_transform
                                                             ?.Rotation_z) ||
+                                                            (contentImgVdo &&
+                                                              contentImgVdo[0]
+                                                                ?.text_transform
+                                                                ?.Rotation_z) ||
                                                         0
                                                       }
                                                       onChange={(e)=>dimRotation_z(e.target.value)}
@@ -7997,6 +8082,10 @@ const Target = () => {
                                                           contentImgVdo[0]
                                                             ?.video_transform
                                                             ?.Mirror) ||
+                                                            (contentImgVdo &&
+                                                              contentImgVdo[0]
+                                                                ?.text_transform
+                                                                ?.Mirror) ||
                                                         "Mirror"}
                                                     </span>
                                                   </div>
@@ -9493,7 +9582,7 @@ const Target = () => {
                   width="360"
                   height="145"
                   // title="YouTube video player"
-                  // frameborder="0"
+                  frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowfullscreen
                   controls

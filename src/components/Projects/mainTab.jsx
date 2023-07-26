@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Tab from 'react-bootstrap/Tab';
 import FirstTab from "./firsttTab";
 import SecondTab from "./secondTab";
@@ -11,7 +11,7 @@ import { API } from "../../config/api";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { contextObject } from "../ContextStore/ContextApi";
+
 
 
 
@@ -41,6 +41,14 @@ const MainTab = () => {
         })
       };
 
+    //   useEffect(()=>{
+    //    setTimeout(() => {
+    //     console.log(id,'iddddddddddddddddddddddddddddddddddddddddddddddddddd');
+    //     axios.get(API.BASE_URL + 'getproject_contentdata/'+id+'/').then((res)=>{
+    //         console.log(res,'response from get of useERffect<-------------------------------')
+    //     }).catch((e)=>console.log(e,'error in caych block <--------------------------'))
+    //    }, 2000);
+    //   },[])
     
 
     return (
