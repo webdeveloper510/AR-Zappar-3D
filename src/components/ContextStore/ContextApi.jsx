@@ -10,6 +10,7 @@ const ContextProvider=(props)=>{
     const [selected3D,setselected3D]=useState([]);
     const [loader,setloader]=useState(false);
     const [loadContent,setloadContent]=useState(false);
+    const [contentImgVdo,setContentImgVdo]=useState(false);
 
 
 
@@ -30,6 +31,8 @@ const ContextProvider=(props)=>{
         setloader,
         loadContent,
         setloadContent,
+        contentImgVdo,
+        setContentImgVdo
 
     }
     return (

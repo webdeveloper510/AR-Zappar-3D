@@ -103,7 +103,7 @@ const ModelAr =()=> {
             render();
  
         function init() {
-
+            console.log('In Test.jsx file **********************************************', ctx.contentImgVdo)
             canvas = document.getElementById( 'canvas' );
             // Initialize The Project View Model---------------------------------------------------------------->
 
@@ -223,6 +223,7 @@ const ModelAr =()=> {
                     if (getImage){
                         for (let i = 0; i < getImage.length  &&  getImage !== undefined; i++){
                             const imageId = getImage[i][0].id
+                            console.log(id)
                             const imageData = getImage[i][0].image_url
                             const textureLoader = new THREE.TextureLoader()
                             const texturedf = textureLoader.load(imageData)
@@ -231,14 +232,14 @@ const ModelAr =()=> {
                             texturedf.magFilter = THREE.LinearFilter;
                             const geometry = new THREE.BoxGeometry(getImage[i][0].image_transform.width, getImage[i][0].image_transform.height,1)
                             const material = new THREE.MeshBasicMaterial({ map: texturedf, transparent: false })
-                            const mesh = new THREE.Mesh(geometry, material);
+                            mesh = new THREE.Mesh(geometry, material);
                             plane.add(mesh);
                             mesh.position.set(Number(getImage[i][0].image_transform.position_x), Number(getImage[i][0].image_transform.position_y), Number(getImage[i][0].image_transform.position_d)+8)
                             mesh.rotation.x =getImage[i][0].image_transform.Rotation_x
                             mesh.rotation.y =getImage[i][0].image_transform.Rotation_y
                             mesh.rotation.z =getImage[i][0].image_transform.Rotation_z
                             mesh.userData.type = 'image';
-                            mesh.userData.id = imageId;              
+                            mesh.userData.name = imageData;              
                         }
                     }
 
@@ -269,7 +270,7 @@ const ModelAr =()=> {
                             Videomesh = new THREE.Mesh(Videogeometry, Videomaterial);
                             scene.add(Videomesh);
                             Videomesh.position.set(0,0,-10)
-                            Videomesh.userData.name="Video Material"
+                            Videomesh.userData.id=getVideo[i][0].video_url;
                         }
                     }
 
@@ -284,6 +285,7 @@ const ModelAr =()=> {
                             loader.load(gltfContent, (gltf) => {
                                 gltf.scene.position.set(1, 2, 0);
                                 scene.add(gltf.scene);
+                                
                             })
                         }
                     }
@@ -476,7 +478,7 @@ const ModelAr =()=> {
             cameraOrtho.right = cameraOrtho.top * aspect;
             cameraOrtho.updateProjectionMatrix();
             renderer.setSize( window.innerWidth, window.innerHeight );
-            labelRenderer.setSize( window.innerWidth, window.innerHeight );
+            // labelRenderer.setSize( window.innerWidth, window.innerHeight );
         }
 
 
@@ -491,6 +493,6 @@ const ModelAr =()=> {
             setTimeout(()=>{
                 boxModal()
             }, 100)
-        },[rendeR,id,ctx.reRender,ctx.loadContent,ctx.loader]);
+        },[rendeR,id,ctx.reRender,ctx.loadContent,ctx.loader, ctx.contentImgVdo]);
 }
 export default ModelAr;

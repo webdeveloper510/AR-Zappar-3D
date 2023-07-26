@@ -1358,6 +1358,7 @@ const Target = () => {
         console.log('successfully deleted');
         setrenderGetProjact((prev) => !prev);
         setcontentImgVdo(null);
+        ctx.setContentImgVdo(null)
         setselectedVideo(null);
         setselectedFile(null);
         setreRender((prev)=>!prev);
@@ -1381,6 +1382,7 @@ const Target = () => {
         console.log('Deleted video successfully');
         setrenderGetProjact((prev) => !prev);
         setcontentImgVdo(null);
+        ctx.setContentImgVdo(null)
         setselectedVideo(null);
         setselectedFile(null);
         setreRender((prev)=>!prev);
@@ -3621,6 +3623,8 @@ const Target = () => {
                                 setisContent(false);
                                 setselectedText(null);
                                 setcontentImgVdo( itm );
+                                ctx.setContentImgVdo(itm)
+
                               }}
                             >
                               <svg
@@ -3665,6 +3669,8 @@ const Target = () => {
                                 setselectedText(null);
                                 setTimeout(() => {
                                   setcontentImgVdo(itm);
+                                  ctx.setContentImgVdo(itm)
+
                                 }, 0);
                               }}
                             >
@@ -3757,11 +3763,6 @@ const Target = () => {
                   setisOpen(false);
                   setisContent(false);
                 }}
-                // style={{
-                //   zIndex: isOpen || isContent ? "1" : "-1",
-                //   backgroundColor: "transparent",
-                //   touchAction: "auto",
-                // }}
               >
               <ModelAr />
                 </canvas>
@@ -6128,15 +6129,12 @@ const Target = () => {
                                           className="target-image-content Content--15Wyt Open--EFZA8"
                                           style={{ overflow: "visible" }}
                                         >
-                                          <div>
-                                           { !contentImgVdo[0].button_name && (<div
-                                              className="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO border border-danger"
-                                              style={{
-                                                width: "100%",
-                                                height: "170px",
-                                              }}
-                                             
-                                            >
+                                          {/* <div> */}
+
+                                           { !contentImgVdo[0].button_name && (
+                                           <div className="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO border border-danger">
+
+                                            <div className="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO " style={{width: "100%",height: "170px"}}>
                                               {contentImgVdo &&
                                                 contentImgVdo[0].image_url && (
                                                   <img
@@ -6167,11 +6165,6 @@ const Target = () => {
                                                     />
                                                   </video>
                                                 )}
-                                                {/* {
-                                                   selectedText && ( <p>
-                                                    {'selectedText[0].button_name'}
-                                                   </p> )
-                                                } */}
                                               <div className="HoverDiv--jI34Q ">
                                                 <button
                                                   style={{
@@ -6205,8 +6198,8 @@ const Target = () => {
                                                   style={{ display: "none" }}
                                                 />
                                               </div>
-                                            </div>)}
-                                          </div>
+                                            </div>
+                                          </div>)}
                                         </div>
                                       </Accordion.Body>
                                     </Accordion.Item>
