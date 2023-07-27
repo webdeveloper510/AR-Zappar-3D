@@ -187,7 +187,7 @@ const ModelAr =()=> {
                         control.addEventListener( 'dragging-changed', function ( event ) {
                         orbit.enabled = ! event.value;
                     } );
-                scene.add( control );
+                    scene.add( control );
 
 
 
@@ -239,7 +239,7 @@ const ModelAr =()=> {
                             mesh.rotation.y =getImage[i][0].image_transform.Rotation_y
                             mesh.rotation.z =getImage[i][0].image_transform.Rotation_z
                             mesh.userData.type = 'image';
-                            mesh.userData.name = imageData;              
+                            mesh.userData.name = imageData;      
                         }
                     }
 
@@ -270,7 +270,7 @@ const ModelAr =()=> {
                             Videomesh = new THREE.Mesh(Videogeometry, Videomaterial);
                             scene.add(Videomesh);
                             Videomesh.position.set(0,0,-10)
-                            Videomesh.userData.id=getVideo[i][0].video_url;
+                            Videomesh.userData.name=getVideo[i][0].video_url;
                         }
                     }
 
@@ -303,6 +303,18 @@ const ModelAr =()=> {
                         }
                     }
 
+                    if(ctx.contentImgVdo && ctx.contentImgVdo[0].image_url === mesh.userData.name){
+                        control.attach(mesh)
+                    }
+                    else{
+                        console.log("not found");
+                    }
+                    if(ctx.contentImgVdo[0].video_url === Videomesh.userData.name){
+                        control.attach(Videomesh)
+                    }
+                    else{
+                        console.log("No selected")
+                    }
                     // States for Text Featres ------------------------------------------------------------------------------------------------>
              
                     labelRenderer = new CSS3DRenderer() 
@@ -487,7 +499,7 @@ const ModelAr =()=> {
             // requestAnimationFrame(render)
             onWindowResize()
             renderer.render( scene, currentCamera );
-            labelRenderer.render( scene, currentCamera);
+            // labelRenderer.render( scene, currentCamera);
         }
     }
             setTimeout(()=>{

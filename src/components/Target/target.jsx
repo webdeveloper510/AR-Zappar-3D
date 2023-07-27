@@ -3665,13 +3665,13 @@ const Target = () => {
                               class="videp_file_txt"
                               onClick={() => {
                                 setisContent(false);
-                                setcontentImgVdo(null);
+                                // setcontentImgVdo(null);
                                 setselectedText(null);
-                                setTimeout(() => {
+                                // setTimeout(() => {
                                   setcontentImgVdo(itm);
                                   ctx.setContentImgVdo(itm)
 
-                                }, 0);
+                                // }, 0);
                               }}
                             >
                               <svg
