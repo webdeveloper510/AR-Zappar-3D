@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { API } from "../../../src/config/api"
 import axios from "axios"; 
 import { useNavigate , useParams } from "react-router-dom";
@@ -21,6 +21,7 @@ import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faList } from '@fortawesome/free-solid-svg-icons';
 import MainTab from "./mainTab";
+import { contextObject } from "../ContextStore/ContextApi";
 
 
 const Project =()=>{
@@ -34,6 +35,7 @@ const Project =()=>{
   const [SceneType , selectSceneType] = useState(null);
   const [FeaturedtrackerOption,Featuredtracker] = useState(null);
   const [showcreatelabel, setcreatelabel] = useState(false);
+  const ctx=useContext(contextObject);
 
 
   
@@ -110,10 +112,41 @@ const Project =()=>{
   
  // FOR API  ------------------------------------------------------------------->
 
+
+ useEffect(() => {
+  const delay = 500;
+
+  const timeoutId = setTimeout(() => {
+      const formData = new FormData();
+      formData.append('ProTitle',titlePro)
+      
+      axios.post(API.BASE_URL + 'update-project/'+id+'/', formData, {
+        headers: {
+          'accept': 'application/json',
+              'content-type': 'multipart/form-data' 
+          },
+        })
+      .then(function (response) {
+        
+      })
+      .catch(function(err) {
+        console.error('Error uploading file', err);
+      });
+  }, delay);
+
+  return () => {
+    clearTimeout(timeoutId);
+  };
+}, [titlePro]);
+
+
+
+
   const handleSubmit = () => {   
       const formData = new FormData();
       formData.append('ProTitle',titlePro)
       // console.log('Params Id', id)
+      // ctx.settitleOfProject(titlePro)
       axios.post(API.BASE_URL + 'update-project/'+id+'/', formData, {
         headers: {
           'accept': 'application/json',

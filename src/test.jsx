@@ -562,7 +562,7 @@ const ModelAr =()=> {
                 renderer.render(scene, currentCamera);
                 updatetransform();
             }
-            requestAnimationFrame(render);
+            // requestAnimationFrame(render);
         }
     }
             setTimeout(()=>{

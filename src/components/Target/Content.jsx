@@ -84,27 +84,27 @@ console.log(contentImgVdo,'this is content video')
 
 
 
-const getDimensions=()=>{
-  console.log(contentImgVdo,'this is ideeeeeeeeeee');
-  axios.get(API.BASE_URL + "scene_details/" + ctx.scene_id)
-  .then((res)=>{
-    // console.log(res.data.data[0],'inside useEffect');
+// const getDimensions=()=>{
+//   console.log(contentImgVdo,'this is ideeeeeeeeeee');
+//   axios.get(API.BASE_URL + "scene_details/" + ctx.scene_id)
+//   .then((res)=>{
+//     // console.log(res.data.data[0],'inside useEffect');
 
-    if(contentImgVdo && contentImgVdo[0].image_id){
-      console.log(res.data.data[0].image_data.map(itm=>(
-        itm.find(item=>item.image_id===contentImgVdo[0].image_id)
-      )),'IMAGE IDIDIDIDID')
-    }
-    if(contentImgVdo && contentImgVdo[0].video_id){
-      console.log(res.data.data[0].image_data.map(itm=>(
-        itm.filter(item=>item.image_id===contentImgVdo[0].video_id)
-      )).find(elem=>typeof elem ==='object'),'ViDEO IDIDIDIDID')
-    }
+//     if(contentImgVdo && contentImgVdo[0].image_id){
+//       console.log(res.data.data[0].image_data.map(itm=>(
+//         itm.find(item=>item.image_id===contentImgVdo[0].image_id)
+//       )),'IMAGE IDIDIDIDID')
+//     }
+//     if(contentImgVdo && contentImgVdo[0].video_id){
+//       console.log(res.data.data[0].image_data.map(itm=>(
+//         itm.filter(item=>item.image_id===contentImgVdo[0].video_id)
+//       )).find(elem=>typeof elem ==='object'),'ViDEO IDIDIDIDID')
+//     }
 
-   console.log( res.data.data[0].image_data[2],'ID of 178 of this item <------------------');
-  })
-  .catch((e)=>console.log(e,'ERROR to fetch dimensions'))
-}
+//    console.log( res.data.data[0].image_data[2],'ID of 178 of this item <------------------');
+//   })
+//   .catch((e)=>console.log(e,'ERROR to fetch dimensions'))
+// }
 
 useEffect(() => {
   // getDimensions()
@@ -232,8 +232,7 @@ useEffect(() => {
 
 
 
-
-}, [useSelector((state)=>state.sideBarContentReducer.toUpdateDimensions)])
+}, [useSelector((state)=>state.sideBarContentReducer.contentImgVdo)]);
 
 
   return (

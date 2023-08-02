@@ -11,15 +11,17 @@ import { API } from "../../config/api";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { contextObject } from "../ContextStore/ContextApi";
 
 
 
-
+let firstTime=false;
 const MainTab = () => {
 
     const [projectTitle,setprojectTitle]=useState('Untitled project');
     const [projectIcon,setprojectIcon]=useState(null)
     const {id} = useParams();
+    const ctx=useContext(contextObject);
 
     const handleImageChange = (event) => {
         const obj={
@@ -41,14 +43,31 @@ const MainTab = () => {
         })
       };
 
-    //   useEffect(()=>{
+      useEffect(()=>{
     //    setTimeout(() => {
-    //     console.log(id,'iddddddddddddddddddddddddddddddddddddddddddddddddddd');
-    //     axios.get(API.BASE_URL + 'getproject_contentdata/'+id+'/').then((res)=>{
-    //         console.log(res,'response from get of useERffect<-------------------------------')
-    //     }).catch((e)=>console.log(e,'error in caych block <--------------------------'))
+        axios.get(API.BASE_URL + 'project-list/'+id+'/').then((res)=>{
+            console.log(res,'response from get of useERffect<-------------------------------')
+            console.log(res.data.projectTitle,'LInk of TITIT');
+            if(res.data.projectIcon){
+                setprojectIcon(res.data.projectIcon)
+            }
+            if(res.data.projectTitle){
+                setprojectTitle(res.data.projectTitle)
+            }
+            if(res.data.projectTitle==='Untitled project'){
+                setprojectTitle(res.data.ProTitle)
+            }
+        }).catch((e)=>console.log(e,'error in caych block <--------------------------'))
     //    }, 2000);
-    //   },[])
+      },[])
+
+    // useEffect(()=>{
+    //     if(firstTime && projectTitle==='Untitled project'){
+    //         alert('gdhfs')
+    //         setprojectTitle(ctx.titleOfProject)
+    //     }
+    //     firstTime=true
+    // },[ctx.titleOfProject])
     
 
     return (

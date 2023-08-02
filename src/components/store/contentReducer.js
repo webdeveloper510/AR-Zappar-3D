@@ -30,7 +30,6 @@ const sideBarContent=createSlice({
         //     state.dataSentbox=actions.payload
         // }
         setContent(state,actions){
-          console.log('state,actionsstate,<========================');
             state.isContent=actions.payload
         },
         selectedTargetImage(state,actions){

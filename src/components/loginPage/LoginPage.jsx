@@ -18,10 +18,25 @@ const handleEmail =(e)=>{
 }
 //  Password
 const [password , userPassword] = useState(null)
+const [passErr,setpassErr]=useState(false);
+const [emailErr,setemailErr]=useState(false);
 const handlePass =(e)=>{
+
     userPassword(e.target.value)
 }
 const handleLogin = ()=>{
+        setpassErr(false);
+        setemailErr(false);
+        if(email.trim()===""){
+            setemailErr(true)
+        }
+        if(password.trim()===""){
+            setpassErr(true)
+        }
+        if(email.trim()==="" || password.trim()===""){
+            return;
+        }
+       else{
         axios.post(API.BASE_URL + 'login/', {
             email: email,
             password: password,
@@ -34,7 +49,8 @@ const handleLogin = ()=>{
           .catch(function(err) {
             console.error('Error uploading file', err);
             toast.error("Invalid login credentials !")
-          });
+          })
+        }
 }
 var token = localStorage.getItem('token');
 useEffect(()=>{
@@ -53,11 +69,19 @@ useEffect(()=>{
                         <form className="login-pg-form">
                             <div className="mb-3 envelop-div">
                                 <label className="form-label fw-semibold" >Email</label>
-                                <input type="email" className="form-control" value={email} placeholder="Enter Your Email"  onChange={handleEmail}/>
+                                <input type="email" className="form-control" value={email} placeholder="Enter Your Email"  onChange={handleEmail} 
+                                style={{
+                                    border: emailErr ? '1px solid red' : ''
+                                }}
+                                />
                             </div>
                             <div className="mb-3">
                                 <label className="form-label fw-semibold" value={password} >Password</label>
-                                <input type="password" className="form-control" placeholder="Enter Your Password" onChange={handlePass} />
+                                <input type="password" className="form-control" placeholder="Enter Your Password" onChange={handlePass} 
+                                 style={{
+                                    border: passErr ? '1px solid red' : ''
+                                }}
+                                />
                             </div>
                             <div className="mt-3">
                                 <a className="btn btn-sign-in" type="button"

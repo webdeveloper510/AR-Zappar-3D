@@ -79,27 +79,24 @@ const RegisterPage = () => {
     setDOBError(false);
     setRoleError(false);
 
-    if (firstName === "") {
+    if (firstName.trim() === "") {
       setfirstNameError(true);
     }
-    if (LastName === "") {
+    if (LastName.trim() === "") {
       setLastNameError(true);
     }
-    if (password === "") {
+    if (password.trim() === "") {
       setPassError(true);
     }
-    // if(!Proffession){
-    //     setRoleError(true)
-    // }
+    if (Proffession.trim()==="") {
+      setRoleError(true)
+    }
+    if (selectedDate.trim()==="") {
+      setDOBError(true)
+    }
 
-    if (firstName.trim() === "" || LastName.trim() === "" || password.trim() === "") {
-        console.log(
-            LastNameError,
-            firstNameError,
-            PassError,
-            'this is error inside log if any of these empty'
-        );
-        toast.error("Please fill all the require fields1234");
+    if (firstName.trim() === "" || LastName.trim() === "" || password.trim() === "" || Proffession.trim()==="" || selectedDate.trim()==="") {
+      
         return ;
     }
 

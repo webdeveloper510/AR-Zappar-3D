@@ -15,6 +15,7 @@ const ContextProvider=(props)=>{
 
     const [contentImgVdo, setcontentImgVdo] = useState(null);
     const [fontselected, Selectedfont] = useState(null);
+    const [titleOfProject,settitleOfProject]=useState('')
 
 
 
@@ -40,6 +41,8 @@ const ContextProvider=(props)=>{
         setcontentImgVdo,
         fontselected,
         Selectedfont,
+        titleOfProject,
+        settitleOfProject,
 
 
     }
