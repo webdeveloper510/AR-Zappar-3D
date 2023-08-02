@@ -103,7 +103,7 @@ const ModelAr =()=> {
             render();
  
         function init() {
-            console.log('In Test.jsx file **********************************************', ctx.contentImgVdo)
+            // console.log('In Test.jsx file **********************************************', ctx.contentImgVdo)
             canvas = document.getElementById( 'canvas' );
             // Initialize The Project View Model---------------------------------------------------------------->
 
@@ -223,7 +223,7 @@ const ModelAr =()=> {
                     if (getImage){
                         for (let i = 0; i < getImage.length  &&  getImage !== undefined; i++){
                             const imageId = getImage[i][0].id
-                            console.log(id)
+                            // console.log(id)
                             const imageData = getImage[i][0].image_url
                             const textureLoader = new THREE.TextureLoader()
                             const texturedf = textureLoader.load(imageData)
@@ -249,7 +249,7 @@ const ModelAr =()=> {
 
                     if (getVideo){
                         for (let i = 0; i < getVideo.length  &&  getVideo !== undefined; i++){
-                            console.log(getVideo[i])
+                            // console.log(getVideo[i])
                             const video = document.createElement('video');
                             video.autoplay = true;
                             video.crossOrigin="anonymous"
@@ -307,13 +307,13 @@ const ModelAr =()=> {
                         control.attach(mesh)
                     }
                     else{
-                        console.log("not found");
+                        // console.log("not found");
                     }
-                    if(ctx.contentImgVdo[0].video_url === Videomesh.userData.name){
+                    if(ctx.contentImgVdo && ctx.contentImgVdo[0].video_url === Videomesh.userData.name){
                         control.attach(Videomesh)
                     }
                     else{
-                        console.log("No selected")
+                        // console.log("No selected")
                     }
                     // States for Text Featres ------------------------------------------------------------------------------------------------>
              
@@ -370,7 +370,7 @@ const ModelAr =()=> {
                             cPointLable.rotation.x =getText[i][0].text_transform.Rotation_x
                             cPointLable.rotation.y =getText[i][0].text_transform.Rotation_y + Math.PI
                             cPointLable.rotation.z =getText[i][0].text_transform.Rotation_z
-                            console.log('Here is the Point Label------------>',cPointLable);
+                            // console.log('Here is the Point Label------------>',cPointLable);
                         }
                     }
 
@@ -378,7 +378,7 @@ const ModelAr =()=> {
 
                     if (getButton){
                         for (let i = 0; i <getButton.length; i++){
-                            console.log(getButton[i][0].button_name)
+                            // console.log(getButton[i][0].button_name)
                             const buttonEle = document.createElement('div')
                             buttonEle.textContent = getButton[i][0].button_name
                             buttonEle.style.backgroundColor = 'rgb(150, 191, 239)'

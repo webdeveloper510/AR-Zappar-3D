@@ -13,7 +13,6 @@ const LoginPage =()=>{
 const navigate = useNavigate();
 //  Email Address
 const [email , userEmail] = useState(null);
-
 const handleEmail =(e)=>{
     userEmail(e.target.value)
 }

@@ -10,7 +10,12 @@ const ContextProvider=(props)=>{
     const [selected3D,setselected3D]=useState([]);
     const [loader,setloader]=useState(false);
     const [loadContent,setloadContent]=useState(false);
-    const [contentImgVdo,setContentImgVdo]=useState(false);
+
+ 
+
+    const [contentImgVdo, setcontentImgVdo] = useState(null);
+    const [fontselected, Selectedfont] = useState(null);
+
 
 
 
@@ -32,7 +37,10 @@ const ContextProvider=(props)=>{
         loadContent,
         setloadContent,
         contentImgVdo,
-        setContentImgVdo
+        setcontentImgVdo,
+        fontselected,
+        Selectedfont,
+
 
     }
     return (

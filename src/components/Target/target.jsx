@@ -32,11 +32,22 @@ import { Tabs } from "react-bootstrap";
 import { contextObject } from "../ContextStore/ContextApi";
 import Box from "@material-ui/core/Box";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Content from "./Content";
+import { useDispatch, useSelector } from "react-redux";
+import { sideBarContentAction } from "../store/contentReducer";
+import LeftSideBar from "./LeftSideBar";
+import ButtonsDetail from "./ButtonsDetail";
+import TextDetail from "./TextDetail";
+import ImageDetail from "./ImageDetail";
+import VideoDetail from "./VideoDetail";
+import ModalDetail from "./ModalDetail";
+import Applets from "./Applets";
 
 // import Button from 'react-bootstrap/Button';
 
 let firstTime = true;
 const Target = () => {
+  const dispatch=useDispatch()
   // HANDLE GET USER-ID FROM LOCALSTORAGE ------------------------------------------------------------------------------------------------------------------
   const paramData = useParams();
   const [id, setid] = useState(paramData.id);
@@ -62,6 +73,23 @@ const Target = () => {
   const [s_id, s_ID] = useState(null);
   const [s_transition_enter, transition_enter] = useState(null);
   const [s_transition_exit, transition_exit] = useState(null);
+
+  // states to show buttons details components
+
+  const isButtonDetailShow = useSelector((state)=>state.LeftSideBarReducer.isButtonDetailShow);
+  const isShowTextDetail = useSelector((state)=>state.LeftSideBarReducer.isShowTextDetail);
+  const isShowImageDetail = useSelector((state)=>state.LeftSideBarReducer.isShowImageDetail);
+  const isShowVideoDetail = useSelector((state)=>state.LeftSideBarReducer.isShowVideoDetail);
+
+  const isShowModalDetail = useSelector((state)=>state.LeftSideBarReducer.isShowModalDetail);
+
+  const isShowAppletsDetail = useSelector((state)=>state.LeftSideBarReducer.isShowAppletsDetail)
+
+  // isShowAppletsDetail
+
+
+
+
 
   // STATES for PROJECT Content Dara OF AN PROJECT ---------------------------------------------->
 
@@ -144,7 +172,9 @@ const Target = () => {
   // state to show and hide all scenes
   const [showScene, setshowScene] = useState(false);
   const [isOpen, setisOpen] = useState(false);
-  const [isContent, setisContent] = useState(true);
+  // const [isContent, setisContent] = useState(true);
+
+  const isContent=useSelector((state)=>state.sideBarContentReducer.isContent)
 
   //  state to render getProject detail function
 
@@ -154,10 +184,17 @@ const Target = () => {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  //  state for image or video select and send to content part
-  const [contentImgVdo, setcontentImgVdo] = useState(null);
+  // states for event key
+  const [firstKey,setfirstKey]=useState(null);
+  const [secondKey,setsecondKey]=useState(null);
+  const [thirdKey,setthirdKey]=useState(null);
+  const [fourthKey,setfourthKey]=useState(null);
+  const [fifthKey,setfifthKey]=useState(null);
+  const [sixthKey,setsixthKey]=useState(null);
 
-  const contentImgVdoRef = useRef(contentImgVdo);
+  //  state for image or video select and send to content part
+  // const [contentImgVdo, setcontentImgVdo] = useState(null);
+
 
   // array of scene Images
 
@@ -166,6 +203,13 @@ const Target = () => {
   useEffect(() => {
     ctx.setscene_id(s_scene_id);
   }, [s_scene_id]);
+
+  // const contentImgVdo=ctx.contentImgVdo;
+  const contentImgVdo=useSelector((state)=>state.sideBarContentReducer.contentImgVdo)
+  // const setcontentImgVdo=ctx.setcontentImgVdo;
+  const contentImgVdoRef = useRef(contentImgVdo);
+  // const setcontentImgVdo =dispatch(sideBarContentAction.setcontentImgVdo())
+
 
   const fbImage =
     "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxEHBhMQEA8SFRIWFRgWFxUWDRUXERUYGhYWHRgVGRcaHSggGBonHhgUIjIhJSouLi4uGB8zODUsNygtLi4BCgoKDg0OGxAQGy8iICUrLS4tKzMtLS0vKy0tMi0uLzcrLi4tLS0tLi0tLS0rLS0tKy8tLy0tLS8tLS0tLS0tLf/AABEIAOEA4QMBIgACEQEDEQH/xAAcAAEAAgMBAQEAAAAAAAAAAAAAAgcBBQYEAwj/xABJEAACAQICBAoFCAYJBQAAAAAAAQIDEQQFBiExUQcSIkFhcXKBkaETFDKxwhUmNEJSU8HRNmKCkpOiIyQzNUNzstLwFhek4eL/xAAaAQEAAgMBAAAAAAAAAAAAAAAABQYBAwQC/8QANBEAAgEBAwkGBgMBAQAAAAAAAAECAwQRsQUSITFBUWFxgRORodHh8BUiMjRywRQjM1JC/9oADAMBAAIRAxEAPwC8QAAAAAAAAAYOYzjS+jgm40l6WfQ7U138/d4m2lRqVXdBX+9pqrV6dGOdUdyx5b+h1BpcfpJhsC2pVeNJfVguM+q+y/ecDmeeYjMvbm+L9haoeX43NaS1HJK11ZdF5+nUg6+W9lGPV+Sf75o7LF6cSvajQj1ym35K3vNRiNKMZXl/bcVboxS87GkBIU7FQhqiuunEi6lvtNTXN9NGFx7ama4ir7Veb66kvzPNKo57ZN9bbPmDoUUtRzSnKX1Nvq/M+kZuOxtdTPRTzKvS9mtUXVUkvceMGXFPWhGUo6m11Nzh9JsZR/xpNbpQi/Nr8Ta4XTmpD+1oxkt8ZOL8HdPyORBzzsdCf1QWGB007daaf01H1d+N5ZuA0pwuMduPxJbppr+b2fM3UJKcbppp86eopg9uXZrWy2d6NSUV9nbF9aerv2kfWyTF6abu4P35knQy3JaKsb+K0eD81yLdByWU6Z067UcRH0cvtRu4PrW2Pmuk6inUVWmpRacXrTTumt6a2kTWoVKLumricoWilXV9N34rmtZ9QAaTcAAAAAAAAAAAAAAADXZpmtLKsPx6kupJXlJ7kvx2Hi0i0ghktGytKq1yYX1dcnzLo2vxarfG4ypjsS6lWTlJ875uhLmXQSNjye63zz0R8Xy4ce4i7flKND5IaZeC58dt3fsv2md6R1s2bjfiUuaEXqfafP8A81GluYuLlip0o045sFcir1as6ss+bvZm4uYuLnu41mbi5i4uLgZuLmLi4uBm4uYuLi4Gbi5i4uLgZuLmLi4uBm5ssozytlM+RK8b64PXF/8AvpXmay4ueZwjOObJXo905ypyzou57y1clzulnFLkO00uVBvlLpW9dPuNwUrRrSoVlOEnGSd007NMsPRnSaOawVOraNbm5oz6VufR3rcq/bMnOl89PTHdtXmizWDKarf11dEt+x+T4bdm46cAEWS4AAAAAAAAANBpNnsckw1o2dWS5Mea3PJ7l733te3OsyhlGAlVnr5kueUnsj/zmTKnx2Mnj8XKrUlecnd7luS3JEjk+xds8+f0rxfktvcReUrd2EcyH1PwW/nuv58HGvXliaznOTlKTu29rZG5EFlSuKsSuLkQDBK4uRABK4uRABK4uRABK4uYpwdWooxTcnsSTcn1JbTfYHQ/F4vXKEaa/XevwV2u9GupVhTV85JczbSo1Krupxb6YvUaK4udlS4P5tcrFJdVFvzckfT/ALf6tWL/APH/APs5/iNm/wC/CXkdXwy1/wDHjHzOJuLnY1OD+S9nFJ9dFr4meWtoLiYLkzpS6pNPzX4npW6zvVNeKxR5eTrUv/D708GcxcXPRmWXVcsrqFaHFk1xlyk7q7V9T6GeU6YyUlenejklFxd0lcyVxGTjJNNprWmnZp70yIMnksfRLSL5Sp+iqv8ApktT+2t/Wudd++3UlI0qsqNVTjJqUXdNPWmtjLT0azpZzgLuyqxsqkenmkuh/muYruUbEqT7SH0vZufk9hZ8mW/tl2VT6lqe9ea8de83YAIslwAAAYvZazJymnmb+oZd6GD5dW66VH63js8dxto0nVqKEdvt9xqr1o0abqS1L3d11HJaV5284zJ8V/0ULxgt++Xf+RpbkLi5b6dONOKhHUil1akqs3OWtk7i5C4uezWTuLkLi4BO4uQuLgE7i5C4uATubvRvRupnU+NfiUU9c7a3vilzvp2Lp2Hn0ayd51mKhrVOPKnJc0dy6Xs8XzFs4ehHD0VCEVGMVZJbEiLyhbux+SH1Yeu4lcnZPVf+yp9K8X5I8mWZVRyujxaNNLe9sn1va+rYbEArspOTvk72WaMVFZsVcgADB6AAAK54Sf72p/5XxSOTudXwlf3tT/yvjkclctth+3hyKflD7qfNYIlcXIXFzqOInc9+R5rLJ8yjVjrWyUftJ7V1866UjW3M3PMoxmnGWlM9QlKElKLua1F3YevHEUYzg7xklJPensPscNwdZtxoSwsnsvKn1X5UfF373uO5KjaaDoVXB9OK2e95c7LXVekqi26+D2+9wABoOgFOaSZn8q5xOonyb2h2VqXjrf7RY2mGYfJ+j9SSdpS5EeuW23So8Z9xUhO5Ho6JVXyX7/XiQOWa/wBNJc3gv34Gbi5gE2QJm4uYABm4uYABm4uYABm4uRPRgsP65jYU19eSj4yS/EczKi27lrLQ0Jy75PyOLa5dTly32fsL923e2dCQhFQiklZJWSJlLq1HUm5va7y70qapwUFqSu94gAGs2AHyrVY0aTlJpRSbbbskltbe44vM9P406nFw1L0i+1JtJ9S2267G6hZ6tZ3U1fgaK9ppUVfUd2PRLSdyCtHwgYl/4VL92X+4f9wMV91S/dl/uO34TaOHecvxWzb33Mnwl/3tT/yvjkchc2GeZzUzvERqVIxjKKsrRaVrt87evWa4nrLTdOjGEtaRXbXUjVrSnHU/JGbi5gG85jNxcwAD05fjZYDHQrQ9qElLr3x6mrrvLow9eOJw8akHeMoqSfQ1dFHFmcHmP9ZyR02+VSlZ9Uta8+Mu4h8r0c6mqi1rQ+T9cSZyNWzajpPU9K5r0wOsABXyxlfcJ2LarUaCf1XNrfd2Xul4nDm804xPrGk1bXqjxYruir+bkaG5b7DTzLPBcL+/SVC3VM+0TfG7u0YkgRuLnUchIEbi4BIEbi4BIEbi4BI2misPSaSYdfrp+Gv8DUXNzoe/nPQ7X4M1V9FKT4PBm6zq+tD8lii4wAUsugAABxfCVjnQy6nQi7ekk2+lQtqffKL/AGSujtuFJ/1jD9mfvgcPctWTIqNmjdtvfi1+iqZTk3aZJ7Ll4J/tkgRuLnecBIEbi4BIEbi4BIEbi4BI6ng6xnoM8dNvVVi0uuPKXkpeJylz3ZBiPVc7o1L7Kkb9TaUvJs02mn2lGcd6fob7LU7OtCXFd2pl2gApl5dc1lH55V9NnVeW+pN+MmeG5mrPj1W97b8WRLzFXJIo83nSb3t4mbi5gGTwZuLmAAZuLmADJK5i5jjWMcZb/IzczzeiVzc6HP50UO1+DNJxlv8AI3Ohsr6U4ftfhI1WhPsp8ngzdZ2u2h+UcS5wAUkugAABXXCp9Kw/Zn74nDXO44VXbFYfsz98TheMt/kW3Jqf8WHXFlTyk1/Kn0wRK4uR4y3+Q4y3+R3XPccN6JXFzFwYMmbi5gAGbi5gAGbhuxgw9hlBrQXN8vx6DBWHyswQHwpbix/FTU1FxKjW5teBi56s7p+hzetD7NSa8JSR4rk9F3pMr845smtzZO4uRuLmTySuLkbi4BK4uRuYuAWxwf4eFTRem5Qi3xp63BN+2zpPU6X3cP4cfyNBwdforT7U/wDWzpym2y/+RU/J4lwsn+EPxjgjz+p0vu4fw4/kZjhacJXVOCe9QVz7g5tJ0AAAAAAHyqUY1fahF9cU/eQ9Tpfdw/hx/I9AF7B5/U6X3cP4cfyHqdL7uH8OP5HoPNjK6wuEnUeyEZSf7Kb/AAMq96ENC1lKZ7WVfO68lazqStZarcZ28rHiuQT1Gbl5Uc1Zq2FJlLObk9unvJXFyNxcyeSVxcjcXAJXFyFxJ6glpDNl8nS3Asv/AKb6AQnxWJPfCeBX2nGH9W0qrq2pyUl08aKb82zRXO44VsJ6PH0Kq2Ti4vdeDuu9qX8pwpJWKefZ4S4Lw0YojbZDMrzXG/v0/slcXIg6jlJXFyIAJXFyIBkt/g5/RWl2qn+tnUHL8HH6KUu1P/WzqCl2z7ip+TxLdZE+wh+KwQABznRcwAAYAAAAABm5g0mmWJ9U0YxEv1OL+/JR+I3ZxvCjW9Fo9GC+vVin1KMn71E6LHHPtEI8UaLVJwozktifoVZcXIguhTyVxciACVxciACVz25Jh/XM4o07X41SKfVxlfyueA6rg2wfrWkqnzUoyl0Xa4qX81+40159nSlPcn6eJus9PtKsY72u7aW6ACkXFyzmcxwg4D1/RubS5VNqoupXUv5XJ9xTp+hakFUg4tXTVmuZp7UUTn2WvKM3q0HfkS5L3p64vwa77liyLWvhKk9mlddD/XeQOVqPzRqLk/1+zwAjcXJshiQI3FwCQI3FwDLSY4q6PExcXM3veYuRniro8TeaFJf9VYbV9f4ZGiubvQp/OzDdv8JGq0N9jPT/AOXgzdZ0u2h+SxLwABRy4AAAFa8LivisN2anvgV/xV0eJ3/C79Jw3Zqe+BX9y4ZMb/iQ5PFlWyil/Jn0wRniro8QlYxcXO297ziuRIEbi5gySBG4uASBG4uASLS4L8v9Bk867WurKy7MLq/7zl4IrHCYeWMxUKUFeU5KMV0t2XcX1luDjl+Ap0YezCKiumy2vpe3vIjLNfNpKmtcn4L1wJXJVHOqOo9i8X6YnrABWiwA4LhQyb1jBRxcFyqfJn0wb1Pub8JPcd6fGvRjXoyhNJxknGSexpqzT7jfZq7oVVUWzDaaq9FVabg9p+eLi5ttKMllkObSpO7h7VOX2oPZ3rY+ldKNTcukJxnFSjqelFTnBwk4y1oXFxcXPR4FxcXFwBcXFxcAXN7oS/nXhu38MjRXN3oQ/nZhu38MjVaP8p/i8GbrP/rDmsS8gAUctwAABWfC99Jw3Zqe+JX1yweF/wCk4bs1PfEr65b8m/aQ5PFlYyh9zPpghcXFxc7jiFxcXFwBcXFxcAXFxc9WUZfUzXMIUKS5U3a/NFc8n0JXZhtRTb0JHqMXJ3LWdpwXZN6XEyxk1yY3jT6ZtcqXcnb9p7izzx5ZgYZbgIUaatCEbLe97fS3dvrPYUy2Wl2is57NnBe9PUtdmoKjTUO/n70AAHMbwAADn9LsgjpBlbhqVWF5UpPmlzxf6r1J9z5ik69GWGrypzi4yi3GUXtTW1H6MOK090S+V6Pp6K/rEVrj95Fc3bXM+fZutL5LtypPsqj+V6nufk9vfvIy32PtV2kPqXivPcVGBJOMmmmmtTTVmnzpoxctBAXGQYuLmBcZBi4uBcZN9oP+lmG7fwyNBc3ugz+duG7fwyNVo/yn+LwZts6/tjzWJeoAKMW0AAArLhg+k4bs1PfErssLhi+k4bs1PfEry5cMmfaQ64srOUPuZdMEZBi4udxx3GQYuLgXGQYuLmTFxNa3ZbfMuLQPRpZJgPSVI/1iouVvhHaodexvptuNPwfaIOhxcZiY8rbSptezuqSX2ty5tu21rFK3lS3qd9Gm9G17+C4LxJ3J1jzP7ZrTs4euHUAAhCWAAAAAAAAAOI030LWbRdfDpRr/AFo6lGr+U+nn596qatSlQrOE4uMouzi01JPc09h+kDm9KdE6OkNPjNcSslyaqWvqmvrLzXM9pMWDKjpJU6umOx7vNEbbLAql86eiWPqUfcXNlnuQ4jIsTxK1OyfszWuE+zL8Hr6DV3LLGcZrOi71vIKUJQebJXMlcXI3Fz0eSVzfaDfpdhu38Mjn7m+0Ffzuw3b+GRptH+UvxeDN1n/1jzWJfAAKMWsAAAq/hi+k4bsz98Su7lh8Mn0rC9mp74ldXLjkz7SHXFlat/3MumCJXFyNxc7jjJXFyNz25XllbNsUqVCnKcue2yK3yeyK6WYbUVe9CMqLk7lrPItbsizdB9BvQcXE4yHK206LXs7pTW/dHm59epbjRLQqlkUVUqWq4j7VuRDsJ8/6z19Ws68rtvyrnp06Ora9/LcuO0m7Hk/MunV17t3PjhxAAIMlQAAAAAAAAAAAAAADz4zCU8bh3Tq04zg9sZJNMrrSPg01upgpdPopy8oTful4lmg6bNa6tnd9N9NjNNaz06qumuu0/OOPwFXLcR6OvSnTnulG1+lPY10rUeY/R2MwVPHUOJWpwqQf1ZwUl16+fpOMzbgzwuKblQnOjLd/aU/BvjL97uJ2hlqlLRVWa+9efS5kTWyXNaabv4bfIqM3+gn6X4bt/DI92Y8HWOwjvCEK0d9Ook7dMZ2fcrnz0RyuvgNL8N6WhUh/SP26Uor2Zc7Ws7qlelUozzJJ/K9q3PZrOanQqU6sc6LWlYl3gApZZQAACreGP6XhezU98Cuiy+FbCVMdjsNGjSnUkozuoU5Sau4WuorVsfgc5l2gGPxr10lSW+pUS/lV5eRbLBWp07HBzklr1viyv2yjOpaJZqb1YI5Y+2Gw88XXUKcJTm9kYxcpPuRaGVcGFGi1LE1p1H9mC4kOpvXJ91jtMtyyjldHiUKMKa5+LGzfS3tk+lmqvlmjBXU1nPuXn4dT3SyZUlpm7vF+RW2jvBrUrtTxkvRx+7i06r65bI9131Fk5XltHKsKqdClGENyWtvfJvXJ9LPcCCtNsrWh/O9G5aF74slqFmp0V8i67ffIAA5TeAAAAAAAAAAAAAAAAAAAAAAAAAAGekAADyAAAAADLAABgAAAAAAAAAAAAAAA/9k=";
@@ -220,12 +264,12 @@ const Target = () => {
   const [dwidth, dimwidth] = useState(null);
   const [dheight, dimheight] = useState(null);
   const [ddepth, dimdepth] = useState(null);
-  const [dposition_x, dimposition_x] = useState(null);
-  const [dposition_y, dimposition_y] = useState(null);
-  const [dposition_d, dimposition_d] = useState(null);
-  const [dRotation_x, dimRotation_x] = useState(null);
-  const [dRotation_y, dimRotation_y] = useState(null);
-  const [dRotation_z, dimRotation_z] = useState(null);
+  // const [dposition_x, dimposition_x] = useState(null);
+  // const [dposition_y, dimposition_y] = useState(null);
+  // const [dposition_d, dimposition_d] = useState(null);
+  // const [dRotation_x, dimRotation_x] = useState(null);
+  // const [dRotation_y, dimRotation_y] = useState(null);
+  // const [dRotation_z, dimRotation_z] = useState(null);
   // ---Image Appearance ----------->
   const [aper_border_color, A_border_color] = useState(null);
   const [aper_border_width, A_border_width] = useState(null);
@@ -295,11 +339,13 @@ const Target = () => {
   const [hoveredImg, setHoveredImg] = useState(null);
 
   // states for changing size
-  const [widthImgVdo,setwidthImgVdo]=useState(null);
+  // const [widthImgVdo,setwidthImgVdo]=useState(null);
 
-  const [heightImgVdo,setheightImgVdo]=useState(null);
+  // const [heightImgVdo,setheightImgVdo]=useState(null);
 
-  const [depthImgVdo,setdepthImgVdo]=useState(null);
+  // const [depthImgVdo,setdepthImgVdo]=useState(null);
+
+  const [urlVdo, seturlVdo] = useState(false);
 
   // states for text to showing on sidebar
   const [selectedText,setselectedText]=useState(null);
@@ -307,7 +353,18 @@ const Target = () => {
   // for searching
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-  const [arrImg, setarrImg] = useState([]);
+  const [sceneId, setsceneId] = useState(null);
+
+  const widthImgVdo = useSelector((state)=>state.sideBarContentReducer.widthImgVdo);
+  const heightImgVdo = useSelector((state)=>state.sideBarContentReducer.heightImgVdo);
+  const depthImgVdo = useSelector((state)=>state.sideBarContentReducer.depthImgVdo);
+  const dposition_x = useSelector((state)=>state.sideBarContentReducer.dposition_x);
+  const dposition_y = useSelector((state)=>state.sideBarContentReducer.dposition_y);
+  const dposition_d = useSelector((state)=>state.sideBarContentReducer.dposition_d);
+  const dRotation_x = useSelector((state)=>state.sideBarContentReducer.dRotation_x);
+  const dRotation_y = useSelector((state)=>state.sideBarContentReducer.dRotation_y);
+  // const widthImgVdo = useSelector((state)=>state.sideBarContentReducer.widthImgVdo);
+  const dRotation_z = useSelector((state)=>state.sideBarContentReducer.dRotation_z);
 
   const idOfProjectObj = useParams();
   const idOfProject = idOfProjectObj.id;
@@ -316,6 +373,7 @@ const Target = () => {
     const splittedArray = imgUrl.split("/");
     return splittedArray[splittedArray.length - 1];
   };
+
 
   useEffect(() => {
     const delay = 500;
@@ -358,7 +416,7 @@ const Target = () => {
       setDmodelArray(response.data.data.three_d_model_files);
     } catch (err) {}
     finally{
-      setTimeout(()=>ctx.setloader(false))
+      setTimeout(()=>ctx.setloader(false),0)
     }
   };
   useEffect(() => {
@@ -571,15 +629,15 @@ const Target = () => {
 
         const DataImage = responseProject.data.data[0].image_data;
         for (let i = 0; i < DataImage.length; i += 1) {
-          dimwidth(DataImage[i][0].image_transform.width);
-          dimheight(DataImage[i][0].image_transform.height);
-          dimdepth(DataImage[i][0].image_transform.depth);
+          // dimwidth(DataImage[i][0].image_transform.width);
+          // dimheight(DataImage[i][0].image_transform.height);
+          // dimdepth(DataImage[i][0].image_transform.depth);
           // dimposition_x(DataImage[i][0].image_transform.position_x);
           // dimposition_y(DataImage[i][0].image_transform.position_y);
-          dimposition_d(DataImage[i][0].image_transform.position_d);
-          dimRotation_x(DataImage[i][0].image_transform.Rotation_x);
-          dimRotation_y(DataImage[i][0].image_transform.Rotation_y);
-          dimRotation_z(DataImage[i][0].image_transform.Rotation_z);
+          // dimposition_d(DataImage[i][0].image_transform.position_d);
+          // dimRotation_x(DataImage[i][0].image_transform.Rotation_x);
+          // dimRotation_y(DataImage[i][0].image_transform.Rotation_y);
+          // dimRotation_z(DataImage[i][0].image_transform.Rotation_z);
           // Image Appearance ------------->
           A_border_color(DataImage[i][0].image_appearance.border_color);
           A_border_width(DataImage[i][0].image_appearance.border_width);
@@ -605,7 +663,6 @@ const Target = () => {
           setwidthVideo(videoData[i][0].video_transform.video_id);
           setprojectId(videoData[i][0].video_transform.width);
         }
-
         const sceneData = responseProject.data.data[0].scene_data;
         for (let i = 0; i < sceneData.length; i++) {
           // scene_id(sceneData[i][0].scene_id);
@@ -735,15 +792,15 @@ const Target = () => {
 
         const DataImage = responseProject.data.data[0].image_data;
         for (let i = 0; i < DataImage.length; i += 1) {
-          dimwidth(DataImage[i][0].image_transform.width);
-          dimheight(DataImage[i][0].image_transform.height);
-          dimdepth(DataImage[i][0].image_transform.depth);
+          // dimwidth(DataImage[i][0].image_transform.width);
+          // dimheight(DataImage[i][0].image_transform.height);
+          // dimdepth(DataImage[i][0].image_transform.depth);
           // dimposition_x(DataImage[i][0].image_transform.position_x);
           // dimposition_y(DataImage[i][0].image_transform.position_y);
-          dimposition_d(DataImage[i][0].image_transform.position_d);
-          dimRotation_x(DataImage[i][0].image_transform.Rotation_x);
-          dimRotation_y(DataImage[i][0].image_transform.Rotation_y);
-          dimRotation_z(DataImage[i][0].image_transform.Rotation_z);
+          // dimposition_d(DataImage[i][0].image_transform.position_d);
+          // dimRotation_x(DataImage[i][0].image_transform.Rotation_x);
+          // dimRotation_y(DataImage[i][0].image_transform.Rotation_y);
+          // dimRotation_z(DataImage[i][0].image_transform.Rotation_z);
           // Image Appearance ------------->
           A_border_color(DataImage[i][0].image_appearance.border_color);
           A_border_width(DataImage[i][0].image_appearance.border_width);
@@ -804,13 +861,15 @@ const Target = () => {
         axios
           .post(API.BASE_URL + "upload-image/", formData)
           .then(function (response) {
-            toast.success("Image Uploaded!");
-            ctx.setreRender(false);
             imageDimensions(response.data.id, threeewidth, threeeheight);
             imageTransitionAPI(response.data.id);
             imageAppearanceAPI(response.data.id);
             imageActionAPI(response.data.id);
             setrenderGetProjact((prev) => !prev);
+            toast.success("Image Uploaded!");
+           setTimeout(()=>{
+            ctx.setreRender(false);
+           },0)
           })
           .catch(function (err) {
             toast.error("Image not Uploaded!");
@@ -821,7 +880,7 @@ const Target = () => {
       };
     };
     reader.readAsDataURL(file);
-  };
+  }
 
   // STATES FOR THE IMAGE DIMESNSIONS AND PROPERTIES ------------------------------------------------------------------------------->
   const imageDimensions = (id, threeewidth, threeeheight) => {
@@ -888,17 +947,17 @@ const Target = () => {
       height:heightImgVdo || contentImgVdo && contentImgVdo[0]?.video_transform?.height,
       depth:depthImgVdo || contentImgVdo && contentImgVdo[0]?.video_transform?.depth,
       position_x:
-        contentImgVdo && contentImgVdo[0]?.video_transform?.position_x,
+      dposition_x || contentImgVdo && contentImgVdo[0]?.video_transform?.position_x,
       position_y:
-        contentImgVdo && contentImgVdo[0]?.video_transform?.position_y,
+      dposition_y || contentImgVdo && contentImgVdo[0]?.video_transform?.position_y,
       position_d:
-        contentImgVdo && contentImgVdo[0]?.video_transform?.position_d,
+      dposition_d || contentImgVdo && contentImgVdo[0]?.video_transform?.position_d,
       Rotation_x:
-        contentImgVdo && contentImgVdo[0]?.video_transform?.Rotation_x,
+      dRotation_x || contentImgVdo && contentImgVdo[0]?.video_transform?.Rotation_x,
       Rotation_y:
-        contentImgVdo && contentImgVdo[0]?.video_transform?.Rotation_y,
+      dRotation_y || contentImgVdo && contentImgVdo[0]?.video_transform?.Rotation_y,
       Rotation_z:
-        contentImgVdo && contentImgVdo[0]?.video_transform?.Rotation_z,
+      dRotation_z || contentImgVdo && contentImgVdo[0]?.video_transform?.Rotation_z,
       Mirror: contentImgVdo && contentImgVdo[0]?.video_transform?.Mirror,
       video_id_id: contentImgVdo[0].video_id,
     };
@@ -924,17 +983,17 @@ const Target = () => {
       height:heightImgVdo || contentImgVdo && contentImgVdo[0]?.text_transform?.height,
       depth:depthImgVdo || contentImgVdo && contentImgVdo[0]?.text_transform?.depth,
       position_x:
-        contentImgVdo && contentImgVdo[0]?.text_transform?.position_x,
+      dposition_x || contentImgVdo && contentImgVdo[0]?.text_transform?.position_x,
       position_y:
-        contentImgVdo && contentImgVdo[0]?.text_transform?.position_y,
+      dposition_y || contentImgVdo && contentImgVdo[0]?.text_transform?.position_y,
       position_d:
-        contentImgVdo && contentImgVdo[0]?.text_transform?.position_d,
+      dposition_d || contentImgVdo && contentImgVdo[0]?.text_transform?.position_d,
       Rotation_x:
-        contentImgVdo && contentImgVdo[0]?.text_transform?.Rotation_x,
+      dRotation_x || contentImgVdo && contentImgVdo[0]?.text_transform?.Rotation_x,
       Rotation_y:
-        contentImgVdo && contentImgVdo[0]?.text_transform?.Rotation_y,
+      dRotation_y || contentImgVdo && contentImgVdo[0]?.text_transform?.Rotation_y,
       Rotation_z:
-        contentImgVdo && contentImgVdo[0]?.text_transform?.Rotation_z,
+      dRotation_z || contentImgVdo && contentImgVdo[0]?.text_transform?.Rotation_z,
       Mirror: contentImgVdo && contentImgVdo[0]?.text_transform?.Mirror,
       text_id_id: contentImgVdo[0].text_id,
     };
@@ -1043,7 +1102,6 @@ const Target = () => {
     if (typeOfFile !== "video") {
       return;
     }
-    console.log(typeOfFile, "videoFilevideoFilevideoFilevideoFile");
     const videoElement = document.createElement("video");
     videoElement.src = URL.createObjectURL(videoFile);
     const formData = new FormData();
@@ -1323,14 +1381,22 @@ const Target = () => {
   //  api function to DELETE all text data by id
   // http://18.230.11.54:8001/get-all-text-data/1/
 
-  const deleteTextDataById = () => {
+  const deleteTextDataById = (id) => {
     ctx.setloader(true)
     axios
-      .delete(API.BASE_URL + "get-all-text-data/" + s_scene_id)
-      .then(function (response) {})
+      .delete(API.BASE_URL + "get-all-text-data/" + id)
+      .then(function (response) {
+        
+        dispatch(sideBarContentAction.setContent(true))
+        setrenderGetProjact((prev) => !prev);
+        dispatch(sideBarContentAction.setcontentImgVdo(null))
+        ctx.setContentImgVdo(null)
+        setselectedVideo(null);
+        setselectedFile(null);
+        setreRender((prev)=>!prev);
+      })
       .catch(function (err) {})
-      .finally(()=>ctx.setloader(false))
-      ;
+      .finally(()=> setTimeout(()=>{ ctx.setloader(true)},0))
   };
 
   // function to get image data by id
@@ -1356,8 +1422,9 @@ const Target = () => {
       .delete(API.BASE_URL + "get-image-data/" +id+'/')
       .then(function (response) {
         console.log('successfully deleted');
+        dispatch(sideBarContentAction.setContent(true))
         setrenderGetProjact((prev) => !prev);
-        setcontentImgVdo(null);
+        dispatch(sideBarContentAction.setcontentImgVdo(null))
         ctx.setContentImgVdo(null)
         setselectedVideo(null);
         setselectedFile(null);
@@ -1380,8 +1447,9 @@ const Target = () => {
       .delete(API.BASE_URL + "get-video-data/" + id +'/')
       .then(function (response) {
         console.log('Deleted video successfully');
+        dispatch(sideBarContentAction.setContent(true))
         setrenderGetProjact((prev) => !prev);
-        setcontentImgVdo(null);
+        dispatch(sideBarContentAction.setcontentImgVdo(null))
         ctx.setContentImgVdo(null)
         setselectedVideo(null);
         setselectedFile(null);
@@ -1691,14 +1759,16 @@ const Target = () => {
     TrackerOption(true);
   };
 
-  const handleSceneClick = (index, sceneId, name) => {
+  const handleSceneClick = (index, sceneId1, name) => {
     setSelectedScene(index);
     setnameSelectedScene(name);
     setnameInScene(name);
-    getSceneData(sceneId);
+    getSceneData(sceneId1);
   };
 
-    const [fontselected, Selectedfont] = useState(null);
+    // const [fontselected, Selectedfont] = useState(null);
+    const fontselected=ctx.fontselected;
+    const Selectedfont=ctx.Selectedfont;
     const handleFontStyle = (e, type) => {
       Selectedfont(e.target);    
       e.currentTarget.classList.add("selected");
@@ -1758,16 +1828,16 @@ const Target = () => {
       })
     } 
 
-  useEffect(() => {
+  // useEffect(() => {
     
-    return () => {
-      if(!firstTime){
-        setTimeout(()=>{
-          window.location.reload();
-        },0)
-      }
-    }
-  }, [window.location.href.toString()]);
+  //   return () => {
+  //     if(!firstTime){
+  //       setTimeout(()=>{
+  //         window.location.reload();
+  //       },0)
+  //     }
+  //   }
+  // }, [window.location.href.toString()]);
 
   const AddButton=(event)=>{
     const datafull = document.getElementById(selectedBtn)
@@ -1793,12 +1863,22 @@ const Target = () => {
   //  useEffect for sending request in 5 millisend;
 
   useEffect(() => {
+    // console.log('useEffect called<-------------------');
     const delay = 500;
 
     const timeoutId = setTimeout(() => {
-      if(contentImgVdo && contentImgVdo[0].image_transform){imageDimentionUpdate()}
-      if(contentImgVdo && contentImgVdo[0].video_transform){videoDimentionUpdate()}
-      if(contentImgVdo && contentImgVdo[0].text_transform){textDimentionUpdate()}
+      if(contentImgVdo && contentImgVdo[0].image_transform){
+        console.log('useEffect called<--Timeout-- imageDimentionUpdate()--');
+        imageDimentionUpdate()
+      }
+      if(contentImgVdo && contentImgVdo[0].video_transform){
+        console.log('useEffect called<--Timeout-- videoDimentionUpdate()--');
+        videoDimentionUpdate()
+      }
+      if(contentImgVdo && contentImgVdo[0].text_transform){
+        console.log('useEffect called<--Timeout-- textDimentionUpdate()--');
+        textDimentionUpdate()
+      }
     }, delay);
 
     return () => {
@@ -1807,8 +1887,15 @@ const Target = () => {
   }, [widthImgVdo,heightImgVdo,depthImgVdo,dposition_x,dposition_y,dposition_d,dRotation_x,dRotation_y,dRotation_z]);
   
 
+  useEffect(()=>{
+    getSceneData(sceneId);
+    console.log('rendered rendered rendered rendered rendered');
+  },[useSelector((state)=>state.sideBarContentReducer.contentImgVdo)]);
 
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>;
+
+  
+
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 
   return (
     <div className="targetPage" ref={containerRef}>
@@ -2046,7 +2133,7 @@ const Target = () => {
                       })();
                     }}
                   >
-                    Publish12345
+                    Publish
                   </buttonBootstrap>
                 </div>
               </Modal.Footer>
@@ -2322,6 +2409,9 @@ const Target = () => {
             }
             if(contentImgVdo[0].video_id){
               deleteVideoDataById(contentImgVdo[0].video_id)
+            }
+            if(contentImgVdo[0].text_id){
+              deleteTextDataById(contentImgVdo[0].text_id)
             }
             }}
             >
@@ -2773,977 +2863,38 @@ const Target = () => {
           >
             <div className="col-md-1 p-0 m-0 target-left">
               <Tab.Container id="left-tabs-example">
-                <Row className="justify-content-between tab-list flex-nowrap target-left-sidebar">
+                <Row className="justify-content-between tab-list flex-nowrap target-left-sidebar"
+                style={{width:'500px'}}
+                >
                   <Col lg={3} className="side-tab mb-5 mb-md-0">
                     <Nav
-                      // variant="pills"
-                      // className={`flex-column side-main ${
-                      //   isOpen ? "target-pills" : ""
-                      // }`}
-                      className="flex-column side-main target-pills"
+                    variant="pills"
+                    className="flex-column side-main target-pills"
                     >
-                      <Nav.Item>
-                        <Nav.Link
-                          eventKey="first"
-                          onClick={(e) => console.log(e, "clicking on Button")}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="14"
-                            height="20"
-                            viewBox="0 0 14 20"
-                          >
-                            <g
-                              fill="none"
-                              fillRule="evenodd"
-                              stroke="none"
-                              strokeWidth="1"
-                            >
-                              <path
-                                fill="#344B60"
-                                fillRule="nonzero"
-                                d="M17.49 13.047c1.052 0 1.906.804 1.906 1.8l-.008 1.162.031-.01a2 2 0 01.426-.078l.15-.006c.75 0 1.4.41 1.71 1.005l.045.094.082-.034c.175-.066.363-.108.56-.123l.149-.005c1.051 0 1.906.804 1.906 1.793v.447l.065-.02a2 2 0 01.426-.079l.15-.005c1.051 0 1.905.804 1.905 1.793L27 23.408C27 27.044 23.861 30 20.001 30s-7-2.956-7-6.566c-.033-1.17.421-2.155 1.172-2.856.294-.274.623-.49.934-.619.193-.08.383-.13.586-.135l-.131.01.022-4.992c0-.944.775-1.718 1.757-1.79zm0 .952c-.493 0-.895.378-.895.843l-.036 8.329c0 .197-.17.357-.379.357s-.378-.16-.378-.357v-2.349c0-.258-1.848.55-1.79 2.586 0 3.11 2.687 5.64 5.99 5.64 3.3 0 5.987-2.53 5.987-5.64l-.007-2.625c0-.465-.402-.843-.895-.843s-.894.378-.894.843l.007.25c0 .198-.17.357-.379.357-.21 0-.379-.16-.379-.356l-.007-2.387c0-.465-.401-.843-.894-.843-.494 0-.895.378-.895.843l.007 1.715c0 .198-.17.357-.379.357-.21 0-.379-.16-.379-.357l-.007-2.652c0-.465-.4-.842-.894-.842-.493 0-.895.378-.895.842l.007 2.652c0 .198-.17.357-.379.357s-.378-.16-.378-.357l.036-5.52c0-.465-.402-.843-.895-.843zm4.303-.618v1h-2.147v-1h2.147zm-6.46 0v1h-2.146v-1h2.147zm-.417-2.671l1.518 1.43-.715.673-1.518-1.43.715-.673zm5.349 0l.715.673-1.518 1.43-.715-.674 1.518-1.43zM18.15 10v2.022h-1.167V10h1.167z"
-                                transform="translate(-13 -10)"
-                              ></path>
-                            </g>
-                          </svg>
-                          <a
-                            href="#tab1"
-                            className="nav-link p-0 m-0 fw-bold link-dark"
-                          >
-                            Button
-                          </a>
-                        </Nav.Link>
-                      </Nav.Item>
-
-                      <Nav.Item>
-                        <Nav.Link
-                          eventKey="second"
-                          // onClick={() => {setisOpen(!isOpen);console.log('Clicking on text');}}
-                          onClick={(e) => console.log(e, "clicking on Button")}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="15"
-                            height="20"
-                            viewBox="0 0 15 20"
-                          >
-                            <g
-                              fill="none"
-                              fillRule="evenodd"
-                              stroke="none"
-                              strokeWidth="1"
-                            >
-                              <path
-                                fill="#344B60"
-                                fillRule="nonzero"
-                                d="M27.4694534 11.225L21.2234727 11.225 21.2234727 30 19.812701 30 19.812701 11.225 13 11.225 13 10 28 10 28 11.225z"
-                                transform="translate(-13 -10)"
-                              ></path>
-                            </g>
-                          </svg>
-                          <a
-                            href="#tab2"
-                            className="nav-link p-0 m-0 fw-bold link-dark"
-                          >
-                            Text
-                          </a>
-                        </Nav.Link>
-                      </Nav.Item>
-
-                      <Nav.Item>
-                        <Nav.Link
-                          // eventKey={EventKey}
-                          eventKey="third"
-                          onClick={() => {
-                            // settitlePopups("Image");
-                            settypePopup("browse-media-popup");
-                            // setEventKey("third");
-                          }}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="16"
-                            viewBox="0 0 20 16"
-                          >
-                            <g
-                              fill="none"
-                              fillRule="evenodd"
-                              stroke="none"
-                              strokeWidth="1"
-                            >
-                              <path
-                                fill="#344B60"
-                                fillRule="nonzero"
-                                d="M15 14.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5zm0 1a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm4.475 11.504h-8.473v-3.066c.729-.714 1.877-1.438 3.498-1.438.676 0 1.641.174 2.483.659a5.039 5.039 0 012.492 3.845zm9.522-3.906l.08 4.002-8.597-.096c-.237-2.763-2.159-4.132-2.318-4.25a6.038 6.038 0 015.338-3.263c1.89 0 4.3.985 5.497 3.607zM11.002 13h18.002v8.175c-.91-1.175-2.807-2.678-5.504-2.678-2.607 0-5.005 1.492-6.173 3.71a5.956 5.956 0 00-2.827-.712 6.186 6.186 0 00-3.498 1.124V13zm-.546-1a.469.469 0 00-.456.44v15.12c.01.239.209.43.456.44h19.088a.469.469 0 00.456-.44V12.44a.466.466 0 00-.404-.44h-19.14z"
-                                transform="translate(-10 -12)"
-                              ></path>
-                            </g>
-                          </svg>
-                          <a
-                            href="#tab3"
-                            className="nav-link p-0 m-0 fw-bold link-dark"
-                          >
-                            Image
-                          </a>
-                        </Nav.Link>
-                      </Nav.Item>
-
-                      <Nav.Item>
-                        <Nav.Link
-                          // eventKey={EventKey}
-                          eventKey="fourth"
-                          onClick={() => {
-                            // settitlePopups("Video");
-                            settypePopup("browse-video-popup");
-                            setEventKey("fourth");
-                          }}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 20 20"
-                          >
-                            <g
-                              fill="none"
-                              fillRule="evenodd"
-                              stroke="none"
-                              strokeWidth="1"
-                            >
-                              <path
-                                fill="#344B60"
-                                fillRule="nonzero"
-                                d="M14.5 27a1.5 1.5 0 011.415 1H29.5a.5.5 0 01.09.992L29.5 29H15.914a1.5 1.5 0 01-2.828 0H10.5a.5.5 0 01-.09-.992L10.5 28h2.585a1.5 1.5 0 011.415-1zm0 1a.5.5 0 100 1 .5.5 0 000-1zM29 10a1 1 0 011 1v13a1 1 0 01-1 1H11a1 1 0 01-1-1V11a1 1 0 011-1h18zm0 1H11v13h18V11zm-11.566 2.5a.91.91 0 01.464.127l5.131 3.034a.985.985 0 010 1.678l-5.131 3.033a.918.918 0 01-1.275-.36.992.992 0 01-.123-.479v-6.066c0-.534.418-.967.934-.967zm-.059 1v6l5.25-3-5.25-3z"
-                                transform="translate(-10 -10)"
-                              ></path>
-                            </g>
-                          </svg>
-
-                          <video
-                            crossOrigin="anonymous"
-                            id="uploaded-video"
-                            hidden
-                          />
-                          <a
-                            href="#tab4"
-                            className="nav-link p-0 m-0 fw-bold link-dark"
-                          >
-                            Video
-                          </a>
-                        </Nav.Link>
-                      </Nav.Item>
-
-                      <Nav.Item>
-                        <Nav.Link
-                          // eventKey={EventKey}
-                          eventKey="fifth"
-                          onClick={() => {
-                            // setisOpen(!isOpen);
-                            // settitlePopups("3D");
-                            settypePopup("threedmodalpopup");
-                            setEventKey("fifth");
-                          }}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="18"
-                            height="20"
-                            viewBox="0 0 18 20"
-                          >
-                            <path
-                              fill="#344B60"
-                              fillRule="nonzero"
-                              d="M19.735 10.065a.557.557 0 01.52 0l8.43 4.477a.518.518 0 01.234.19c.054.08.08.169.081.257V25c0 .18-.103.347-.27.435l-8.47 4.5a.557.557 0 01-.52 0l-8.47-4.5A.496.496 0 0111 25l.013-9.896a.463.463 0 01.068-.371.525.525 0 01.292-.21zm-7.721 5.791L12 24.746l7.5 3.988.002-8.519-7.488-4.359zM28 15.847l-7.498 4.356-.002 8.531 7.5-3.988v-8.899zM19.996 11l-7.476 3.988 7.472 4.349 7.492-4.353L19.996 11z"
-                              transform="translate(-11 -10)"
-                            ></path>
-                          </svg>
-                          <div className="threeD">
-                            <a
-                              href="#tab3"
-                              className="nav-link p-0 m-0 fw-bold link-dark"
-                            >
-                              3D
-                            </a>
-                            <input
-                              id="3dmodel"
-                              type="file"
-                              className="nav-link p-0 m-0 fw-bold link-dark"
-                            />
-                          </div>
-                        </Nav.Link>
-                      </Nav.Item>
-
-                      <Nav.Item>
-                        <Nav.Link
-                          eventKey="sixth"
-                          // onClick={() =>{ setisOpen(!isOpen);}}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="40"
-                            height="40"
-                            viewBox="0 0 40 40"
-                          >
-                            <path
-                              fill="#4A90E2"
-                              d="M29.685 23.75a.5.5 0 01-.108.63l-.074.053-8.751 5.066a1.5 1.5 0 01-1.361.073l-.143-.073-8.751-5.066a.5.5 0 01.42-.904l.08.038 8.752 5.067a.5.5 0 00.421.037l.08-.037 8.752-5.067a.5.5 0 01.683.182zm0-3.568a.5.5 0 01-.108.631l-.074.052-8.751 5.067a1.5 1.5 0 01-1.361.073l-.143-.073-8.751-5.067a.5.5 0 01.42-.903l.08.038 8.752 5.067a.5.5 0 00.421.037l.08-.037L29.003 20a.5.5 0 01.683.182zm-10.437-9.325a1.5 1.5 0 011.504 0l8.751 5.067a1 1 0 010 1.73l-8.751 5.068a1.5 1.5 0 01-1.504 0l-8.751-5.067a1 1 0 010-1.731zm1.003.866a.5.5 0 00-.502 0l-8.751 5.066 8.751 5.067a.5.5 0 00.502 0l8.751-5.067z"
-                            ></path>
-                          </svg>
-                          <div className="threeD">
-                            <a
-                              href="#tab5"
-                              className="nav-link p-0 m-0 fw-bold link-dark"
-                            ></a>
-                            <input
-                              id="3cube"
-                              type="file"
-                              className="nav-link p-0 m-0 fw-bold link-dark"
-                            />
-                          </div>
-                        </Nav.Link>
-                      </Nav.Item>
+                      <LeftSideBar />
                     </Nav>
+                  
                   </Col>
 
-                  <Tab.Pane
-                    eventKey="first"
-                    // eventKey={isOpen ? "first" : null}
-                    className="bg-light p-4 tab-content"
-                  >
-                    <h2 className="buttons-head">Buttons</h2>
-                    <h6 className="btn-target-left mt-3">Basic buttons</h6>
-                    <hr />
-                    <div className="Grid--v4HT5">
-                      <div
-                        id="1d3f034a-16b5-4754-9763-7bbabfce9095"
-                        style={{
-                          width: "100px",
-                          height: "36px",
-                          color: "white",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          cursor: "pointer",
-                          backgroundColor: "rgb(150, 191, 239)",
-                          border:
-                            selectedBtn ===
-                            "1d3f034a-16b5-4754-9763-7bbabfce9095"
-                              ? "1px solid red"
-                              : "",
-                        }}
-                        onClick={() => {
-                          setselectedBtn(
-                            "1d3f034a-16b5-4754-9763-7bbabfce9095"
-                          );
-                          console.log("Abc selected");
-                        }}
-                      >
-                        Abc
-                      </div>
-                      <div
-                        id="ee7d490e-21d2-4f1d-a51e-0546f4a40353"
-                        style={{
-                          width: "100px",
-                          height: "36px",
-                          color: "rgb(150, 191, 239)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          cursor: "pointer",
-                          backgroundColor: "transparent",
-                          border: "2px solid rgb(150, 191, 239)",
-                          border:
-                            selectedBtn ===
-                            "ee7d490e-21d2-4f1d-a51e-0546f4a40353"
-                              ? "2px solid #0778e8"
-                              : "2px solid rgb(150, 191, 239)",
-                        }}
-                        onClick={() => {
-                          setselectedBtn(
-                            "ee7d490e-21d2-4f1d-a51e-0546f4a40353"
-                          );
-                          console.log("Abc2 selected");
-                        }}
-                      >
-                        Abc2
-                      </div>
-                      <div
-                        id="d89f4b83-667d-46e8-b095-5eecc601a8e0"
-                        style={{
-                          width: "100px",
-                          height: "36px",
-                          color: "white",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          cursor: "pointer",
-                          backgroundColor: "rgb(150, 191, 239)",
-                          border:
-                            selectedBtn ===
-                            "d89f4b83-667d-46e8-b095-5eecc601a8e0"
-                              ? "1px solid red"
-                              : "",
-                        }}
-                        onClick={() => {
-                          setselectedBtn(
-                            "d89f4b83-667d-46e8-b095-5eecc601a8e0"
-                          );
-                          console.log("Abc3 selected");
-                        }}
-                      >
-                        Abc3
-                      </div>
-                      <div
-                        id="9c3c290e-3f02-48e8-9862-711e33f6ef42"
-                        style={{
-                          width: "100px",
-                          height: "36px",
-                          color: "rgb(150, 191, 239)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          cursor: "pointer",
-                          backgroundColor: "transparent",
-                          borderRadius: "6px",
-                          border: "2px solid rgb(150, 191, 239)",
-                          border:
-                            selectedBtn ===
-                            "9c3c290e-3f02-48e8-9862-711e33f6ef42"
-                              ? "2px solid #0778e8"
-                              : "2px solid rgb(150, 191, 239)",
-                        }}
-                        onClick={() => {
-                          setselectedBtn(
-                            "9c3c290e-3f02-48e8-9862-711e33f6ef42"
-                          );
-                          console.log("Abc4 selected");
-                        }}
-                      >
-                        Abc4
-                      </div>
-                      <div
-                        id="5115829b-42a0-4328-9dcb-9ab1a19719c7"
-                        style={{
-                          width: "100px",
-                          height: "36px",
-                          color: "white",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          cursor: "pointer",
-                          backgroundColor: " rgb(150, 191, 239)",
-                          borderRadius: "36px",
-                          border: "2px solid rgb(150, 191, 239)",
-                          border:
-                            selectedBtn ===
-                            "5115829b-42a0-4328-9dcb-9ab1a19719c7"
-                              ? "1px solid red"
-                              : "",
-                        }}
-                        onClick={() => {
-                          setselectedBtn(
-                            "5115829b-42a0-4328-9dcb-9ab1a19719c7"
-                          );
-                          console.log("Abc5 selected");
-                        }}
-                      >
-                        Abc5
-                      </div>
-                      <div
-                        id="daf7cdff-ee9c-4873-a336-cbc5e4bc2bf3"
-                        style={{
-                          width: "100px",
-                          height: "36px",
-                          color: " rgb(150, 191, 239)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          cursor: "pointer",
-                          backgroundColor: "transparent",
-                          borderRadius: "36px",
-                          border: "2px solid rgb(150, 191, 239)",
-                          border:
-                            selectedBtn ===
-                            "daf7cdff-ee9c-4873-a336-cbc5e4bc2bf3"
-                              ? "2px solid #0778e8"
-                              : "2px solid rgb(150, 191, 239)",
-                        }}
-                        onClick={() => {
-                          setselectedBtn(
-                            "daf7cdff-ee9c-4873-a336-cbc5e4bc2bf3"
-                          );
-                          console.log("Abc6 selected");
-                        }}
-                      >
-                        Abc6
-                      </div>
-                    </div>
-                    <div className="Title--29AmM">
-                      Social buttons
-                      <div
-                        className="TitleDivider--2R3vH"
-                        style={{
-                          borderTop: "1px solid rgb(178, 196, 215)",
-                          height: "auto",
-                          width: "100%",
-                        }}
-                      >
-                        <div className="Grid--1NhFW">
-                          {imageObject.map((img, i) => {
-                            return (
-                              <div
-                                id={i}
-                                draggable={true}
-                                style={{
-                                  display: "flex",
-                                  cursor: "pointer",
-                                  backgroundRepeat: "no-repeat",
-                                  backgroundPosition: "50% 50%",
-                                  backgroundSize: "contain",
-                                  marginRight: "auto",
-                                  marginLeft: "auto",
-                                  backgroundImage: `url(${img})`,
-                                  width: "38px",
-                                  height: "38px",
-                                  marginTop: "0px",
-                                }}
-                                data-texture={img}
-                                onClick={() => {}}
-                              ></div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                      <div className="Grid--r1Nnn">
-                        {imageObject2.map((img2, i) => {
-                          return (
-                            <div
-                              className="96d04a62-6acd-454f-b9fc"
-                              id="96d04a62-6acd-454f-b9fc-bf348626c305"
-                              style={{
-                                display: "flex",
-                                cursor: "pointer",
-                                backgroundRepeat: "no-repeat",
-                                backgroundPosition: "50% 50%",
-                                backgroundSize: "contain",
-                                backgroundImage: `url(${img2})`,
-                                width: "110px",
-                                height: "39px",
-                              }}
-                              data-texture={img2}
-                              onClick={() => {}}
-                            ></div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                    <img
-                      src=""
-                      id="social-icon"
-                      className="social-icon"
-                      alt=""
-                    ></img>
-                        <button className="applybutton" onClick={AddButton}>
-                          Apply
-                        </button>
-                  </Tab.Pane>
 
-                  <Tab.Pane
-                    eventKey="second"
-                    // eventKey={isOpen ? "second" : null}
-                    className="bg-light p-4 tab-content"
-                  >
-                    <p className="m-0">Text</p>
-                    <p className="m-0 pt-2">Text Hierarchy</p>
-                    <hr />
+{/* button detail start */}
 
-                    <p
-                      className={`m-0 first-head ${
-                        fontselected === "hading" ? "selected" : ""
-                      }`}
-                      onClick={(e) => {
-                        handleFontStyle(e, "hading");
-                      }}
-                    >
-                      Add a heading
-                    </p>
-                    <p
-                      className={`m-0 second-head ${
-                        fontselected === "sub-hading" ? "selected" : ""
-                      }`}
-                      onClick={(e) => {
-                        handleFontStyle(e, "sub-hading");
-                      }}
-                    >
-                      Add a subheading
-                    </p>
-                    <p
-                      className={`m-0 third-head ${
-                        fontselected === "para" ? "selected" : ""
-                      }`}
-                      onClick={(e) => {
-                        handleFontStyle(e, "para");
-                      }}
-                    >
-                      Add a paragraph{" "}
-                    </p>
-                    <br />
-                    <p className="thene-txted">Themed text</p>
-                    <hr />
-                    <div className="buttons text-side-btn">
-                      <p className={`Standard-title ${ fontselected === "standard" ? "selected" : ""}`} onClick={(e) => { handleFontStyle(e, "standard"); }} style={{fontFamily:'Roboto'}}>
-                        Standard title
-                      </p>
-                      <p
-                        className={`square Rounded-title ${
-                          fontselected === "rounded" ? "selected" : ""
-                        }`}
-                        onClick={(e) => {
-                          handleFontStyle(e, "rounded");
-                        }} style={{fontFamily:'Comfortaa'}}
-                      >
-                        Rounded title
-                      </p>
-                      <p
-                        className={`ellipse Elegant-title ${
-                          fontselected === "elegant" ? "selected" : ""
-                        }`}
-                        onClick={(e) => {
-                          handleFontStyle(e, "elegant");
-                        }} style={{fontFamily:'Cookie'}}
-                      >
-                        Elegant title
-                      </p>
-                      <p
-                        className={`ellipse Classic-title ${
-                          fontselected === "classic" ? "selected" : ""
-                        }`}
-                        onClick={(e) => {
-                          handleFontStyle(e, "classic");
-                        }} style={{fontFamily:'Philosopher'}}
-                      >
-                        Classic title
-                      </p>
-                      <p
-                        className={`round Modern-title ${
-                          fontselected === "modern" ? "selected" : ""
-                        }`}
-                        onClick={(e) => {
-                          handleFontStyle(e, "modern");
-                        }} style={{fontFamily:'Quicksand'}}
-                      >
-                        Modern title
-                      </p>
-                      <p
-                        className={`round Futuristic-title ${
-                          fontselected === "futuristic" ? "selected" : ""
-                        }`}
-                        onClick={(e) => {
-                          handleFontStyle(e, "futuristic");
-                        }} style={{fontFamily:'Orbitron'}}
-                      >
-                        Futuristic title
-                      </p>
-                      <p
-                        className={`round Handwritten-title ${
-                          fontselected === "handwritten" ? "selected" : ""
-                        }`}
-                        onClick={(e) => {
-                          handleFontStyle(e, "handwritten");
-                        }} style={{fontFamily:'Sacramento'}}
-                      >
-                        Handwritten title
-                      </p>
-                      <p
-                        className={`round Magic-title-2 ${
-                          fontselected === "magic" ? "selected" : ""
-                        }`}
-                        onClick={(e) => {
-                          handleFontStyle(e, "magic");
-                        }} style={{fontFamily:'Snowburst One'}}
-                      >
-                        Magic title 2
-                      </p>
-                      <p
-                        className={`round Funky-title ${
-                          fontselected === "funky" ? "selected" : ""
-                        }`}
-                        onClick={(e) => {
-                          handleFontStyle(e, "funky");
-                        }} style={{fontFamily:'Wallpoet'}}
-                      >
-                        {" "}
-                        Funky title
-                      </p>
-                    </div>
-                    <button className="applybutton" onClick={applyfont}>
-                      Apply
-                    </button>
-                  </Tab.Pane>
+               
+                 {isButtonDetailShow &&  <ButtonsDetail imageObject={imageObject} imageObject2={imageObject2}  />}
+                
+         {isShowTextDetail && <TextDetail handleFontStyle={handleFontStyle} applyfont={applyfont} />}
+                 
+    {isShowImageDetail && <ImageDetail setshowPopHandle={setshowPopHandle} setuploadAll={setuploadAll} inputCallingFunction={inputCallingFunction}  />}
 
-                  <Tab.Pane
-                    eventKey="third"
-                    // eventKey={isOpen ? "third" : null}
-                    // eventKey={isImagePopup ? "third" : null}
-                    onClick={() => {
-                      // setisOpen(!isOpen);
-                    }}
-                    className="bg-light p-4 tab-content"
-                  >
-                    <p className="m-0 fs-4 fw-semibold ">
-                      Image
-                      <i className="bi bi-question-circle text-muted fs-6"></i>
-                    </p>
-                    <div className="mt-3">
-                      <div className="images-btn-outer">
-                        <div className="browse-btn-outer">
-                          <button
-                            className="btn rounded-2"
-                            id="browse-btn"
-                            // onClick={handleshowbrowsemedia}
-                            onClick={() => {
-                              setshowPopHandle(true);
-                              setuploadAll(true);
-                            }}
-                          >
-                            <i className="bi bi-upload"></i>Browse media library
-                          </button>
-                        </div>
-                        <div className="upload-btn-outer">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 16 16"
-                          >
-                            <g clipPath="url(#clip0_1953_9492)">
-                              <path
-                                fill="#4A90E2"
-                                d="M.8 9.2a.4.4 0 01-.394-.328L.4 8.8V1.6C.4.985.835.465 1.41.406L1.52.4h12.96c.591 0 1.062.484 1.115 1.086l.005.114v7.2a.4.4 0 01-.794.072L14.8 8.8V1.6c0-.204-.121-.361-.265-.394L14.48 1.2H1.52c-.148 0-.286.134-.315.326L1.2 1.6v7.2a.4.4 0 01-.4.4zm7.2 6a.4.4 0 01-.394-.328L7.6 14.8V6.966L5.883 8.683l-.056.046a.4.4 0 01-.51-.612l2.4-2.4a.398.398 0 01.182-.104l.067-.012h.068a.398.398 0 01.193.07l.056.046 2.4 2.4a.4.4 0 01-.51.612l-.056-.046L8.4 6.966V14.8a.4.4 0 01-.4.4z"
-                              ></path>
-                            </g>
-                            <defs>
-                              <clipPath id="clip0_1953_9492">
-                                <path fill="#fff" d="M0 0H16V16H0z"></path>
-                              </clipPath>
-                            </defs>
-                          </svg>
-                          <input
-                            type="file"
-                            id="img-upload"
-                            // onChange={handleImageInput}
-                            onChange={inputCallingFunction}
-                          />
-                        </div>
-                      </div>
-                    </div>
+    {isShowVideoDetail && <VideoDetail setshowPopHandle={setshowPopHandle} setuploadAll={setuploadAll} inputCallingFunction={inputCallingFunction} />}
+                 
+ {isShowModalDetail && <ModalDetail setshowPopHandle={setshowPopHandle} setuploadAll={setuploadAll} inputCallingFunction={inputCallingFunction}  />}
 
-                    <div className="row mt-3">
-                      {ctx.selectedImage.map((image, index) => (
-                        <div className="col-md-6" key={index}>
-                          <img
-                            src={image[0].image_url}
-                            alt={`Image ${index + 1}`}
-                            className="img-fluid"
-                            style={{
-                              width: "100%",
-                              height: "160px",
-                              marginTop: "10px",
-                            }}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </Tab.Pane>
-
-                  <Tab.Pane
-                    eventKey="fourth"
-                    // eventKey={isOpen ? "fourth" : null}
-                    // onClick={() => setisOpen(!isOpen)}
-                    className="bg-light p-4 tab-content"
-                  >
-                    <p className="m-0 fs-4 fw-semibold">
-                      Videos
-                      <i className="bi bi-question-circle text-muted fs-6"></i>
-                    </p>
-
-                    <div className="mt-3" id="videos-popup">
-                      <div className="images-btn-outer">
-                        <div className="browse-btn-outer">
-                          <button
-                            className="btn rounded-2"
-                            id="browse-btn"
-                            // onClick={handleshowvideomedia}
-                            onClick={() => {
-                              setshowPopHandle(true);
-                              setuploadAll(true);
-                            }}
-                          >
-                            Browse media library
-                          </button>
-                        </div>
-                        <div className="upload-btn-outer">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 16 16"
-                          >
-                            <g clipPath="url(#clip0_1953_9492)">
-                              <path
-                                fill="#4A90E2"
-                                d="M.8 9.2a.4.4 0 01-.394-.328L.4 8.8V1.6C.4.985.835.465 1.41.406L1.52.4h12.96c.591 0 1.062.484 1.115 1.086l.005.114v7.2a.4.4 0 01-.794.072L14.8 8.8V1.6c0-.204-.121-.361-.265-.394L14.48 1.2H1.52c-.148 0-.286.134-.315.326L1.2 1.6v7.2a.4.4 0 01-.4.4zm7.2 6a.4.4 0 01-.394-.328L7.6 14.8V6.966L5.883 8.683l-.056.046a.4.4 0 01-.51-.612l2.4-2.4a.398.398 0 01.182-.104l.067-.012h.068a.398.398 0 01.193.07l.056.046 2.4 2.4a.4.4 0 01-.51.612l-.056-.046L8.4 6.966V14.8a.4.4 0 01-.4.4z"
-                              ></path>
-                            </g>
-                            <defs>
-                              <clipPath id="clip0_1953_9492">
-                                <path fill="#fff" d="M0 0H16V16H0z"></path>
-                              </clipPath>
-                            </defs>
-                          </svg>
-                          <input
-                            class="video-upload"
-                            type="file"
-                            id="img-upload"
-                            onChange={inputCallingFunction}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="row mt-3">
-                      {ctx.selectedVideos.map((video, index) => (
-                        <div className="col-md-12" key={index}>
-                          <video
-                            // controls
-                            style={{
-                              width: "100%",
-                              height: "auto",
-                              marginTop: "10px",
-                            }}
-                            onMouseOver={(e) => e.target.play()}
-                            onMouseOut={(e) => e.target.pause()}
-                          >
-                            <source src={video[0].video_url} type="video/mp4" />
-                          </video>
-                        </div>
-                      ))}
-                    </div>
-                  </Tab.Pane>
-
-                  <Tab.Pane
-                    eventKey="fifth"
-                    // eventKey={isOpen ? "fifth" : null}
-                    // onClick={() => setisOpen(!isOpen)}
-                    className="bg-light p-4 tab-content"
-                  >
-                    <p className="m-0 fs-4 fw-semibold">3D</p>
-
-                    <div className="mt-3" id="threeD-modal-popup">
-                      <div className="images-btn-outer">
-                        <div className="browse-btn-outer">
-                          <button
-                            className="btn rounded-2"
-                            id="browse-btn"
-                            // onClick={handleshowthreedmodal}
-                            onClick={() => {
-                              setshowPopHandle(true);
-                              setuploadAll(true);
-                            }}
-                          >
-                            Browse media library
-                          </button>
-                        </div>
-                        <div className="upload-btn-outer">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 16 16"
-                          >
-                            <g clipPath="url(#clip0_1953_9492)">
-                              <path
-                                fill="#4A90E2"
-                                d="M.8 9.2a.4.4 0 01-.394-.328L.4 8.8V1.6C.4.985.835.465 1.41.406L1.52.4h12.96c.591 0 1.062.484 1.115 1.086l.005.114v7.2a.4.4 0 01-.794.072L14.8 8.8V1.6c0-.204-.121-.361-.265-.394L14.48 1.2H1.52c-.148 0-.286.134-.315.326L1.2 1.6v7.2a.4.4 0 01-.4.4zm7.2 6a.4.4 0 01-.394-.328L7.6 14.8V6.966L5.883 8.683l-.056.046a.4.4 0 01-.51-.612l2.4-2.4a.398.398 0 01.182-.104l.067-.012h.068a.398.398 0 01.193.07l.056.046 2.4 2.4a.4.4 0 01-.51.612l-.056-.046L8.4 6.966V14.8a.4.4 0 01-.4.4z"
-                              ></path>
-                            </g>
-                            <defs>
-                              <clipPath id="clip0_1953_9492">
-                                <path fill="#fff" d="M0 0H16V16H0z"></path>
-                              </clipPath>
-                            </defs>
-                          </svg>
-                          <input
-                            class="3D-modal-upload"
-                            type="file"
-                            id="img-upload"
-                            // onChange={handle3Dmodel}
-                            onChange={(e) => inputCallingFunction(e)}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="row mt-3">
-                      {ctx.selected3D.map((image, index) => (
-                        <div className="col-md-6" key={index}>
-                          <img
-                            src={image[0].file_url}
-                            alt={`Image ${index + 1}`}
-                            className="img-fluid"
-                            style={{
-                              width: "100%",
-                              height: "160px",
-                              marginTop: "10px",
-                            }}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </Tab.Pane>
-                  <Tab.Pane
-                    eventKey="sixth"
-                    // eventKey={isOpen ? "sixth" : null}
-                    // onClick={() => setisOpen(!isOpen)}
-                    className="bg-light p-4 tab-content"
-                  >
-                    <p className="m-0 scene-objects">Scene Objects</p>
-                    <div className="mt-3">
-                      <div class="screen-layer">
-                        <span>Screen Layer</span>
-                      </div>
-                      {getImage?.map((itm) => {
-                        return (
-                          <div class="video_file">
-                            <span
-                              class="videp_file_txt"
-                              onClick={() => {
-                                setisContent(false);
-                                setselectedText(null);
-                                setcontentImgVdo( itm );
-                                ctx.setContentImgVdo(itm)
-
-                              }}
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 20 20"
-                              >
-                                <g
-                                  fill="none"
-                                  fill-rule="evenodd"
-                                  stroke="none"
-                                  stroke-width="1"
-                                >
-                                  <path
-                                    fill="#344B60"
-                                    fill-rule="nonzero"
-                                    d="M14.5 27a1.5 1.5 0 011.415 1H29.5a.5.5 0 01.09.992L29.5 29H15.914a1.5 1.5 0 01-2.828 0H10.5a.5.5 0 01-.09-.992L10.5 28h2.585a1.5 1.5 0 011.415-1zm0 1a.5.5 0 100 1 .5.5 0 000-1zM29 10a1 1 0 011 1v13a1 1 0 01-1 1H11a1 1 0 01-1-1V11a1 1 0 011-1h18zm0 1H11v13h18V11zm-11.566 2.5a.91.91 0 01.464.127l5.131 3.034a.985.985 0 010 1.678l-5.131 3.033a.918.918 0 01-1.275-.36.992.992 0 01-.123-.479v-6.066c0-.534.418-.967.934-.967zm-.059 1v6l5.25-3-5.25-3z"
-                                    transform="translate(-10 -10)"
-                                  ></path>
-                                </g>
-                              </svg>
-
-                              {
-                                itm[0].image_url.split("/")[
-                                  itm[0].image_url.split("/").length - 1
-                                ]
-                              }
-                            </span>
-                          </div>
-                        );
-                      })}
-
-                      {getVideo?.map((itm) => {
-                        return (
-                          <div class="video_file">
-                            <span
-                              class="videp_file_txt"
-                              onClick={() => {
-                                setisContent(false);
-                                // setcontentImgVdo(null);
-                                setselectedText(null);
-                                // setTimeout(() => {
-                                  setcontentImgVdo(itm);
-                                  ctx.setContentImgVdo(itm)
-
-                                // }, 0);
-                              }}
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 20 20"
-                              >
-                                <g
-                                  fill="none"
-                                  fill-rule="evenodd"
-                                  stroke="none"
-                                  stroke-width="1"
-                                >
-                                  <path
-                                    fill="#344B60"
-                                    fill-rule="nonzero"
-                                    d="M14.5 27a1.5 1.5 0 011.415 1H29.5a.5.5 0 01.09.992L29.5 29H15.914a1.5 1.5 0 01-2.828 0H10.5a.5.5 0 01-.09-.992L10.5 28h2.585a1.5 1.5 0 011.415-1zm0 1a.5.5 0 100 1 .5.5 0 000-1zM29 10a1 1 0 011 1v13a1 1 0 01-1 1H11a1 1 0 01-1-1V11a1 1 0 011-1h18zm0 1H11v13h18V11zm-11.566 2.5a.91.91 0 01.464.127l5.131 3.034a.985.985 0 010 1.678l-5.131 3.033a.918.918 0 01-1.275-.36.992.992 0 01-.123-.479v-6.066c0-.534.418-.967.934-.967zm-.059 1v6l5.25-3-5.25-3z"
-                                    transform="translate(-10 -10)"
-                                  ></path>
-                                </g>
-                              </svg>
-
-                              {
-                                itm[0].video_url.split("/")[
-                                  itm[0].video_url.split("/").length - 1
-                                ]
-                              }
-                            </span>
-                          </div>
-                        );
-                      })}
-
-                      {getText?.map((text)=>(
-                        <div className="textfield" 
-                        onClick={()=>{
-                          setcontentImgVdo(text);
-                          setisContent(false)
-                          // setselectedText(text[0].button_name);
-                          console.log(contentImgVdo,'this is text <---------------------------------------')
-                        }}
-                        >
-                          <span className="text-format">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="6%"
-                            height="6%"
-                            viewBox="0 0 15 20"
-                          >
-                            <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
-                              <path
-                                fill="#073158"
-                                fillRule="nonzero"
-                                d="M27.4694534 11.225L21.2234727 11.225 21.2234727 30 19.812701 30 19.812701 11.225 13 11.225 13 10 28 10 28 11.225z"
-                                transform="translate(-13 -10)"
-                              ></path>
-                            </g>
-                          </svg>
-                            {text[0].button_name}
-                          </span>
-                        </div>
-                      ))}
-
-                      <div class="AR_layer_div">
-                        <div class="screen-layer">
-                          <span>AR Layer</span>
-                        </div>
-                      </div>
-                    </div>
-                  </Tab.Pane>
+ {isShowAppletsDetail && <Applets getImage={getImage} getVideo={getVideo} setselectedText={setselectedText} seturlVdo={seturlVdo} getText={getText}  />}
+                  
                 </Row>
               </Tab.Container>
+             
             </div>
             <div
               className="col-md-9 p-0 m-0 target-center"
@@ -3751,7 +2902,8 @@ const Target = () => {
               onClick={(e) => {
                 e.stopPropagation();
                 setisOpen(false);
-                setisContent(true);
+                // setisContent(true);
+                dispatch(sideBarContentAction.setContent(true))
               }}
             >
               <canvas
@@ -3761,7 +2913,8 @@ const Target = () => {
                 onClick={(e) => {
                   e.stopPropagation();
                   setisOpen(false);
-                  setisContent(false);
+                  // setisContent(false);
+                  dispatch(sideBarContentAction.setContent(false))
                 }}
               >
               <ModelAr />
@@ -6098,2745 +5251,9 @@ const Target = () => {
 
               {/* onclick image, video,3d */}
 
-              <Tab.Container id="right-tabs-example" defaultActiveKey="first">
-                <Row className="flex-column justify-content-between tab-list right-tabs video-img-tabs">
-                  <Col className="side-tab mb-5 mb-md-0 p-0">
-                    <Tab.Content>
-                      {/* Start---- single---section  */}
-                      <Tab.Pane
-                        eventKey="first"
-                        className="bg-light py-4 tab-content target-tab-content"
-                      >
-                        <div
-                          className="InspectorMenu--1PeA4 video-div-height"
-                          data-testid="InspectorMenu"
-                        >
-                          {!isContent && (
-                            <Accordion defaultActiveKey="0">
-                              <div className="ShelfContainer--1Ad4O">
-                                <div style={{ width: "100%" }}>
-                                  {/* start Content show hide content  */}
-                                  <div className="TitleContainer--2xD-b title-content">
-                                    <Accordion.Item eventKey="0">
-                                      <Accordion.Header >
-                                       <p style={{
-                                        color:contentImgVdo && contentImgVdo[0].button_name ? 'rgb(91 89 89 / 35%)' : 'black'
-                                      }}> Content</p>
-                                      </Accordion.Header>
-                                      <Accordion.Body>
-                                        <div
-                                          data-testid="ShelfDrawerBtnContent"
-                                          className="target-image-content Content--15Wyt Open--EFZA8"
-                                          style={{ overflow: "visible" }}
-                                        >
-                                          {/* <div> */}
+{/* content component here */}
+             <Content />  
 
-                                           { !contentImgVdo[0].button_name && (
-                                           <div className="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO border border-danger">
-
-                                            <div className="target-image-content-inner PreviewDiv--WjPlt PreviewDiv--1AHiO " style={{width: "100%",height: "170px"}}>
-                                              {contentImgVdo &&
-                                                contentImgVdo[0].image_url && (
-                                                  <img
-                                                    src={
-                                                      contentImgVdo[0].image_url
-                                                    }
-                                                    style={{
-                                                      width: "100%",
-                                                      height: "100%",
-                                                      display: "flex",
-                                                      objectFit: "cover",
-                                                    }}
-                                                  />
-                                                )}
-                                              {contentImgVdo &&
-                                                contentImgVdo[0].video_url && (
-                                                  <video
-                                                    width="100%"
-                                                    height="100%"
-                                                    controls
-                                                  >
-                                                    <source
-                                                      src={
-                                                        contentImgVdo[0]
-                                                          .video_url
-                                                      }
-                                                      type="video/mp4"
-                                                    />
-                                                  </video>
-                                                )}
-                                              <div className="HoverDiv--jI34Q ">
-                                                <button
-                                                  style={{
-                                                    width: "100%",
-                                                    height: "100%",
-                                                  }}
-                                                >
-                                                  <div className="SubBtn--26RUV TrkImgUploadButton--3e-ZC">
-                                                    Replace123
-                                                  </div>
-                                                </button>
-                                                <input
-                                                  type="file"
-                                                  accept="image/jpeg,image/png,.jpeg,.jpg,.png"
-                                                  onChange={TargetImage}
-                                                  style={{
-                                                    margin: "-60px 0 0 0 ",
-                                                    position: "relative",
-                                                    zIndex: "3",
-                                                  }}
-                                                />
-                                              </div>
-                                              <div className="HoverDiv--2gksf ">
-                                                <button className="ActionBtn--1x70k">
-                                                  {/* <div className="EntityReplaceBtn--V4byk">
-                                                    Replace
-                                                  </div> */}
-                                                </button>
-                                                <input
-                                                  type="file"
-                                                  style={{ display: "none" }}
-                                                />
-                                              </div>
-                                            </div>
-                                          </div>)}
-                                        </div>
-                                      </Accordion.Body>
-                                    </Accordion.Item>
-                                  </div>
-                                  {/* End Content show hide  */}
-
-                                  <div
-                                    style={{
-                                      borderTop: "1px solid rgb(178, 196, 215)",
-                                      height: "auto",
-                                      width: "100%",
-                                    }}
-                                  ></div>
-                                </div>
-
-                                <div style={{ width: "100%" }}>
-                                  <div
-                                    data-testid="ShelfDrawerBtnContent"
-                                    className="Content--15Wyt Closed--2YzdP"
-                                    style={{ overflow: "hidden" }}
-                                  ></div>
-                                </div>
-                                <div style={{ width: "100%" }}></div>
-
-                                <div style={{ width: "100%" }}>
-                                  <button
-                                    data-testid="ShelfDrawerBtn"
-                                    className="btn-transition-effect DrawerBtn--bdcva  "
-                                  >
-                                    {/* start Transition show hide content  */}
-                                    <div
-                                      className="TitleContainer--2xD-b title-content"
-                                      id="transition-affects-outer-two"
-                                    >
-                                      <Accordion.Item eventKey="4">
-                                        <Accordion.Header>
-                                          {" "}
-                                          Transition Effects
-                                        </Accordion.Header>
-                                        <Accordion.Body>
-                                          <div
-                                            data-testid="ShelfDrawerBtnContent"
-                                            className="target-image-content Content--15Wyt Open--EFZA8"
-                                            style={{ overflow: "visible" }}
-                                          >
-                                            <div>
-                                              <div className="row">
-                                                <Tab.Container
-                                                  id="left-tabs-example"
-                                                  defaultActiveKey="first"
-                                                >
-                                                  <Col className="side-tab col-md-12 mb-5 mb-md-0 p-0">
-                                                    <Nav
-                                                      variant="pills"
-                                                      className="side-main"
-                                                    >
-                                                      <Nav.Item>
-                                                        <Nav.Link eventKey="first-enter">
-                                                          <a
-                                                            href="#tab1"
-                                                            className="nav-link p-0 m-0 fw-bold link-dark enter-text"
-                                                          >
-                                                            {" "}
-                                                            Enter-12
-                                                          </a>
-                                                        </Nav.Link>
-                                                      </Nav.Item>
-
-                                                      <Nav.Item>
-                                                        <Nav.Link eventKey="second-exit">
-                                                          <a
-                                                            href="#tab2"
-                                                            className="nav-link p-0 m-0 fw-bold link-dark enter-text"
-                                                          >
-                                                            Exit
-                                                          </a>
-                                                        </Nav.Link>
-                                                      </Nav.Item>
-                                                    </Nav>
-                                                  </Col>
-                                                  <Col className="tab-main">
-                                                    <Tab.Content>
-                                                      {/* Start---- Enter   */}
-                                                      <Tab.Pane
-                                                        eventKey="first-enter"
-                                                        className="bg-light tab-content target-tab-content"
-                                                      >
-                                                        <Accordion>
-                                                          <div className="transition-outer">
-                                                            <div className="transition-for-all">
-                                                              <div className="first-img border-to-all">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="68"
-                                                                  height="68"
-                                                                  viewBox="0 0 68 68"
-                                                                >
-                                                                  <defs>
-                                                                    <rect
-                                                                      id="path-1"
-                                                                      width="68"
-                                                                      height="68"
-                                                                      x="0"
-                                                                      y="0"
-                                                                      rx="5"
-                                                                    ></rect>
-                                                                    <linearGradient
-                                                                      id="linearGradient-3"
-                                                                      x1="100%"
-                                                                      x2="0%"
-                                                                      y1="50%"
-                                                                      y2="50%"
-                                                                    >
-                                                                      <stop
-                                                                        offset="0%"
-                                                                        stopColor="#EEF6FF"
-                                                                      ></stop>
-                                                                      <stop
-                                                                        offset="100%"
-                                                                        stopColor="#EEF6FF"
-                                                                        stopOpacity="0"
-                                                                      ></stop>
-                                                                    </linearGradient>
-                                                                  </defs>
-                                                                  <g
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    stroke="none"
-                                                                    strokeWidth="1"
-                                                                  >
-                                                                    <g>
-                                                                      <mask
-                                                                        id="mask-2"
-                                                                        fill="#fff"
-                                                                      >
-                                                                        <use href="#path-1"></use>
-                                                                      </mask>
-
-                                                                      <path
-                                                                        fill="#96BFEF"
-                                                                        d="M3.4 22.6148507L17.8328447 6.8 38.4 30.8755409 20.8993196 45.675647 30.1572612 59.8 3.83003227 45.4802808 16.58811 31.9959974z"
-                                                                        mask="url(#mask-2)"
-                                                                      ></path>
-                                                                    </g>
-                                                                  </g>
-                                                                </svg>
-                                                                <div className="Title--2wreU none-text">
-                                                                  None
-                                                                </div>
-                                                              </div>
-
-                                                              <div className="second-img border-to-all">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="68"
-                                                                  height="68"
-                                                                  viewBox="0 0 68 68"
-                                                                >
-                                                                  <defs>
-                                                                    <rect
-                                                                      id="path-1"
-                                                                      width="68"
-                                                                      height="68"
-                                                                      x="0"
-                                                                      y="0"
-                                                                      rx="5"
-                                                                    ></rect>
-                                                                    <linearGradient
-                                                                      id="linearGradient-3"
-                                                                      x1="100%"
-                                                                      x2="0%"
-                                                                      y1="50%"
-                                                                      y2="50%"
-                                                                    >
-                                                                      <stop
-                                                                        offset="0%"
-                                                                        stopColor="#EEF6FF"
-                                                                      ></stop>
-                                                                      <stop
-                                                                        offset="100%"
-                                                                        stopColor="#EEF6FF"
-                                                                        stopOpacity="0"
-                                                                      ></stop>
-                                                                    </linearGradient>
-                                                                  </defs>
-                                                                  <g
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    stroke="none"
-                                                                    strokeWidth="1"
-                                                                  >
-                                                                    <g>
-                                                                      <mask
-                                                                        id="mask-2"
-                                                                        fill="#fff"
-                                                                      >
-                                                                        <use href="#path-1"></use>
-                                                                      </mask>
-                                                                      <path
-                                                                        fill="url(#linearGradient-3)"
-                                                                        fillRule="nonzero"
-                                                                        d="M-17 22.6148507L-2.56715528 6.8 17.8328447 6.8 17.2472582 18.6534773 16.58811 31.9959974 10.7026223 45.675647 30.1572612 59.8 -2.56715528 59.8 -16.5699677 45.4802808 -3.81189004 31.9959974z"
-                                                                        mask="url(#mask-2)"
-                                                                      ></path>
-                                                                      <path
-                                                                        fill="#96BFEF"
-                                                                        d="M63.298 37.644l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
-                                                                        mask="url(#mask-2)"
-                                                                        transform="rotate(90 52.36 34)"
-                                                                      ></path>
-                                                                      <path
-                                                                        fill="#96BFEF"
-                                                                        d="M3.4 22.6148507L17.8328447 6.8 38.4 30.8755409 20.8993196 45.675647 30.1572612 59.8 3.83003227 45.4802808 16.58811 31.9959974z"
-                                                                        mask="url(#mask-2)"
-                                                                      ></path>
-                                                                    </g>
-                                                                  </g>
-                                                                </svg>
-                                                                <div className="Title--2wreU">
-                                                                  Slide L-R
-                                                                </div>
-                                                              </div>
-                                                              <div className="third-img border-to-all">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="68"
-                                                                  height="68"
-                                                                  viewBox="0 0 68 68"
-                                                                >
-                                                                  <defs>
-                                                                    <rect
-                                                                      id="path-1"
-                                                                      width="68"
-                                                                      height="68"
-                                                                      x="0"
-                                                                      y="0"
-                                                                      rx="5"
-                                                                    ></rect>
-                                                                    <linearGradient
-                                                                      id="linearGradient-3"
-                                                                      x1="83.061%"
-                                                                      x2="0%"
-                                                                      y1="50%"
-                                                                      y2="50%"
-                                                                    >
-                                                                      <stop
-                                                                        offset="0%"
-                                                                        stopColor="#EEF6FF"
-                                                                        stopOpacity="0"
-                                                                      ></stop>
-                                                                      <stop
-                                                                        offset="100%"
-                                                                        stopColor="#EEF6FF"
-                                                                      ></stop>
-                                                                    </linearGradient>
-                                                                  </defs>
-                                                                  <g
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    stroke="none"
-                                                                    strokeWidth="1"
-                                                                  >
-                                                                    <g>
-                                                                      <mask
-                                                                        id="mask-2"
-                                                                        fill="#fff"
-                                                                      >
-                                                                        <use href="#path-1"></use>
-                                                                      </mask>
-                                                                      <path
-                                                                        fill="url(#linearGradient-3)"
-                                                                        fillRule="nonzero"
-                                                                        d="M40.8 22.6148507L43.3328447 6.8 75.6328447 6.8 75.0472582 18.6534773 74.38811 31.9959974 74.38811 45.4802808 72.536306 59.8 55.6572612 59.8 41.2300323 45.4802808 53.98811 31.9959974z"
-                                                                        mask="url(#mask-2)"
-                                                                      ></path>
-                                                                      <path
-                                                                        fill="#96BFEF"
-                                                                        d="M28.9 22.6148507L43.3328447 6.8 63.9 30.8755409 46.3993196 45.675647 55.6572612 59.8 29.3300323 45.4802808 42.08811 31.9959974z"
-                                                                        mask="url(#mask-2)"
-                                                                      ></path>
-                                                                      <path
-                                                                        fill="#96BFEF"
-                                                                        d="M27.598 37.644l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
-                                                                        mask="url(#mask-2)"
-                                                                        transform="matrix(0 1 1 0 -17.34 17.34)"
-                                                                      ></path>
-                                                                    </g>
-                                                                  </g>
-                                                                </svg>
-                                                                <div className="Title--2wreU">
-                                                                  Slide R-L
-                                                                </div>
-                                                              </div>
-                                                            </div>
-                                                            <div className="transition-for-all">
-                                                              <div className="fourth-img border-to-all">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="68"
-                                                                  height="70"
-                                                                  viewBox="0 0 68 70"
-                                                                >
-                                                                  <defs>
-                                                                    <path
-                                                                      id="path-1"
-                                                                      d="M4.987.165l58-.152a5 5 0 015.013 5v58.165a5 5 0 01-5 5H5a5 5 0 01-5-5V5.165a5 5 0 014.987-5z"
-                                                                    ></path>
-                                                                    <linearGradient
-                                                                      id="linearGradient-3"
-                                                                      x1="50%"
-                                                                      x2="50%"
-                                                                      y1="0%"
-                                                                      y2="100%"
-                                                                    >
-                                                                      <stop
-                                                                        offset="0%"
-                                                                        stopColor="#EEF6FF"
-                                                                      ></stop>
-                                                                      <stop
-                                                                        offset="100%"
-                                                                        stopColor="#EEF6FF"
-                                                                        stopOpacity="0"
-                                                                      ></stop>
-                                                                    </linearGradient>
-                                                                  </defs>
-                                                                  <g
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    stroke="none"
-                                                                    strokeWidth="1"
-                                                                  >
-                                                                    <g transform="translate(0 1)">
-                                                                      <g transform="translate(0 -1)">
-                                                                        <g transform="translate(0 .822)">
-                                                                          <mask
-                                                                            id="mask-2"
-                                                                            fill="#fff"
-                                                                          >
-                                                                            <use href="#path-1"></use>
-                                                                          </mask>
-                                                                          <path
-                                                                            fill="url(#linearGradient-3)"
-                                                                            fillRule="nonzero"
-                                                                            d="M16 49.4649587L30.0083493 34.1783937 49.9705882 57.4497055 49.9705882 68.6858564 39.9328401 85.4079602 16 71.3920676z"
-                                                                            mask="url(#mask-2)"
-                                                                          ></path>
-                                                                          <g mask="url(#mask-2)">
-                                                                            <g transform="translate(15.5 10.038)">
-                                                                              <path
-                                                                                fill="#96BFEF"
-                                                                                fillRule="nonzero"
-                                                                                d="M0.5 39.4272899L14.5083493 24.1407249 34.4705882 47.4120367 17.4846337 61.717754 26.4702829 75.3702914 0.917384264 61.5289139 13.3002244 48.495065z"
-                                                                              ></path>
-                                                                              <path
-                                                                                fill="#96BFEF"
-                                                                                fillRule="evenodd"
-                                                                                d="M27.787 9.987L18.254.493a1.654 1.654 0 00-2.358 0L6.363 9.987a1.672 1.672 0 00.072 2.278 1.69 1.69 0 002.286.104l8.422-8.32 8.42 8.387a1.654 1.654 0 002.358 0 1.673 1.673 0 00-.134-2.45z"
-                                                                              ></path>
-                                                                              <g
-                                                                                fill="none"
-                                                                                fillRule="evenodd"
-                                                                                strokeLinecap="round"
-                                                                                strokeWidth="1"
-                                                                                transform="matrix(0 -1 -1 0 31.5 69.14)"
-                                                                              >
-                                                                                <g transform="translate(14 25)">
-                                                                                  <path
-                                                                                    stroke="#FFF"
-                                                                                    d="M0.5 1L17.5 1"
-                                                                                  ></path>
-                                                                                  <path
-                                                                                    stroke="#96BFEF"
-                                                                                    d="M0.5 0.5L17.5 0.5"
-                                                                                  ></path>
-                                                                                </g>
-                                                                                <g transform="translate(4)">
-                                                                                  <path
-                                                                                    stroke="#FFF"
-                                                                                    d="M0.5 1L17.5 1"
-                                                                                  ></path>
-                                                                                  <path
-                                                                                    stroke="#96BFEF"
-                                                                                    d="M0.5 0.5L17.5 0.5"
-                                                                                  ></path>
-                                                                                </g>
-                                                                                <g transform="translate(0 14)">
-                                                                                  <path
-                                                                                    stroke="#FFF"
-                                                                                    d="M0.5 1L17.5 1"
-                                                                                  ></path>
-                                                                                  <path
-                                                                                    stroke="#96BFEF"
-                                                                                    d="M0.5 0.5L17.5 0.5"
-                                                                                  ></path>
-                                                                                </g>
-                                                                              </g>
-                                                                            </g>
-                                                                          </g>
-                                                                        </g>
-                                                                      </g>
-                                                                    </g>
-                                                                  </g>
-                                                                </svg>
-                                                                <div className="Title--2wreU">
-                                                                  Slide up
-                                                                </div>
-                                                              </div>
-                                                              <div className="five-img border-to-all">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="68"
-                                                                  height="68"
-                                                                  viewBox="0 0 68 68"
-                                                                >
-                                                                  <defs>
-                                                                    <path
-                                                                      id="path-1"
-                                                                      d="M5 0h58a5 5 0 015 5v58a5 5 0 01-5 5H5a5 5 0 01-5-5V5a5 5 0 015-5z"
-                                                                    ></path>
-                                                                    <linearGradient
-                                                                      id="linearGradient-3"
-                                                                      x1="50%"
-                                                                      x2="50%"
-                                                                      y1="0%"
-                                                                      y2="100%"
-                                                                    >
-                                                                      <stop
-                                                                        offset="0%"
-                                                                        stopColor="#EEF6FF"
-                                                                        stopOpacity="0"
-                                                                      ></stop>
-                                                                      <stop
-                                                                        offset="100%"
-                                                                        stopColor="#EEF6FF"
-                                                                      ></stop>
-                                                                    </linearGradient>
-                                                                  </defs>
-                                                                  <g
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    stroke="none"
-                                                                    strokeWidth="1"
-                                                                  >
-                                                                    <g>
-                                                                      <mask
-                                                                        id="mask-2"
-                                                                        fill="#fff"
-                                                                      >
-                                                                        <use href="#path-1"></use>
-                                                                      </mask>
-                                                                      <g mask="url(#mask-2)">
-                                                                        <g transform="translate(17 -20.4)">
-                                                                          <path
-                                                                            fill="url(#linearGradient-3)"
-                                                                            fillRule="nonzero"
-                                                                            d="M0.430032272 15.8148507L7.63284472 9.05941988e-15 28.0328447 9.05941988e-15 35 11.8534773 35 24.0755409 26.78811 30.9020874 26.78811 53 0.430032272 38.6802808z"
-                                                                          ></path>
-                                                                          <path
-                                                                            fill="#96BFEF"
-                                                                            fillRule="nonzero"
-                                                                            d="M1.09618981e-12 15.8148507L14.4328447 1.20792265e-14 35 24.0755409 17.4993196 38.875647 26.7572612 53 0.430032272 38.6802808 13.18811 25.1959974z"
-                                                                          ></path>
-                                                                          <path
-                                                                            fill="#96BFEF"
-                                                                            fillRule="evenodd"
-                                                                            d="M27.598 76.632l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
-                                                                            transform="matrix(1 0 0 -1 0 145.976)"
-                                                                          ></path>
-                                                                        </g>
-                                                                      </g>
-                                                                      <g
-                                                                        strokeLinecap="round"
-                                                                        mask="url(#mask-2)"
-                                                                      >
-                                                                        <g transform="rotate(90 27.5 16)">
-                                                                          <g transform="translate(13.5 21)">
-                                                                            <path
-                                                                              stroke="#FFF"
-                                                                              d="M0.5 1L17.5 1"
-                                                                            ></path>
-                                                                            <path
-                                                                              stroke="#96BFEF"
-                                                                              d="M0.5 0.5L17.5 0.5"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g transform="translate(14.5 .5)">
-                                                                            <path
-                                                                              stroke="#FFF"
-                                                                              d="M0.5 1L17.5 1"
-                                                                            ></path>
-                                                                            <path
-                                                                              stroke="#96BFEF"
-                                                                              d="M0.5 0.5L17.5 0.5"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g transform="translate(.5 9.5)">
-                                                                            <path
-                                                                              stroke="#FFF"
-                                                                              d="M0.5 1L17.5 1"
-                                                                            ></path>
-                                                                            <path
-                                                                              stroke="#96BFEF"
-                                                                              d="M0.5 0.5L17.5 0.5"
-                                                                            ></path>
-                                                                          </g>
-                                                                        </g>
-                                                                      </g>
-                                                                    </g>
-                                                                  </g>
-                                                                </svg>
-                                                                <div className="Title--2wreU">
-                                                                  Slide down
-                                                                </div>
-                                                              </div>
-                                                              <div className="six-img border-to-all">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="68"
-                                                                  height="68"
-                                                                  viewBox="0 0 68 68"
-                                                                >
-                                                                  <defs>
-                                                                    <radialGradient
-                                                                      id="radialGradient-1"
-                                                                      cx="50%"
-                                                                      cy="50%"
-                                                                      r="46.12%"
-                                                                      fx="50%"
-                                                                      fy="50%"
-                                                                      gradientTransform="matrix(1 0 0 1.47487 0 -.237)"
-                                                                    >
-                                                                      <stop
-                                                                        offset="0%"
-                                                                        stopColor="#96BFEF"
-                                                                        stopOpacity="0.584"
-                                                                      ></stop>
-                                                                      <stop
-                                                                        offset="100%"
-                                                                        stopColor="#96BFEF"
-                                                                        stopOpacity="0.214"
-                                                                      ></stop>
-                                                                    </radialGradient>
-                                                                  </defs>
-                                                                  <g
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    stroke="none"
-                                                                    strokeWidth="1"
-                                                                  >
-                                                                    <g>
-                                                                      <rect
-                                                                        width="68"
-                                                                        height="68"
-                                                                        x="0"
-                                                                        y="0"
-                                                                        rx="5"
-                                                                      ></rect>
-                                                                      <g
-                                                                        fill="url(#radialGradient-1)"
-                                                                        fillRule="nonzero"
-                                                                        transform="translate(17 6.8)"
-                                                                      >
-                                                                        <path d="M0 15.8148507L14.4328447 0 35 24.0755409 17.4993196 38.875647 26.7572612 53 0.430032272 38.6802808 13.18811 25.1959974z"></path>
-                                                                      </g>
-                                                                    </g>
-                                                                  </g>
-                                                                </svg>
-                                                                <div className="Title--2wreU">
-                                                                  Fade-In
-                                                                </div>
-                                                              </div>
-                                                            </div>
-                                                            <div className="transition-for-all">
-                                                              <div className="seven-img border-to-all">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="56"
-                                                                  height="58"
-                                                                  viewBox="0 0 56 58"
-                                                                >
-                                                                  <defs>
-                                                                    <radialGradient
-                                                                      id="radialGradient-1"
-                                                                      cx="50%"
-                                                                      cy="48.736%"
-                                                                      r="76.188%"
-                                                                      fx="50%"
-                                                                      fy="48.736%"
-                                                                      gradientTransform="matrix(0 .66667 -1 0 .987 .154)"
-                                                                    >
-                                                                      <stop
-                                                                        offset="0%"
-                                                                        stopColor="#96BFEF"
-                                                                        stopOpacity="0.63"
-                                                                      ></stop>
-                                                                      <stop
-                                                                        offset="100%"
-                                                                        stopColor="#FFF"
-                                                                        stopOpacity="0"
-                                                                      ></stop>
-                                                                    </radialGradient>
-                                                                  </defs>
-                                                                  <g
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    stroke="none"
-                                                                    strokeWidth="1"
-                                                                  >
-                                                                    <g transform="translate(-6 -5)">
-                                                                      <g transform="translate(6 5)">
-                                                                        <g transform="translate(.822)">
-                                                                          <g
-                                                                            fillRule="nonzero"
-                                                                            transform="translate(11.178 4)"
-                                                                          >
-                                                                            <path
-                                                                              fill="#96BFEF"
-                                                                              d="M6.4 18.1937302L14.3174462 9.6 25.6 22.6825581 15.9996267 30.7248799 21.078269 38.4 6.63590342 30.6187186 13.6346203 23.2914099z"
-                                                                            ></path>
-                                                                            <path
-                                                                              fill="url(#radialGradient-1)"
-                                                                              d="M0 14.3228836L13.1957437 0 32 21.8042635 15.9993779 35.2081331 24.4637816 48 0.393172363 35.0311977 12.0577005 22.8190165z"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g
-                                                                            fill="#96BFEF"
-                                                                            transform="matrix(-1 0 0 1 14 43.7)"
-                                                                          >
-                                                                            <path
-                                                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
-                                                                              transform="scale(1 -1) rotate(45 23.312 0)"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g
-                                                                            fill="#96BFEF"
-                                                                            transform="translate(40.291 43.7)"
-                                                                          >
-                                                                            <path
-                                                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
-                                                                              transform="scale(1 -1) rotate(45 23.312 0)"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g
-                                                                            fill="#96BFEF"
-                                                                            transform="rotate(180 7 7)"
-                                                                          >
-                                                                            <path
-                                                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
-                                                                              transform="scale(1 -1) rotate(45 23.312 0)"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g
-                                                                            fill="#96BFEF"
-                                                                            transform="matrix(1 0 0 -1 40.291 14)"
-                                                                          >
-                                                                            <path
-                                                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
-                                                                              transform="scale(1 -1) rotate(45 23.312 0)"
-                                                                            ></path>
-                                                                          </g>
-                                                                        </g>
-                                                                      </g>
-                                                                    </g>
-                                                                  </g>
-                                                                </svg>
-                                                                <div className="Title--2wreU">
-                                                                  Scale-Up
-                                                                </div>
-                                                              </div>
-                                                              <div className="eight-img border-to-all">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="46"
-                                                                  height="51"
-                                                                  viewBox="0 0 46 51"
-                                                                >
-                                                                  <defs>
-                                                                    <radialGradient
-                                                                      id="radialGradient-1"
-                                                                      cx="50%"
-                                                                      cy="48.736%"
-                                                                      r="76.188%"
-                                                                      fx="50%"
-                                                                      fy="48.736%"
-                                                                      gradientTransform="matrix(0 .66667 -1 0 .987 .154)"
-                                                                    >
-                                                                      <stop
-                                                                        offset="0%"
-                                                                        stopColor="#96BFEF"
-                                                                        stopOpacity="0.63"
-                                                                      ></stop>
-                                                                      <stop
-                                                                        offset="100%"
-                                                                        stopColor="#FFF"
-                                                                        stopOpacity="0"
-                                                                      ></stop>
-                                                                    </radialGradient>
-                                                                  </defs>
-                                                                  <g
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    stroke="none"
-                                                                    strokeWidth="1"
-                                                                  >
-                                                                    <g transform="translate(-11 -8)">
-                                                                      <g transform="translate(11 8)">
-                                                                        <g transform="translate(0 .588)">
-                                                                          <g
-                                                                            fill="#96BFEF"
-                                                                            transform="matrix(1 0 0 -1 0 49.412)"
-                                                                          >
-                                                                            <path
-                                                                              d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
-                                                                              transform="scale(1 -1) rotate(45 22.255 0)"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g
-                                                                            fill="#96BFEF"
-                                                                            transform="rotate(180 23 24.706)"
-                                                                          >
-                                                                            <path
-                                                                              d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
-                                                                              transform="scale(1 -1) rotate(45 22.255 0)"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g
-                                                                            fill="#96BFEF"
-                                                                            transform="translate(0 .412)"
-                                                                          >
-                                                                            <path
-                                                                              d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
-                                                                              transform="scale(1 -1) rotate(45 22.255 0)"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g
-                                                                            fill="#96BFEF"
-                                                                            transform="matrix(-1 0 0 1 46 .412)"
-                                                                          >
-                                                                            <path
-                                                                              d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
-                                                                              transform="scale(1 -1) rotate(45 22.255 0)"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g
-                                                                            fillRule="nonzero"
-                                                                            transform="translate(7 .412)"
-                                                                          >
-                                                                            <path
-                                                                              fill="#96BFEF"
-                                                                              d="M6.4 18.1937302L14.3174462 9.6 25.6 22.6825581 15.9996267 30.7248799 21.078269 38.4 6.63590342 30.6187186 13.6346203 23.2914099z"
-                                                                            ></path>
-                                                                            <path
-                                                                              fill="url(#radialGradient-1)"
-                                                                              d="M0 14.3228836L13.1957437 0 32 21.8042635 15.9993779 35.2081331 24.4637816 48 0.393172363 35.0311977 12.0577005 22.8190165z"
-                                                                            ></path>
-                                                                          </g>
-                                                                        </g>
-                                                                      </g>
-                                                                    </g>
-                                                                  </g>
-                                                                </svg>
-                                                                <div className="Title--2wreU">
-                                                                  Scale-Down
-                                                                </div>
-                                                              </div>
-
-                                                              <div className="nine-img border-to-all">
-                                                                <div className="Title--2wreU">
-                                                                  Scale-Down-dummy
-                                                                </div>
-                                                              </div>
-                                                            </div>
-                                                          </div>
-                                                        </Accordion>
-                                                      </Tab.Pane>
-                                                      {/* Start---- Exit   */}
-                                                      <Tab.Pane
-                                                        eventKey="second-exit"
-                                                        className="bg-light tab-content target-tab-content"
-                                                      >
-                                                        <Accordion>
-                                                          <div className="transition-outer">
-                                                            <div className="transition-for-all">
-                                                              <div className="first-img border-to-all">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="35"
-                                                                  height="53"
-                                                                  viewBox="0 0 35 53"
-                                                                >
-                                                                  <g
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    stroke="none"
-                                                                    strokeWidth="1"
-                                                                  >
-                                                                    <g
-                                                                      fill="#96BFEF"
-                                                                      transform="translate(-38 -292)"
-                                                                    >
-                                                                      <g transform="translate(21 284)">
-                                                                        <path d="M17 23.8148507L31.4328447 8 52 32.0755409 34.4993196 46.875647 43.7572612 61 17.4300323 46.6802808 30.18811 33.1959974z"></path>
-                                                                      </g>
-                                                                    </g>
-                                                                  </g>
-                                                                </svg>
-                                                                <div className="Title--2wreU none-text">
-                                                                  None
-                                                                </div>
-                                                              </div>
-
-                                                              <div className="second-img border-to-all">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="68"
-                                                                  height="68"
-                                                                  viewBox="0 0 68 68"
-                                                                >
-                                                                  <defs>
-                                                                    <rect
-                                                                      id="path-1"
-                                                                      width="68"
-                                                                      height="68"
-                                                                      x="0"
-                                                                      y="0"
-                                                                      rx="5"
-                                                                    ></rect>
-                                                                    <linearGradient
-                                                                      id="linearGradient-3"
-                                                                      x1="100%"
-                                                                      x2="0%"
-                                                                      y1="50%"
-                                                                      y2="50%"
-                                                                    >
-                                                                      <stop
-                                                                        offset="0%"
-                                                                        stopColor="#EEF6FF"
-                                                                      ></stop>
-                                                                      <stop
-                                                                        offset="100%"
-                                                                        stopColor="#EEF6FF"
-                                                                        stopOpacity="0"
-                                                                      ></stop>
-                                                                    </linearGradient>
-                                                                  </defs>
-                                                                  <g
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    stroke="none"
-                                                                    strokeWidth="1"
-                                                                  >
-                                                                    <g>
-                                                                      <mask
-                                                                        id="mask-2"
-                                                                        fill="#fff"
-                                                                      >
-                                                                        <use href="#path-1"></use>
-                                                                      </mask>
-                                                                      <path
-                                                                        fill="url(#linearGradient-3)"
-                                                                        fillRule="nonzero"
-                                                                        d="M-17 22.6148507L-2.56715528 6.8 17.8328447 6.8 17.2472582 18.6534773 16.58811 31.9959974 10.7026223 45.675647 30.1572612 59.8 -2.56715528 59.8 -16.5699677 45.4802808 -3.81189004 31.9959974z"
-                                                                        mask="url(#mask-2)"
-                                                                      ></path>
-                                                                      <path
-                                                                        fill="#96BFEF"
-                                                                        d="M63.298 37.644l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
-                                                                        mask="url(#mask-2)"
-                                                                        transform="rotate(90 52.36 34)"
-                                                                      ></path>
-                                                                      <path
-                                                                        fill="#96BFEF"
-                                                                        d="M3.4 22.6148507L17.8328447 6.8 38.4 30.8755409 20.8993196 45.675647 30.1572612 59.8 3.83003227 45.4802808 16.58811 31.9959974z"
-                                                                        mask="url(#mask-2)"
-                                                                      ></path>
-                                                                    </g>
-                                                                  </g>
-                                                                </svg>
-                                                                <div className="Title--2wreU">
-                                                                  Slide L-R
-                                                                </div>
-                                                              </div>
-                                                              <div className="third-img border-to-all">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="68"
-                                                                  height="68"
-                                                                  viewBox="0 0 68 68"
-                                                                >
-                                                                  <defs>
-                                                                    <rect
-                                                                      id="path-1"
-                                                                      width="68"
-                                                                      height="68"
-                                                                      x="0"
-                                                                      y="0"
-                                                                      rx="5"
-                                                                    ></rect>
-                                                                    <linearGradient
-                                                                      id="linearGradient-3"
-                                                                      x1="83.061%"
-                                                                      x2="0%"
-                                                                      y1="50%"
-                                                                      y2="50%"
-                                                                    >
-                                                                      <stop
-                                                                        offset="0%"
-                                                                        stopColor="#EEF6FF"
-                                                                        stopOpacity="0"
-                                                                      ></stop>
-                                                                      <stop
-                                                                        offset="100%"
-                                                                        stopColor="#EEF6FF"
-                                                                      ></stop>
-                                                                    </linearGradient>
-                                                                  </defs>
-                                                                  <g
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    stroke="none"
-                                                                    strokeWidth="1"
-                                                                  >
-                                                                    <g>
-                                                                      <mask
-                                                                        id="mask-2"
-                                                                        fill="#fff"
-                                                                      >
-                                                                        <use href="#path-1"></use>
-                                                                      </mask>
-                                                                      <path
-                                                                        fill="url(#linearGradient-3)"
-                                                                        fillRule="nonzero"
-                                                                        d="M40.8 22.6148507L43.3328447 6.8 75.6328447 6.8 75.0472582 18.6534773 74.38811 31.9959974 74.38811 45.4802808 72.536306 59.8 55.6572612 59.8 41.2300323 45.4802808 53.98811 31.9959974z"
-                                                                        mask="url(#mask-2)"
-                                                                      ></path>
-                                                                      <path
-                                                                        fill="#96BFEF"
-                                                                        d="M28.9 22.6148507L43.3328447 6.8 63.9 30.8755409 46.3993196 45.675647 55.6572612 59.8 29.3300323 45.4802808 42.08811 31.9959974z"
-                                                                        mask="url(#mask-2)"
-                                                                      ></path>
-                                                                      <path
-                                                                        fill="#96BFEF"
-                                                                        d="M27.598 37.644l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
-                                                                        mask="url(#mask-2)"
-                                                                        transform="matrix(0 1 1 0 -17.34 17.34)"
-                                                                      ></path>
-                                                                    </g>
-                                                                  </g>
-                                                                </svg>
-                                                                <div className="Title--2wreU">
-                                                                  Slide R-L
-                                                                </div>
-                                                              </div>
-                                                            </div>
-                                                            <div className="transition-for-all">
-                                                              <div className="fourth-img border-to-all">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="68"
-                                                                  height="70"
-                                                                  viewBox="0 0 68 70"
-                                                                >
-                                                                  <defs>
-                                                                    <path
-                                                                      id="path-1"
-                                                                      d="M4.987.165l58-.152a5 5 0 015.013 5v58.165a5 5 0 01-5 5H5a5 5 0 01-5-5V5.165a5 5 0 014.987-5z"
-                                                                    ></path>
-                                                                    <linearGradient
-                                                                      id="linearGradient-3"
-                                                                      x1="50%"
-                                                                      x2="50%"
-                                                                      y1="0%"
-                                                                      y2="100%"
-                                                                    >
-                                                                      <stop
-                                                                        offset="0%"
-                                                                        stopColor="#EEF6FF"
-                                                                      ></stop>
-                                                                      <stop
-                                                                        offset="100%"
-                                                                        stopColor="#EEF6FF"
-                                                                        stopOpacity="0"
-                                                                      ></stop>
-                                                                    </linearGradient>
-                                                                  </defs>
-                                                                  <g
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    stroke="none"
-                                                                    strokeWidth="1"
-                                                                  >
-                                                                    <g transform="translate(0 1)">
-                                                                      <g transform="translate(0 -1)">
-                                                                        <g transform="translate(0 .822)">
-                                                                          <mask
-                                                                            id="mask-2"
-                                                                            fill="#fff"
-                                                                          >
-                                                                            <use href="#path-1"></use>
-                                                                          </mask>
-                                                                          <path
-                                                                            fill="url(#linearGradient-3)"
-                                                                            fillRule="nonzero"
-                                                                            d="M16 49.4649587L30.0083493 34.1783937 49.9705882 57.4497055 49.9705882 68.6858564 39.9328401 85.4079602 16 71.3920676z"
-                                                                            mask="url(#mask-2)"
-                                                                          ></path>
-                                                                          <g mask="url(#mask-2)">
-                                                                            <g transform="translate(15.5 10.038)">
-                                                                              <path
-                                                                                fill="#96BFEF"
-                                                                                fillRule="nonzero"
-                                                                                d="M0.5 39.4272899L14.5083493 24.1407249 34.4705882 47.4120367 17.4846337 61.717754 26.4702829 75.3702914 0.917384264 61.5289139 13.3002244 48.495065z"
-                                                                              ></path>
-                                                                              <path
-                                                                                fill="#96BFEF"
-                                                                                fillRule="evenodd"
-                                                                                d="M27.787 9.987L18.254.493a1.654 1.654 0 00-2.358 0L6.363 9.987a1.672 1.672 0 00.072 2.278 1.69 1.69 0 002.286.104l8.422-8.32 8.42 8.387a1.654 1.654 0 002.358 0 1.673 1.673 0 00-.134-2.45z"
-                                                                              ></path>
-                                                                              <g
-                                                                                fill="none"
-                                                                                fillRule="evenodd"
-                                                                                strokeLinecap="round"
-                                                                                strokeWidth="1"
-                                                                                transform="matrix(0 -1 -1 0 31.5 69.14)"
-                                                                              >
-                                                                                <g transform="translate(14 25)">
-                                                                                  <path
-                                                                                    stroke="#FFF"
-                                                                                    d="M0.5 1L17.5 1"
-                                                                                  ></path>
-                                                                                  <path
-                                                                                    stroke="#96BFEF"
-                                                                                    d="M0.5 0.5L17.5 0.5"
-                                                                                  ></path>
-                                                                                </g>
-                                                                                <g transform="translate(4)">
-                                                                                  <path
-                                                                                    stroke="#FFF"
-                                                                                    d="M0.5 1L17.5 1"
-                                                                                  ></path>
-                                                                                  <path
-                                                                                    stroke="#96BFEF"
-                                                                                    d="M0.5 0.5L17.5 0.5"
-                                                                                  ></path>
-                                                                                </g>
-                                                                                <g transform="translate(0 14)">
-                                                                                  <path
-                                                                                    stroke="#FFF"
-                                                                                    d="M0.5 1L17.5 1"
-                                                                                  ></path>
-                                                                                  <path
-                                                                                    stroke="#96BFEF"
-                                                                                    d="M0.5 0.5L17.5 0.5"
-                                                                                  ></path>
-                                                                                </g>
-                                                                              </g>
-                                                                            </g>
-                                                                          </g>
-                                                                        </g>
-                                                                      </g>
-                                                                    </g>
-                                                                  </g>
-                                                                </svg>
-                                                                <div className="Title--2wreU">
-                                                                  Slide up
-                                                                </div>
-                                                              </div>
-                                                              <div className="five-img border-to-all">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="68"
-                                                                  height="68"
-                                                                  viewBox="0 0 68 68"
-                                                                >
-                                                                  <defs>
-                                                                    <path
-                                                                      id="path-1"
-                                                                      d="M5 0h58a5 5 0 015 5v58a5 5 0 01-5 5H5a5 5 0 01-5-5V5a5 5 0 015-5z"
-                                                                    ></path>
-                                                                    <linearGradient
-                                                                      id="linearGradient-3"
-                                                                      x1="50%"
-                                                                      x2="50%"
-                                                                      y1="0%"
-                                                                      y2="100%"
-                                                                    >
-                                                                      <stop
-                                                                        offset="0%"
-                                                                        stopColor="#EEF6FF"
-                                                                        stopOpacity="0"
-                                                                      ></stop>
-                                                                      <stop
-                                                                        offset="100%"
-                                                                        stopColor="#EEF6FF"
-                                                                      ></stop>
-                                                                    </linearGradient>
-                                                                  </defs>
-                                                                  <g
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    stroke="none"
-                                                                    strokeWidth="1"
-                                                                  >
-                                                                    <g>
-                                                                      <mask
-                                                                        id="mask-2"
-                                                                        fill="#fff"
-                                                                      >
-                                                                        <use href="#path-1"></use>
-                                                                      </mask>
-                                                                      <g mask="url(#mask-2)">
-                                                                        <g transform="translate(17 -20.4)">
-                                                                          <path
-                                                                            fill="url(#linearGradient-3)"
-                                                                            fillRule="nonzero"
-                                                                            d="M0.430032272 15.8148507L7.63284472 9.05941988e-15 28.0328447 9.05941988e-15 35 11.8534773 35 24.0755409 26.78811 30.9020874 26.78811 53 0.430032272 38.6802808z"
-                                                                          ></path>
-                                                                          <path
-                                                                            fill="#96BFEF"
-                                                                            fillRule="nonzero"
-                                                                            d="M1.09618981e-12 15.8148507L14.4328447 1.20792265e-14 35 24.0755409 17.4993196 38.875647 26.7572612 53 0.430032272 38.6802808 13.18811 25.1959974z"
-                                                                          ></path>
-                                                                          <path
-                                                                            fill="#96BFEF"
-                                                                            fillRule="evenodd"
-                                                                            d="M27.598 76.632l-9.821-9.822a1.7 1.7 0 00-2.43 0l-9.821 9.822a1.735 1.735 0 002.429 2.464l8.678-8.606 8.675 8.676a1.7 1.7 0 002.43 0 1.735 1.735 0 00-.14-2.534z"
-                                                                            transform="matrix(1 0 0 -1 0 145.976)"
-                                                                          ></path>
-                                                                        </g>
-                                                                      </g>
-                                                                      <g
-                                                                        strokeLinecap="round"
-                                                                        mask="url(#mask-2)"
-                                                                      >
-                                                                        <g transform="rotate(90 27.5 16)">
-                                                                          <g transform="translate(13.5 21)">
-                                                                            <path
-                                                                              stroke="#FFF"
-                                                                              d="M0.5 1L17.5 1"
-                                                                            ></path>
-                                                                            <path
-                                                                              stroke="#96BFEF"
-                                                                              d="M0.5 0.5L17.5 0.5"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g transform="translate(14.5 .5)">
-                                                                            <path
-                                                                              stroke="#FFF"
-                                                                              d="M0.5 1L17.5 1"
-                                                                            ></path>
-                                                                            <path
-                                                                              stroke="#96BFEF"
-                                                                              d="M0.5 0.5L17.5 0.5"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g transform="translate(.5 9.5)">
-                                                                            <path
-                                                                              stroke="#FFF"
-                                                                              d="M0.5 1L17.5 1"
-                                                                            ></path>
-                                                                            <path
-                                                                              stroke="#96BFEF"
-                                                                              d="M0.5 0.5L17.5 0.5"
-                                                                            ></path>
-                                                                          </g>
-                                                                        </g>
-                                                                      </g>
-                                                                    </g>
-                                                                  </g>
-                                                                </svg>
-                                                                <div className="Title--2wreU">
-                                                                  Slide down
-                                                                </div>
-                                                              </div>
-                                                              <div className="six-img border-to-all">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="68"
-                                                                  height="68"
-                                                                  viewBox="0 0 68 68"
-                                                                >
-                                                                  <defs>
-                                                                    <radialGradient
-                                                                      id="radialGradient-1"
-                                                                      cx="50%"
-                                                                      cy="50%"
-                                                                      r="46.12%"
-                                                                      fx="50%"
-                                                                      fy="50%"
-                                                                      gradientTransform="matrix(1 0 0 1.47487 0 -.237)"
-                                                                    >
-                                                                      <stop
-                                                                        offset="0%"
-                                                                        stopColor="#96BFEF"
-                                                                        stopOpacity="0.584"
-                                                                      ></stop>
-                                                                      <stop
-                                                                        offset="100%"
-                                                                        stopColor="#96BFEF"
-                                                                        stopOpacity="0.214"
-                                                                      ></stop>
-                                                                    </radialGradient>
-                                                                  </defs>
-                                                                  <g
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    stroke="none"
-                                                                    strokeWidth="1"
-                                                                  >
-                                                                    <g>
-                                                                      <rect
-                                                                        width="68"
-                                                                        height="68"
-                                                                        x="0"
-                                                                        y="0"
-                                                                        rx="5"
-                                                                      ></rect>
-                                                                      <g
-                                                                        fill="url(#radialGradient-1)"
-                                                                        fillRule="nonzero"
-                                                                        transform="translate(17 6.8)"
-                                                                      >
-                                                                        <path d="M0 15.8148507L14.4328447 0 35 24.0755409 17.4993196 38.875647 26.7572612 53 0.430032272 38.6802808 13.18811 25.1959974z"></path>
-                                                                      </g>
-                                                                    </g>
-                                                                  </g>
-                                                                </svg>
-                                                                <div className="Title--2wreU">
-                                                                  Fade-Out
-                                                                </div>
-                                                              </div>
-                                                            </div>
-                                                            <div className="transition-for-all">
-                                                              <div className="seven-img border-to-all">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="56"
-                                                                  height="58"
-                                                                  viewBox="0 0 56 58"
-                                                                >
-                                                                  <defs>
-                                                                    <radialGradient
-                                                                      id="radialGradient-1"
-                                                                      cx="50%"
-                                                                      cy="48.736%"
-                                                                      r="76.188%"
-                                                                      fx="50%"
-                                                                      fy="48.736%"
-                                                                      gradientTransform="matrix(0 .66667 -1 0 .987 .154)"
-                                                                    >
-                                                                      <stop
-                                                                        offset="0%"
-                                                                        stopColor="#96BFEF"
-                                                                        stopOpacity="0.63"
-                                                                      ></stop>
-                                                                      <stop
-                                                                        offset="100%"
-                                                                        stopColor="#FFF"
-                                                                        stopOpacity="0"
-                                                                      ></stop>
-                                                                    </radialGradient>
-                                                                  </defs>
-                                                                  <g
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    stroke="none"
-                                                                    strokeWidth="1"
-                                                                  >
-                                                                    <g transform="translate(-6 -5)">
-                                                                      <g transform="translate(6 5)">
-                                                                        <g transform="translate(.822)">
-                                                                          <g
-                                                                            fillRule="nonzero"
-                                                                            transform="translate(11.178 4)"
-                                                                          >
-                                                                            <path
-                                                                              fill="#96BFEF"
-                                                                              d="M6.4 18.1937302L14.3174462 9.6 25.6 22.6825581 15.9996267 30.7248799 21.078269 38.4 6.63590342 30.6187186 13.6346203 23.2914099z"
-                                                                            ></path>
-                                                                            <path
-                                                                              fill="url(#radialGradient-1)"
-                                                                              d="M0 14.3228836L13.1957437 0 32 21.8042635 15.9993779 35.2081331 24.4637816 48 0.393172363 35.0311977 12.0577005 22.8190165z"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g
-                                                                            fill="#96BFEF"
-                                                                            transform="matrix(-1 0 0 1 14 43.7)"
-                                                                          >
-                                                                            <path
-                                                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
-                                                                              transform="scale(1 -1) rotate(45 23.312 0)"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g
-                                                                            fill="#96BFEF"
-                                                                            transform="translate(40.291 43.7)"
-                                                                          >
-                                                                            <path
-                                                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
-                                                                              transform="scale(1 -1) rotate(45 23.312 0)"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g
-                                                                            fill="#96BFEF"
-                                                                            transform="rotate(180 7 7)"
-                                                                          >
-                                                                            <path
-                                                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
-                                                                              transform="scale(1 -1) rotate(45 23.312 0)"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g
-                                                                            fill="#96BFEF"
-                                                                            transform="matrix(1 0 0 -1 40.291 14)"
-                                                                          >
-                                                                            <path
-                                                                              d="M12.726 8.444L7.819 3.597a.857.857 0 00-1.21-.002L1.721 8.42a.847.847 0 00.04 1.16.873.873 0 001.173.056l4.318-4.23 4.333 4.282a.857.857 0 001.211.002.845.845 0 00-.071-1.247z"
-                                                                              transform="scale(1 -1) rotate(45 23.312 0)"
-                                                                            ></path>
-                                                                          </g>
-                                                                        </g>
-                                                                      </g>
-                                                                    </g>
-                                                                  </g>
-                                                                </svg>
-                                                                <div className="Title--2wreU">
-                                                                  Scale-Up
-                                                                </div>
-                                                              </div>
-                                                              <div className="eight-img border-to-all">
-                                                                <svg
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                  width="46"
-                                                                  height="51"
-                                                                  viewBox="0 0 46 51"
-                                                                >
-                                                                  <defs>
-                                                                    <radialGradient
-                                                                      id="radialGradient-1"
-                                                                      cx="50%"
-                                                                      cy="48.736%"
-                                                                      r="76.188%"
-                                                                      fx="50%"
-                                                                      fy="48.736%"
-                                                                      gradientTransform="matrix(0 .66667 -1 0 .987 .154)"
-                                                                    >
-                                                                      <stop
-                                                                        offset="0%"
-                                                                        stopColor="#96BFEF"
-                                                                        stopOpacity="0.63"
-                                                                      ></stop>
-                                                                      <stop
-                                                                        offset="100%"
-                                                                        stopColor="#FFF"
-                                                                        stopOpacity="0"
-                                                                      ></stop>
-                                                                    </radialGradient>
-                                                                  </defs>
-                                                                  <g
-                                                                    fill="none"
-                                                                    fillRule="evenodd"
-                                                                    stroke="none"
-                                                                    strokeWidth="1"
-                                                                  >
-                                                                    <g transform="translate(-11 -8)">
-                                                                      <g transform="translate(11 8)">
-                                                                        <g transform="translate(0 .588)">
-                                                                          <g
-                                                                            fill="#96BFEF"
-                                                                            transform="matrix(1 0 0 -1 0 49.412)"
-                                                                          >
-                                                                            <path
-                                                                              d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
-                                                                              transform="scale(1 -1) rotate(45 22.255 0)"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g
-                                                                            fill="#96BFEF"
-                                                                            transform="rotate(180 23 24.706)"
-                                                                          >
-                                                                            <path
-                                                                              d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
-                                                                              transform="scale(1 -1) rotate(45 22.255 0)"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g
-                                                                            fill="#96BFEF"
-                                                                            transform="translate(0 .412)"
-                                                                          >
-                                                                            <path
-                                                                              d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
-                                                                              transform="scale(1 -1) rotate(45 22.255 0)"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g
-                                                                            fill="#96BFEF"
-                                                                            transform="matrix(-1 0 0 1 46 .412)"
-                                                                          >
-                                                                            <path
-                                                                              d="M11.808 8.337L6.975 3.565a.835.835 0 00-.6-.245.862.862 0 00-.604.255L.862 8.424A.841.841 0 00.89 9.578a.867.867 0 001.168.043l4.336-4.25 4.268 4.216a.835.835 0 00.6.245.862.862 0 00.605-.254.857.857 0 00.244-.637.831.831 0 00-.303-.604z"
-                                                                              transform="scale(1 -1) rotate(45 22.255 0)"
-                                                                            ></path>
-                                                                          </g>
-                                                                          <g
-                                                                            fillRule="nonzero"
-                                                                            transform="translate(7 .412)"
-                                                                          >
-                                                                            <path
-                                                                              fill="#96BFEF"
-                                                                              d="M6.4 18.1937302L14.3174462 9.6 25.6 22.6825581 15.9996267 30.7248799 21.078269 38.4 6.63590342 30.6187186 13.6346203 23.2914099z"
-                                                                            ></path>
-                                                                            <path
-                                                                              fill="url(#radialGradient-1)"
-                                                                              d="M0 14.3228836L13.1957437 0 32 21.8042635 15.9993779 35.2081331 24.4637816 48 0.393172363 35.0311977 12.0577005 22.8190165z"
-                                                                            ></path>
-                                                                          </g>
-                                                                        </g>
-                                                                      </g>
-                                                                    </g>
-                                                                  </g>
-                                                                </svg>
-                                                                <div className="Title--2wreU">
-                                                                  Scale-Down
-                                                                </div>
-                                                              </div>
-                                                              <div className="nine-img border-to-all">
-                                                                <div className="Title--2wreU">
-                                                                  Scale-Down-dummy
-                                                                </div>
-                                                              </div>
-                                                            </div>
-                                                          </div>
-                                                        </Accordion>
-                                                      </Tab.Pane>
-                                                    </Tab.Content>
-                                                  </Col>
-                                                </Tab.Container>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </Accordion.Body>
-                                      </Accordion.Item>
-                                    </div>
-                                    {/* End Transition show hide content  */}
-                                  </button>
-                                  <div
-                                    data-testid="ShelfDrawerBtnContent"
-                                    className="Content--15Wyt Closed--2YzdP"
-                                    style={{ overflow: "hidden" }}
-                                  ></div>
-
-                                  {/* /**************photoUi****************/}
-                                  <div
-                                    style={{
-                                      borderTop: "1px solid rgb(178, 196, 215)",
-                                      height: "auto",
-                                      width: "100%",
-                                    }}
-                                  ></div>
-                                </div>
-                                <div style={{ width: "100%" }}>
-                                  <div
-                                    data-testid="ShelfDrawerBtnContent"
-                                    className="Content--15Wyt Closed--2YzdP"
-                                    style={{ overflow: "hidden" }}
-                                  ></div>
-                                </div>
-                                <div style={{ width: "100%" }}></div>
-                                <div style={{ width: "100%" }}>
-                                  <button
-                                    data-testid="ShelfDrawerBtn"
-                                    className="btn-transition-effect DrawerBtn--bdcva  "
-                                  >
-                                    {/* start tranform show hide content  */}
-                                    <div className="TitleContainer--2xD-b title-content">
-                                      <Accordion.Item eventKey="5">
-                                        <Accordion.Header>
-                                          Transforms
-                                        </Accordion.Header>
-                                        <Accordion.Body>
-                                          <div className="continer">
-                                            <div
-                                              data-testid="ShelfDrawerBtnContent"
-                                              className="Content--15Wyt Open--EFZA8"
-                                              style={{ overflow: "visible" }}
-                                            >
-                                              <div data-testid="Transforms">
-                                                <div className="accor-title RowTitle--21qhU RowTitle--3Xq7s">
-                                                  Size (mm)
-                                                  <button className="PadLockBtn--1bnDi"></button>
-                                                </div>
-                                                <div className="InputRow--1kdSn InputRow--2M9c1">
-                                                  <div
-                                                    data-testid="NumericalInputContainerDiv"
-                                                    className="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj false"
-                                                  >
-                                                    <input
-                                                      type="number"
-                                                      data-testid="NumericalInput"
-                                                      id="GetWidth"
-                                                      value={
-                                                        widthImgVdo ||
-                                                        (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.image_transform
-                                                            ?.width) ||
-                                                        (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.video_transform
-                                                            ?.width) ||
-                                                            
-                                                              (contentImgVdo &&
-                                                                contentImgVdo[0]
-                                                                  ?.text_transform
-                                                                  ?.width)
-                                                             ||
-                                                        0
-                                                      }
-                                                      onChange={(e)=>setwidthImgVdo(e.target.value)}
-                                                    />
-                                                    <label
-                                                      data-testid="NumericalInputLabel"
-                                                      style={{ color: "grey" }}
-                                                    >
-                                                      W
-                                                    </label>
-                                                  </div>
-                                                  <div
-                                                    style={{
-                                                      borderLeft:
-                                                        "1px solid rgb(178, 196, 215)",
-                                                      width: "auto",
-                                                      height: "23px",
-                                                    }}
-                                                  ></div>
-                                                  <div
-                                                    data-testid="NumericalInputContainerDiv"
-                                                    className="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj false"
-                                                  >
-                                                    <input
-                                                      type="number"
-                                                      data-testid="NumericalInput"
-                                                      id="GetHeight"
-                                                      value={
-                                                        heightImgVdo ||
-                                                        (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.image_transform
-                                                            ?.height) ||
-                                                        (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.video_transform
-                                                            ?.height) ||
-                                                            
-                                                              (contentImgVdo &&
-                                                                contentImgVdo[0]
-                                                                  ?.text_transform
-                                                                  ?.height)
-                                                             ||
-                                                        10
-                                                      }
-                                                      onChange={(e)=>setheightImgVdo(e.target.value)}
-
-                                                    />
-                                                    <label
-                                                      data-testid="NumericalInputLabel"
-                                                      style={{ color: "grey" }}
-                                                    >
-                                                      H
-                                                    </label>
-                                                  </div>
-                                                  <div
-                                                    style={{
-                                                      borderLeft:
-                                                        "1px solid rgb(178, 196, 215)",
-                                                      width: "auto",
-                                                      height: "23px",
-                                                    }}
-                                                  ></div>
-                                                  <div
-                                                    data-testid="NumericalInputContainerDiv"
-                                                    className="NumericalInput--3r_8a false TransformInput--CeOv_ TransformInput--6Bbsj Disabled--2q2TU"
-                                                  >
-                                                    <input
-                                                      type="number"
-                                                      data-testid="NumericalInput"
-                                                      id="GetLength"
-                                                      value={
-                                                        // depthImgVdo ||
-                                                        // (contentImgVdo &&
-                                                        //   contentImgVdo[0]
-                                                        //     ?.image_transform
-                                                        //     ?.depth) ||
-                                                        // (contentImgVdo &&
-                                                        //   contentImgVdo[0]
-                                                        //     ?.video_transform
-                                                        //     ?.depth) ||
-                                                        0
-                                                      }
-                                                      onChange={(e)=>setdepthImgVdo(e.target.value)}
-                                                    />
-                                                    <label
-                                                      data-testid="NumericalInputLabel"
-                                                      style={{ color: "grey" }}
-                                                    >
-                                                      D
-                                                    </label>
-                                                  </div>
-                                                </div>
-                                                <div className="accor-title RowTitle--3Kekp RowTitle--3Xq7s title-position">
-                                                  Position (mm)
-                                                </div>
-                                                <div className="InputRow--VLm0n InputRow--2M9c1">
-                                                  <div
-                                                    data-testid="NumericalInputContainerDiv"
-                                                    className="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false"
-                                                  >
-                                                    <input
-                                                      type="number"
-                                                      data-testid="NumericalInput"
-                                                      value={
-                                                        dposition_x || (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.image_transform
-                                                            ?.position_x) ||
-                                                        (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.video_transform
-                                                            ?.position_x) ||
-                                                              (contentImgVdo &&
-                                                                contentImgVdo[0]
-                                                                  ?.text_transform
-                                                                  ?.position_x)
-                                                             ||
-                                                        0
-                                                      }
-                                                      onChange={(e)=>dimposition_x(e.target.value)}
-                                                    />
-                                                    <label
-                                                      data-testid="NumericalInputLabel"
-                                                      style={{ color: "red" }}
-                                                    >
-                                                      X
-                                                    </label>
-                                                  </div>
-                                                  <div
-                                                    style={{
-                                                      borderLeft:
-                                                        "1px solid rgb(178, 196, 215)",
-                                                      width: "auto",
-                                                      height: "23px",
-                                                    }}
-                                                  ></div>
-                                                  <div
-                                                    data-testid="NumericalInputContainerDiv"
-                                                    className="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false"
-                                                  >
-                                                    <input
-                                                      type="number"
-                                                      data-testid="NumericalInput"
-                                                      value={
-                                                        dposition_y || (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.image_transform
-                                                            ?.position_y) ||
-                                                        (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.video_transform
-                                                            ?.position_y) ||
-                                                              (contentImgVdo &&
-                                                                contentImgVdo[0]
-                                                                  ?.text_transform
-                                                                  ?.position_y)
-                                                             ||
-                                                        0
-                                                      }
-                                                      onChange={(e)=>dimposition_y(e.target.value)}
-                                                    />
-                                                    <label
-                                                      data-testid="NumericalInputLabel"
-                                                      style={{ color: "green" }}
-                                                    >
-                                                      Y
-                                                    </label>
-                                                  </div>
-                                                  <div
-                                                    style={{
-                                                      borderLeft:
-                                                        "1px solid rgb(178, 196, 215)",
-                                                      width: "auto",
-                                                      height: "23px",
-                                                    }}
-                                                  ></div>
-                                                  <div
-                                                    data-testid="NumericalInputContainerDiv"
-                                                    className="NumericalInput--3r_8a false TransformInput--3vnmf TransformInput--6Bbsj false"
-                                                  >
-                                                    <input
-                                                      type="number"
-                                                      data-testid="NumericalInput"
-                                                      value={
-                                                        dposition_d || (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.image_transform
-                                                            ?.position_d) ||
-                                                        (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.video_transform
-                                                            ?.position_d) ||
-                                                            (contentImgVdo &&
-                                                              contentImgVdo[0]
-                                                                ?.text_transform
-                                                                ?.position_d)
-                                                           ||
-                                                        0
-                                                      }
-                                                      onChange={(e)=>dimposition_d(e.target.value)}
-                                                    />
-                                                    <label
-                                                      data-testid="NumericalInputLabel"
-                                                      style={{ color: "blue" }}
-                                                    >
-                                                      Z
-                                                    </label>
-                                                  </div>
-                                                </div>
-                                                <div className="accor-title RowTitle--1O1Ao RowTitle--3Xq7s title-rotation">
-                                                  Rotation (deg)
-                                                </div>
-                                                <div className="InputRow--J8Q4c InputRow--2M9c1">
-                                                  <div
-                                                    data-testid="NumericalInputContainerDiv"
-                                                    className="NumericalInput--3r_8a false TransformInput--2C1wH TransformInput--6Bbsj false"
-                                                  >
-                                                    <input
-                                                      type="number"
-                                                      data-testid="NumericalInput"
-                                                      value={
-                                                        dRotation_x || (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.image_transform
-                                                            ?.Rotation_x) ||
-                                                        (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.video_transform
-                                                            ?.Rotation_x) ||
-                                                            (contentImgVdo &&
-                                                              contentImgVdo[0]
-                                                                ?.text_transform
-                                                                ?.Rotation_x)
-                                                           ||
-                                                        0
-                                                      }
-                                                      onChange={(e)=>dimRotation_x(e.target.value)}
-                                                    />
-                                                    <label
-                                                      data-testid="NumericalInputLabel"
-                                                      style={{ color: "red" }}
-                                                    >
-                                                      °X
-                                                    </label>
-                                                  </div>
-                                                  <div
-                                                    style={{
-                                                      borderLeft:
-                                                        "1px solid rgb(178, 196, 215)",
-                                                      width: "auto",
-                                                      height: "23px",
-                                                    }}
-                                                  ></div>
-                                                  <div
-                                                    data-testid="NumericalInputContainerDiv"
-                                                    className="NumericalInput--3r_8a false TransformInput--2C1wH TransformInput--6Bbsj false"
-                                                  >
-                                                    <input
-                                                      type="number"
-                                                      data-testid="NumericalInput"
-                                                      value={
-                                                        dRotation_y || (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.image_transform
-                                                            ?.Rotation_y) ||
-                                                        (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.video_transform
-                                                            ?.Rotation_y) ||
-                                                            (contentImgVdo &&
-                                                              contentImgVdo[0]
-                                                                ?.text_transform
-                                                                ?.Rotation_y) ||
-                                                        0
-                                                      }
-                                                      onChange={(e)=>dimRotation_y(e.target.value)}
-                                                    />
-                                                    <label
-                                                      data-testid="NumericalInputLabel"
-                                                      style={{ color: "green" }}
-                                                    >
-                                                      °Y
-                                                    </label>
-                                                  </div>
-                                                  <div
-                                                    style={{
-                                                      borderLeft:
-                                                        "1px solid rgb(178, 196, 215)",
-                                                      width: "auto",
-                                                      height: "23px",
-                                                    }}
-                                                  ></div>
-                                                  <div
-                                                    data-testid="NumericalInputContainerDiv"
-                                                    className="NumericalInput--3r_8a false TransformInput--2C1wH TransformInput--6Bbsj false"
-                                                  >
-                                                    <input
-                                                      type="number"
-                                                      data-testid="NumericalInput"
-                                                      value={
-                                                        dRotation_z || (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.image_transform
-                                                            ?.Rotation_z) ||
-                                                        (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.video_transform
-                                                            ?.Rotation_z) ||
-                                                            (contentImgVdo &&
-                                                              contentImgVdo[0]
-                                                                ?.text_transform
-                                                                ?.Rotation_z) ||
-                                                        0
-                                                      }
-                                                      onChange={(e)=>dimRotation_z(e.target.value)}
-                                                    />
-                                                    <label
-                                                      data-testid="NumericalInputLabel"
-                                                      style={{ color: "blue" }}
-                                                    >
-                                                      °Z
-                                                    </label>
-                                                  </div>
-                                                </div>
-                                                <div className="InputRow--1FGNp InputRow--2M9c1">
-                                                  <div className="InputRowTitle--3HdL6 InputRowTitle--DDSWz">
-                                                    <span>Order</span>
-                                                  </div>
-                                                  <button
-                                                    data-testid="TransformsOrderMoveToFront"
-                                                    className="MoveForward--18DDT"
-                                                  ></button>
-                                                  <button
-                                                    data-testid="TransformsOrderMoveForward"
-                                                    className="MoveForward--18DDT"
-                                                  ></button>
-                                                  <button
-                                                    data-testid="TransformsOrderMoveBackward"
-                                                    disabled=""
-                                                    className="MoveBack--O0pO4"
-                                                  ></button>
-                                                  <button
-                                                    data-testid="TransformsOrderMoveToBack"
-                                                    disabled=""
-                                                    className="MoveBack--O0pO4"
-                                                  ></button>
-                                                </div>
-                                                <div className="InputRow--1bROy InputRow--2M9c1">
-                                                  <div className="InputRowTitle--6kOLL InputRowTitle--DDSWz">
-                                                    <span>
-                                                      {(contentImgVdo &&
-                                                        contentImgVdo[0]
-                                                          ?.image_transform
-                                                          ?.Mirror) ||
-                                                        (contentImgVdo &&
-                                                          contentImgVdo[0]
-                                                            ?.video_transform
-                                                            ?.Mirror) ||
-                                                            (contentImgVdo &&
-                                                              contentImgVdo[0]
-                                                                ?.text_transform
-                                                                ?.Mirror) ||
-                                                        "Mirror"}
-                                                    </span>
-                                                  </div>
-                                                  <button data-testid="TransformsMirrorHorizontal"></button>
-                                                  <button data-testid="TransformsMirrorVertical"></button>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </Accordion.Body>
-                                      </Accordion.Item>
-                                    </div>
-                                    {/* End Transition show hide content  */}
-                                  </button>
-
-                                  {/* start appearance content */}
-
-                                  {/* /**************transforms****************/}
-                                  <div
-                                    style={{
-                                      borderTop: "1px solid rgb(178, 196, 215)",
-                                      height: "auto",
-                                      width: "100%",
-                                    }}
-                                  ></div>
-                                </div>
-                                <div style={{ width: "100%" }}>
-                                  <div
-                                    data-testid="ShelfDrawerBtnContent"
-                                    className="Content--15Wyt Closed--2YzdP"
-                                    style={{ overflow: "hidden" }}
-                                  ></div>
-                                </div>
-                                <div style={{ width: "100%" }}></div>
-                                <div style={{ width: "100%" }}>
-                                  <button
-                                    data-testid="ShelfDrawerBtn"
-                                    className="btn-transition-effect DrawerBtn--bdcva  "
-                                  >
-                                    {/* start appearance show hide content  */}
-                                    <div className="TitleContainer--2xD-b title-content">
-                                      <Accordion.Item eventKey="6">
-                                        <Accordion.Header>
-                                          Appearance
-                                        </Accordion.Header>
-                                        <Accordion.Body>
-                                          <div className="row opacity-div">
-                                            <p class="opacity">opacity</p>
-
-                                            <div className="row opacity-div">
-                                              <p className="opacity">Opacity</p>
-
-                                              <div>
-                                                <input
-                                                  type="range"
-                                                  id="vol"
-                                                  name="vol"
-                                                  min="0"
-                                                  max="100"
-                                                  value={valueopacityborder}
-                                                  onChange={
-                                                    handleborderopacityValue
-                                                  }
-                                                />
-                                                <p>{valueopacityborder}</p>
-                                              </div>
-                                            </div>
-                                          </div>
-
-                                          <div className="row opacity-div">
-                                            <p className="opacity">frames</p>
-                                            <div className="frames-outer">
-                                              <div className="frames-list">
-                                                <div className="no-frame frame-for-all">
-                                                  <span>No Frame</span>
-                                                </div>
-                                                <div className="first-frame frame-for-all">
-                                                  <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                    width="106"
-                                                    height="72"
-                                                    viewBox="0 0 106 72"
-                                                  >
-                                                    <defs>
-                                                      <path
-                                                        id="path-1"
-                                                        d="M0 0H106V72H0z"
-                                                      ></path>
-                                                    </defs>
-                                                    <g
-                                                      fill="none"
-                                                      fillRule="evenodd"
-                                                      stroke="none"
-                                                      strokeWidth="1"
-                                                    >
-                                                      <g>
-                                                        <mask
-                                                          id="mask-2"
-                                                          fill="#fff"
-                                                        >
-                                                          <use xlinkHref="#path-1"></use>
-                                                        </mask>
-                                                        <use
-                                                          fill="#FFF"
-                                                          xlinkHref="#path-1"
-                                                        ></use>
-                                                        <g mask="url(#mask-2)">
-                                                          <g
-                                                            fillRule="nonzero"
-                                                            transform="translate(-1)"
-                                                          >
-                                                            <g transform="translate(.693)">
-                                                              <path
-                                                                fill="#D5E7FD"
-                                                                d="M.307 0h107l-.005 41.742c-5.378-5.98-16.902-13.773-32.831-13.773-15.398 0-29.565 7.592-36.46 18.878-3.677-1.725-9.478-3.618-16.699-3.618-7.22 0-15.08 2.153-21.005 5.771V0z"
-                                                              ></path>
-                                                              <path
-                                                                fill="#96BFEF"
-                                                                d="M50.307 72h-50V56.23C4.58 52.63 11.644 49 21.141 49c3.96 0 9.616.875 14.545 3.32 6.478 3.213 13.328 9.857 14.621 19.68z"
-                                                              ></path>
-                                                              <path
-                                                                fill="#AFD4FF"
-                                                                d="M107.307 51.571V72H56.962c-1.392-14.235-12.72-21.58-13.655-22.19C50.732 37.515 64.158 33 74.66 33c11.1 0 25.613 5.062 32.647 18.571z"
-                                                              ></path>
-                                                            </g>
-                                                            <path
-                                                              fill="#E8F0FA"
-                                                              d="M23.19 7.679c-7.317 0-13.25 5.727-13.25 12.793 0 7.066 5.933 12.794 13.25 12.794 7.318 0 13.25-5.728 13.25-12.794 0-7.066-5.932-12.793-13.25-12.793z"
-                                                            ></path>
-                                                            <path
-                                                              fill="#FFF"
-                                                              d="M23.19 12.796c4.391 0 7.95 3.437 7.95 7.676 0 4.24-3.559 7.676-7.95 7.676-4.39 0-7.95-3.437-7.95-7.676 0-4.24 3.56-7.676 7.95-7.676z"
-                                                            ></path>
-                                                          </g>
-                                                        </g>
-                                                      </g>
-                                                    </g>
-                                                  </svg>
-                                                </div>
-                                              </div>
-
-                                              <div className="frames-list">
-                                                <div className="third-frame frame-for-all">
-                                                  <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                    width="106"
-                                                    height="72"
-                                                    viewBox="0 0 106 72"
-                                                  >
-                                                    <defs>
-                                                      <path
-                                                        id="path-1"
-                                                        d="M0 0H106V72H0z"
-                                                      ></path>
-                                                    </defs>
-                                                    <g
-                                                      fill="none"
-                                                      fillRule="evenodd"
-                                                      stroke="none"
-                                                      strokeWidth="1"
-                                                    >
-                                                      <g>
-                                                        <mask
-                                                          id="mask-2"
-                                                          fill="#fff"
-                                                        >
-                                                          <use xlinkHref="#path-1"></use>
-                                                        </mask>
-                                                        <use
-                                                          fill="#FFF"
-                                                          xlinkHref="#path-1"
-                                                        ></use>
-                                                        <g mask="url(#mask-2)">
-                                                          <g
-                                                            fillRule="nonzero"
-                                                            transform="translate(-1)"
-                                                          >
-                                                            <g transform="translate(.693)">
-                                                              <path
-                                                                fill="#D5E7FD"
-                                                                d="M.307 0h107l-.005 41.742c-5.378-5.98-16.902-13.773-32.831-13.773-15.398 0-29.565 7.592-36.46 18.878-3.677-1.725-9.478-3.618-16.699-3.618-7.22 0-15.08 2.153-21.005 5.771V0z"
-                                                              ></path>
-                                                              <path
-                                                                fill="#96BFEF"
-                                                                d="M50.307 72h-50V56.23C4.58 52.63 11.644 49 21.141 49c3.96 0 9.616.875 14.545 3.32 6.478 3.213 13.328 9.857 14.621 19.68z"
-                                                              ></path>
-                                                              <path
-                                                                fill="#AFD4FF"
-                                                                d="M107.307 51.571V72H56.962c-1.392-14.235-12.72-21.58-13.655-22.19C50.732 37.515 64.158 33 74.66 33c11.1 0 25.613 5.062 32.647 18.571z"
-                                                              ></path>
-                                                            </g>
-                                                            <path
-                                                              fill="#E8F0FA"
-                                                              d="M23.19 7.679c-7.317 0-13.25 5.727-13.25 12.793 0 7.066 5.933 12.794 13.25 12.794 7.318 0 13.25-5.728 13.25-12.794 0-7.066-5.932-12.793-13.25-12.793z"
-                                                            ></path>
-                                                            <path
-                                                              fill="#FFF"
-                                                              d="M23.19 12.796c4.391 0 7.95 3.437 7.95 7.676 0 4.24-3.559 7.676-7.95 7.676-4.39 0-7.95-3.437-7.95-7.676 0-4.24 3.56-7.676 7.95-7.676z"
-                                                            ></path>
-                                                          </g>
-                                                        </g>
-                                                      </g>
-                                                    </g>
-                                                  </svg>
-                                                </div>
-                                                <div className="fourth-frame frame-for-all">
-                                                  <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                    width="106"
-                                                    height="72"
-                                                    viewBox="0 0 106 72"
-                                                  >
-                                                    <defs>
-                                                      <path
-                                                        id="path-1"
-                                                        d="M0 0H106V72H0z"
-                                                      ></path>
-                                                    </defs>
-                                                    <g
-                                                      fill="none"
-                                                      fillRule="evenodd"
-                                                      stroke="none"
-                                                      strokeWidth="1"
-                                                    >
-                                                      <g>
-                                                        <mask
-                                                          id="mask-2"
-                                                          fill="#fff"
-                                                        >
-                                                          <use xlinkHref="#path-1"></use>
-                                                        </mask>
-                                                        <use
-                                                          fill="#FFF"
-                                                          xlinkHref="#path-1"
-                                                        ></use>
-                                                        <g mask="url(#mask-2)">
-                                                          <g
-                                                            fillRule="nonzero"
-                                                            transform="translate(-1)"
-                                                          >
-                                                            <g transform="translate(.693)">
-                                                              <path
-                                                                fill="#D5E7FD"
-                                                                d="M.307 0h107l-.005 41.742c-5.378-5.98-16.902-13.773-32.831-13.773-15.398 0-29.565 7.592-36.46 18.878-3.677-1.725-9.478-3.618-16.699-3.618-7.22 0-15.08 2.153-21.005 5.771V0z"
-                                                              ></path>
-                                                              <path
-                                                                fill="#96BFEF"
-                                                                d="M50.307 72h-50V56.23C4.58 52.63 11.644 49 21.141 49c3.96 0 9.616.875 14.545 3.32 6.478 3.213 13.328 9.857 14.621 19.68z"
-                                                              ></path>
-                                                              <path
-                                                                fill="#AFD4FF"
-                                                                d="M107.307 51.571V72H56.962c-1.392-14.235-12.72-21.58-13.655-22.19C50.732 37.515 64.158 33 74.66 33c11.1 0 25.613 5.062 32.647 18.571z"
-                                                              ></path>
-                                                            </g>
-                                                            <path
-                                                              fill="#E8F0FA"
-                                                              d="M23.19 7.679c-7.317 0-13.25 5.727-13.25 12.793 0 7.066 5.933 12.794 13.25 12.794 7.318 0 13.25-5.728 13.25-12.794 0-7.066-5.932-12.793-13.25-12.793z"
-                                                            ></path>
-                                                            <path
-                                                              fill="#FFF"
-                                                              d="M23.19 12.796c4.391 0 7.95 3.437 7.95 7.676 0 4.24-3.559 7.676-7.95 7.676-4.39 0-7.95-3.437-7.95-7.676 0-4.24 3.56-7.676 7.95-7.676z"
-                                                            ></path>
-                                                          </g>
-                                                        </g>
-                                                      </g>
-                                                    </g>
-                                                  </svg>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-
-                                          <div className="row opacity-div">
-                                            <p className="opacity">
-                                              Corner Radius
-                                            </p>
-                                            <div>
-                                              <input
-                                                type="range"
-                                                id="vol"
-                                                name="vol"
-                                                min="0"
-                                                max="100"
-                                                value={valueborder}
-                                                onChange={handleborderValue}
-                                              />
-                                              <p>{valueborder}</p>
-                                            </div>
-                                          </div>
-
-                                          <div className="row opacity-div border-input">
-                                            <p className="opacity">
-                                              Border width
-                                            </p>
-                                            <div>
-                                              <input
-                                                type="number"
-                                                data-testid="NumericalInput"
-                                              />
-                                            </div>
-                                          </div>
-                                        </Accordion.Body>
-                                      </Accordion.Item>
-                                    </div>
-                                    {/* End appearance show hide content  */}
-                                  </button>
-                                  {/* end appearance content */}
-
-                                  {/* start action content */}
-
-                                  {/* /**************actions****************/}
-                                  <div
-                                    style={{
-                                      borderTop: "1px solid rgb(178, 196, 215)",
-                                      height: "auto",
-                                      width: "100%",
-                                    }}
-                                  ></div>
-                                </div>
-                                <div style={{ width: "100%" }}>
-                                  <div
-                                    data-testid="ShelfDrawerBtnContent"
-                                    className="Content--15Wyt Closed--2YzdP"
-                                    style={{ overflow: "hidden" }}
-                                  ></div>
-                                </div>
-                                <div style={{ width: "100%" }}></div>
-                                <div style={{ width: "100%" }}>
-                                  <button
-                                    data-testid="ShelfDrawerBtn"
-                                    className="btn-transition-effect DrawerBtn--bdcva  "
-                                  >
-                                    {/* start action show hide content  */}
-                                    <div className="TitleContainer--2xD-b title-content">
-                                      <Accordion.Item
-                                        eventKey="7"
-                                        id="take-actions"
-                                      >
-                                        <Accordion.Header>
-                                          Actions
-                                        </Accordion.Header>
-                                        <Accordion.Body id="track-top">
-                                          <div className="row track-with">
-                                            <span className="Title-track">
-                                              1. On Tap:
-                                            </span>
-
-                                            {/* start dropdown origin */}
-                                            <Accordion>
-                                              <Accordion.Item eventKey="0">
-                                                <Accordion.Header>
-                                                  <span>
-                                                    <svg
-                                                      xmlns="http://www.w3.org/2000/svg"
-                                                      width="22"
-                                                      height="22"
-                                                      className="OptionIcon--1pjW4"
-                                                      viewBox="0 0 22 22"
-                                                    >
-                                                      <g
-                                                        fill="none"
-                                                        transform="translate(-11012.146 -515.646)"
-                                                      >
-                                                        <path
-                                                          d="M0 0H20V20H0z"
-                                                          transform="translate(11012.5 516)"
-                                                        ></path>
-                                                        <g
-                                                          stroke="#4A90E2"
-                                                          strokeWidth="1"
-                                                          transform="translate(-255.5 116) translate(11268 400)"
-                                                        >
-                                                          <g>
-                                                            <circle
-                                                              cx="10"
-                                                              cy="10"
-                                                              r="10"
-                                                              stroke="none"
-                                                            ></circle>
-                                                            <circle
-                                                              cx="10"
-                                                              cy="10"
-                                                              r="9.5"
-                                                            ></circle>
-                                                          </g>
-                                                          <path d="M0 20L20 0"></path>
-                                                        </g>
-                                                      </g>
-                                                    </svg>{" "}
-                                                    No Action
-                                                  </span>
-                                                </Accordion.Header>
-                                                <Accordion.Body>
-                                                  <div
-                                                    className=" "
-                                                    data-testid="MenuList"
-                                                  >
-                                                    <div
-                                                      className="Option--31oUF Active--37WPC HasNoIcon--3C9vr"
-                                                      data-testid="Option"
-                                                      title="Animate Model"
-                                                    >
-                                                      <div className="Container--Mc1y-">
-                                                        <span>
-                                                          <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width="20"
-                                                            height="20"
-                                                            className="OptionIcon--1pjW4"
-                                                            viewBox="0 0 20 20"
-                                                          >
-                                                            <g clipPath="url(#clip0_689_12380)">
-                                                              <path
-                                                                fill="none"
-                                                                d="M0 0H20V20H0z"
-                                                              ></path>
-                                                              <path
-                                                                fill="#B4BBC3"
-                                                                fillRule="evenodd"
-                                                                d="M17 7a2 2 0 100-4 2 2 0 000 4zm0 1a3 3 0 100-6 3 3 0 000 6zM1.449 3.928A9.41 9.41 0 00-.098 3.49l.196-.98c.605.12 1.175.278 1.71.485a.5.5 0 01-.36.933zM4.04 5.013a.5.5 0 01.705.062c.68.812 1.244 1.829 1.718 3.095a.5.5 0 11-.937.35c-.445-1.188-.958-2.099-1.548-2.803a.5.5 0 01.062-.704zm8.951 3.12a6.017 6.017 0 00-.798.88.5.5 0 11-.796-.606c.372-.488.696-.815.935-1.025a3.658 3.658 0 01.376-.29l.027-.017.01-.006.004-.002.002-.001.249.433.248.434h.001l.002-.001.001-.001h.001l-.007.003a2.678 2.678 0 00-.255.2zm-6.186 2.981a.5.5 0 01.593.386c.214 1.013.403 2.134.57 3.376a.5.5 0 01-.99.134 45.844 45.844 0 00-.559-3.303.5.5 0 01.386-.593zm3.515.125a.5.5 0 01.265.655c-.37.872-.74 1.925-1.085 3.19a.5.5 0 11-.965-.263 26.03 26.03 0 011.13-3.317.5.5 0 01.655-.265zm-1.96 6.57a.5.5 0 01.405.58 48.774 48.774 0 00-.27 1.682l-.993-.031c-.047-.582-.096-1.144-.147-1.687a.5.5 0 01.702-.503.497.497 0 01.303-.041z"
-                                                                clipRule="evenodd"
-                                                              ></path>
-                                                            </g>
-                                                            <defs>
-                                                              <clipPath id="clip0_689_12380">
-                                                                <path
-                                                                  fill="none"
-                                                                  d="M0 0H20V20H0z"
-                                                                ></path>
-                                                              </clipPath>
-                                                            </defs>
-                                                          </svg>
-                                                          Animate Model
-                                                        </span>
-                                                      </div>
-                                                    </div>
-                                                    <div
-                                                      className="Option--31oUF HasNoIcon--3C9vr"
-                                                      data-testid="Option"
-                                                      title="play sound"
-                                                    >
-                                                      <div className="Container--Mc1y-">
-                                                        <span>
-                                                          <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width="20"
-                                                            height="20"
-                                                            className="OptionIcon--1pjW4"
-                                                            viewBox="0 0 20 20"
-                                                          >
-                                                            <g data-name="Group 2">
-                                                              <path
-                                                                fill="none"
-                                                                d="M0 0H20V20H0z"
-                                                                data-name="Rectangle 68"
-                                                              ></path>
-                                                              <path
-                                                                fill="#344B60"
-                                                                d="M.455 0A.469.469 0 01.9.41L.909.5v11a.479.479 0 01-.455.5.469.469 0 01-.447-.41L0 11.5V.5A.479.479 0 01.455 0z"
-                                                                data-name="Line Copy"
-                                                                transform="translate(2.727 4)"
-                                                              ></path>
-                                                              <path
-                                                                fill="#344B60"
-                                                                d="M.455 0A.469.469 0 01.9.41L.909.5v7a.479.479 0 01-.454.5.469.469 0 01-.447-.41L0 7.5v-7A.479.479 0 01.455 0z"
-                                                                data-name="Line Copy 7"
-                                                                transform="translate(0 6)"
-                                                              ></path>
-                                                              <path
-                                                                fill="#344B60"
-                                                                d="M.455 0A.469.469 0 01.9.41L.909.5v7a.479.479 0 01-.454.5.469.469 0 01-.447-.41L0 7.5v-7A.479.479 0 01.455 0z"
-                                                                data-name="Line Copy 6"
-                                                                transform="translate(19.091 6)"
-                                                              ></path>
-                                                              <path
-                                                                fill="#344B60"
-                                                                d="M.455 0A.469.469 0 01.9.41L.909.5v11a.479.479 0 01-.455.5.469.469 0 01-.447-.41L0 11.5V.5A.479.479 0 01.455 0z"
-                                                                data-name="Line Copy 5"
-                                                                transform="translate(16.364 4)"
-                                                              ></path>
-                                                              <path
-                                                                fill="#344B60"
-                                                                d="M.455 0A.469.469 0 01.9.41L.909.5v19a.479.479 0 01-.455.5.469.469 0 01-.447-.41L0 19.5V.5A.479.479 0 01.455 0z"
-                                                                data-name="Line Copy 4"
-                                                                transform="translate(13.636)"
-                                                              ></path>
-                                                              <path
-                                                                fill="#344B60"
-                                                                d="M.455 0A.469.469 0 01.9.41L.909.5v7a.479.479 0 01-.454.5.469.469 0 01-.447-.41L0 7.5v-7A.479.479 0 01.455 0z"
-                                                                data-name="Line Copy 2"
-                                                                transform="translate(8.182 6)"
-                                                              ></path>
-                                                              <path
-                                                                fill="#344B60"
-                                                                d="M.455 0A.469.469 0 01.9.41L.909.5v14a.479.479 0 01-.455.5.469.469 0 01-.447-.41L0 14.5V.5A.479.479 0 01.455 0z"
-                                                                data-name="Line Copy 3"
-                                                                transform="translate(10.909 3)"
-                                                              ></path>
-                                                              <path
-                                                                fill="#344B60"
-                                                                d="M.455 0A.469.469 0 01.9.41L.909.5v14a.479.479 0 01-.455.5.469.469 0 01-.447-.41L0 14.5V.5A.479.479 0 01.455 0z"
-                                                                data-name="Line Copy 9"
-                                                                transform="translate(5.455 3)"
-                                                              ></path>
-                                                            </g>
-                                                          </svg>{" "}
-                                                          Play Sound
-                                                        </span>
-                                                      </div>
-                                                    </div>
-                                                    <div
-                                                      className="Option--31oUF HasNoIcon--3C9vr"
-                                                      data-testid="Option"
-                                                      title="play video"
-                                                    >
-                                                      <div className="Container--Mc1y-">
-                                                        <span>
-                                                          <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width="20"
-                                                            height="20"
-                                                            className="OptionIcon--1pjW4"
-                                                            viewBox="0 0 20 20"
-                                                          >
-                                                            <g
-                                                              fill="none"
-                                                              fillRule="evenodd"
-                                                              stroke="none"
-                                                              strokeWidth="1"
-                                                            >
-                                                              <path
-                                                                fill="#B4BBC3"
-                                                                fillRule="nonzero"
-                                                                d="M14.5 27a1.5 1.5 0 011.415 1H29.5a.5.5 0 01.09.992L29.5 29H15.914a1.5 1.5 0 01-2.828 0H10.5a.5.5 0 01-.09-.992L10.5 28h2.585a1.5 1.5 0 011.415-1zm0 1a.5.5 0 100 1 .5.5 0 000-1zM29 10a1 1 0 011 1v13a1 1 0 01-1 1H11a1 1 0 01-1-1V11a1 1 0 011-1h18zm0 1H11v13h18V11zm-11.566 2.5a.91.91 0 01.464.127l5.131 3.034a.985.985 0 010 1.678l-5.131 3.033a.918.918 0 01-1.275-.36.992.992 0 01-.123-.479v-6.066c0-.534.418-.967.934-.967zm-.059 1v6l5.25-3-5.25-3z"
-                                                                transform="translate(-10 -10)"
-                                                              ></path>
-                                                            </g>
-                                                          </svg>
-                                                          Play Video
-                                                        </span>
-                                                      </div>
-                                                    </div>
-
-                                                    <div
-                                                      className="Option--31oUF HasNoIcon--3C9vr"
-                                                      data-testid="Option"
-                                                      title="play video"
-                                                    >
-                                                      <div className="Container--Mc1y-">
-                                                        <span>
-                                                          <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width="20"
-                                                            height="20"
-                                                            className="OptionIcon--1pjW4"
-                                                            viewBox="0 0 20 20"
-                                                          >
-                                                            <g fill="none">
-                                                              <path
-                                                                d="M0 0H20V20H0z"
-                                                                data-name="Rectangle 66"
-                                                              ></path>
-                                                              <g
-                                                                stroke="#344B60"
-                                                                strokeMiterlimit="10"
-                                                                strokeWidth="1"
-                                                              >
-                                                                <path
-                                                                  stroke="none"
-                                                                  d="M0 0h16.013a2 2 0 012 2v5.6a2 2 0 01-2 2H2a2 2 0 01-2-2V0z"
-                                                                  transform="translate(1.319 8.759)"
-                                                                ></path>
-                                                                <path
-                                                                  d="M1 .5h15.013a1.5 1.5 0 011.5 1.5v5.6a1.5 1.5 0 01-1.5 1.5H2A1.5 1.5 0 01.5 7.6V1A.5.5 0 011 .5z"
-                                                                  transform="translate(1.319 8.759)"
-                                                                ></path>
-                                                              </g>
-                                                              <g
-                                                                strokeMiterlimit="10"
-                                                                data-name="Rectangle Copy 16"
-                                                              >
-                                                                <path
-                                                                  d="M0 1.6A1.592 1.592 0 011.851 0l14.8.931a1.99 1.99 0 011.92 1.672l.174 2.152L.165 3.59z"
-                                                                  transform="rotate(-17 18.41 2.255)"
-                                                                ></path>
-                                                                <path
-                                                                  fill="#344B60"
-                                                                  d="M1.712 1c-.25 0-.476.084-.605.224a.377.377 0 00-.106.3l.091 1.122 16.565 1.042-.08-1c-.027-.33-.439-.72-.987-.755l-14.801-.93A1.226 1.226 0 001.712 1m0-1c.046 0 .093.001.14.004l14.8.931c1.006.064 1.85.799 1.921 1.672l.174 2.152L.165 3.59l-.16-1.986C-.068.707.7 0 1.712 0z"
-                                                                  transform="rotate(-17 18.41 2.255)"
-                                                                ></path>
-                                                              </g>
-                                                              <path
-                                                                stroke="#344B60"
-                                                                strokeLinecap="square"
-                                                                strokeMiterlimit="10"
-                                                                strokeWidth="1"
-                                                                d="M16.453 2.326l-.827 2.105"
-                                                                data-name="Line 4 Copy 3"
-                                                              ></path>
-                                                              <path
-                                                                stroke="#344B60"
-                                                                strokeLinecap="square"
-                                                                strokeMiterlimit="10"
-                                                                strokeWidth="1"
-                                                                d="M12.455 3.105l-.91 2.191"
-                                                                data-name="Line 4 Copy"
-                                                              ></path>
-                                                              <path
-                                                                stroke="#344B60"
-                                                                strokeLinecap="square"
-                                                                strokeMiterlimit="10"
-                                                                strokeWidth="1"
-                                                                d="M8.266 4.201l-.851 2.053"
-                                                                data-name="Line 4 Copy 2"
-                                                              ></path>
-                                                              <path
-                                                                stroke="#344B60"
-                                                                strokeLinecap="square"
-                                                                strokeMiterlimit="10"
-                                                                strokeWidth="1"
-                                                                d="M4.026 5.297L3.188 7.46"
-                                                                data-name="Line 4 Copy 4"
-                                                              ></path>
-                                                            </g>
-                                                          </svg>
-                                                          Links to scene
-                                                        </span>
-                                                      </div>
-                                                    </div>
-
-                                                    <div
-                                                      className="Option--31oUF HasNoIcon--3C9vr"
-                                                      data-testid="Option"
-                                                      title="play video"
-                                                    >
-                                                      <div className="Container--Mc1y-">
-                                                        <span>
-                                                          <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width="20"
-                                                            height="20"
-                                                            className="OptionIcon--1pjW4"
-                                                            viewBox="0 0 20 20"
-                                                          >
-                                                            <g
-                                                              data-name="Atom/Icon/Social"
-                                                              transform="translate(-3)"
-                                                            >
-                                                              <path
-                                                                fill="#344B60"
-                                                                d="M8.09 20h-.561a.451.451 0 01-.372-.17.506.506 0 01-.063-.453l1.193-5.639H4.1l-1.193 5.7a.643.643 0 01-.239.437.718.718 0 01-.417.125h-.589l1.32-6.262H.427a.426.426 0 01-.344-.127.643.643 0 01-.077-.453l.056-.409h3.073l1.151-5.5H.722l.084-.537c.038-.31.25-.467.632-.467h3L5.648.537a.6.6 0 01.217-.4A.686.686 0 016.294 0h.576L5.564 6.247h4.183L11.052 0h.589a.444.444 0 01.365.155.506.506 0 01.07.438L10.87 6.247H14l-.085.537a.5.5 0 01-.175.353.724.724 0 01-.443.113h-2.581l-1.151 5.5h3.158a.42.42 0 01.336.127.552.552 0 01.07.438l-.056.424H9.41L8.09 20zM5.409 7.251l-1.151 5.5h4.184l1.151-5.5z"
-                                                                data-name="#"
-                                                                transform="translate(3)"
-                                                              ></path>
-                                                            </g>
-                                                          </svg>
-                                                          Links to social
-                                                          network
-                                                        </span>
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                </Accordion.Body>
-                                              </Accordion.Item>
-                                            </Accordion>
-                                            {/* start dropdown origin */}
-                                            <button
-                                              data-testid="ShelfDrawerBtn"
-                                              className="btn-action-save btn-upload DrawerBtn--bdcva Open--EFZA8 action-btn-save"
-                                            >
-                                              <div className="Title-action-save">
-                                                {" "}
-                                                Save
-                                              </div>
-                                            </button>
-                                            <button
-                                              data-testid="ShelfDrawerBtn"
-                                              className="btn-action-cancel action-btn-cancel"
-                                            >
-                                              <div className="Title-action-cancel">
-                                                Cancel
-                                              </div>
-                                            </button>
-                                          </div>
-                                        </Accordion.Body>
-                                      </Accordion.Item>
-                                    </div>
-                                    {/* End actions show hide content  */}
-                                  </button>
-                                  {/* end actions content */}
-                                </div>
-                              </div>
-                            </Accordion>
-                          )}
-                        </div>
-                      </Tab.Pane>
-
-                      {!isContent && (
-                        <div
-                          className="InspectorMenu--1PeA44 2D-3D-second-div"
-                          data-testid="InspectorMenu"
-                        >
-                          <div className="ShelfContainer--1Ad4O">
-                            <div style={{ width: "100%" }}></div>
-                          </div>
-
-                          <div className="OuterContainer--1AGzZ bottom-2d-3d-height">
-                            <div
-                              className="Switcher2d3d--1SCbh Disabled--fqu6h"
-                              data-testid="Switcher2d3d"
-                            >
-                              <button
-                                className="Inactive--945so"
-                                data-testid="ToggleOffButton"
-                              >
-                                2D
-                              </button>
-
-                              <label className="switch--1ZKOu">
-                                <input
-                                  type="checkbox"
-                                  data-testid="ToggleState"
-                                  id="checkID"
-                                  onChange={thecheckfunction}
-                                />
-                                <span className="slider--y3Xl-"></span>
-                              </label>
-
-                              <button
-                                className="Active--3YQI9"
-                                data-testid="ToggleOnButton"
-                              >
-                                3D
-                              </button>
-                            </div>
-
-                            <div
-                              className="border-middle"
-                              style={{
-                                borderLeft: "1px solid rgb(178, 196, 215)",
-                                width: "auto",
-                                height: "16px",
-                              }}
-                            ></div>
-                            <div className="ViewMenu--2ejhM">
-                              <span>27%</span>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </Tab.Content>
-                    {/* End---- scene   */}
-                  </Col>
-                </Row>
-              </Tab.Container>
               {/* onclick image, video,3d */}
             </div>
           </div>
@@ -8862,6 +5279,7 @@ const Target = () => {
                   onClick={() => {
                     handleSceneClick(i, scene.id, scene.name);
                     setnameInScene(scene.name);
+                    setsceneId(scene.id)
                     scene_id(scene.id);
                   }}
                 >
@@ -9677,7 +6095,7 @@ const Target = () => {
                                     >
                                       <path d="M21.714 10c1.263 0 2.286.895 2.286 2v1h4.526c.262 0 .474.224.474.5 0 .245-.168.45-.389.492l-.085.008h-1.581l-.672 12.235C26.157 28.349 24.523 30 22.546 30h-5.092c-1.977 0-3.611-1.65-3.727-3.765L13.055 14h-1.581a.487.487 0 01-.474-.5c0-.245.168-.45.389-.492l.085-.008H16v-1c0-1.105 1.023-2 2.286-2h3.428zm4.296 4H13.99l.668 12.176c.084 1.527 1.224 2.732 2.632 2.819l.164.005h5.092c1.428 0 2.617-1.148 2.781-2.65l.015-.174L26.01 14zm-8.51 4a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L17 24.5v-6a.5.5 0 01.5-.5zm5 0a.5.5 0 01.492.41l.008.09v6a.5.5 0 01-.992.09L22 24.5v-6a.5.5 0 01.5-.5zm-.7-7h-3.6c-.615 0-1.123.386-1.192.883L17 12v1h6v-1c0-.513-.463-.936-1.06-.993L21.8 11z"></path>
                                     </svg>
-                                    <span className="delete-file-txt border border-danger" 
+                                    <span className="delete-file-txt"
                                     onClick={()=>{
                                       console.log(deletedItem.image_id,'deletedItem[0].image_urldeletedItem[0].image_url')
                                       if(deletedItem.image_id){
@@ -9688,7 +6106,7 @@ const Target = () => {
                                       }
                                     }}
                                     >
-                                      Delete file123
+                                      Delete file
                                     </span>
                                   </div>
                                 </Accordion.Body>
