@@ -13,6 +13,7 @@ import svgHere2 from '../src/assets/images/Mediamodifier-Design.svg'
 import { contextObject } from './components/ContextStore/ContextApi';
 import { CSS3DRenderer, CSS3DObject } from '../node_modules/three/examples/jsm/renderers/CSS3DRenderer'
 import { ViewHelper } from '../node_modules/three/examples/jsm/helpers/ViewHelper'
+import { useSelector } from 'react-redux';
 
 
 
@@ -72,6 +73,8 @@ const ModelAr =()=> {
         const [transitionID, transitionIDGet] = useState(null)
         const [transition_enter, transition_enterGet] = useState(null)
         const [transition_exit, transition_exitGet] = useState(null)
+
+  const contentImgVdo1=useSelector((state)=>state.sideBarContentReducer.contentImgVdo)
     // UseEffect Using ---------------------------------------------------------------------------------------->
 
     const IndecatorImages= [
@@ -103,7 +106,6 @@ const ModelAr =()=> {
             render();
  
         function init() {
-            // console.log('In Test.jsx file **********************************************', ctx.contentImgVdo)
             canvas = document.getElementById( 'canvas' );
             // Initialize The Project View Model---------------------------------------------------------------->
             // clock
@@ -177,15 +179,6 @@ const ModelAr =()=> {
                 orbit.addEventListener( 'change', render );
                 orbit.touches.ONE = THREE.TOUCH.PAN;
                 orbit.touches.TWO = THREE.TOUCH.DOLLY_ROTATE;
-                // orbit.target = plane.position;
-                // orbit.minPolarAngle = 0; // default
-                // orbit.maxPolarAngle = Math.PI; // default
-                // orbit.minAzimuthAngle = - Infinity; // default
-                // orbit.maxAzimuthAngle = Infinity; // default
-                // orbit.enableRotate = true; // Enable rotation
-                // // Disable rotation along the X and Z axes (horizontal rotation)
-                // orbit.enableRotateX = false;
-                // orbit.enableRotateZ = false;
 
 // Helper function================================================================>
 
@@ -247,7 +240,6 @@ const ModelAr =()=> {
                     if (getImage){
                         for (let i = 0; i < getImage.length  &&  getImage !== undefined; i++){
                             const imageId = getImage[i][0].id
-                            // console.log(id)
                             const imageData = getImage[i][0].image_url
                             const textureLoader = new THREE.TextureLoader()
                             const texturedf = textureLoader.load(imageData)
@@ -325,20 +317,20 @@ const ModelAr =()=> {
 
                             }
                         }
-                    }
-
-                    if(ctx.contentImgVdo && ctx.contentImgVdo[0].image_url === mesh.userData.name){
+                    }   
+                    console.log(contentImgVdo1,'this is selected<-------------------')
+                    if(contentImgVdo1 && contentImgVdo1[0].image_url === mesh.userData.name){
                         control.attach(mesh)
-
+                        console.log('contentImgVdo1')
                     }
                     else{
-                        // console.log("not found");
+                        console.log("not found");
                     }
-                    if(ctx.contentImgVdo && ctx.contentImgVdo[0].video_url === Videomesh.userData.name){
+                    if(contentImgVdo1 && contentImgVdo1[0].video_url === Videomesh.userData.name){
                         control.attach(Videomesh)
                     }
                     else{
-                        // console.log("No selected")
+                        console.log("No selected")
                     }
 
                     // States for Text Featres ------------------------------------------------------------------------------------------------>
@@ -404,7 +396,6 @@ const ModelAr =()=> {
 
                     if (getButton){
                         for (let i = 0; i <getButton.length; i++){
-                            // console.log(getButton[i][0].button_name)
                             const buttonEle = document.createElement('div')
                             buttonEle.textContent = getButton[i][0].button_name
                             buttonEle.style.backgroundColor = 'rgb(150, 191, 239)'
@@ -518,7 +509,6 @@ const ModelAr =()=> {
             cameraOrtho.right = cameraOrtho.top * aspect;
             cameraOrtho.updateProjectionMatrix();
             renderer.setSize( window.innerWidth, window.innerHeight );
-            // labelRenderer.setSize( window.innerWidth, window.innerHeight );
         }
 
         function updatetransform() {
@@ -530,8 +520,8 @@ const ModelAr =()=> {
                 timer = setTimeout(function() {
                     var position = control.object.position;
         
-                    if (ctx.contentImgVdo[0].image_id) {
-                        axios.put(API.BASE_URL + "image_transform/" + ctx.contentImgVdo[0].image_transform.id + '/', {
+                    if (contentImgVdo1[0].image_id) {
+                        axios.put(API.BASE_URL + "image_transform/" + contentImgVdo1[0].image_transform.id + '/', {
                             position_x: position.x,
                             position_y: position.y,
                             position_d: position.z
@@ -542,8 +532,8 @@ const ModelAr =()=> {
                         });
                     }
         
-                    if (ctx.contentImgVdo[0].video_id) {
-                        axios.put(API.BASE_URL + "video_transform/" + ctx.contentImgVdo[0].video_transform.id + '/', {
+                    if (contentImgVdo1[0].video_id) {
+                        axios.put(API.BASE_URL + "video_transform/" + contentImgVdo1[0].video_transform.id + '/', {
                             position_x: position.x,
                             position_y: position.y,
                             position_d: position.z
@@ -567,29 +557,17 @@ const ModelAr =()=> {
             const timeSinceLastRender = currentTime - lastRenderTime;
 
             if (timeSinceLastRender >= 1000 / frameRate) {
-            // const delta = clock.getDelta()
-
                 lastRenderTime = currentTime;
                 onWindowResize();
                 renderer.render(scene, currentCamera);
                 updatetransform();
-                // if (viewHelper) { 
-                //     viewHelper.orbit.center = orbit.target;
-
-                //     viewHelper.update(delta);
-                //     viewHelper.render(renderer);
-                // }
             }
-            // animate()
-
             requestAnimationFrame(render);
-
-
         }
     }
             setTimeout(()=>{
                 boxModal()
             }, 200)
-        },[rendeR,id,ctx.reRender,ctx.loadContent,ctx.loader, ctx.contentImgVdo]);
+        },[rendeR,id,ctx.reRender,ctx.loadContent,ctx.loader ,contentImgVdo1]);
 }
 export default ModelAr;

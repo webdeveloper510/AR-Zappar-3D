@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useDispatch } from "react-redux";
 import { sideBarContentAction } from "../store/contentReducer";
+import { contextObject } from "../ContextStore/ContextApi";
 
 const Applets = ({
   getImage,
@@ -10,6 +11,7 @@ const Applets = ({
   getText,
 }) => {
   const dispatch = useDispatch();
+  const ctx=useContext(contextObject);
   return (
     <div
       // eventKey="sixth"
@@ -42,7 +44,7 @@ const Applets = ({
                   dispatch(sideBarContentAction.setContent(false));
                   setselectedText(null);
                   dispatch(sideBarContentAction.setcontentImgVdo(itm));
-                  // ctx.setContentImgVdo(itm);
+                  ctx.setContentImgVdo(itm);
                   dispatch(sideBarContentAction.settoUpdateDimensions());
                 }}
               >
@@ -87,7 +89,10 @@ const Applets = ({
                   dispatch(sideBarContentAction.setcontentImgVdo(null));
                   setTimeout(() => {
                     dispatch(sideBarContentAction.setcontentImgVdo(itm));
+                    ctx.setContentImgVdo(itm);
                     dispatch(sideBarContentAction.settoUpdateDimensions());
+
+
                   }, 0);
                   console.log(itm, "from getVideo<---------------------");
                   setselectedText(null);
