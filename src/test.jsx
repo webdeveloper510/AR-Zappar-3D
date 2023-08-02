@@ -567,18 +567,18 @@ const ModelAr =()=> {
             const timeSinceLastRender = currentTime - lastRenderTime;
 
             if (timeSinceLastRender >= 1000 / frameRate) {
-            const delta = clock.getDelta()
+            // const delta = clock.getDelta()
 
                 lastRenderTime = currentTime;
                 onWindowResize();
                 renderer.render(scene, currentCamera);
                 updatetransform();
-                if (viewHelper) { 
-                    viewHelper.orbit.center = orbit.target;
+                // if (viewHelper) { 
+                //     viewHelper.orbit.center = orbit.target;
 
-                    viewHelper.update(delta);
-                    viewHelper.render(renderer);
-                }
+                //     viewHelper.update(delta);
+                //     viewHelper.render(renderer);
+                // }
             }
             // animate()
 

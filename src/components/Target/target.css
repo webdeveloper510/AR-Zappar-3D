@@ -37,7 +37,7 @@ img#social-icon {
 
 /* .InspectorMenu--1PeA4 {
     width: 272px;
-    height: calc(100vh - 60px);
+    height: calc(calc(100vh - 48.5px) - 60px);
     padding: 10px 20px 10px 20px;
     position: absolute;
     display: flex;
@@ -722,7 +722,7 @@ button {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 48.5px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -747,7 +747,7 @@ button {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 48.5px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1878,7 +1878,7 @@ body {
     overflow-x: hidden;
 }
 .video-img-tabs {
-    height: 100vh;
+    height: calc(100vh - 48.5px);
 }
 .OuterContainer--1AGzZ.bottom-2d-3d-height {
     position: absolute;
@@ -1886,7 +1886,7 @@ body {
     bottom: 10px;
 }
 /* .video-div-height {
-    height: calc(100vh - 60px) !important;
+    height: calc(calc(100vh - 48.5px) - 60px) !important;
     float: left;
     width: 100%;
 } */
@@ -2090,7 +2090,7 @@ span.videp_file_txt svg {
     font-family: "Lato",sans-serif;
 }
 .col-md-1.p-0.m-0.target-left {
-    height: 100vh;
+    height: calc(100vh - 48.5px);
 }
 div#track-top .accordion-item h2.accordion-header button.accordion-button.collapsed {
     padding-left: 10px;
@@ -2160,7 +2160,9 @@ button.applybutton:hover {
 background-color: #e7735b;
 }
 .row.col-md-12.justify-content-between {
-    background: #f2f2f2;
+    /* background: #f2f2f2; */
+    max-height: calc(100vh - 48.5px);
+    overflow: hidden;
 }
 span.text-format svg {
     margin-right: 20px;

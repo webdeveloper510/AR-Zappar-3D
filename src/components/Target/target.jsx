@@ -474,7 +474,7 @@ const Target = () => {
   // get SCENES DETAILS --------------------------------------------------------------------->
 
   const handleSubmit = (sceneName) => {
-    ctx.setloader(true)
+    // ctx.setloader(true)
     const formdataScene = new FormData();
     formdataScene.append("project_id", id);
     formdataScene.append("name", sceneName);
@@ -2867,12 +2867,14 @@ const Target = () => {
             <div className="col-md-1 p-0 m-0 target-left">
               <Tab.Container id="left-tabs-example">
                 <Row className="justify-content-between tab-list flex-nowrap target-left-sidebar"
-                style={{width:'500px'}}
+                style={{width:'327px'}}
                 >
                   <Col lg={3} className="side-tab mb-5 mb-md-0">
                     <Nav
                     variant="pills"
                     className="flex-column side-main target-pills"
+                    style={{
+                      background: '#f2f2f2'}}
                     >
                       <LeftSideBar />
                     </Nav>

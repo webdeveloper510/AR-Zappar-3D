@@ -3154,7 +3154,7 @@ label.label-name {
     text-align: center;
     z-index: 9;
     position: absolute;
-    bottom: -40px;
+    bottom: 0px;
 }
 
 svg.svg-inline--fa.fa-circle-plus path {
