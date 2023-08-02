@@ -24,6 +24,7 @@ const Applets = ({
         left: "75px",
         top: "0px",
         boxShadow: "5px 0 5px -2px rgba(0, 0, 0, 0.1)",
+        transition: '.7s ease'
       }}
     >
       <p className="m-0 scene-objects">Scene Objects</p>

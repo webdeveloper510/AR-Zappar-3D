@@ -3328,4 +3328,12 @@ div#home-page-container {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
-  
+  .first-div-desable {
+    width: 32%;
+    box-shadow: 0px 2px 9px 2px #cccccc8c;
+    border: 1px solid #ccc0;
+    padding: 7px;
+    border-radius: 7px;
+    cursor: pointer;
+    background: #eee;
+}

@@ -57,13 +57,13 @@ const NavBar =()=>{
 <div className="container-fluid">
   <div className="d-flex align-items-center justify-content-between w-100">
     <div className="w-100 text-white">          
-      <h2 class="main-op-logo"><img src={logoImage} /></h2>
+      <h2 className="main-op-logo"><img src={logoImage} /></h2>
     </div>
    
     <div className="dropdown custom-drop-down">
       <a href="#" className="navbar-profile-toggle link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
         <img src={ProfilePic} alt="mdo" width="32" height="32" className="rounded-circle"/>
-        <p class="user-profile-name">{nameOfUser}</p><svg class="down-arrow-img"
+        <p className="user-profile-name">{nameOfUser}</p><svg className="down-arrow-img"
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="28"
                                         height="28"

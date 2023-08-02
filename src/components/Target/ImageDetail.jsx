@@ -14,7 +14,8 @@ const ImageDetail = ({setshowPopHandle,setuploadAll,inputCallingFunction}) => {
       // setisOpen(!isOpen);
     // }}
     className="bg-light p-4 tab-content"
-    style={{zIndex:'9',width:'360px',height:'auto', boxShadow: '5px 0 5px -2px rgba(0, 0, 0, 0.1)',position:'absolute',left:'75px',top:'0px' }}
+    style={{zIndex:'9',width:'360px',height:'auto', boxShadow: '5px 0 5px -2px rgba(0, 0, 0, 0.1)',position:'absolute',left:'75px',top:'0px',
+    transition: '.7s ease' }}
   >
     <p className="m-0 fs-4 fw-semibold ">
       Image

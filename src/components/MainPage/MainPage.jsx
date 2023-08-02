@@ -80,8 +80,11 @@ const handleshowcreatelabel = () => setcreatelabel(true);
 
   /********** Start----SecondModel State *************/
     const handleSecondShow = () =>{
-      handleClose();
-      setSecondShow(true);
+      if(!ProjectType==''){
+        handleClose();
+        setSecondShow(true);
+      }
+
     }
 
   /********** Start----Model Delete State *************/
@@ -146,7 +149,8 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                   'content-type': 'multipart/form-data'
             },
           }).then(function(response) {
-            navigate("/project/"+response.data.id)
+            console.log(response)
+            navigate("/project/"+response.data.data.id)
           }).catch(function(err) {
             toast.error("Not able to create project !")
           })
@@ -250,7 +254,7 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                       
                             <div className="d-flex align-items-center col-md-8">
                               <form className="w-100 me-3" role="search" id="search-form">
-                                <svg class="main-serach"
+                                <svg className="main-serach"
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="40"
                                 height="40"
@@ -272,7 +276,7 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                                       viewBox="0 0 40 40"
                                     >
                                       <path d="M15.5 27a.5.5 0 01.09.992L15.5 28h-4a.5.5 0 01-.09-.992L11.5 27h4zm10-8a.5.5 0 01.492.41l.008.09v6.793l2.146-2.147.07-.057a.5.5 0 01.695.695l-.057.07-3 3a.498.498 0 01-.227.13l-.084.014h-.086a.498.498 0 01-.241-.087l-.07-.057-3-3a.5.5 0 01.638-.765l.07.057L25 26.293V19.5a.5.5 0 01.5-.5zm-5 0a.5.5 0 01.09.992L20.5 20h-9a.5.5 0 01-.09-.992L11.5 19h9zm8-8a.5.5 0 01.09.992L28.5 12h-17a.5.5 0 01-.09-.992L11.5 11h17z"></path>
-                                    </svg>Sort  <svg class="down-arrow-img"
+                                    </svg>Sort  <svg className="down-arrow-img"
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="10"
                                         height="10"
@@ -302,7 +306,7 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                                     viewBox="0 0 40 40"
                                   >
                                     <path d="M10.5 10l-.084.007a.5.5 0 00-.325.779l6.915 9.88.001 8.834c0 .445.538.667.852.353l3.99-3.995.051-.06a.5.5 0 00.095-.293v-4.82l7.895-9.874A.5.5 0 0029.5 10h-19zm17.961.999l-7.354 9.2-.047.07a.5.5 0 00-.062.242v4.786l-2.994 2.997v-7.783L18 20.435a.5.5 0 00-.084-.21l-6.458-9.226h17.004z"></path>
-                                  </svg>Filter  <svg class="down-arrow-img"
+                                  </svg>Filter  <svg className="down-arrow-img"
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="10"
                                         height="10"
@@ -315,19 +319,19 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                                       </svg>
                                 </a>
                                 <ul className="dropdown-menu text-small shadow main-page-sort" id="sort-fliter-list">
-                                <div class="flex btw filter-inner-list"><div class="filter-title">Tool</div>
-                                <a href="#" class="btn btn-link">Clear all</a></div>
-                                <li class="" title="Universal AR"><div class="field"><label><input type="checkbox" name="uar" value="uar"/>Universal AR</label></div></li>
-                                <li class="" title="Studio"><div class="field"><label><input type="checkbox" name="studio" value="studio"/>Studio</label></div></li>
-                                <li class="" title="Designer"><div class="field"><label><input type="checkbox" name="designer-2" value="designer-2"/>Designer</label></div></li>
+                                <div className="flex btw filter-inner-list"><div className="filter-title">Tool</div>
+                                <a href="#" className="btn btn-link">Clear all</a></div>
+                                <li className="" title="Universal AR"><div className="field"><label><input type="checkbox" name="uar" value="uar"/>Universal AR</label></div></li>
+                                <li className="" title="Studio"><div className="field"><label><input type="checkbox" name="studio" value="studio"/>Studio</label></div></li>
+                                <li className="" title="Designer"><div className="field"><label><input type="checkbox" name="designer-2" value="designer-2"/>Designer</label></div></li>
                                 <li>
-                              <div class="field-serch">
-                                <div class="input-wrapper"><input id="search-labels-input" type="search" placeholder="Search labels"/>
-                                <svg class="search-label-svg" role="button" width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M19,11 C23.418278,11 27,14.581722 27,19 C27,21.0296419 26.2441691,22.8827501 24.9986213,24.2932105 L29.2708011,28.5802351 C29.4657149,28.775845 29.4651506,29.092427 29.2695406,29.2873408 C29.0956652,29.4605974 28.8262068,29.4794023 28.6315796,29.3440591 L28.562435,29.2860803 L24.2922058,24.9995083 C22.8818702,26.2445279 21.0291601,27 19,27 C14.581722,27 11,23.418278 11,19 C11,14.581722 14.581722,11 19,11 Z M19,12 C15.1340068,12 12,15.1340068 12,19 C12,22.8659932 15.1340068,26 19,26 C20.8819703,26 22.5904778,25.2573173 23.8484255,24.0490489 C23.8682789,24.0062003 23.8973303,23.9668665 23.9327917,23.9315312 C23.9676812,23.8967659 24.0064192,23.8682194 24.0476289,23.8458892 C25.2573173,22.5904778 26,20.8819703 26,19 C26,15.1340068 22.8659932,12 19,12 Z" fill="#344B60"></path></svg></div></div>
+                              <div className="field-serch">
+                                <div className="input-wrapper"><input id="search-labels-input" type="search" placeholder="Search labels"/>
+                                <svg className="search-label-svg" role="button" width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M19,11 C23.418278,11 27,14.581722 27,19 C27,21.0296419 26.2441691,22.8827501 24.9986213,24.2932105 L29.2708011,28.5802351 C29.4657149,28.775845 29.4651506,29.092427 29.2695406,29.2873408 C29.0956652,29.4605974 28.8262068,29.4794023 28.6315796,29.3440591 L28.562435,29.2860803 L24.2922058,24.9995083 C22.8818702,26.2445279 21.0291601,27 19,27 C14.581722,27 11,23.418278 11,19 C11,14.581722 14.581722,11 19,11 Z M19,12 C15.1340068,12 12,15.1340068 12,19 C12,22.8659932 15.1340068,26 19,26 C20.8819703,26 22.5904778,25.2573173 23.8484255,24.0490489 C23.8682789,24.0062003 23.8973303,23.9668665 23.9327917,23.9315312 C23.9676812,23.8967659 24.0064192,23.8682194 24.0476289,23.8458892 C25.2573173,22.5904778 26,20.8819703 26,19 C26,15.1340068 22.8659932,12 19,12 Z" fill="#344B60"></path></svg></div></div>
                               </li>
                               <hr/>
                               {/* <li><hr className="dropdown-divider"/></li> */}
-                              <li class="create-labels" onClick={handleshowcreatelabel}><FontAwesomeIcon icon={faPlus} /> Create Labels</li>
+                              <li className="create-labels" onClick={handleshowcreatelabel}><FontAwesomeIcon icon={faPlus} /> Create Labels</li>
                               </ul>
                               </div>
 
@@ -352,16 +356,16 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                   <Modal.Title>Create label</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                <div class="field mb24"><div class="label-wrapper">
-                  <label class="label-name" for="Labelname">Label name</label></div>
-                  <div class="input-wrapper">
+                <div className="field mb24"><div className="label-wrapper">
+                  <label className="label-name" for="Labelname">Label name</label></div>
+                  <div className="input-wrapper">
                   <input slot="input" type="text" id="Labelname" min="0" max="255"/></div></div>
                   </Modal.Body>
                 <Modal.Footer>
-                  <Button variant="secondary" class="btn-cancel-popup" onClick={handledeleteClose}>
+                  <Button variant="secondary" className="btn-cancel-popup" onClick={handledeleteClose}>
                   Cancel
                   </Button>
-                  <Button variant="primary" class="btn-delete-popup" onClick={handledeleteClose}>
+                  <Button variant="primary" className="btn-delete-popup" onClick={handledeleteClose}>
                    Create
                   </Button>
                 </Modal.Footer>
@@ -385,18 +389,18 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                           <div className="card-img-outer">
                             <span className="badge text-bg-light">{proData.projectType}</span>
                             <img src={proData.imagePro} className="card-img-top" alt="..."/>
-                            <div class="overlay dark">Open project</div>
+                            <div className="overlay dark">Open project</div>
                             <div className="dropdown-menu-svg" direction="bottom-left">
-                              <button class="btn btn-dots" id="profile-dots" slot="toggle" onClick={ToggleButtonShow}>
+                              <button className="btn btn-dots" id="profile-dots" slot="toggle" onClick={ToggleButtonShow}>
                                 <svg xmlns="http://www.w3.org/2000/svg"  width="40"  height="40"  viewBox="0 0 40 40">
                                 <path  fillRule="evenodd"  d="M20 25a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0-6.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0-6.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"></path>
                                 </svg>
                               </button>
                               { ToggleButton && ( 
-                                <ul slot="body" class="profile-list">
-                                  <li class="edit-cover"  onClick={(e)=>{e.stopPropagation();handleCoverimageShow(proData.id);EditHandle(proData.id)} }>Edit cover image</li>
-                                  <li class="disabled">Unpublish</li>
-                                  <li class="danger"  onClick={(e)=>{e.stopPropagation();handleDeleteShow(proData.id)}}>
+                                <ul slot="body" className="profile-list">
+                                  <li className="edit-cover"  onClick={(e)=>{e.stopPropagation();handleCoverimageShow(proData.id);EditHandle(proData.id)} }>Edit cover image</li>
+                                  <li className="disabled">Unpublish</li>
+                                  <li className="danger"  onClick={(e)=>{e.stopPropagation();handleDeleteShow(proData.id)}}>
                                     Delete
                                   </li>
                                 </ul>
@@ -413,17 +417,17 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                     })
                   ):
                   <>
-                  <div class="home-screen-outer">
-                    <div class="home-screen">
+                  <div className="home-screen-outer">
+                    <div className="home-screen">
                       <img src={homsecreen} className="home-img" alt="..."/>
                     </div>
-                    <div class="home-screen-right">
-                      <h3 class="mb16">Welcome to sayehbaz!</h3>
-                      <p class="mb16 fs14">We are excited for you to be here!</p>
-                      <p class="mb16 fs14">We offer a set of award-winning tools for creators of all abilities to build augmented reality experiences. Start your first project today.</p>
-                      <button type="button" class="btn btn-primary btn-medium mb24" id="createProjectBtn" onClick={handleShow}>Create project</button>
-                      <p class="fs14">Not sure where to begin? Learn about AR and the different types of experiences with our
-                      <button type="button" class="btn btn-link" id="interactiveTourLink">interactive tour.</button></p>
+                    <div className="home-screen-right">
+                      <h3 className="mb16">Welcome to sayehbaz!</h3>
+                      <p className="mb16 fs14">We are excited for you to be here!</p>
+                      <p className="mb16 fs14">We offer a set of award-winning tools for creators of all abilities to build augmented reality experiences. Start your first project today.</p>
+                      <button type="button" className="btn btn-primary btn-medium mb24" id="createProjectBtn" onClick={handleShow}>Create project</button>
+                      <p className="fs14">Not sure where to begin? Learn about AR and the different types of experiences with our
+                      <button type="button" className="btn btn-link" id="interactiveTourLink">interactive tour.</button></p>
                     </div>
                   </div>
                   </>
@@ -440,23 +444,23 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                 “Untitled project”</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <div class="flex btw image-preview">
+                <div className="flex btw image-preview">
                 {proInfo?.length>0?(
                   editableItem?.map((proData, i) => {
                     // {proData.id === coverimageid}
                     return (
-                      <div class="card">
-                        <div class="card-project"><div class="tag">proData.projectType</div>
-                          <div class="image">
+                      <div className="card">
+                        <div className="card-project"><div className="tag">proData.projectType</div>
+                          <div className="image">
                           <img src={draggedImage || proData.imagePro} className="card-img-top" alt="..."/>
-                            <div class="overlay dark">Delete image</div>
+                            <div className="overlay dark">Delete image</div>
                           </div>
-                          <div class="text-content">
-                              <span class="icon" title="Web Developer">W</span>
+                          <div className="text-content">
+                              <span className="icon" title="Web Developer">W</span>
                               <h4>{proData.ProTitle}</h4>
                             <div>
-                              <span class="status-icon"></span>
-                              <span class="status-text">Created {proData.created_at}&nbsp;&nbsp;|&nbsp;&nbsp;Unpublished</span>
+                              <span className="status-icon"></span>
+                              <span className="status-text">Created {proData.created_at}&nbsp;&nbsp;|&nbsp;&nbsp;Unpublished</span>
                             </div>
                           </div>
                         </div>
@@ -464,18 +468,18 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                     )
                   })
                 ):<></>}
-                  <div class="upload-cover-img">
+                  <div className="upload-cover-img">
                 
-                    <div class="dz-overlay"></div>
+                    <div className="dz-overlay"></div>
               
-                      <div class="upload-outer">
+                      <div className="upload-outer">
                         <input type="file" title=" " name="projectCover" accept="image/*" required="" onChange={handleCoverImageChange}/>
                           <zpr-dropzone-icon hydrated="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16">
                             <path d="M10,0a6.008,6.008,0,0,1,3.86,1.371,5.808,5.808,0,0,1,2.033,3.5A4.887,4.887,0,0,1,18.96,6.639a4.717,4.717,0,0,1-.534,6.473,4.919,4.919,0,0,1-3.312,1.26H12.67a.448.448,0,0,1-.314-.128.43.43,0,0,1,0-.616.448.448,0,0,1,.314-.128h2.443a4.034,4.034,0,0,0,2.76-1.085A3.87,3.87,0,0,0,18.126,7,4.019,4.019,0,0,0,15.48,5.675a.448.448,0,0,1-.27-.121.433.433,0,0,1-.132-.261,4.947,4.947,0,0,0-.593-1.89,5.036,5.036,0,0,0-1.292-1.518A5.141,5.141,0,0,0,11.4.977a5.19,5.19,0,0,0-3.923.458,5.081,5.081,0,0,0-1.523,1.3A4.978,4.978,0,0,0,5.063,4.5a4.925,4.925,0,0,0-.126,1.974.428.428,0,0,1-.016.184.433.433,0,0,1-.092.161.444.444,0,0,1-.152.109.451.451,0,0,1-.184.037H4.229a3.359,3.359,0,0,0-2.353.957,3.224,3.224,0,0,0,0,4.619,3.358,3.358,0,0,0,2.353.957h3.11a.448.448,0,0,1,.314.128.43.43,0,0,1,0,.616.448.448,0,0,1-.314.128H4.229A4.247,4.247,0,0,1,1.272,13.2a4.075,4.075,0,0,1-.127-5.791,4.24,4.24,0,0,1,2.9-1.293,5.729,5.729,0,0,1,.365-2.324A5.811,5.811,0,0,1,5.685,1.8,5.937,5.937,0,0,1,7.656.463,6.029,6.029,0,0,1,10,0Z" transform="translate(0 0)" fill="#ef5332"></path>
                             <path d="M2.232,0a.359.359,0,0,1,.231.091L4.35,1.922a.394.394,0,0,1,.027.521.343.343,0,0,1-.488.023L2.574,1.19V6.957a.355.355,0,0,1-.342.366.355.355,0,0,1-.343-.366V1.19L.575,2.466a.349.349,0,0,1-.488-.023.389.389,0,0,1,.027-.521L2,.092A.289.289,0,0,1,2.232,0Z" transform="translate(7.506 8.678)" fill="#ef5332"></path></svg>
                           </zpr-dropzone-icon>
-                          <zpr-dropzone-msg class="help-text" hydrated="">
+                          <zpr-dropzone-msg className="help-text" hydrated="">
                             {
                               !draggedImage && <span>Drag your cover image here or click to upload</span>
                             }
@@ -489,10 +493,10 @@ const handleshowcreatelabel = () => setcreatelabel(true);
               </div>
             </Modal.Body>
               <Modal.Footer>
-                <Button variant="secondary" class="btn-cancel-cover" onClick={handleCoverClose}>
+                <Button variant="secondary" className="btn-cancel-cover" onClick={handleCoverClose}>
                 Cancel
                 </Button>
-                <Button variant="primary" class="btn-save-cover" onClick={handleCoverImage}>
+                <Button variant="primary" className="btn-save-cover" onClick={handleCoverImage}>
                   Save
                 </Button>
               </Modal.Footer>
@@ -503,10 +507,10 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                 </Modal.Header>
                 <Modal.Body>All experience content and analytics data associated with this project will be lost.</Modal.Body>
                 <Modal.Footer>
-                  <Button variant="secondary" class="btn-cancel-popup" onClick={handleDeleteClose}>
+                  <Button variant="secondary" className="btn-cancel-popup" onClick={handleDeleteClose}>
                   Cancel
                   </Button>
-                  <Button variant="primary" class="btn-delete-popup" onClick={handleDelete}>
+                  <Button variant="primary" className="btn-delete-popup" onClick={handleDelete}>
                     Delete
                   </Button>
                 </Modal.Footer>
@@ -525,7 +529,9 @@ const handleshowcreatelabel = () => setcreatelabel(true);
             <div className="step-content show">
                 <div className="p4">
                   <div className="first-popup-design"> 
-                    <div className={`first-div ${ProjectType === "Studio" ? "project-type" : ""}`} onClick={event => handleSelectProjectType( event , "Studio")} >
+                    <div className="first-div-desable">
+                    {/*{`first-div ${ProjectType === "Studio" ? "project-type" : ""}`} >
+                       onClick={event => handleSelectProjectType( event , "Studio")} > */}
                         <div className="inner-img">
                           <div className="image-outer">
                         <img src={StudioImage}></img></div>
@@ -542,7 +548,8 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                         <p> Create world &amp; image tracked 3D projects with our drag &amp; drop editor.</p>
                         </div>
                     </div>
-                    <div className={`first-div ${ProjectType === "Studio" ? "project-type" : ""}`} onClick={event => handleSelectProjectType( event , "Universal AR")} >
+                    <div className="first-div-desable">
+                     {/* {`first-div ${ProjectType === "Studio" ? "project-type" : ""}`} onClick={event => handleSelectProjectType( event , "Universal AR")} > */}
                     <div className="inner-img">
                     <div className="image-outer">
                         <img src={UniversalAR}></img>

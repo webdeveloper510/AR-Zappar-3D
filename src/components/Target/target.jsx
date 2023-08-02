@@ -1681,10 +1681,8 @@ const Target = () => {
     setUrl(event.target.value);
   };
 
-  // Generate a QR code with the current URL state
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(
-    Url
-  )}&size=200x200`;
+
+  // handleBack Function 
 
   const handleBack = (event) => {
     navigate("/home");
@@ -2107,9 +2105,14 @@ const Target = () => {
                       handlepreviewClose();
                       (() => {
                         ctx.setloader(true)
+                        const formData = new FormData()
+                        formData.append('publish_key', 1)
+                        formData.append('project_content_id',idOfProject )
+                        formData.append('target_image_url', )
+                        formData.append('user_id', )
                         return axios
                           .patch(
-                            API.BASE_URL + "update-project/" + idOfProject,
+                            API.BASE_URL + "generate_qrcode_for_target_image/" + idOfProject,
                             { publish_key: 1 },
                             {
                               headers: {

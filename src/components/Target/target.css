@@ -456,6 +456,7 @@ input {
     height: 100%;
     background: #fff;
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 16%);
+    transition: .7s ease;
 }
 
 .target-left .tab-content {
@@ -465,6 +466,7 @@ input {
     overflow-y: scroll;
     margin-top: 3px;
     border-bottom: 1px solid #cccccc6e;
+    transition: .7s ease;
 }
 
 .target-left .tab-content {
@@ -477,6 +479,7 @@ input {
   .target-left .tab-content {
     scrollbar-width: thin;
     scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+    transition: .7s ease;
   }
   .target-left .tab-content::-webkit-scrollbar-track {
     background: var(--scrollbarBG);
@@ -485,6 +488,7 @@ input {
     background-color: #5089c7 ;
     border-radius: 6px;
     border: 3px solid var(--scrollbarBG);
+    transition: .7s ease;
   }
   h2.buttons-head {
     font-size: 16px;
@@ -2172,12 +2176,9 @@ span.text-format {
     display: block;
     transition: none;
 }
-/* span:hover{
-    background: #EBF6FE;
-    color: #4A90E2;
-    border-left: 3px solid #4A90E2;
-    padding: 10px 10px;
-} */
+canvas#canvas {
+    background: #f2f2f2;
+}
 
 .textfield {
     float: left;

@@ -47,7 +47,8 @@ const ButtonsDetail = ({imageObject,imageObject2}) => {
                     // }
                     // eventKey={isOpen ? "first" : null}
                     className="bg-light p-4 tab-content"
-                    style={{zIndex:'9',width:'360px',height:'82%', boxShadow: '5px 0 5px -2px rgba(0, 0, 0, 0.1)',position:'absolute',left:'75px',top:'0px' }}
+                    style={{zIndex:'9',width:'360px',height:'82%', boxShadow: '5px 0 5px -2px rgba(0, 0, 0, 0.1)',position:'absolute',left:'75px',top:'0px',
+                    transition: '1s ease-in-out !important' }}
                   >
                     <h2 className="buttons-head">Buttons</h2>
                     <h6 className="btn-target-left mt-3">Basic buttons</h6>

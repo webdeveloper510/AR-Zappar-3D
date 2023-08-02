@@ -152,6 +152,7 @@ const RegisterPage = () => {
 
   return (
     <div className="sign-up-page" id="sign-up-page">
+
       <div className="container-fluid p-0 m-0">
         <div className="row p-0 m-0 align-items-center sign-up-bgg">
           <div className="col-md-12 sign-up-outer">
@@ -196,6 +197,7 @@ const RegisterPage = () => {
                     style={{ border: emailError ? "0.5px solid red" : "" }}
                   />
                 </div>
+       
                 <div className="mb-2">
                   <label className="form-label fw-semibold">Password</label>
                   <input

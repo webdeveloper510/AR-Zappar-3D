@@ -12,7 +12,7 @@ import svgHere from '../src/assets/images/svgviewer-output.svg'
 import svgHere2 from '../src/assets/images/Mediamodifier-Design.svg'
 import { contextObject } from './components/ContextStore/ContextApi';
 import { CSS3DRenderer, CSS3DObject } from '../node_modules/three/examples/jsm/renderers/CSS3DRenderer'
-
+import { ViewHelper } from '../node_modules/three/examples/jsm/helpers/ViewHelper'
 
 
 
@@ -92,12 +92,12 @@ const ModelAr =()=> {
     // boxModal Function Startes ------------------------------------------------------------------------------>
         const boxModal = () => {
 
+            
         // Variables ------------------------------------------------------------------------------------------->
             let cameraPersp, cameraOrtho, currentCamera, canvas ,labelRenderer
-            let scene, renderer, control, orbit , plane  , Videomesh , Imagesocial , gltf , plane2,mesh
-            let selectedModel = null;
-
-            var ModelsArray = []
+            let scene, renderer, control, orbit , plane  , Videomesh ,mesh,Indecator , helper, clock ,viewHelper
+            let lastRenderTime = 0;
+            const frameRate = 60; // Limit the frame rate to 60 FPS
 
             init();
             render();
@@ -106,7 +106,8 @@ const ModelAr =()=> {
             // console.log('In Test.jsx file **********************************************', ctx.contentImgVdo)
             canvas = document.getElementById( 'canvas' );
             // Initialize The Project View Model---------------------------------------------------------------->
-
+            // clock
+            clock = new THREE.Clock();
 
             renderer = new THREE.WebGLRenderer({canvas:canvas,antialias: true});
             renderer.setPixelRatio( window.devicePixelRatio );
@@ -118,19 +119,19 @@ const ModelAr =()=> {
 
             // Camera SetUp For the Project View Model----------------------------------------------------------->
 
-                const aspect = window.innerWidth / window.innerHeight;
-                cameraPersp = new THREE.PerspectiveCamera( 55, aspect, 0.11, 1000 );
-                const camera = new THREE.Camera( 30, aspect, 0.11, 1000 );
-                cameraOrtho = new THREE.OrthographicCamera( - 600 * aspect, 600 * aspect, 600, - 600, 0.01, 3000 );
-                currentCamera = cameraPersp;
-                currentCamera.position.set(  0 , 0, -500);
+            const aspect = window.innerWidth / window.innerHeight;
+            cameraPersp = new THREE.PerspectiveCamera( 55, aspect, 0.11, 1000 );
+            const camera = new THREE.Camera( 30, aspect, 0.11, 1000 );
+            cameraOrtho = new THREE.OrthographicCamera( - 600 * aspect, 600 * aspect, 600, - 600, 0.01, 3000 );
+            currentCamera = cameraPersp;
+            currentCamera.position.set(  0 , 0, -500);
 
 
             // Creating Scene View ------------------------------------------------------------------------------->
 
-                scene = new THREE.Scene();
-                scene.background = new THREE.Color( 0xf2f2f2);
-
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color( 0xf2f2f2);
+            scene.add( new THREE.AmbientLight( 0x222222 ) );
 
             // Creating Plane For Tracker ------------------------------------------------------------------------->
           
@@ -139,7 +140,7 @@ const ModelAr =()=> {
             const texture1 = textureLoader.load(svgHere)
             const geometry = new THREE.BoxGeometry(350, 350 ,8);
             const material = new THREE.MeshBasicMaterial({map : texture1 , side : THREE.DoubleSide , transparent : false})           
-            const plane = new THREE.Mesh(geometry,material );
+            plane = new THREE.Mesh(geometry,material );
             material.needsUpdate = false;
             scene.add(plane);
             plane.position.set(0, 0, 0);
@@ -148,26 +149,26 @@ const ModelAr =()=> {
 
             // Threjs Plane Helper for OrbitControler Indecator ------------------------------------------------------->
 
-            const boxorbitIndictor = new THREE.BoxGeometry(50,50,50);
-            const IndecatorTexture = new THREE.TextureLoader();
-            const IndecatorTextures = IndecatorImages.map(imageUrl => {
-                const texture = IndecatorTexture.load(imageUrl);
-                texture.minFilter = THREE.LinearFilter;
-                texture.magFilter = THREE.LinearFilter;
-                return texture;
-              });
-            const materialorbitIndictor = IndecatorTextures.map(texture => new THREE.MeshBasicMaterial({ map: texture }));
-            const Indecator = new THREE.Mesh(boxorbitIndictor,materialorbitIndictor)
-            scene.add(Indecator);
-            Indecator.position.set(-300,-250,0 )
+            // const boxorbitIndictor = new THREE.BoxGeometry(50,50,50);
+            // const IndecatorTexture = new THREE.TextureLoader();
+            // const IndecatorTextures = IndecatorImages.map(imageUrl => {
+            //     const texture = IndecatorTexture.load(imageUrl);
+            //     texture.minFilter = THREE.LinearFilter;
+            //     texture.magFilter = THREE.LinearFilter;
+            //     return texture;
+            //   });
+            // const materialorbitIndictor = IndecatorTextures.map(texture => new THREE.MeshBasicMaterial({ map: texture }));
+            // Indecator = new THREE.Mesh(boxorbitIndictor,materialorbitIndictor)
+            // scene.add(Indecator);
+            // Indecator.position.set(-300,-200,0 )
 
+            
 
             // Adding Light Effects ------------------------------------------------------------------------------->
 
                 const light = new THREE.DirectionalLight( 0xffffff, 5 );
                 light.position.set( 1, 1, 1 );
                 scene.add( light );
-
 
             // OrbitControls Addded ------------------------------------------------------------------------------->
 
@@ -176,8 +177,32 @@ const ModelAr =()=> {
                 orbit.addEventListener( 'change', render );
                 orbit.touches.ONE = THREE.TOUCH.PAN;
                 orbit.touches.TWO = THREE.TOUCH.DOLLY_ROTATE;
-                orbit.target = plane.position;
+                // orbit.target = plane.position;
+                // orbit.minPolarAngle = 0; // default
+                // orbit.maxPolarAngle = Math.PI; // default
+                // orbit.minAzimuthAngle = - Infinity; // default
+                // orbit.maxAzimuthAngle = Infinity; // default
+                // orbit.enableRotate = true; // Enable rotation
+                // // Disable rotation along the X and Z axes (horizontal rotation)
+                // orbit.enableRotateX = false;
+                // orbit.enableRotateZ = false;
 
+// Helper function================================================================>
+
+                viewHelper = new ViewHelper( currentCamera, renderer.domElement );
+                viewHelper.orbit = orbit;
+                console.log(viewHelper)
+                const div = document.createElement( 'div' );
+                div.id = 'viewHelper';
+                div.style.position = 'absolute';
+                div.style.right = '350px';
+                div.style.bottom = 0;
+                div.style.height = '128px';
+                div.style.width = '128px';
+                
+                document.body.appendChild( div );
+                
+                div.addEventListener( 'pointerup', (event) => viewHelper.handleClick( event ) );
 
 
             // TransFormControls Added ----------------------------------------------------------------------------->
@@ -208,7 +233,6 @@ const ModelAr =()=> {
                         ctx.setselectedImage(responseProject.data.data[0].image_data);
                         ctx.setselectedVideos(responseProject.data.data[0].video_data);
                         ctx.setselected3D(responseProject.data.data[0].ThreeDmodeldata)
-
                         rendeR=false
 
 
@@ -249,7 +273,7 @@ const ModelAr =()=> {
 
                     if (getVideo){
                         for (let i = 0; i < getVideo.length  &&  getVideo !== undefined; i++){
-                            // console.log(getVideo[i])
+
                             const video = document.createElement('video');
                             video.autoplay = true;
                             video.crossOrigin="anonymous"
@@ -305,6 +329,7 @@ const ModelAr =()=> {
 
                     if(ctx.contentImgVdo && ctx.contentImgVdo[0].image_url === mesh.userData.name){
                         control.attach(mesh)
+
                     }
                     else{
                         // console.log("not found");
@@ -315,6 +340,7 @@ const ModelAr =()=> {
                     else{
                         // console.log("No selected")
                     }
+
                     // States for Text Featres ------------------------------------------------------------------------------------------------>
              
                     labelRenderer = new CSS3DRenderer() 
@@ -370,7 +396,7 @@ const ModelAr =()=> {
                             cPointLable.rotation.x =getText[i][0].text_transform.Rotation_x
                             cPointLable.rotation.y =getText[i][0].text_transform.Rotation_y + Math.PI
                             cPointLable.rotation.z =getText[i][0].text_transform.Rotation_z
-                            // console.log('Here is the Point Label------------>',cPointLable);
+
                         }
                     }
 
@@ -477,8 +503,10 @@ const ModelAr =()=> {
                     break;
             }
         } );
+
     }
 
+    //   }
         // Window Resize Functions -------------------------------------------------------------------------------------------------------->
 
                             
@@ -493,18 +521,75 @@ const ModelAr =()=> {
             // labelRenderer.setSize( window.innerWidth, window.innerHeight );
         }
 
+        function updatetransform() {
+            let timer; // Declare a variable to hold the timer ID
+        
+            control.addEventListener('change', function() {
+                clearTimeout(timer); // Clear any existing timer before setting a new one
+        
+                timer = setTimeout(function() {
+                    var position = control.object.position;
+        
+                    if (ctx.contentImgVdo[0].image_id) {
+                        axios.put(API.BASE_URL + "image_transform/" + ctx.contentImgVdo[0].image_transform.id + '/', {
+                            position_x: position.x,
+                            position_y: position.y,
+                            position_d: position.z
+                        }).then(function(response) {
+                            console.log(response);
+                        }).catch(function(error) {
+                            console.log(error);
+                        });
+                    }
+        
+                    if (ctx.contentImgVdo[0].video_id) {
+                        axios.put(API.BASE_URL + "video_transform/" + ctx.contentImgVdo[0].video_transform.id + '/', {
+                            position_x: position.x,
+                            position_y: position.y,
+                            position_d: position.z
+                        }).then(function(response) {
+                            console.log(response);
+                        }).catch(function(error) {
+                            console.log(error);
+                        });
+                    }
+                }, 1000); // Delay of 1000ms (1 second) before executing the API call
+            });
+        }
+        
 
+          
 
         function render() {
-            // requestAnimationFrame(render)
-            onWindowResize()
-            renderer.render( scene, currentCamera );
-            // labelRenderer.render( scene, currentCamera);
+
+
+            const currentTime = performance.now();
+            const timeSinceLastRender = currentTime - lastRenderTime;
+
+            if (timeSinceLastRender >= 1000 / frameRate) {
+            const delta = clock.getDelta()
+
+                lastRenderTime = currentTime;
+                onWindowResize();
+                renderer.render(scene, currentCamera);
+                updatetransform();
+                if (viewHelper) { 
+                    viewHelper.orbit.center = orbit.target;
+
+                    viewHelper.update(delta);
+                    viewHelper.render(renderer);
+                }
+            }
+            // animate()
+
+            requestAnimationFrame(render);
+
+
         }
     }
             setTimeout(()=>{
                 boxModal()
-            }, 100)
+            }, 200)
         },[rendeR,id,ctx.reRender,ctx.loadContent,ctx.loader, ctx.contentImgVdo]);
 }
 export default ModelAr;
