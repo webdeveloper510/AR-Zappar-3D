@@ -5500,13 +5500,15 @@ const Target = () => {
       <Modal
         id={typePopup}
         show={showPopHandle}
+        className="modelFileFields"
         onHide={() => {
           setshowPopHandle(false);
           setselectedVideo(null);
           setselectedFile(null);
+          
         }}
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton >
           <Modal.Title>Create browse media popup</Modal.Title>
         </Modal.Header>
         <Modal.Body>

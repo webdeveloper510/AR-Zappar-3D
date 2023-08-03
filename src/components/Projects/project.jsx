@@ -222,7 +222,7 @@ return(
                     </div>
                     <div class="col-md-5 align-self-center p-4" id="project-actions">
                     {isShowDot && <span class=" status-icon" style={{
-                      backgroundColor:publishedKey ? '#e0f1fd':'green'
+                      backgroundColor:!publishedKey ? '#9fc1d9':'green'
                     }}></span>}
                       <input id="projName" className="mt-md-0" type="text" onChange={handleUntitle} value={titlePro} /> 
                   <div class="actions-div">

@@ -2190,9 +2190,6 @@ canvas#canvas {
     width: 100%;
     margin-top: 15px;
 }
-/* .modal.show .modal-dialog{
+.modelFileFields .modal-dialog {
     max-width: 90% !important;
-} */
-/* .modal-dialog {
-    max-width: 90%;
-} */
+}

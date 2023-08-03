@@ -57,14 +57,6 @@ const RegisterPage = () => {
     setSelectedDate(event.target.value);
     // console.log("Date----------->" , event.target.value)
   };
-  const MyDataObject = {
-    firstname: firstName,
-    lastname: LastName,
-    email: email,
-    password: password,
-    proffession: Proffession,
-    dateofbirth: selectedDate,
-  };
   const handelLogin = () => {
     navigate("/");
   };
@@ -100,11 +92,8 @@ const RegisterPage = () => {
     }
 
     if (firstName.trim() === "" || LastName.trim() === "" || password.trim() === "" || Proffession.trim()==="" || selectedDate.trim()==="" || email.trim() === '') {
-      
         return ;
-
     }
-
     else {
       const formData = new FormData();
       formData.append("firstname", firstName);
