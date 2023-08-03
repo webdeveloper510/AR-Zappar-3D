@@ -296,7 +296,7 @@ const LeftSideBar = () => {
           }}
         >
           {image.svg}
-          <span className="nav-link p-0 m-0 link-dark">{image.name}</span>
+          <span className="nav-link p-0 m-0 link-dark" >{image.name}</span>
           <div style={{borderTop:'1px solid rgb(178, 196, 215)',height: 'auto',width: '35px', marginTop: "10px",marginLeft:'15px'}}></div>
         </div>
       ))}
