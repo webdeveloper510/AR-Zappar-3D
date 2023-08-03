@@ -588,16 +588,18 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                   <div className="qr-outer">
                     <div className={`qr-div ${FeaturedTrackerOption === "QR Code" ? "sel-trigger" : ""}`} onClick={event => handleSelectTrigerType( event , "QR Code")}>
                     <div className="qr-img">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#3276c3" version="1.1" viewBox="0 0 448 448" xmlSpace="preserve">
+                      <div className="svg">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#000" version="1.1" viewBox="0 0 448 448" xmlSpace="preserve">
                                 <g><path d="M64 64H96V96H64z"></path><path d="M352 64H384V96H352z"></path><path d="M288 0v160h160V0H288zm128 128h-96V32h96v96z"></path><path d="M256 64L224 64 224 32 256 32 256 0 192 0 192 96 224 96 224 128 256 128z"></path><path d="M160 160V0H0v160h160zM32 32h96v96H32V32z"></path><path d="M0 192L0 256 32 256 32 224 64 224 64 192z"></path><path d="M224 224L256 224 256 160 224 160 224 128 192 128 192 192 224 192z"></path><path d="M352 192H384V224H352z"></path><path d="M416 192H448V224H416z"></path><path d="M320 256L320 288 352 288 352 320 384 320 384 256 352 256 352 224 320 224 320 192 288 192 288 224 256 224 256 256z"></path><path d="M384 224H416V256H384z"></path><path d="M0 288v160h160V288H0zm128 128H32v-96h96v96z"></path><path d="M256 256L224 256 224 224 192 224 192 192 96 192 96 224 64 224 64 256 128 256 128 224 160 224 160 256 192 256 192 288 224 288 224 320 256 320z"></path><path d="M288 288H320V320H288z"></path><path d="M416 256H448V320H416z"></path><path d="M320 320H352V352H320z"></path><path d="M384 320H416V352H384z"></path><path d="M64 352H96V384H64z"></path><path d="M320 384L320 352 288 352 288 320 256 320 256 352 224 352 224 320 192 320 192 384 224 384 224 416 256 416 256 384z"></path><path d="M352 384L320 384 320 416 352 416 352 448 384 448 384 352 352 352z"></path><path d="M416 352H448V384H416z"></path><path d="M192 416H224V448H192z"></path><path d="M256 416H320V448H256z"></path><path d="M416 416H448V448H416z"></path></g>
                               </svg>
                                   <span className="qr-code">QR code</span>
-                    </div>
+                      </div>
                     <div className="qr-text">
                       <p> Simple to use and popular across the world. Scanning the QR launches your AR experience in browser with WebAR.</p>
                     </div>
                     </div>
-                      <div className={`deep-link-div ${FeaturedTrackerOption === "Deep Link" ? "sel-trigger" : ""}`} onClick={event => handleSelectTrigerType( event , "Deep Link")}>
+                    </div>
+                      {/* <div className={`deep-link-div ${FeaturedTrackerOption === "Deep Link" ? "sel-trigger" : ""}`} onClick={event => handleSelectTrigerType( event , "Deep Link")}>
                         <div className="qr-img">
                         <svg fill="#3276c3" width="50" height="50" viewBox="-0.96 -0.96 33.92 33.92" version="1.1" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)">
                                           <g id="SVGRepo_bgCarrier" stroke-width="0"/>
@@ -609,7 +611,7 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                       <div className="qr-text">
                       <p>  Deep links allows users to launch an experience without first having to scan a zapcode.</p>
                       </div>
-                      </div>
+                      </div> */}
                   </div>
                 </div>
 

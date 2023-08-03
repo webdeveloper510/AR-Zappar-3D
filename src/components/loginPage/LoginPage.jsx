@@ -12,12 +12,12 @@ import loginright from '../../assets/images/login-banner.png';
 const LoginPage =()=>{
 const navigate = useNavigate();
 //  Email Address
-const [email , userEmail] = useState(null);
+const [email , userEmail] = useState('');
 const handleEmail =(e)=>{
     userEmail(e.target.value)
 }
 //  Password
-const [password , userPassword] = useState(null)
+const [password , userPassword] = useState('')
 const [passErr,setpassErr]=useState(false);
 const [emailErr,setemailErr]=useState(false);
 const handlePass =(e)=>{

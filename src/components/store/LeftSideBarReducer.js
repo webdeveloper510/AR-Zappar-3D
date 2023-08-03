@@ -8,6 +8,7 @@ const initialState = {
     isShowVideoDetail:false,
     isShowModalDetail:false,
     isShowAppletsDetail:false,
+    isShowModel3dDetail:null,
 }
 
 const leftSideBarSlice=createSlice({
@@ -32,7 +33,10 @@ const leftSideBarSlice=createSlice({
           setisShowAppletsDetail(state,actions){
             state.isShowAppletsDetail=actions.payload;
           },
-
+          setisShow3Dmodel(state,actions){
+            console.log(actions.payload,'HHHHHHHHHHHHHHHH');
+            state.isShowModel3dDetail=actions.payload;
+          },
     }
 });
 

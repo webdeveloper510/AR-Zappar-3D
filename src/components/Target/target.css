@@ -1563,9 +1563,7 @@ svg {
     cursor: pointer;
     transition: 0.5s;
 }
-g:hover {
-    fill: #4f83c4;
-}
+
 h6 {
     margin: 95px 0 0 12px !important;
     padding: 0 !important;
@@ -2187,3 +2185,14 @@ canvas#canvas {
     width: 100%;
     margin-top: 15px;
 }
+.model3d {
+    float: left;
+    width: 100%;
+    margin-top: 15px;
+}
+/* .modal.show .modal-dialog{
+    max-width: 90% !important;
+} */
+/* .modal-dialog {
+    max-width: 90%;
+} */

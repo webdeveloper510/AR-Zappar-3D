@@ -46,13 +46,13 @@ const SecondTab = () => {
                                   </div>
                               
 
-                                <div class="d-flex text-center">
+                                {/* <div class="d-flex text-center">
                                 <button class="pt-1 pb-1" id="png-btn-download" type="button"><FontAwesomeIcon icon={faArrowDown} style={{ color: "rgb(120 120 120)", width: "15px", height: "15px", marginRight: 8 }} />PNG</button>
                                 <button class="pt-1 pb-1" id="svg-btn-download" type="button"><FontAwesomeIcon icon={faArrowDown} style={{ color: "rgb(120 120 120)", width: "15px", height: "15px", marginRight: 8 }} />SVG</button>
                                  
                                   
                                 </div>
-                                
+                                 */}
                               </div>
                               <div class="col-md-3"></div>
                               <div class="col-md-5 destination-img">

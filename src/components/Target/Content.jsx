@@ -15,6 +15,9 @@ import Accordion from "react-bootstrap/Accordion";
 import Tab from "react-bootstrap/Tab";
 import "./target.css";
 import { contextObject } from "../ContextStore/ContextApi";
+// import '@google/model-viewer';
+// import evaluators from '../../../node_modules/@google/model-viewer/lib/styles/evaluators'
+
 
 
 
@@ -54,6 +57,8 @@ const Content = () => {
     const twoDthreeDID=useSelector((state)=>state.sideBarContentReducer.twoDthreeDID)
 
     const contentImgVdo=useSelector((state)=>state.sideBarContentReducer.contentImgVdo)
+
+    const ThreeDModel = useSelector((state)=>state.LeftSideBarReducer.sShowModel3dDetail)
 
 
 //     const contentImgVdo=ctx.contentImgVdo;
@@ -232,7 +237,12 @@ useEffect(() => {
 
 
 
+
 }, [useSelector((state)=>state.sideBarContentReducer.contentImgVdo)]);
+
+
+
+
 
 
   return (
@@ -308,6 +318,31 @@ useEffect(() => {
                                             />
                                           </video>
                                         )}
+
+                                        {contentImgVdo && 
+                                          contentImgVdo.file_url &&(
+                                          //   <canvas
+                                          //   src={
+                                          //     ThreeDModel[0].file_url
+                                          //   }
+                                          //   style={{
+                                          //     width: "100%",
+                                          //     height: "100%",
+                                          //     display: "flex",
+                                          //     objectFit: "cover",
+                                          //   }}
+                                          // />
+                                          <model-viewer
+                                          src={
+                                                ThreeDModel.file_url
+                                              }
+                                          alt="3D Model"
+                                          auto-rotate
+                                          camera-controls
+                                          style="width: 100%; height: 500px;"
+                                      ></model-viewer>
+                                          )
+                                        }
                                       <div className="HoverDiv--jI34Q ">
                                         <button
                                           style={{

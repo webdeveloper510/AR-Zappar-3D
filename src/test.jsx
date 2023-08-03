@@ -266,6 +266,10 @@ const ModelAr =()=> {
                     if (getVideo){
                         for (let i = 0; i < getVideo.length  &&  getVideo !== undefined; i++){
 
+                            var position_x = getVideo[i][0].video_transform.position_x
+                            var position_y = getVideo[i][0].video_transform.position_y
+                            var position_d = getVideo[i][0].video_transform.position_d
+
                             const video = document.createElement('video');
                             video.autoplay = true;
                             video.crossOrigin="anonymous"
@@ -285,7 +289,7 @@ const ModelAr =()=> {
                             const Videogeometry = new THREE.BoxGeometry(getVideo[i][0].video_transform.width,getVideo[i][0].video_transform.height,1);
                             Videomesh = new THREE.Mesh(Videogeometry, Videomaterial);
                             scene.add(Videomesh);
-                            Videomesh.position.set(0,0,-10)
+                            Videomesh.position.set(Number(getVideo[i][0].video_transform.position_x),Number(getVideo[i][0].video_transform.position_y),Number(getVideo[i][0].video_transform.position_d)-8)
                             Videomesh.userData.name=getVideo[i][0].video_url;
                         }
                     }
@@ -295,13 +299,20 @@ const ModelAr =()=> {
                     // 3D MODEL Handler Function ---------------------------------------------------------------------------------------->
 
                     if (get3Dmodel){
-                        for (let i = 0; i < get3Dmodel.length  &&  get3Dmodel !== undefined; i++    ){
+                        for (let i = 0; i < get3Dmodel.length  &&  get3Dmodel !== undefined; i++){
+                            var positionX = get3Dmodel[i][0].threedModel_transform.position_x
+                            var positionY = get3Dmodel[i][0].threedModel_transform.position_y
+                            var positionD = get3Dmodel[i][0].threedModel_transform.position_d
+                            var width= get3Dmodel[i][0].threedModel_transform.width
+                            var height = get3Dmodel[i][0].threedModel_transform.height
+                            var depth = get3Dmodel[i][0].threedModel_transform.depth
                             const gltfContent =get3Dmodel[i][0].file_url
                             const loader = new GLTFLoader();
                             loader.load(gltfContent, (gltf) => {
-                                gltf.scene.position.set(1, 2, 0);
+                                // gltf.scene.position.set((positionX,positionY,positionD));
                                 scene.add(gltf.scene);
-                                
+                                // gltf.scene.scale.set(width,height,depth)
+                                console.log(gltf.scene.scale);
                             })
                         }
                     }
@@ -379,15 +390,15 @@ const ModelAr =()=> {
                             const p = document.createElement('h1');
                             p.textContent = getText[i][0].button_name;
                             p.style.color = getText[i][0].text_text.text_color;
-                            p.style.fontSize = '10px';
+                            p.style.fontSize = '20px';
                             p.style.fontWeight = 'bold';
                             p.style.fontFamily = getText[i][0].text_text.text_font;
                             const cPointLable = new CSS3DObject(p);
                             scene.add(cPointLable)
-                            cPointLable.position.set(Number(getText[i][0].text_transform.position_x), Number(getText[i][0].text_transform.position_y), Number(getText[i][0].text_transform.position_d)-8)
-                            cPointLable.rotation.x =getText[i][0].text_transform.Rotation_x
-                            cPointLable.rotation.y =getText[i][0].text_transform.Rotation_y + Math.PI
-                            cPointLable.rotation.z =getText[i][0].text_transform.Rotation_z
+                            // cPointLable.position.set(Number(getText[i][0].text_transform.position_x), Number(getText[i][0].text_transform.position_y), Number(getText[i][0].text_transform.position_d)-8)
+                            // cPointLable.rotation.x =getText[i][0].text_transform.Rotation_x
+                            // cPointLable.rotation.y =getText[i][0].text_transform.Rotation_y + Math.PI
+                            // cPointLable.rotation.z =getText[i][0].text_transform.Rotation_z
 
                         }
                     }

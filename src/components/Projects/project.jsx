@@ -119,7 +119,7 @@ const Project =()=>{
 
 
  useEffect(() => {
-  const delay = 500;
+  const delay = 2000;
 
   const timeoutId = setTimeout(() => {
       const formData = new FormData();

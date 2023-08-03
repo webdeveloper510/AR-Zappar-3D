@@ -69,7 +69,6 @@ const sideBarContent=createSlice({
             state.twoDthreeDID=actions.payload
         },
         setcontentImgVdo(state,actions){
-            console.log(actions.payload,'||||||||||||| action payload<||||||||||||||||||');
             state.contentImgVdo=actions.payload
         },
         updateVdo(state){

@@ -42,6 +42,7 @@ import ImageDetail from "./ImageDetail";
 import VideoDetail from "./VideoDetail";
 import ModalDetail from "./ModalDetail";
 import Applets from "./Applets";
+import { GLTFLoader } from '../../../node_modules/three/examples/jsm/loaders/GLTFLoader'
 
 // import Button from 'react-bootstrap/Button';
 
@@ -1215,7 +1216,11 @@ const Target = () => {
     if (e.target.files[0].type !== "") {
       return;
     }
-
+    // const ModelDetails = new GLTFLoader()
+    // ModelDetails.load(e.target.files[0], (gltf)=>{
+    //   console.log(gltf.scale)
+    // })
+  // }
     formData.append("File", e.target.files[0]);
     formData.append("scene_id", s_scene_id);
     ctx.setloader(true)
@@ -1223,11 +1228,12 @@ const Target = () => {
       .post(API.BASE_URL + "upload-threed-model-file/", formData)
       .then(function (response) {
         toast.success("Modal Uploaded !");
-        ctx.setreRender(false);
-        threeDmodelTransform(response.data.id);
-        threeDmodelTransition(response.data.id);
-        threeDmodelAction(response.data.id);
-        setrenderGetProjact((prev) => !prev);
+        console.log(response)
+        // ctx.setreRender(false);
+        // threeDmodelTransform(response.data.id);
+        // threeDmodelTransition(response.data.id);
+        // threeDmodelAction(response.data.id);
+        // setrenderGetProjact((prev) => !prev);
       })
       .catch(function (err) {
         console.log(err, "inside upload 3D model function");
@@ -2884,18 +2890,18 @@ const Target = () => {
 {/* button detail start */}
 
                
-                 {isButtonDetailShow &&  <ButtonsDetail imageObject={imageObject} imageObject2={imageObject2}  />}
-                
-         {isShowTextDetail && <TextDetail handleFontStyle={handleFontStyle} applyfont={applyfont} />}
-                 
+    {isButtonDetailShow &&  <ButtonsDetail imageObject={imageObject} imageObject2={imageObject2}  />}
+    
+    {isShowTextDetail && <TextDetail handleFontStyle={handleFontStyle} applyfont={applyfont} />}
+            
     {isShowImageDetail && <ImageDetail setshowPopHandle={setshowPopHandle} setuploadAll={setuploadAll} inputCallingFunction={inputCallingFunction}  />}
 
     {isShowVideoDetail && <VideoDetail setshowPopHandle={setshowPopHandle} setuploadAll={setuploadAll} inputCallingFunction={inputCallingFunction} />}
-                 
- {isShowModalDetail && <ModalDetail setshowPopHandle={setshowPopHandle} setuploadAll={setuploadAll} inputCallingFunction={inputCallingFunction}  />}
+                
+    {isShowModalDetail && <ModalDetail setshowPopHandle={setshowPopHandle} setuploadAll={setuploadAll} inputCallingFunction={inputCallingFunction}  />}
 
- {isShowAppletsDetail && <Applets getImage={getImage} getVideo={getVideo} setselectedText={setselectedText} seturlVdo={seturlVdo} getText={getText}  />}
-                  
+    {isShowAppletsDetail && <Applets getImage={getImage} getVideo={getVideo} setselectedText={setselectedText} seturlVdo={seturlVdo} getText={getText} get3Dmodel={get3Dmodel} />}
+                      
                 </Row>
               </Tab.Container>
              

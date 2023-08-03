@@ -94,6 +94,7 @@ const RegisterPage = () => {
     if (selectedDate.trim()==="") {
       setDOBError(true)
     }
+
     if(email.trim() === ''){
       setemailError(true)
     }
@@ -101,6 +102,7 @@ const RegisterPage = () => {
     if (firstName.trim() === "" || LastName.trim() === "" || password.trim() === "" || Proffession.trim()==="" || selectedDate.trim()==="" || email.trim() === '') {
       
         return ;
+
     }
 
     else {
