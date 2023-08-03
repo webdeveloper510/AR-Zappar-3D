@@ -6140,13 +6140,6 @@ const Target = () => {
           >
             Cancel
           </button>
-          <button
-            variant="primary"
-            className="btn-delete-popup"
-            onClick={handlethreedDeleteClose}
-          >
-            Create
-          </button>
         </Modal.Footer>
       </Modal>
       {/*end of modal***popup**for**threed**modal**/}
