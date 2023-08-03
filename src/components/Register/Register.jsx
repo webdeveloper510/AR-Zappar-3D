@@ -94,8 +94,11 @@ const RegisterPage = () => {
     if (selectedDate.trim()==="") {
       setDOBError(true)
     }
+    if(email.trim() === ''){
+      setemailError(true)
+    }
 
-    if (firstName.trim() === "" || LastName.trim() === "" || password.trim() === "" || Proffession.trim()==="" || selectedDate.trim()==="") {
+    if (firstName.trim() === "" || LastName.trim() === "" || password.trim() === "" || Proffession.trim()==="" || selectedDate.trim()==="" || email.trim() === '') {
       
         return ;
     }

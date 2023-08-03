@@ -35,6 +35,8 @@ const Project =()=>{
   const [SceneType , selectSceneType] = useState(null);
   const [FeaturedtrackerOption,Featuredtracker] = useState(null);
   const [showcreatelabel, setcreatelabel] = useState(false);
+  const [publishedKey,setpublishedKey]=useState(true);
+  const [isShowDot,setisShowDot]=useState(false)
   const ctx=useContext(contextObject);
 
 
@@ -45,6 +47,9 @@ const Project =()=>{
   if(id?.length > 0){
   axios.get(API.BASE_URL+'project-list/'+id+'/')
     .then(function(response){
+      console.log(response,'THIS is RESPONSE <___---------_________');
+      setpublishedKey(response.data.publish_key)
+      setisShowDot(true)
       addTitle(response.data.ProTitle)
       ProImg(response.data.imagePro.toString())
       CreationDate(response.data.created_at)
@@ -216,7 +221,9 @@ return(
                         </div>
                     </div>
                     <div class="col-md-5 align-self-center p-4" id="project-actions">
-                    <span class=" status-icon"></span>
+                    {isShowDot && <span class=" status-icon" style={{
+                      backgroundColor:publishedKey ? '#e0f1fd':'green'
+                    }}></span>}
                       <input id="projName" className="mt-md-0" type="text" onChange={handleUntitle} value={titlePro} /> 
                   <div class="actions-div">
                       <div className="dropdown custom-drop-down">
