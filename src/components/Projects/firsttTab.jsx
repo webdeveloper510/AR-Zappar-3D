@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBarcode, faGripHorizontal, faQrcode, faArrowDown, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import Mob1 from "../../assets/images/mobi-1.png";
 import Mob2 from "../../assets/images/newMobile.jpg";
+import { contextObject } from "../ContextStore/ContextApi";
 
 const FirstTab = () => {
+
+  const ctx=useContext(contextObject);
     return (
         <>
             <section>
@@ -16,7 +19,7 @@ const FirstTab = () => {
                                   <h5 class="project-title-head">Untitle Project</h5>
                                   
                                  <div class="project-qr-img">
-                                 <svg
+                                 {/* <svg
       xmlns="http://www.w3.org/2000/svg"
       width="180"
       height="180"
@@ -191,7 +194,11 @@ const FirstTab = () => {
           <path d="M22 28H29V29H22z"></path>
         </g>
       </g>
-    </svg>
+    </svg> */}
+    <img src={localStorage.getItem('qrCode')} />
+    {
+      console.log(localStorage.getItem('qrCode'),'ctx.qrCodectx.qrCodectx.qrCode')
+    }
                                  </div>
 
                                   {/* <div class="d-flex text-center">

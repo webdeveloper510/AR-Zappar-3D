@@ -15,7 +15,9 @@ const ContextProvider=(props)=>{
 
     const [contentImgVdo, setcontentImgVdo] = useState(null);
     const [fontselected, Selectedfont] = useState(null);
-    const [titleOfProject,settitleOfProject]=useState('')
+    const [titleOfProject,settitleOfProject]=useState('');
+    const [qrCode,setqrCode]=useState(null);
+    const [isPublish,setisPublish]=useState(false)
 
 
 
@@ -43,6 +45,11 @@ const ContextProvider=(props)=>{
         Selectedfont,
         titleOfProject,
         settitleOfProject,
+        qrCode,
+        setqrCode,
+        isPublish,
+        setisPublish,
+
 
 
     }

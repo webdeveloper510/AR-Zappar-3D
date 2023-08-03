@@ -1987,9 +1987,12 @@ const Target = () => {
                         (() => {
                           ctx.setloader(true)
                           return axios
-                            .patch(
-                              API.BASE_URL + "update-project/" + idOfProject,
-                              { publish_key: 1 },
+                            .post(
+                              API.BASE_URL + "publish_project/",
+                              { project_id:idOfProject,
+                                publish_key: "True"
+                              },
+                              
                               {
                                 headers: {
                                   accept: "application/json",
@@ -1998,13 +2001,15 @@ const Target = () => {
                               }
                             )
                             .then((res) => {
-                              console.log(res, "response<--------->");
+                              console.log(res, "response<--RESRESRESRES------->");
+                              console.log(res.data.qr_code_url,'THIS IS QR CODE');
+                              ctx.setqrCode(res.data.qr_code_url)
                               handlepublishshow();
-                              navigate("/project/" + res.data.id);
+                              // navigate("/project/" + res.data.id);
                               toast.success("Project Published Successfully");
                             })
                             .catch((err) => {
-                              console.log(err, "error<----------->");
+                              console.log(err, "error<---ERRERRERRERRERR-------->");
                               toast.error("Not able to create project !");
                             })
                             .finally(()=>{
@@ -2013,7 +2018,7 @@ const Target = () => {
                         })();
                       }}
                     >
-                      Publish
+                      Publish123
                     </a>
                   </button>
                 </div>
@@ -2117,7 +2122,7 @@ const Target = () => {
                         formData.append('user_id', )
                         return axios
                           .patch(
-                            API.BASE_URL + "generate_qrcode_for_target_image/" + idOfProject,
+                            API.BASE_URL + "generate_qrcode_for_target_image/" + idOfProject+'/',
                             { publish_key: 1 },
                             {
                               headers: {
@@ -2127,12 +2132,13 @@ const Target = () => {
                             }
                           )
                           .then((res) => {
-                            console.log(res, "response<--------->");
+                            console.log(res, "responseResPosNse<--------->");
                             navigate("/project/" + res.data.id);
                             toast.success("Project Published Successfully");
                           })
                           .catch((err) => {
                             console.log(err, "error<----------->");
+                            ctx.setisPublish(true)
                             toast.error("Not able to create project !");
                           })
                           .finally(()=>{
@@ -2213,7 +2219,7 @@ const Target = () => {
                     <div className="card-publish-left">
                       <div className="card-publish-left-inner">
                         <div className="test-qr-publish">
-                          <svg
+                          {/* <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="100"
                             height="100"
@@ -2248,7 +2254,8 @@ const Target = () => {
                               <path d="M256 416H320V448H256z"></path>
                               <path d="M416 416H448V448H416z"></path>
                             </g>
-                          </svg>
+                          </svg> */}
+                          <img src={ctx.qrCode} />
                         </div>
                       </div>
                       <div className="card-publish-right">

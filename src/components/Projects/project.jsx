@@ -49,6 +49,7 @@ const Project =()=>{
     .then(function(response){
       console.log(response,'THIS is RESPONSE <___---------_________');
       setpublishedKey(response.data.publish_key)
+      ctx.setisPublish(response.data.publish_key)
       setisShowDot(true)
       addTitle(response.data.ProTitle)
       ProImg(response.data.imagePro.toString())

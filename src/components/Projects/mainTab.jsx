@@ -54,7 +54,7 @@ const MainTab = () => {
             if(res.data.projectTitle){
                 setprojectTitle(res.data.projectTitle)
             }
-            if(res.data.projectTitle==='Untitled project'){
+            if(res.data.projectTitle===null){
                 setprojectTitle(res.data.ProTitle)
             }
         }).catch((e)=>console.log(e,'error in caych block <--------------------------'))

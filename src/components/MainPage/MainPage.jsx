@@ -1,4 +1,4 @@
-import React, { useEffect , useState } from "react";
+import React, { useContext, useEffect , useState } from "react";
 import "../../App.css";
 import homsecreen from '../../assets/images/homescreen.png'
 import axios from "axios";
@@ -20,6 +20,7 @@ import SideBar from "../SideBar/sidebar";
 import Button from 'react-bootstrap/Button';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import defaultProjectImage from "../../assets/images/defaultProject.png"
+import { contextObject } from "../ContextStore/ContextApi";
 
 const MainPage =()=>{
   const navigate = useNavigate()
@@ -40,6 +41,7 @@ const MainPage =()=>{
   const val = localStorage.getItem('id');
   const token = localStorage.getItem('token');
   const [showcreatelabel, setcreatelabel] = useState(false);
+  const ctx=useContext(contextObject);
 
 
   // USE EFFFECTS FUNCTIONS ***************************************************************/
@@ -149,7 +151,10 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                   'content-type': 'multipart/form-data'
             },
           }).then(function(response) {
-            console.log(response)
+            console.log(response,'create PROJECTTTTTTTTT');
+            console.log(response.data.qr_code_url,'this is QR code');
+            // ctx.setqrCode(response.data.data.qr_code_url);
+            localStorage.setItem('qrCode',response.data.qr_code_url)
             navigate("/project/"+response.data.data.id)
           }).catch(function(err) {
             toast.error("Not able to create project !")
@@ -460,7 +465,9 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                               <h4>{proData.ProTitle}</h4>
                             <div>
                               <span className="status-icon"></span>
-                              <span className="status-text">Created {proData.created_at}&nbsp;&nbsp;|&nbsp;&nbsp;Unpublished</span>
+                              <span className="status-text">Created {proData.created_at}&nbsp;&nbsp;|&nbsp;&nbsp;{
+                              !ctx.isPublish ? 'Unpublished' : 'Published'
+                              }</span>
                             </div>
                           </div>
                         </div>
