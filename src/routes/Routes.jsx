@@ -13,6 +13,7 @@ import UserProfile from '../components/UserProfileEdit/profileEdit';
 import MainTab from '../components/Projects/mainTab';
 import FirstTab from '../components/Projects/firsttTab';
 import SecondTab from '../components/Projects/secondTab';
+import WelcomePage from '../components/welcome/WelcomePage';
 
 
 function Routing(){
@@ -37,6 +38,9 @@ function Routing(){
                 <Route path="/user" element={<UserProfile/>} />
                 <Route path='/MainTab' element={<MainTab />} />
                 <Route path='/FirstTab' element={<FirstTab />} />
+                <Route path='/ar-web-view/:id/' element={<WelcomePage />} />
+
+                {/* <WelcomePage /> */}
 
                 {/* </> */}
                 {/* )  */}

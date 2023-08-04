@@ -171,6 +171,21 @@ const Project =()=>{
         console.error('Error uploading file', err);
       });
 }
+
+
+// Unpublished project API function
+
+const unPublishProject=()=>{
+  axios.post(API.BASE_URL+'publish_project/',{
+    project_id:id,
+    publish_key:'False',
+  }).then((res)=>{
+    console.log(res,'response from unpublished key');
+    ctx.setisPublish(false)
+  }).catch((err)=>{
+    console.log(err,'error from unpublished key');
+  })
+}
 //-------------------------------------------CreateScene---------------------------------------->
 
 
@@ -232,7 +247,9 @@ return(
                       <div class="pointer-div">
                         <div class="tag designer-tag-text">Designer</div>
                         
-                          <input type="file" className="base-img" onChange={handleImageChange} />
+                          <input type="file" className="base-img" onChange={handleImageChange}
+                          accept="image/*"
+                          />
                           <div class="upload-file-btn">
                           <button id="svgporj" class="open-designer-image">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16"><path d="M10,0a6.008,6.008,0,0,1,3.86,1.371,5.808,5.808,0,0,1,2.033,3.5A4.887,4.887,0,0,1,18.96,6.639a4.717,4.717,0,0,1-.534,6.473,4.919,4.919,0,0,1-3.312,1.26H12.67a.448.448,0,0,1-.314-.128.43.43,0,0,1,0-.616.448.448,0,0,1,.314-.128h2.443a4.034,4.034,0,0,0,2.76-1.085A3.87,3.87,0,0,0,18.126,7,4.019,4.019,0,0,0,15.48,5.675a.448.448,0,0,1-.27-.121.433.433,0,0,1-.132-.261,4.947,4.947,0,0,0-.593-1.89,5.036,5.036,0,0,0-1.292-1.518A5.141,5.141,0,0,0,11.4.977a5.19,5.19,0,0,0-3.923.458,5.081,5.081,0,0,0-1.523,1.3A4.978,4.978,0,0,0,5.063,4.5a4.925,4.925,0,0,0-.126,1.974.428.428,0,0,1-.016.184.433.433,0,0,1-.092.161.444.444,0,0,1-.152.109.451.451,0,0,1-.184.037H4.229a3.359,3.359,0,0,0-2.353.957,3.224,3.224,0,0,0,0,4.619,3.358,3.358,0,0,0,2.353.957h3.11a.448.448,0,0,1,.314.128.43.43,0,0,1,0,.616.448.448,0,0,1-.314.128H4.229A4.247,4.247,0,0,1,1.272,13.2a4.075,4.075,0,0,1-.127-5.791,4.24,4.24,0,0,1,2.9-1.293,5.729,5.729,0,0,1,.365-2.324A5.811,5.811,0,0,1,5.685,1.8,5.937,5.937,0,0,1,7.656.463,6.029,6.029,0,0,1,10,0Z" transform="translate(0 0)" fill="#ef5332"></path><path d="M2.232,0a.359.359,0,0,1,.231.091L4.35,1.922a.394.394,0,0,1,.027.521.343.343,0,0,1-.488.023L2.574,1.19V6.957a.355.355,0,0,1-.342.366.355.355,0,0,1-.343-.366V1.19L.575,2.466a.349.349,0,0,1-.488-.023.389.389,0,0,1,.027-.521L2,.092A.289.289,0,0,1,2.232,0Z" transform="translate(7.506 8.678)" fill="#ef5332"></path></svg>
@@ -244,7 +261,7 @@ return(
                     </div>
                     <div class="col-md-5 align-self-center p-4" id="project-actions">
                     {isShowDot && <span class=" status-icon" style={{
-                      backgroundColor:!publishedKey ? '#9fc1d9':'green'
+                      backgroundColor:!ctx.isPublish ? '#9fc1d9':'green'
                     }}></span>}
                       <input id="projName" className="mt-md-0" type="text" onChange={handleUntitle} value={titlePro} /> 
                   <div class="actions-div">
@@ -256,13 +273,19 @@ return(
                               <path d="M21.913 10.843c-1.703 1.107-2.6 3.132-2.327 5.126l.028.18-8.736 8.735a2.997 2.997 0 000 4.238l.138.13a2.998 2.998 0 004.101-.13l8.73-8.729.254.04a5.231 5.231 0 005.898-5.301l-.009-.098a.703.703 0 00-1.043-.497l-2.232 1.288-1.476-.862-.008-1.71 2.23-1.287a.702.702 0 00.013-1.208 5.232 5.232 0 00-5.368-.034l-.193.12zm4.636.556l.024.013-2.307 1.331.012 2.792 2.415 1.407L29 15.611l-.019.19a4.25 4.25 0 01-2.096 3.153 4.252 4.252 0 01-3.095.46l-.256-.058-9.058 9.048a2.038 2.038 0 01-2.88 0 2.033 2.033 0 010-2.876l9.062-9.053-.058-.254c-.406-1.795.394-3.696 1.986-4.632a4.26 4.26 0 013.963-.19z"></path>
                             </svg>Actions</p><FontAwesomeIcon icon={faChevronDown} />
                           </a>
-                              <ul className="dropdown-menu text-small shadow">
-                                <li><a className="dropdown-item"> Duplicate</a></li>
-                                <li><a className="dropdown-item">Get deep link ID</a></li>
-                                <li><hr className="dropdown-divider"/></li>
-                                <li ><button className="dropdown-item" disabled> Unpublish</button></li>
-                              <li onClick={deleteProject}><a className="dropdown-item">Delete</a></li>
-                              </ul>
+                          <ul className="dropdown-menu text-small shadow">
+                            <li><a className="dropdown-item"> 
+                          
+                            Duplicate</a></li>
+                            <li><a className="dropdown-item">
+                         Get deep link ID</a></li>
+                            <li><hr className="dropdown-divider"/></li>
+                            <li ><button className="dropdown-item" disabled={!ctx.isPublish ? true : false} 
+                            onClick={unPublishProject}
+                            >
+                          Unpublish</button></li>
+                          <li onClick={deleteProject}><a className="dropdown-item">Delete</a></li>
+                          </ul>
                         </div>
                         {/* labels*/}
                         <div className="dropdown custom-drop-down"id="project-labels">

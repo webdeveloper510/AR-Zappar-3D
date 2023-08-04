@@ -14,15 +14,14 @@ const navigate = useNavigate();
 //  Email Address
 const [email , userEmail] = useState('');
 const handleEmail =(e)=>{
-    userEmail(e.target.value)
+    userEmail(e.target.value.trim())
 }
 //  Password
 const [password , userPassword] = useState('')
 const [passErr,setpassErr]=useState(false);
 const [emailErr,setemailErr]=useState(false);
 const handlePass =(e)=>{
-
-    userPassword(e.target.value)
+    userPassword(e.target.value.trim())
 }
 const handleLogin = ()=>{
         setpassErr(false);
