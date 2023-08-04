@@ -152,10 +152,6 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                   'content-type': 'multipart/form-data'
             },
           }).then(function(response) {
-            console.log(response,'create PROJECTTTTTTTTT');
-            console.log(response.data.qr_code_url,'this is QR code');
-            // ctx.setqrCode(response.data.data.qr_code_url);
-            localStorage.setItem('qrCode',response.data.qr_code_url)
             navigate("/project/"+response.data.data.id)
           }).catch(function(err) {
             toast.error("Not able to create project !")

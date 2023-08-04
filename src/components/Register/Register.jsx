@@ -3,11 +3,8 @@ import axios from "axios";
 import { API } from "../../config/api";
 import "../../App.css";
 import { useNavigate } from "react-router-dom";
-//
-import logoImage from "../../assets/images/sayehbazf.png";
 import "react-datepicker/dist/react-datepicker.css";
 import loginright from "../../assets/images/login-banner.png";
-import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
 import profileImg from "../../assets/images/profile.png";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -35,10 +32,7 @@ const RegisterPage = () => {
   };
   //  Email Address
   const [email, userEmail] = useState("");
-  // const handleEmail = (e) => {
-  //   let setEmail=e.target.value
-  //   userEmail(setEmail.trim());
-  // };
+ 
 
 
 
@@ -68,9 +62,7 @@ const RegisterPage = () => {
     const [passwordVisible,setpasswordVisible]=useState(false)
 
   const handleDateChange = (event) => {
-    console.log(selectedDate,'this is data');
     setSelectedDate(event.target.value);
-    // console.log("Date----------->" , event.target.value)
   };
   const handelLogin = () => {
     navigate("/");
@@ -80,17 +72,9 @@ const RegisterPage = () => {
   const handleEmail = (e) => {
     const emailValue = e.target.value.toString();
     userEmail(emailValue.trim());
-    console.log(email);
-    // setemailError(emailValue !== e.target.value);
   }
 
-  // const handleEmail1 = (e) => {
-  //   console.log(e.key);
-  //   if(e.key===' ')
-  //  { userEmail(email.trim());}
-  //   // setemailError(emailValue !== e.target.value);
-  // }
-
+ 
 
 
   const handleRegister = () => {
@@ -168,24 +152,13 @@ const RegisterPage = () => {
               },
             })
             .then(function (response) {
-              console.log(response);
-              // navigate("/");
+              localStorage.setItem('token',response.data.token.access)
+              localStorage.setItem('id',response.data.data.id)         
+
+              navigate("/home");
               toast.success("Registerd Successfully !");
             })
             .catch(function (err) {
-              console.log("Error Registrations !", err.response.data);
-              // if(err.response.data.firstname){
-              //   const errMsg = err.response.data.firstname[0];
-              //   setfirstNameError(true);
-              //  return toast.error(errMsg);
-              // }
-              // if(err.response.data.lastname
-              //   ){
-              //   const errMsg = err.response.data.lastname
-              //   [0];
-              //   setLastNameError(true);
-              //   return toast.error(errMsg);
-              // }
               if (err.response.data.email) {
                 const errMsg = err.response.data.email[0];
                 setemailError(true);
@@ -200,10 +173,6 @@ const RegisterPage = () => {
         });
     }
   };
-
-  // useEffect(()=>{
-  //   userEmail(email.replace(/\s/g, ''));
-  // },[email])
 
   useEffect(()=>{
 
@@ -278,7 +247,6 @@ const RegisterPage = () => {
                         cursor: 'pointer',
                       }}
                       onClick={()=>{
-                        console.log('called');
                         setpasswordVisible((prev)=>!prev)}}
                     >
                       {passwordVisible ? <FaEyeSlash /> : <FaEye />}

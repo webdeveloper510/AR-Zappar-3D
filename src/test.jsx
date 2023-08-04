@@ -98,7 +98,7 @@ const ModelAr =()=> {
             
         // Variables ------------------------------------------------------------------------------------------->
             let cameraPersp, cameraOrtho, currentCamera, canvas ,labelRenderer
-            let scene, renderer, control, orbit , plane  , Videomesh ,mesh,Indecator , helper, clock ,viewHelper
+            let scene, renderer, control, orbit , plane  , Videomesh ,mesh,Indecator , helper, clock ,viewHelper , cPointLable
             let lastRenderTime = 0;
             const frameRate = 60; // Limit the frame rate to 60 FPS
 
@@ -265,11 +265,6 @@ const ModelAr =()=> {
 
                     if (getVideo){
                         for (let i = 0; i < getVideo.length  &&  getVideo !== undefined; i++){
-
-                            var position_x = getVideo[i][0].video_transform.position_x
-                            var position_y = getVideo[i][0].video_transform.position_y
-                            var position_d = getVideo[i][0].video_transform.position_d
-
                             const video = document.createElement('video');
                             video.autoplay = true;
                             video.crossOrigin="anonymous"
@@ -290,6 +285,9 @@ const ModelAr =()=> {
                             Videomesh = new THREE.Mesh(Videogeometry, Videomaterial);
                             scene.add(Videomesh);
                             Videomesh.position.set(Number(getVideo[i][0].video_transform.position_x),Number(getVideo[i][0].video_transform.position_y),Number(getVideo[i][0].video_transform.position_d)-8)
+                            Videomesh.rotation.x =getVideo[i][0].video_transform.Rotation_x
+                            Videomesh.rotation.y =getVideo[i][0].video_transform.Rotation_y
+                            Videomesh.rotation.z =getVideo[i][0].video_transform.Rotation_z
                             Videomesh.userData.name=getVideo[i][0].video_url;
                         }
                     }
@@ -312,7 +310,7 @@ const ModelAr =()=> {
                                 // gltf.scene.position.set((positionX,positionY,positionD));
                                 scene.add(gltf.scene);
                                 // gltf.scene.scale.set(width,height,depth)
-                                console.log(gltf.scene.scale);
+                                gltf.scene.userData.name=get3Dmodel[i][0].file_url
                             })
                         }
                     }
@@ -329,20 +327,6 @@ const ModelAr =()=> {
                             }
                         }
                     }   
-                    console.log(contentImgVdo1,'this is selected<-------------------')
-                    if(contentImgVdo1 && contentImgVdo1[0].image_url === mesh.userData.name){
-                        control.attach(mesh)
-                        console.log('contentImgVdo1')
-                    }
-                    else{
-                        console.log("not found");
-                    }
-                    if(contentImgVdo1 && contentImgVdo1[0].video_url === Videomesh.userData.name){
-                        control.attach(Videomesh)
-                    }
-                    else{
-                        console.log("No selected")
-                    }
 
                     // States for Text Featres ------------------------------------------------------------------------------------------------>
              
@@ -350,7 +334,7 @@ const ModelAr =()=> {
                     labelRenderer.domElement.style.top = '0px';
                     labelRenderer.domElement.style.position = 'absolute';
                     labelRenderer.domElement.style.pointerEvents = 'none';
-                    document.body.appendChild(labelRenderer.domElement) 
+                    document.body.appendChild(labelRenderer.domElement)     
 
                     // HTML CSS2DRENDERER ---------------------------------------------------------------->
                     if (getText){
@@ -393,13 +377,14 @@ const ModelAr =()=> {
                             p.style.fontSize = '20px';
                             p.style.fontWeight = 'bold';
                             p.style.fontFamily = getText[i][0].text_text.text_font;
-                            const cPointLable = new CSS3DObject(p);
+                            cPointLable = new CSS3DObject(p);
                             scene.add(cPointLable)
+                            cPointLable.position.set(10,10, 0)
                             // cPointLable.position.set(Number(getText[i][0].text_transform.position_x), Number(getText[i][0].text_transform.position_y), Number(getText[i][0].text_transform.position_d)-8)
                             // cPointLable.rotation.x =getText[i][0].text_transform.Rotation_x
                             // cPointLable.rotation.y =getText[i][0].text_transform.Rotation_y + Math.PI
                             // cPointLable.rotation.z =getText[i][0].text_transform.Rotation_z
-
+                            cPointLable.userData.name=getText[i][0].button_name
                         }
                     }
 
@@ -421,8 +406,18 @@ const ModelAr =()=> {
                         }
                     }
 
-                 
-
+                    if(contentImgVdo1 ){
+                        if (contentImgVdo1[0].image_url === mesh.userData.name){
+                        control.attach(mesh)
+                        }
+                        if(contentImgVdo1[0].video_url === Videomesh.userData.name){
+                            control.attach(Videomesh)
+                        }
+                        if(contentImgVdo1[0].button_name === cPointLable.userData.name){
+                            control.attach(Videomesh)
+                        }
+                    }
+                    
 
                    
                    
@@ -438,6 +433,8 @@ const ModelAr =()=> {
                     break;
             }
         } );
+
+
 
         // Window Resize Handlers ------------------------------------------------------------------------------------------------------>
 
@@ -572,8 +569,9 @@ const ModelAr =()=> {
                 onWindowResize();
                 renderer.render(scene, currentCamera);
                 updatetransform();
+                labelRenderer.render(scene, currentCamera); // Render the CSS3D labels
             }
-            // requestAnimationFrame(render);
+            requestAnimationFrame(render);
         }
     }
             setTimeout(()=>{

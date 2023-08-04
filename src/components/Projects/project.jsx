@@ -47,16 +47,15 @@ const Project =()=>{
   if(id?.length > 0){
   axios.get(API.BASE_URL+'project-list/'+id+'/')
     .then(function(response){
-      console.log(response,'THIS is RESPONSE <___---------_________');
       setpublishedKey(response.data.publish_key)
       ctx.setisPublish(response.data.publish_key)
       setisShowDot(true)
       addTitle(response.data.ProTitle)
       ProImg(response.data.imagePro.toString())
       CreationDate(response.data.created_at)
+      ctx.setqrCode(response.data.qr_code_url)
     })
     .catch(function(error){
-      // console.log(error)
     })
   }
  },[imgProject])
@@ -64,6 +63,7 @@ const Project =()=>{
  // USE EFFECT FOR USERNAME ------------------------------------------------------------------->
 
  const token = localStorage.getItem('token')
+ const userId = localStorage.getItem('id')
  useEffect(()=>{
    axios.post(API.BASE_URL + 'userprofile/', null, {
      headers: {
@@ -74,7 +74,6 @@ const Project =()=>{
     UserName(response.data.firstname)
    })
    .catch((error) => {
-     // console.log(error, 'error');
    });
  },[]);
 
@@ -82,11 +81,9 @@ const Project =()=>{
  const deleteProject = () => {
   axios.delete(API.BASE_URL+'project-list/'+id+'/')
   .then(function(response){
-    console.log(response,'PROJECT deleted<-------------------');
     navigate('/home')
   })
   .catch(function(error){
-    // console.log(error)
   })
  }
 
@@ -120,12 +117,11 @@ const Project =()=>{
 
 
  useEffect(() => {
-  const delay = 2000;
+  const delay = 500;
 
   const timeoutId = setTimeout(() => {
       const formData = new FormData();
       formData.append('ProTitle',titlePro)
-      
       axios.post(API.BASE_URL + 'update-project/'+id+'/', formData, {
         headers: {
           'accept': 'application/json',
@@ -133,7 +129,18 @@ const Project =()=>{
           },
         })
       .then(function (response) {
-        
+        console.log(response)
+        if(response.data.data.projectTitle ===null){
+          console.log('ok')
+          formData.append('projectTitle',titlePro)
+          axios.post(API.BASE_URL + 'update-project/'+id+'/', formData, {
+            headers: {
+              'accept': 'application/json',
+                  'content-type': 'multipart/form-data' 
+              },
+            })
+            .then(function (response) {console.log('update-project')})
+      }
       })
       .catch(function(err) {
         console.error('Error uploading file', err);
@@ -151,8 +158,6 @@ const Project =()=>{
   const handleSubmit = () => {   
       const formData = new FormData();
       formData.append('ProTitle',titlePro)
-      // console.log('Params Id', id)
-      // ctx.settitleOfProject(titlePro)
       axios.post(API.BASE_URL + 'update-project/'+id+'/', formData, {
         headers: {
           'accept': 'application/json',
@@ -190,7 +195,23 @@ const handleshowcreatelabel = () => setcreatelabel(true);
  const handleClose = () =>{
   setShow(false);
 } 
-  
+
+  const[emailRes, recEmail]=useState(null)
+  const[imageRes, recImage]=useState(null)
+  const[usernameRes, recUsername]=useState(null)
+  const[detailRes, recDetails]=useState(null)
+  useEffect(()=>{
+    axios.get(API.BASE_URL+'getpublish_list/'+userId+'/')
+    .then(function(res){
+      console.log(res)
+      recEmail(res.data.data.email)
+      recImage(res.data.data.profile_image)
+      recUsername(res.data.data.username)
+      recDetails(res.data.data.project_details)
+    }).catch(function(err){
+      console.log(err)
+    })
+  },[])
 /********** End----Model State *************/
 
 
@@ -232,45 +253,41 @@ return(
                           
                             <p class="user-profile-name"> 
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-      <path d="M21.913 10.843c-1.703 1.107-2.6 3.132-2.327 5.126l.028.18-8.736 8.735a2.997 2.997 0 000 4.238l.138.13a2.998 2.998 0 004.101-.13l8.73-8.729.254.04a5.231 5.231 0 005.898-5.301l-.009-.098a.703.703 0 00-1.043-.497l-2.232 1.288-1.476-.862-.008-1.71 2.23-1.287a.702.702 0 00.013-1.208 5.232 5.232 0 00-5.368-.034l-.193.12zm4.636.556l.024.013-2.307 1.331.012 2.792 2.415 1.407L29 15.611l-.019.19a4.25 4.25 0 01-2.096 3.153 4.252 4.252 0 01-3.095.46l-.256-.058-9.058 9.048a2.038 2.038 0 01-2.88 0 2.033 2.033 0 010-2.876l9.062-9.053-.058-.254c-.406-1.795.394-3.696 1.986-4.632a4.26 4.26 0 013.963-.19z"></path>
-    </svg>Actions</p><FontAwesomeIcon icon={faChevronDown} />
+                              <path d="M21.913 10.843c-1.703 1.107-2.6 3.132-2.327 5.126l.028.18-8.736 8.735a2.997 2.997 0 000 4.238l.138.13a2.998 2.998 0 004.101-.13l8.73-8.729.254.04a5.231 5.231 0 005.898-5.301l-.009-.098a.703.703 0 00-1.043-.497l-2.232 1.288-1.476-.862-.008-1.71 2.23-1.287a.702.702 0 00.013-1.208 5.232 5.232 0 00-5.368-.034l-.193.12zm4.636.556l.024.013-2.307 1.331.012 2.792 2.415 1.407L29 15.611l-.019.19a4.25 4.25 0 01-2.096 3.153 4.252 4.252 0 01-3.095.46l-.256-.058-9.058 9.048a2.038 2.038 0 01-2.88 0 2.033 2.033 0 010-2.876l9.062-9.053-.058-.254c-.406-1.795.394-3.696 1.986-4.632a4.26 4.26 0 013.963-.19z"></path>
+                            </svg>Actions</p><FontAwesomeIcon icon={faChevronDown} />
                           </a>
-                          <ul className="dropdown-menu text-small shadow">
-                            <li><a className="dropdown-item"> 
-                          
-                            Duplicate</a></li>
-                            <li><a className="dropdown-item">
-                         Get deep link ID</a></li>
-                            <li><hr className="dropdown-divider"/></li>
-                            <li ><button className="dropdown-item" disabled>
-                          Unpublish</button></li>
-                          <li onClick={deleteProject}><a className="dropdown-item">Delete</a></li>
-                          </ul>
+                              <ul className="dropdown-menu text-small shadow">
+                                <li><a className="dropdown-item"> Duplicate</a></li>
+                                <li><a className="dropdown-item">Get deep link ID</a></li>
+                                <li><hr className="dropdown-divider"/></li>
+                                <li ><button className="dropdown-item" disabled> Unpublish</button></li>
+                              <li onClick={deleteProject}><a className="dropdown-item">Delete</a></li>
+                              </ul>
                         </div>
-
                         {/* labels*/}
                         <div className="dropdown custom-drop-down"id="project-labels">
                             <a href="#" className="navbar-profile-toggle link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             
-                              <p class="user-profile-name"><svg class="labels-svg"
-      xmlns="http://www.w3.org/2000/svg"
-      width="18"
-      height="18"
-      fill="#073158"
-      viewBox="0 0 20 20"
-    >
-      <g clipPath="url(#clip0_379_1216)">
-        <path
-          fill="#000"
-          d="M10.368 0a.68.68 0 01.484.201l8.35 8.39c.558.586.836 1.249.794 1.958-.04.664-.304 1.274-.807 1.846l-7.074 7.037-.115.092c-.638.406-1.26.564-1.85.428-.515-.118-1.054-.436-1.677-.978l-8.16-8.219a.68.68 0 01-.199-.47L0 1.472C.007 1.044.126.681.392.413.666.138 1.055.023 1.588 0h8.78zm-.284 1.363H1.618c-.13.005-.21.018-.243.02l-.006-.001v.015l-.004.078.111 8.516 7.929 7.988c.431.374.789.585 1.052.645.178.041.424-.017.75-.213l6.986-6.948c.278-.316.419-.642.44-.995.018-.307-.109-.61-.41-.927l-8.139-8.178zM6.474 3.21a2.956 2.956 0 012.732 4.084 2.956 2.956 0 01-3.864 1.599 2.956 2.956 0 01-1.827-2.73A2.956 2.956 0 016.474 3.21zm0 1.363a1.59 1.59 0 100 3.18 1.59 1.59 0 000-3.18z"
-        ></path>
-      </g>
-      <defs>
-        <clipPath id="clip0_379_1216">
-          <path fill="#fff" d="M0 0H20V20H0z"></path>
-        </clipPath>
-      </defs>
-    </svg>Labels</p><FontAwesomeIcon icon={faChevronDown} />
+                              <p class="user-profile-name">
+                                <svg class="labels-svg"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="18"
+                                  height="18"
+                                  fill="#073158"
+                                  viewBox="0 0 20 20"
+                                >
+                                  <g clipPath="url(#clip0_379_1216)">
+                                    <path
+                                      fill="#000"
+                                      d="M10.368 0a.68.68 0 01.484.201l8.35 8.39c.558.586.836 1.249.794 1.958-.04.664-.304 1.274-.807 1.846l-7.074 7.037-.115.092c-.638.406-1.26.564-1.85.428-.515-.118-1.054-.436-1.677-.978l-8.16-8.219a.68.68 0 01-.199-.47L0 1.472C.007 1.044.126.681.392.413.666.138 1.055.023 1.588 0h8.78zm-.284 1.363H1.618c-.13.005-.21.018-.243.02l-.006-.001v.015l-.004.078.111 8.516 7.929 7.988c.431.374.789.585 1.052.645.178.041.424-.017.75-.213l6.986-6.948c.278-.316.419-.642.44-.995.018-.307-.109-.61-.41-.927l-8.139-8.178zM6.474 3.21a2.956 2.956 0 012.732 4.084 2.956 2.956 0 01-3.864 1.599 2.956 2.956 0 01-1.827-2.73A2.956 2.956 0 016.474 3.21zm0 1.363a1.59 1.59 0 100 3.18 1.59 1.59 0 000-3.18z"
+                                    ></path>
+                                  </g>
+                                  <defs>
+                                    <clipPath id="clip0_379_1216">
+                                      <path fill="#fff" d="M0 0H20V20H0z"></path>
+                                    </clipPath>
+                                  </defs>
+                                </svg>Labels</p><FontAwesomeIcon icon={faChevronDown} />
                             </a>
                             <ul className="dropdown-menu text-small shadow">
                               <li>
@@ -410,39 +427,33 @@ return(
                       <FontAwesomeIcon icon={faList} />Publish logs</p>
                         </div>
                     </div>
-                    
                       <div class="published-log-tabel">
-                      <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">User</th>
-      <th scope="col">Email</th>
-      <th scope="col">Publish Date</th>
-      <th scope="col">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row"><img alt="mdo" width="32" height="32" class="rounded-circle published-log-img" src="http://43.204.111.164:8000/media/profile_picture/profile.png" />Web Developer</th>
-      <td>developerweb6@gmail.com</td>
-      <td>May 24, 2023, 10:42 a.m.</td>
-      <td>Version | v5</td>
-    </tr>
-    <tr>
-      <th scope="row"><img alt="mdo" width="32" height="32" class="rounded-circle published-log-img" src="http://43.204.111.164:8000/media/profile_picture/profile.png" />Web Developer</th>
-      <td>developerweb6@gmail.com</td>
-      <td>May 24, 2023, 10:42 a.m.</td>
-      <td>Version | v5</td>
-    </tr>
-    <tr>
-      <th scope="row"><img alt="mdo" width="32" height="32" class="rounded-circle published-log-img" src="http://43.204.111.164:8000/media/profile_picture/profile.png" />Web Developer</th>
-      <td>developerweb6@gmail.com</td>
-      <td>May 24, 2023, 10:42 a.m.</td>
-      <td>Version | v5</td>
-    </tr>
-  </tbody>
-</table>
-                     
+                      {detailRes?.length>0?(
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">User</th>
+                              <th scope="col">Email</th>
+                              <th scope="col">Publish Date</th>
+                              <th scope="col">Description</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {detailRes?.map((i,val)=>(
+                            <tr>
+                            <th><img alt="mdo" width="32" height="32" class="rounded-circle published-log-img" src={imageRes} />{usernameRes}</th>
+                            <td>{emailRes}</td>
+                            <td>{i.updated_at}</td>
+                            <td>Version | {i.description}</td>
+                          </tr>
+                          ))}
+                          </tbody>
+                        </table>
+                          ):<>
+                          <div className="unPublished-log">
+                            <h4>Publish your project to create logs and versions</h4>
+                          </div>
+                          </>}
                       </div>
                   </div>
 
@@ -450,68 +461,6 @@ return(
             </div>
           </div>
         </div>
-
-
-
- {/* Start---model data */}
- <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-        className="slectTrigger" id="ope-design-popup"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Select a tracking type for your new scene</Modal.Title>
-         </Modal.Header>
-        <Modal.Body>
-
-
-          <div className="open-designer-popup" >
-            <div className={`three-image-designer ${SceneType === "WorldTracking" ? "selected" : ""}`} onClick={event => handleSelectTarget(event , "WorldTracking")}>
-            <div className="designer-image">
-            <img src={WorldTracking}></img>
-            </div>
-            <div className="designer-content">
-            <h3>World tracking</h3>
-            <p>Place content on flat surfaces, like the ground or tabletop.</p>
-            </div>
-            </div>
-
-            <div className={`three-image-designer ${SceneType === "ImageTracking" ? "selected" : ""}`} onClick={event => handleSelectTarget(event , "ImageTracking")}>
-            <div className="designer-image">
-            <img src={ImageTracking}></img>
-            </div>
-            <div className="designer-content">
-            <h3>Image tracking</h3>
-            <p>Content will anchor to images. Great for posters.</p>
-            </div>
-            </div>
-
-            <div className={`three-image-designer ${SceneType === "FaceTracking" ? "selected" : ""}`} onClick={event => handleSelectTarget(event , "FaceTracking")}>
-            <div className="designer-image">
-            <img src={faceTracking}></img>
-            </div>
-            <div className="designer-content">
-            <h3>Face tracking</h3>
-            <p>Attach content to anchor points on parts of the face.</p>
-            </div>
-            </div>
-
-           
-          </div>
-          <div className="scene-outer">
-            <button className="btn-scene" disabled="" style={{padding: "10px 16px"}} onClick={handleSubmit}>Create scene</button>
-            </div>
-		    <>
-       
-       
-        </>
-          
-        </Modal.Body>
-      </Modal>
-      {/* End---model data */}
-
       </div>
     )
 }

@@ -372,7 +372,6 @@ button#open-design {
 h5.project-title-head {
     font-size: 20px;
     font-weight: 600;
-    margin: 0 0 0 43px;
 }
 h5.project-destination-head {
     font-size: 16px;
@@ -3351,4 +3350,28 @@ div#home-page-container {
 .svg {
     float: left;
     width: 10%;
+}
+.unPublished-log {
+    margin: 0;
+    padding: 40px 0px;
+    text-align: center;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    background: #f7f7f7;
+}
+.unPublished-log h4 {
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.published-log-tabel tbody {
+    display: table-row-group !important;
+}
+
+.published-log-tabel thead,
+.published-log-tabel tfoot,
+.published-log-tabel tr,
+.published-log-tabel td,
+.published-log-tabel th {
+    display: revert !important;
 }
