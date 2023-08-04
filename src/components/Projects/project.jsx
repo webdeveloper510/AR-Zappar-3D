@@ -117,7 +117,7 @@ const Project =()=>{
 
 
  useEffect(() => {
-  const delay = 500;
+  const delay = 1000;
 
   const timeoutId = setTimeout(() => {
       const formData = new FormData();
@@ -273,19 +273,17 @@ return(
                               <path d="M21.913 10.843c-1.703 1.107-2.6 3.132-2.327 5.126l.028.18-8.736 8.735a2.997 2.997 0 000 4.238l.138.13a2.998 2.998 0 004.101-.13l8.73-8.729.254.04a5.231 5.231 0 005.898-5.301l-.009-.098a.703.703 0 00-1.043-.497l-2.232 1.288-1.476-.862-.008-1.71 2.23-1.287a.702.702 0 00.013-1.208 5.232 5.232 0 00-5.368-.034l-.193.12zm4.636.556l.024.013-2.307 1.331.012 2.792 2.415 1.407L29 15.611l-.019.19a4.25 4.25 0 01-2.096 3.153 4.252 4.252 0 01-3.095.46l-.256-.058-9.058 9.048a2.038 2.038 0 01-2.88 0 2.033 2.033 0 010-2.876l9.062-9.053-.058-.254c-.406-1.795.394-3.696 1.986-4.632a4.26 4.26 0 013.963-.19z"></path>
                             </svg>Actions</p><FontAwesomeIcon icon={faChevronDown} />
                           </a>
+
                           <ul className="dropdown-menu text-small shadow">
-                            <li><a className="dropdown-item"> 
-                          
-                            Duplicate</a></li>
-                            <li><a className="dropdown-item">
-                         Get deep link ID</a></li>
-                            <li><hr className="dropdown-divider"/></li>
-                            <li ><button className="dropdown-item" disabled={!ctx.isPublish ? true : false} 
-                            onClick={unPublishProject}
-                            >
-                          Unpublish</button></li>
-                          <li onClick={deleteProject}><a className="dropdown-item">Delete</a></li>
+                            <li><button className="dropdown-item" disabled>  Duplicate</button></li>
+                                <li><button className="dropdown-item" disabled> Get deep link ID</button></li>
+                              <li><hr className="dropdown-divider"/></li><li ><button className="dropdown-item" disabled={!ctx.isPublish ? true : false} 
+                              onClick={unPublishProject}
+                              >Unpublish</button></li>
+                            <li onClick={deleteProject}><a className="dropdown-item">Delete</a></li>
                           </ul>
+
+
                         </div>
                         {/* labels*/}
                         <div className="dropdown custom-drop-down"id="project-labels">

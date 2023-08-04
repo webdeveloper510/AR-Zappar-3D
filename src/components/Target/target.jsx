@@ -1646,9 +1646,21 @@ const Target = () => {
   //  HANDLE TARGET IMAGE FUNCTION ------------------------------------------------------------------------------------------------------------------------
 
   const TargetImage = (e) => {
-    selectedTargetImage(e.target.files[0]);
+    const formData = new FormData();
+    formData.append('project_id',id)
+    formData.append('target_image',e.target.files[0])
+    axios.post(API.BASE_URL+'project_content/',formData,{
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }).then(function(res){
+      console.log('image_uploaded', res)
+      selectedTargetImage(res.data.data);
+  }).catch(function(err){console.log("error")});
   };
-
+  
+  console.log(targetImage, 'Image is here')
+  
   // USE-EFFECT FOR THE USER'S PROJECS LIST -----------------------------------------------------------------------------------------------------------------
 
   const token = localStorage.getItem("token");
@@ -4601,13 +4613,15 @@ const Target = () => {
                                                   >
                                                     <div className="target-overview-cover-image">
                                                       <div className="pointer-div">
-                                                        <span className="upload-target-img">
+                                                        {targetImage?(<><img src={targetImage}/></>):(<><span className="upload-target-img">
                                                           Upload Target image
                                                         </span>
                                                         <input
                                                           type="file"
-                                                          className="base-img"
-                                                        />
+                                                          className="base-img" 
+                                                          onChange={TargetImage}
+                                                        /></>)}
+                                                        
                                                       </div>
                                                     </div>
                                                   </div>
