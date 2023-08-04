@@ -10,6 +10,7 @@ import loginright from "../../assets/images/login-banner.png";
 import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
 import profileImg from "../../assets/images/profile.png";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 //
 
 const RegisterPage = () => {
@@ -17,23 +18,35 @@ const RegisterPage = () => {
   //  First Name
   const [firstName, UserFirstName] = useState("");
   const handleFirstName = (e) => {
-    UserFirstName(e.target.value);
+    if(firstName===''){
+      UserFirstName(e.target.value.trim());
+    }else{
+      UserFirstName(e.target.value);
+    }
   };
   // Last Name
   const [LastName, UserLastName] = useState("");
   const handleLastName = (e) => {
+    if(LastName===''){
+    UserLastName(e.target.value.trim())
+  }else{
     UserLastName(e.target.value);
+  }
   };
   //  Email Address
   const [email, userEmail] = useState("");
-  const handleEmail = (e) => {
-    userEmail(e.target.value);
-  };
+  // const handleEmail = (e) => {
+  //   let setEmail=e.target.value
+  //   userEmail(setEmail.trim());
+  // };
+
+
+
   //  Password
   const [password, userPassword] = useState("");
 
   const handlePassword = (e) => {
-    userPassword(e.target.value);
+      userPassword(e.target.value.trim());
   };
   // Proffession
   const [Proffession, selectProff] = useState("");
@@ -52,14 +65,31 @@ const RegisterPage = () => {
     const [DOBError, setDOBError] = useState(false);
     const [RoleError, setRoleError] = useState(false);
     const [reRender,setreRender]=useState(true);
+    const [passwordVisible,setpasswordVisible]=useState(false)
 
   const handleDateChange = (event) => {
+    console.log(selectedDate,'this is data');
     setSelectedDate(event.target.value);
     // console.log("Date----------->" , event.target.value)
   };
   const handelLogin = () => {
     navigate("/");
   };
+
+
+  const handleEmail = (e) => {
+    const emailValue = e.target.value.toString();
+    userEmail(emailValue.trim());
+    console.log(email);
+    // setemailError(emailValue !== e.target.value);
+  }
+
+  // const handleEmail1 = (e) => {
+  //   console.log(e.key);
+  //   if(e.key===' ')
+  //  { userEmail(email.trim());}
+  //   // setemailError(emailValue !== e.target.value);
+  // }
 
 
 
@@ -94,6 +124,30 @@ const RegisterPage = () => {
     if (firstName.trim() === "" || LastName.trim() === "" || password.trim() === "" || Proffession.trim()==="" || selectedDate.trim()==="" || email.trim() === '') {
         return ;
     }
+    if(firstName.trim().length>50){
+      setfirstNameError(true);
+      toast.error('This field should not contain more than 50 characters');
+      return;
+    }
+    if(LastName.trim().length>50){
+      setLastNameError(true);
+      toast.error('This field should not contain more than 50 characters');
+      return;
+    }
+    const emailRegex = /^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\/\\])(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/;
+
+    if(!emailRegex.test(password)){
+      setPassError(true);
+      toast.error('Password should contain at least one special character, one upper case charackter, one lowercase character and one integer.');
+      return;
+    }
+    const today = new Date();
+    const selectedDateValue = new Date(selectedDate)
+    if(selectedDateValue>today){
+      setDOBError(true)
+      toast.error("can't select future date");
+      return;
+    }
     else {
       const formData = new FormData();
       formData.append("firstname", firstName);
@@ -114,28 +168,42 @@ const RegisterPage = () => {
               },
             })
             .then(function (response) {
-              navigate("/");
+              console.log(response);
+              // navigate("/");
               toast.success("Registerd Successfully !");
             })
             .catch(function (err) {
               console.log("Error Registrations !", err.response.data);
+              // if(err.response.data.firstname){
+              //   const errMsg = err.response.data.firstname[0];
+              //   setfirstNameError(true);
+              //  return toast.error(errMsg);
+              // }
+              // if(err.response.data.lastname
+              //   ){
+              //   const errMsg = err.response.data.lastname
+              //   [0];
+              //   setLastNameError(true);
+              //   return toast.error(errMsg);
+              // }
               if (err.response.data.email) {
                 const errMsg = err.response.data.email[0];
                 setemailError(true);
                 if (errMsg) {
-                  toast.error(errMsg);
+                  return toast.error(errMsg);
                 }
               }
               if (err.response.data.dateofbirth) {
                 setDOBError(true);
               }
-              if (err.response.data.proffession) {
-                setRoleError(true);
-              }
             });
         });
     }
   };
+
+  // useEffect(()=>{
+  //   userEmail(email.replace(/\s/g, ''));
+  // },[email])
 
   useEffect(()=>{
 
@@ -152,7 +220,7 @@ const RegisterPage = () => {
               <form className="sign-up-pg-form">
                 <div className="row mb-2">
                   <div className="col-6">
-                    <label className="form-label fw-semibold">First Name</label>
+                    <label className="form-label fw-semibold">First Name{<span><strong className="text-danger">*</strong></span>}</label>
                     <input
                       type="text"
                       className="form-control"
@@ -165,7 +233,7 @@ const RegisterPage = () => {
                     />
                   </div>
                   <div className="col-6">
-                    <label className="form-label fw-semibold">Last Name</label>
+                    <label className="form-label fw-semibold">Last Name{<span><strong className="text-danger">*</strong></span>}</label>
                     <input
                       type="text"
                       className="form-control"
@@ -178,9 +246,9 @@ const RegisterPage = () => {
                 </div>
 
                 <div className="mb-2">
-                  <label className="form-label fw-semibold">Email</label>
+                  <label className="form-label fw-semibold">Email{<span><strong className="text-danger">*</strong></span>}</label>
                   <input
-                    type="email"
+                    type="text"
                     className="form-control"
                     placeholder="Email"
                     value={email}
@@ -189,21 +257,37 @@ const RegisterPage = () => {
                   />
                 </div>
        
-                <div className="mb-2">
-                  <label className="form-label fw-semibold">Password</label>
+                <div className="mb-2" style={{
+                  position:'relative'
+                }}>
+                  <label className="form-label fw-semibold">Password{<span><strong className="text-danger">*</strong></span>}</label>
                   <input
-                    type="password"
+                    type={!passwordVisible ? "password" : 'text'}
                     className="form-control"
                     placeholder="Password"
                     value={password}
                     onChange={handlePassword}
-                    style={{ border: PassError ? "0.5px solid red" : "" }}
+                    style={{ border: PassError ? "0.5px solid red" : ""}}
                   />
+                          <div
+                      style={{
+                        position: 'absolute',
+                        top: '52%',
+                        right: '10px',
+                        // transform: 'translateY(-50%)',
+                        cursor: 'pointer',
+                      }}
+                      onClick={()=>{
+                        console.log('called');
+                        setpasswordVisible((prev)=>!prev)}}
+                    >
+                      {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+                    </div>
                 </div>
 
                 <div className="mb-2 dob">
                   <label className="form-label fw-semibold date-of-birth">
-                    Date of Birth
+                    Date of Birth{<span><strong className="text-danger">*</strong></span>}
                   </label>
                   <input
                     type="date"
@@ -217,7 +301,7 @@ const RegisterPage = () => {
                   />
                 </div>
                 <div className="mb-2">
-                  <label className="form-label fw-semibold role">Role</label>
+                  <label className="form-label fw-semibold role">Role{<span><strong className="text-danger">*</strong></span>}</label>
                   <select
                     className="form-select"
                     onChange={handleSelect}
@@ -234,8 +318,8 @@ const RegisterPage = () => {
                     <option value={"I am a 3D Artist."}>
                       I am a 3D Artist.
                     </option>
-                    <option value={"I am an Educator."}>
-                      I am an Educator.
+                    <option value={"I am a Educator."}>
+                      I am a Educator.
                     </option>
                     <option value={"I am working in Learning and Development."}>
                       I am working in Learning and Development.
@@ -260,7 +344,6 @@ const RegisterPage = () => {
                     type="button"
                     onClick={handelLogin}
                   >
-                    {" "}
                     Login
                   </a>
                 </p>

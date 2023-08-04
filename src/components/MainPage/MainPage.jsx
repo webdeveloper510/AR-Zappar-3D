@@ -21,6 +21,7 @@ import Button from 'react-bootstrap/Button';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import defaultProjectImage from "../../assets/images/defaultProject.png"
 import { contextObject } from "../ContextStore/ContextApi";
+import { async } from "q";
 
 const MainPage =()=>{
   const navigate = useNavigate()
@@ -65,7 +66,7 @@ const MainPage =()=>{
     axios.get(API.BASE_URL+'projects/'+val+'/' )
     .then(function(response){
       setProInfo(response.data)
-      // console.log(response.data)
+      console.log(response.data,'Main.JSX INSIDE uSEEFFECT')
     }).catch(function(error){
     })
   }, [])
@@ -415,7 +416,12 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                           <div className="card-body ">
                               <img src={imageProfile} className="rounded-circle" width="36" height="36" alt="..."/>
                             <h5 className="card-title">{proData.ProTitle}</h5>
-                            <p className="card-text"><small className="text-muted">Created {proData.created_at} | Unpublished</small></p>
+                            <p className="card-text"><small className="text-muted">Created {proData.created_at} | 
+                         {
+                          proData.publish_key ? 'Published' : 'Unpublished'
+                         }
+                            {/* Unpublished */}
+                            </small></p>
                           </div>  
                         </div>
                       )

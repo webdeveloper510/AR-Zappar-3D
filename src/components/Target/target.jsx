@@ -2138,7 +2138,6 @@ const Target = () => {
                           })
                           .catch((err) => {
                             console.log(err, "error<----------->");
-                            ctx.setisPublish(true)
                             toast.error("Not able to create project !");
                           })
                           .finally(()=>{
