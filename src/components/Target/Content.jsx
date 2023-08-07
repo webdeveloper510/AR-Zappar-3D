@@ -64,7 +64,6 @@ const Content = () => {
 //     const contentImgVdo=ctx.contentImgVdo;
 //   const setcontentImgVdo=ctx.setcontentImgVdo;
 
-console.log(contentImgVdo,'this is content video')
 
 
   const handleborderopacityValue = (event) => {

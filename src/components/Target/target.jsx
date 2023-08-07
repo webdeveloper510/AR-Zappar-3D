@@ -1610,7 +1610,6 @@ const Target = () => {
 
   useEffect(()=>{
     axios.get(API.BASE_URL + "scene_data_by_project/"+ id).then(function (response){
-      console.log(response)
       selectedTargetImage(response.data.project_content[0].target_image)
     }).then(function (err){})
   },[])
@@ -1662,7 +1661,6 @@ const Target = () => {
   }).catch(function(err){console.log("error")});
   };
   
-  console.log(targetImage, 'Image is here')
   
   // USE-EFFECT FOR THE USER'S PROJECS LIST -----------------------------------------------------------------------------------------------------------------
 
@@ -1838,7 +1836,7 @@ const Target = () => {
     }
     const textTextFeature=(textId , fontStyle ,textVal)=>{
       console.log(textId , fontStyle ,textVal)
-      const formData = {text_id :textId ,text :textVal ,text_size :0 ,text_font :fontStyle ,link :null ,text_color : '#344B60',alignment : 'left'}
+      const formData = {text_id :textId ,text :textVal ,text_size :20 ,text_font :fontStyle ,link :null ,text_color : '#344B60',alignment : 'left'}
       axios.post(API.BASE_URL+"text_text/", formData,{}).then(function(res){
         console.log("textTextFeature(textId , fontStyle);", res.data)
       }).catch(function(error){
@@ -1907,7 +1905,6 @@ const Target = () => {
 
   useEffect(()=>{
     getSceneData(sceneId);
-    console.log('rendered rendered rendered rendered rendered');
   },[useSelector((state)=>state.sideBarContentReducer.contentImgVdo)]);
 
 
