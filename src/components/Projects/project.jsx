@@ -38,38 +38,10 @@ const Project =()=>{
   const [publishedKey,setpublishedKey]=useState(true);
   const [isShowDot,setisShowDot]=useState(false)
   const [labelName,setlabelName]=useState('');
-  const [allLabels,setallLabels]=useState(null);
+  // const [allLabels,setallLabels]=useState(null);
   const ctx=useContext(contextObject);
 
-  // project_label
-
-  const createLabel= async ()=>{
-    try {
-      const response = await axios.post(API.BASE_URL+'project-label/',{
-        project_id:id,
-        project_label:labelName,
-        user_id:localStorage.getItem('id'),
-        required:true,
-      })
-      console.log(response);
-      getLabels()
-
-    } catch (err) {
-      console.log(err,'this is error in creating label');
-    }
-  }
-
-  const getLabels= async ()=>{
-    try {
-      const response= await axios.get(API.BASE_URL+"project_label_list/"+localStorage.getItem('id')+'/');
-      console.log(response,'this is from GET all labels');
-      setallLabels(response.data.data);
-      console.log(allLabels,'this is from GET all labels121212121212121212');
-
-    } catch (err) {
-      console.log(err,'this is error from GET all labels');
-    }
-  }
+  
 
  // USE EFFECT FOR ID ------------------------------------------------------------------->
  useEffect  (() => {
@@ -94,7 +66,7 @@ const Project =()=>{
  const token = localStorage.getItem('token')
  const userId = localStorage.getItem('id')
  useEffect(()=>{
-  getLabels()
+  ctx.getLabels()
    axios.post(API.BASE_URL + 'userprofile/', null, {
      headers: {
        Authorization: `Bearer ${token}`,
@@ -128,14 +100,20 @@ const Project =()=>{
 
   const handleImageChange = (event) => {
     const formData = new FormData;
+    let selectedFile = event.target.files[0];
+    if(!selectedFile.type.startsWith('image/')){
+      toast.error('Selected file is not a image');
+      return;
+    }
     formData.append("imagePro" , event.target.files[0])
+    console.log(event.target.value,'this is selected image');
     axios.post(API.BASE_URL + 'update-project/'+id+'/', formData, {
       headers: {
         'accept': 'application/json',
             'content-type': 'multipart/form-data'
       },
     }).then(function(response){
-      // console.log("---------------------------------------------------------*************------>",response.data.data.imagepro)
+      // console.log("--------------------------------------------------*************------>",response.data.data.imagepro)
       toast.success("Image Uploaded !")
       ProImg(response.data.data.imagepro.toString())
     }).catch(function(error){
@@ -352,7 +330,7 @@ return(
                               </li>
                               <li><hr className="dropdown-divider"/></li>
                               {
-                                allLabels?.map((itm,i)=>(
+                                ctx.allLabels?.map((itm,i)=>(
                                   // <div key={i}>
                                   <li key={i}>
                                   <div class="field">
@@ -390,7 +368,7 @@ return(
                   Cancel
                   </Button>
                   <Button variant="primary" class="btn-delete-popup" onClick={()=>{
-                      createLabel();
+                      ctx.createLabel(id,labelName);
                     setcreatelabel(false);
                   }}>
                    Create

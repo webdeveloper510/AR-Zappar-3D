@@ -220,8 +220,8 @@ const UserProfile =()=>{
                 <div className="input-text" style={{
                   position:'relative'
                 }}>
-                  <label>Old Passowd</label>
-                    <input type={!passwordVisible ? "password" : 'text'} className="" placeholder="Old Password" onChange={handleOldPassword}/>
+                  <label>Current Passowd</label>
+                    <input type={!passwordVisible ? "password" : 'text'} className="" placeholder="Current Password" onChange={handleOldPassword}/>
                     <div
                                 style={{
                                     position: 'absolute',
@@ -260,8 +260,8 @@ const UserProfile =()=>{
                 <div className="input-text" style={{
                   position:'relative'
                 }}>
-                  <label>Confirm Passowd</label>
-                    <input type={!ConfpasswordVisible ? "password" : 'text'} className="" placeholder="Confirm Password" onChange={handleConfirmPassword}/>
+                  <label>Confirm New Passowd</label>
+                    <input type={!ConfpasswordVisible ? "password" : 'text'} className="" placeholder="New Password" onChange={handleConfirmPassword}/>
                     <div
                                 style={{
                                     position: 'absolute',

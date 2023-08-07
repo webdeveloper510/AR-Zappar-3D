@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus, faList } from '@fortawesome/free-solid-svg-icons';
 import { toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { faArrowLeft  } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-bootstrap/Modal';
 import mainbg from '../../assets/images/main-bg.jpg';
@@ -43,12 +43,15 @@ const MainPage =()=>{
   const token = localStorage.getItem('token');
   const [showcreatelabel, setcreatelabel] = useState(false);
   const ctx=useContext(contextObject);
+  const {id} = useParams();
+  const [labelName,setlabelName]=useState('');
 
 
   // USE EFFFECTS FUNCTIONS ***************************************************************/
 
 
   useEffect(()=>{
+    ctx.getLabels()
     axios.post(API.BASE_URL + 'userprofile/', null, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -333,6 +336,20 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                               </li>
                               <hr/>
                               {/* <li><hr className="dropdown-divider"/></li> */}
+                              {
+                                ctx.allLabels?.map((itm,i)=>(
+                                  // <div key={i}>
+                                  <li key={i}>
+                                  <div class="form-check">
+                                  <input className="form-check-input border border-danger" type="checkbox" value="" id="flexCheckDefault" checked />
+                                  <label className="form-check-label" for="flexCheckDefault" >
+                                  {itm.project_label}
+                                  </label>
+                                </div>
+                                </li>
+                                // </div>
+                                ))
+                              }
                               <li className="create-labels" onClick={handleshowcreatelabel}><FontAwesomeIcon icon={faPlus} /> Create Labels</li>
                               </ul>
                               </div>
@@ -367,7 +384,14 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                   <Button variant="secondary" className="btn-cancel-popup" onClick={handledeleteClose}>
                   Cancel
                   </Button>
-                  <Button variant="primary" className="btn-delete-popup" onClick={handledeleteClose}>
+                  <Button variant="primary" className="btn-delete-popup" 
+                   onClick={()=>{
+                    ctx.createLabel(id,labelName);
+                    handledeleteClose()
+                  // setcreatelabel(false);
+                }}
+                  // onClick={handledeleteClose}
+                  >
                    Create
                   </Button>
                 </Modal.Footer>
