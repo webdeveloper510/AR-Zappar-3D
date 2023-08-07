@@ -16,6 +16,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
 import { API } from "../../config/api";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 const UserProfile =()=>{
   const navigate = useNavigate()
 
@@ -28,7 +29,13 @@ const UserProfile =()=>{
   const [OldPassword , GetOldPassword] = useState(null);
   const [NewPassword , GetNewPassword] = useState(null);
   const [ConfirmPassword , GetConfirmPassword] = useState(null);
+  const [passwordVisible,setpasswordVisible]=useState(false);
+  const [NewpasswordVisible,setNewpasswordVisible]=useState(false);
+  const [ConfpasswordVisible,setConfpasswordVisible]=useState(false);
 
+
+
+  // 
    /********** End----Model edit popup State *************/
 
     const token = localStorage.getItem('token')
@@ -112,8 +119,8 @@ const UserProfile =()=>{
 
             <div class="user-profile-page-inner">
                 <div class="row m-0 p-0">
+                    <h4 class="text-center user-settings mt-3 mb-0">User Settings</h4>
                     <form class="user-pg-form">
-                    <h4 class="text-center user-settings">User Settingss</h4>
                       <div class="row mb-2">
                           <div class="col-md-2">
                             <img src={UserDetail.profile_image} alt="mdo" width="60" height="60" class="rounded-circle" />
@@ -151,7 +158,8 @@ const UserProfile =()=>{
                       <div class="row" id="password-field">
                         <div class="col-10">
                             <label class="form-label fw-semibold">Password</label>
-                            <input type="password" class="form-control border-0" placeholder="**************************" />
+                            {/* <input type="text" class="form-control border-0" value='**************************' /> */}
+                            <div><strong>**************************</strong></div>
                         </div>
                         <div class="col-2 edit-btn" >
                         <FontAwesomeIcon icon={faPenToSquare} />
@@ -209,21 +217,63 @@ const UserProfile =()=>{
            <div className="container">
         <div className="card-password">
            
-                <div className="input-text">
+                <div className="input-text" style={{
+                  position:'relative'
+                }}>
                   <label>Old Passowd</label>
-                    <input type="password" className="" placeholder="Old Password" onChange={handleOldPassword}/>
+                    <input type={!passwordVisible ? "password" : 'text'} className="" placeholder="Old Password" onChange={handleOldPassword}/>
+                    <div
+                                style={{
+                                    position: 'absolute',
+                                    top: '40%',
+                                    right: '10px',
+                                    cursor: 'pointer',
+                                }}
+                                onClick={()=>{
+                                    setpasswordVisible((prev)=>!prev)}}
+                                >
+                                {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+                                </div>
                     <i className="fa fa-envelope"></i>
 
                 </div>
-                <div className="input-text">
+                <div className="input-text" style={{
+                  position:'relative'
+                }}>
                   <label>New Passowd</label>
-                    <input type="password" className="" placeholder="New Password" onChange={handleNewPassword}/>
+                    <input type={!NewpasswordVisible ? "password" : 'text'} className="" placeholder="New Password" onChange={handleNewPassword}/>
+                    <div
+                                style={{
+                                    position: 'absolute',
+                                    top: '40%',
+                                    right: '10px',
+                                    cursor: 'pointer',
+                                }}
+                                onClick={()=>{
+                                    setNewpasswordVisible((prev)=>!prev)}}
+                                >
+                                {NewpasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                                </div>
                     <i className="fa fa-envelope"></i>
 
                 </div>
-                <div className="input-text">
+                <div className="input-text" style={{
+                  position:'relative'
+                }}>
                   <label>Confirm Passowd</label>
-                    <input type="password" className="" placeholder="Confirm Password" onChange={handleConfirmPassword}/>
+                    <input type={!ConfpasswordVisible ? "password" : 'text'} className="" placeholder="Confirm Password" onChange={handleConfirmPassword}/>
+                    <div
+                                style={{
+                                    position: 'absolute',
+                                    top: '40%',
+                                    right: '10px',
+                                    cursor: 'pointer',
+                                }}
+                                onClick={()=>{
+                                    setConfpasswordVisible((prev)=>!prev)}}
+                                >
+                                {ConfpasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                                </div>
                     <i className="fa fa-envelope"></i>
 
                 </div>

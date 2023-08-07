@@ -7,12 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import google from '../../assets/images/google.png'
 import logoImage from '../../assets/images/logof.png';
 import loginright from '../../assets/images/login-banner.png';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
 const LoginPage =()=>{
 const navigate = useNavigate();
 //  Email Address
 const [email , userEmail] = useState('');
+const [passwordVisible,setpasswordVisible]=useState(false);
 const handleEmail =(e)=>{
     userEmail(e.target.value.trim())
 }
@@ -74,13 +76,28 @@ useEffect(()=>{
                                 }}
                                 />
                             </div>
-                            <div className="mb-3">
+                            <div className="mb-3" style={{
+                  position:'relative'
+                }}>
                                 <label className="form-label fw-semibold" value={password} >Password</label>
-                                <input type="password" className="form-control" placeholder="Enter Your Password" onChange={handlePass} 
+                                <input type={!passwordVisible ? "password" : 'text'}className="form-control" placeholder="Enter Your Password" onChange={handlePass}
+
                                  style={{
                                     border: passErr ? '1px solid red' : ''
                                 }}
                                 />
+                                           <div
+                                style={{
+                                    position: 'absolute',
+                                    top: '52%',
+                                    right: '10px',
+                                    cursor: 'pointer',
+                                }}
+                                onClick={()=>{
+                                    setpasswordVisible((prev)=>!prev)}}
+                                >
+                                {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+                                </div>
                             </div>
                             <div className="mt-3">
                                 <a className="btn btn-sign-in" type="button"

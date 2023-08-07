@@ -59,7 +59,8 @@ const RegisterPage = () => {
     const [DOBError, setDOBError] = useState(false);
     const [RoleError, setRoleError] = useState(false);
     const [reRender,setreRender]=useState(true);
-    const [passwordVisible,setpasswordVisible]=useState(false)
+    const [passwordVisible,setpasswordVisible]=useState(false);
+    const [showToast,setshowToast]=useState(true);
 
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
@@ -75,7 +76,7 @@ const RegisterPage = () => {
   }
 
  
-
+  const disAbleDate = new Date().toISOString().split('T')[0];
 
   const handleRegister = () => {
     setfirstNameError(false);
@@ -110,26 +111,55 @@ const RegisterPage = () => {
     }
     if(firstName.trim().length>50){
       setfirstNameError(true);
-      toast.error('This field should not contain more than 50 characters');
+     if(showToast){toast.error('This field should not contain more than 50 characters',{
+      autoClose:2500
+    });
+     setshowToast(false);
+     setTimeout(() => {
+       setshowToast(true);
+     }, 3000);
+    }
       return;
     }
     if(LastName.trim().length>50){
       setLastNameError(true);
-      toast.error('This field should not contain more than 50 characters');
+      if(showToast){toast.error('This field should not contain more than 50 characters',{
+        autoClose:2500
+      });
+      setshowToast(false);
+      setTimeout(() => {
+        setshowToast(true);
+      }, 3000);
+    }
       return;
     }
     const emailRegex = /^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\/\\])(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/;
 
     if(!emailRegex.test(password)){
       setPassError(true);
-      toast.error('Password should contain at least one special character, one upper case charackter, one lowercase character and one integer.');
+      if(showToast){toast.error('Password should contain at least one special character, one upper case charackter, one lowercase character and one integer.',{
+        autoClose:2500
+      });
+      setshowToast(false);
+      setTimeout(() => {
+        setshowToast(true);
+      }, 3000);
+    }
       return;
     }
     const today = new Date();
     const selectedDateValue = new Date(selectedDate)
     if(selectedDateValue>today){
       setDOBError(true)
-      toast.error("can't select future date");
+      if(showToast){
+        toast.error("can't select future date",{
+          autoClose:2500
+        });
+        setshowToast(false);
+        setTimeout(() => {
+          setshowToast(true);
+        }, 3000);
+      }
       return;
     }
     else {
@@ -163,7 +193,16 @@ const RegisterPage = () => {
                 const errMsg = err.response.data.email[0];
                 setemailError(true);
                 if (errMsg) {
-                  return toast.error(errMsg);
+                  if(showToast){
+                    toast.error(errMsg,{
+                      autoClose:2500
+                    });
+                    setshowToast(false);
+                    setTimeout(() => {
+                      setshowToast(true);
+                    }, 3000);
+                  }
+                  return;
                 }
               }
               if (err.response.data.dateofbirth) {
@@ -262,6 +301,7 @@ const RegisterPage = () => {
                     id="birthday"
                     name="birthday"
                     className="form-control"
+                    max={disAbleDate}
                     value={selectedDate}
                     onChange={handleDateChange}
                     // DOBError

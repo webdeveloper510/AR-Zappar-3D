@@ -37,10 +37,39 @@ const Project =()=>{
   const [showcreatelabel, setcreatelabel] = useState(false);
   const [publishedKey,setpublishedKey]=useState(true);
   const [isShowDot,setisShowDot]=useState(false)
+  const [labelName,setlabelName]=useState('');
+  const [allLabels,setallLabels]=useState(null);
   const ctx=useContext(contextObject);
 
+  // project_label
 
-  
+  const createLabel= async ()=>{
+    try {
+      const response = await axios.post(API.BASE_URL+'project-label/',{
+        project_id:id,
+        project_label:labelName,
+        user_id:localStorage.getItem('id'),
+        required:true,
+      })
+      console.log(response);
+      getLabels()
+
+    } catch (err) {
+      console.log(err,'this is error in creating label');
+    }
+  }
+
+  const getLabels= async ()=>{
+    try {
+      const response= await axios.get(API.BASE_URL+"project_label_list/"+localStorage.getItem('id')+'/');
+      console.log(response,'this is from GET all labels');
+      setallLabels(response.data.data);
+      console.log(allLabels,'this is from GET all labels121212121212121212');
+
+    } catch (err) {
+      console.log(err,'this is error from GET all labels');
+    }
+  }
 
  // USE EFFECT FOR ID ------------------------------------------------------------------->
  useEffect  (() => {
@@ -65,6 +94,7 @@ const Project =()=>{
  const token = localStorage.getItem('token')
  const userId = localStorage.getItem('id')
  useEffect(()=>{
+  getLabels()
    axios.post(API.BASE_URL + 'userprofile/', null, {
      headers: {
        Authorization: `Bearer ${token}`,
@@ -201,7 +231,7 @@ const unPublishProject=()=>{
 
 
 /***********creatlabelpopup***************************** */
-const handleDeleteClose = () => setcreatelabel(false);
+// const handleDeleteClose = () => setcreatelabel(false);
 const handleshowcreatelabel = () => setcreatelabel(true);
 
 
@@ -287,7 +317,11 @@ return(
                         </div>
                         {/* labels*/}
                         <div className="dropdown custom-drop-down"id="project-labels">
-                            <a href="#" className="navbar-profile-toggle link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a href="#" className="navbar-profile-toggle link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" 
+                            // onClick={()=>{
+                            //   // 123456label APi
+                            // }}
+                            >
                             
                               <p class="user-profile-name">
                                 <svg class="labels-svg"
@@ -317,6 +351,20 @@ return(
                                 <svg class="search-label-svg" role="button" width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M19,11 C23.418278,11 27,14.581722 27,19 C27,21.0296419 26.2441691,22.8827501 24.9986213,24.2932105 L29.2708011,28.5802351 C29.4657149,28.775845 29.4651506,29.092427 29.2695406,29.2873408 C29.0956652,29.4605974 28.8262068,29.4794023 28.6315796,29.3440591 L28.562435,29.2860803 L24.2922058,24.9995083 C22.8818702,26.2445279 21.0291601,27 19,27 C14.581722,27 11,23.418278 11,19 C11,14.581722 14.581722,11 19,11 Z M19,12 C15.1340068,12 12,15.1340068 12,19 C12,22.8659932 15.1340068,26 19,26 C20.8819703,26 22.5904778,25.2573173 23.8484255,24.0490489 C23.8682789,24.0062003 23.8973303,23.9668665 23.9327917,23.9315312 C23.9676812,23.8967659 24.0064192,23.8682194 24.0476289,23.8458892 C25.2573173,22.5904778 26,20.8819703 26,19 C26,15.1340068 22.8659932,12 19,12 Z" fill="#344B60"></path></svg></div></div>
                               </li>
                               <li><hr className="dropdown-divider"/></li>
+                              {
+                                allLabels?.map((itm,i)=>(
+                                  // <div key={i}>
+                                  <li key={i}>
+                                  <div class="form-check">
+                                  <input className="form-check-input border border-danger" type="checkbox" value="" id="flexCheckDefault" checked />
+                                  <label className="form-check-label" for="flexCheckDefault" >
+                                  {itm.project_label}
+                                  </label>
+                                </div>
+                                </li>
+                                // </div>
+                                ))
+                              }
                               <li class="create-labels" onClick={handleshowcreatelabel}><FontAwesomeIcon icon={faPlus} /> Create Labels</li>
                             </ul>
                           </div>
@@ -324,7 +372,7 @@ return(
 
                           {/*start create label popup*/}
                            
-                          <Modal id="create-label-popup" show={showcreatelabel} onHide={handleDeleteClose}>
+                          <Modal id="create-label-popup" show={showcreatelabel} onHide={()=>setcreatelabel(false)}>
                 <Modal.Header closeButton>
                   <Modal.Title>Create label</Modal.Title>
                 </Modal.Header>
@@ -332,13 +380,19 @@ return(
                 <div class="field mb24"><div class="label-wrapper">
                   <label class="label-name" for="Labelname">Label name</label></div>
                   <div class="input-wrapper">
-                  <input slot="input" type="text" id="Labelname" min="0" max="255"/></div></div>
+                  <input slot="input" type="text" id="Labelname" min="0" max="255" 
+                  value={labelName}
+                  onChange={(e)=>setlabelName(e.target.value)}
+                  /></div></div>
                   </Modal.Body>
                 <Modal.Footer>
-                  <Button variant="secondary" class="btn-cancel-popup" onClick={handleDeleteClose}>
+                  <Button variant="secondary" class="btn-cancel-popup" onClick={()=>setcreatelabel(false)}>
                   Cancel
                   </Button>
-                  <Button variant="primary" class="btn-delete-popup" onClick={handleDeleteClose}>
+                  <Button variant="primary" class="btn-delete-popup" onClick={()=>{
+                      createLabel();
+                    setcreatelabel(false);
+                  }}>
                    Create
                   </Button>
                 </Modal.Footer>

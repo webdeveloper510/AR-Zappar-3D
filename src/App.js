@@ -14,7 +14,9 @@ function App() {
     <div className='first'>
       {ctx.loader && <Loader /> }
      <Routing/>
-     <ToastContainer autoclose={1000}/>
+     <ToastContainer 
+      //  autoclose={500}
+     />
     </div>
   
   )

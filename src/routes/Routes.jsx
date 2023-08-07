@@ -39,13 +39,7 @@ function Routing(){
                 <Route path='/MainTab' element={<MainTab />} />
                 <Route path='/FirstTab' element={<FirstTab />} />
                 <Route path='/ar-web-view/:id/' element={<WelcomePage />} />
-
-                {/* <WelcomePage /> */}
-
-                {/* </> */}
-                {/* )  */}
                 <Route path="/" element={<LoginPage/>} />
-                {/* } */}
                 
                 
                 </>

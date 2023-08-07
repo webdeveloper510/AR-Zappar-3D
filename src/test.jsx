@@ -85,6 +85,8 @@ const ModelAr =()=> {
         'data:image/png;base64,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',
         'data:image/png;base64,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',
     ]
+
+    console.log(id,'This is ID<---------------')
         useEffect(() => {
  
             if(!id){
@@ -135,7 +137,7 @@ const ModelAr =()=> {
             scene.background = new THREE.Color( 0xf2f2f2);
             scene.add( new THREE.AmbientLight( 0x222222 ) );
 
-            // Creating Plane For Tracker ------------------------------------------------------------------------->
+            // Creating Plane For Tracker ------------------------------------------------------------------------>
           
 
             const textureLoader = new THREE.TextureLoader();
@@ -149,7 +151,7 @@ const ModelAr =()=> {
             plane.rotation.y = Math.PI;
 
 
-            // Threjs Plane Helper for OrbitControler Indecator ------------------------------------------------------->
+            // Threjs Plane Helper for OrbitControler Indecator ------------------------------------------------->
 
             // const boxorbitIndictor = new THREE.BoxGeometry(50,50,50);
             // const IndecatorTexture = new THREE.TextureLoader();
@@ -214,7 +216,8 @@ const ModelAr =()=> {
 
                     axios.get(API.BASE_URL+"scene_details/"+id+"/")
                     .then((responseProject)=>{
-                            ctx.setreRender(true);   
+                        ctx.setreRender(true);
+                        console.log(responseProject,'From scene_details<------------');
                         setButton(responseProject.data.data[0].button_data)
                         setText(responseProject.data.data[0].text_data)
                         setImage(responseProject.data.data[0].image_data)
@@ -571,7 +574,7 @@ const ModelAr =()=> {
                 updatetransform();
                 labelRenderer.render(scene, currentCamera); // Render the CSS3D labels
             }
-            requestAnimationFrame(render);
+            // requestAnimationFrame(render);
         }
     }
             setTimeout(()=>{

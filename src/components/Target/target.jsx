@@ -2022,7 +2022,7 @@ const Target = () => {
                             })
                             .catch((err) => {
                               console.log(err, "error<---ERRERRERRERRERR-------->");
-                              toast.error("Not able to create project !");
+                              toast.error("Not able to publish project !");
                             })
                             .finally(()=>{
                               setTimeout(()=>{ ctx.setloader(false)},0)
@@ -2030,7 +2030,7 @@ const Target = () => {
                         })();
                       }}
                     >
-                      Publish123
+                      Publish
                     </a>
                   </button>
                 </div>
