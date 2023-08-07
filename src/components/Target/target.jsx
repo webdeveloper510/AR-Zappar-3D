@@ -1608,6 +1608,12 @@ const Target = () => {
        });
   };
 
+  useEffect(()=>{
+    axios.get(API.BASE_URL + "scene_data_by_project/"+ id).then(function (response){
+      console.log(response)
+      selectedTargetImage(response.data.project_content[0].target_image)
+    }).then(function (err){})
+  },[])
   // Create SCENE WHEN THE PROJECT IS LOADED :------------------------------------------------------------------------->
 
   /******************* CONST USESTATES  ***************** */
@@ -1644,12 +1650,9 @@ const Target = () => {
   const handlepublishshow = () => setshowpublish(true);
 
   //  HANDLE TARGET IMAGE FUNCTION ------------------------------------------------------------------------------------------------------------------------
-
+  const projectContentID = localStorage.getItem('ProjectContentID');
   const TargetImage = (e) => {
-    const formData = new FormData();
-    formData.append('project_id',id)
-    formData.append('target_image',e.target.files[0])
-    axios.post(API.BASE_URL+'project_content/',formData,{
+    axios.put(API.BASE_URL+'project_content/'+projectContentID+'/',{target_image:e.target.files[0]},{
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -4612,29 +4615,34 @@ const Target = () => {
                                                     }}
                                                   >
                                                     <div className="target-overview-cover-image">
-                                                      <div className="pointer-div">
-                                                        {targetImage?(<><img src={targetImage}/></>):(<><span className="upload-target-img">
-                                                          Upload Target image
-                                                        </span>
-                                                        <input
-                                                          type="file"
-                                                          className="base-img" 
-                                                          onChange={TargetImage}
-                                                        /></>)}
-                                                        
+                                                      {targetImage? (<>
+                                                      <img src={targetImage} />
+                                                      <div className="replace-hover-btn">
+                                                          <button>Replace</button>
+                                                          <input
+                                                            type="file"
+                                                            accept="image/jpeg,image/png,.jpeg,.jpg,.png"
+                                                            onChange={TargetImage}
+                                                          />
+                                                        </div>
+                                                      </>):(<>
+                                                        <div className="pointer-div">
+                                                          <span className="upload-target-img">
+                                                            Upload Target image
+                                                          </span>
+                                                          <input
+                                                            type="file"
+                                                            className="base-img" 
+                                                            onChange={TargetImage}
+                                                          />
                                                       </div>
+                                                      </>)}
+
                                                     </div>
                                                   </div>
                                                 </div>
                                               </div>
-                                              <div className="replace-hover-btn">
-                                                <button>Replace</button>
-                                                <input
-                                                  type="file"
-                                                  accept="image/jpeg,image/png,.jpeg,.jpg,.png"
-                                                  onChange={TargetImage}
-                                                />
-                                              </div>
+
                                               <div className="row">
                                                 <p
                                                   className="shared-txt"

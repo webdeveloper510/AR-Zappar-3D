@@ -333,15 +333,16 @@ const ModelAr =()=> {
 
                     // States for Text Featres ------------------------------------------------------------------------------------------------>
              
-                    labelRenderer = new CSS3DRenderer() 
+                    labelRenderer = new CSS3DRenderer();
                     labelRenderer.domElement.style.top = '0px';
                     labelRenderer.domElement.style.position = 'absolute';
                     labelRenderer.domElement.style.pointerEvents = 'none';
-                    document.body.appendChild(labelRenderer.domElement)     
+                    document.body.appendChild(labelRenderer.domElement);
 
                     // HTML CSS2DRENDERER ---------------------------------------------------------------->
                     if (getText){
                         for (let i = 0; i < getText.length; i++){
+                            console.log(getText[i]);
                             text_nameget(getText[i][0].button_name)
                             text_actionGet(getText[i][0].text_action.text_action)
                             text_actionIDGet(getText[i][0].text_action.id)
@@ -373,23 +374,27 @@ const ModelAr =()=> {
                             transition_enterGet(getText[i][0].text_transition.transition_enter)
                             transition_exitGet(getText[i][0].text_transition.transition_exit)
 
-
+                            console.log(getText[i][0].button_name)
                             const p = document.createElement('h1');
                             p.textContent = getText[i][0].button_name;
                             p.style.color = getText[i][0].text_text.text_color;
                             p.style.fontSize = '20px';
                             p.style.fontWeight = 'bold';
                             p.style.fontFamily = getText[i][0].text_text.text_font;
+                            p.style.zIndex = 999;
+
+                            p.style.fontFamily = getText[i][0].text_text.text_font;
                             cPointLable = new CSS3DObject(p);
                             scene.add(cPointLable)
-                            cPointLable.position.set(10,10, 0)
-                            // cPointLable.position.set(Number(getText[i][0].text_transform.position_x), Number(getText[i][0].text_transform.position_y), Number(getText[i][0].text_transform.position_d)-8)
-                            // cPointLable.rotation.x =getText[i][0].text_transform.Rotation_x
-                            // cPointLable.rotation.y =getText[i][0].text_transform.Rotation_y + Math.PI
-                            // cPointLable.rotation.z =getText[i][0].text_transform.Rotation_z
+                            // cPointLable.position.set(10,10, 10)
+                            cPointLable.position.set(Number(getText[i][0].text_transform.position_x), Number(getText[i][0].text_transform.position_y), Number(getText[i][0].text_transform.position_d)+8)
+                            cPointLable.rotation.x =getText[i][0].text_transform.Rotation_x
+                            cPointLable.rotation.y =getText[i][0].text_transform.Rotation_y + Math.PI
+                            cPointLable.rotation.z =getText[i][0].text_transform.Rotation_z
                             cPointLable.userData.name=getText[i][0].button_name
                         }
                     }
+                    console.log(cPointLable, "Text")
 
                     // Button APIs ------------------------------------------------------------>
 
@@ -409,17 +414,15 @@ const ModelAr =()=> {
                         }
                     }
 
-                    if(contentImgVdo1 ){
-                        if (contentImgVdo1[0].image_url === mesh.userData.name){
+                        if (contentImgVdo1 && contentImgVdo1[0].image_url === mesh.userData.name){
                         control.attach(mesh)
                         }
-                        if(contentImgVdo1[0].video_url === Videomesh.userData.name){
+                        if(contentImgVdo1 && contentImgVdo1[0].video_url === Videomesh.userData.name){
                             control.attach(Videomesh)
                         }
-                        if(contentImgVdo1[0].button_name === cPointLable.userData.name){
+                        if(contentImgVdo1 && contentImgVdo1[0].button_name === cPointLable.userData.name){
                             control.attach(Videomesh)
                         }
-                    }
                     
 
                    
@@ -564,16 +567,19 @@ const ModelAr =()=> {
         function render() {
 
 
-            const currentTime = performance.now();
-            const timeSinceLastRender = currentTime - lastRenderTime;
+            // const currentTime = performance.now();
+            // const timeSinceLastRender = currentTime - lastRenderTime;
 
-            if (timeSinceLastRender >= 1000 / frameRate) {
-                lastRenderTime = currentTime;
+            // if (timeSinceLastRender >= 1000 / frameRate) {
+                // lastRenderTime = currentTime;
                 onWindowResize();
                 renderer.render(scene, currentCamera);
                 updatetransform();
                 labelRenderer.render(scene, currentCamera); // Render the CSS3D labels
-            }
+
+
+            // }
+
             // requestAnimationFrame(render);
         }
     }

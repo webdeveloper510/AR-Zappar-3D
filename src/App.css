@@ -3076,7 +3076,7 @@ input#search-labels-input {
     height: 40px;
     border: 1px solid #b2c4d7;
     border-radius: 8px;
-    padding: 0 12px;
+    padding: 0 50px;
     font-size: 14px;
     box-sizing: border-box;
     line-height: 1.2;
@@ -3086,7 +3086,7 @@ input#search-labels-input {
 }
 svg.search-label-svg {
     position: absolute;
-    right: 15px;
+    right: 20px;
 }
 li.create-labels svg {
     border: 1px solid #073158;
@@ -3374,4 +3374,41 @@ div#home-page-container {
 .published-log-tabel td,
 .published-log-tabel th {
     display: revert !important;
+}
+.main {
+    margin: 0;
+    padding: 0;
+    background: #ff5001;
+    height: 980px;
+}
+.col-md-6.offset-md-3.mt-5 {
+    margin-top: 25rem !important;
+}
+
+button.continue-button {
+    margin: 8rem 0 0 36rem;
+    border: 1px solid #fff;
+    padding: 10px 28px;
+    color: #ffff;
+    font-size: 20px;
+    font-weight: 600;
+    transition: 0.9s;
+}
+button.continue-button:hover {
+    background: #fff;
+    color: #ff5001;
+    border: 1px solid #ff5001;
+}
+
+input#flexCheckDefault {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+}
+ul .field {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 4px;
 }

@@ -38,7 +38,7 @@ function Routing(){
                 <Route path="/user" element={<UserProfile/>} />
                 <Route path='/MainTab' element={<MainTab />} />
                 <Route path='/FirstTab' element={<FirstTab />} />
-                <Route path='/ar-web-view/:id/' element={<WelcomePage />} />
+                <Route path='/ar-web-view/:id/:v/' element={<WelcomePage />} />
                 <Route path="/" element={<LoginPage/>} />
                 
                 

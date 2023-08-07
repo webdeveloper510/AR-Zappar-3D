@@ -355,9 +355,9 @@ return(
                                 allLabels?.map((itm,i)=>(
                                   // <div key={i}>
                                   <li key={i}>
-                                  <div class="form-check">
-                                  <input className="form-check-input border border-danger" type="checkbox" value="" id="flexCheckDefault" checked />
-                                  <label className="form-check-label" for="flexCheckDefault" >
+                                  <div class="field">
+                                  <label>
+                                    <input type="checkbox" value={itm.project_label} id="flexCheckDefault" />
                                   {itm.project_label}
                                   </label>
                                 </div>
