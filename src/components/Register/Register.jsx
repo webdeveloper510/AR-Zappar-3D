@@ -183,11 +183,7 @@ const RegisterPage = () => {
               },
             })
             .then(function (response) {
-              localStorage.setItem('token',response.data.token.access)
-              localStorage.setItem('id',response.data.data.id)         
-
-              navigate("/home");
-              toast.success("Registerd Successfully !");
+              navigate("/emailconfirm");
             })
             .catch(function (err) {
               if (err.response.data.email) {

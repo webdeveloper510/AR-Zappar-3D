@@ -3420,3 +3420,6 @@ ul .field {
     height: 100%;
     margin-top: 22pc;
 }
+.hidden-icon {
+    display: none;
+}

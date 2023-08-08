@@ -40,7 +40,7 @@ function Routing(){
                 <Route path='/FirstTab' element={<FirstTab />} />
                 <Route path='/ar-web-view/:id/:v/' element={<WelcomePage />} />
                 <Route path="/" element={<LoginPage/>} />
-                <Route path="/verify-email" element={<VerifyEmail />} />
+                <Route path="/verify-email/:id" element={<VerifyEmail />} />
                 
                 
                 </>

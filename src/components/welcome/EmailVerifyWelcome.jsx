@@ -1,7 +1,26 @@
-import React from "react";
-
+import React, { useEffect } from "react";
+import { useParams , useNavigate } from "react-router-dom";
+import { API } from "../../config/api";
+import axios from "axios";
 const VerifyEmail =() =>{
-      const userEmail = "satpaldeepsingh@gmail.com";
+      const navigate = useNavigate()
+      const {id} = useParams()
+      useEffect(()=>{
+        axios.post(API.BASE_URL+'verified-email/', null, {
+          headers: {
+            Authorization: `Bearer ${id}`,
+          },
+        })
+        .then(function(res){
+          console.log(res)
+          localStorage.setItem('token',id)
+          localStorage.setItem('id',res.data.data.id)       
+        }) 
+        .catch(function(err){console.log(err)})
+      },[])
+      const homeNavigate=()=>{
+        navigate('/home')
+      }
 return(
   <div className="main">
   <div className="container">
@@ -17,7 +36,7 @@ return(
                </div>
              </div>
            </div>
-           <button className='continue-button' >Continue</button>
+           <button className='continue-button' onClick={homeNavigate}>Continue</button>
          </div>
      </div>
 )

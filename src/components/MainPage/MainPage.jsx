@@ -275,28 +275,34 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                               </div>
                       
                             <div className="d-flex align-items-center col-md-8">
-                              <form className="w-100 me-3" role="search" id="search-form">
-                                <svg className="main-serach"
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="40"
-                                height="40"
-                                viewBox="0 0 40 40"
-                                onClick={()=>{
-                                  if(seachTerm.trim()!==''){
-                                   setseachTerm('')
-                                  }
-                                }}
-                              >
-                                <path
-                                  fill="#344B60"
-                                  d="M19 11a8 8 0 015.999 13.293l4.272 4.287a.5.5 0 01-.64.764l-.069-.058L24.292 25A8 8 0 1119 11zm0 1a7 7 0 104.848 12.049.412.412 0 01.085-.117.5.5 0 01.115-.086A6.96 6.96 0 0026 19a7 7 0 00-7-7z"
-                                ></path>
-                              </svg>
-                                <input type="search" className="form-control main-serach-input" placeholder="Search projects" aria-label="Search" 
-                                value={seachTerm}
-                                onChange={(e)=>setseachTerm(e.target.value)}
+                            <form className="w-100 me-3" role="search" id="search-form">
+                                <svg
+                                    className={`main-serach ${seachTerm.trim() !== '' ? 'hidden-icon' : ''}`}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="40"
+                                    height="40"
+                                    viewBox="0 0 40 40"
+                                    onClick={() => {
+                                        if (seachTerm.trim() !== '') {
+                                            setseachTerm('');
+                                        }
+                                    }}
+                                >
+                                    <path
+                                        fill="#344B60"
+                                        d="M19 11a8 8 0 015.999 13.293l4.272 4.287a.5.5 0 01-.64.764l-.069-.058L24.292 25A8 8 0 1119 11zm0 1a7 7 0 104.848 12.049.412.412 0 01.085-.117.5.5 0 01.115-.086A6.96 6.96 0 0026 19a7 7 0 00-7-7z"
+                                    ></path>
+                                </svg>
+                                <input
+                                    type="search"
+                                    className="form-control main-serach-input"
+                                    placeholder="Search projects"
+                                    aria-label="Search"
+                                    value={seachTerm}
+                                    onChange={(e) => setseachTerm(e.target.value)}
                                 />
-                              </form>
+                            </form>
+
                               <div className="flex-shrink-0 dropdown sort-bar">
                                 <a href="#" className="main-page-sortbar d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 <svg
