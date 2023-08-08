@@ -26,6 +26,7 @@ import ProjectCard from "./ProjectCard";
 
 
 const MainPage =()=>{
+  document.title = 'Saybaz - Projects';
   const navigate = useNavigate()
   const [show, setShow] = useState(false);
   const [secondShow, setSecondShow] = useState(false);
@@ -510,7 +511,7 @@ const handleshowcreatelabel = () => setcreatelabel(true);
             <Modal id="editcover-image-popup" show={showcover} onHide={handleCoverClose}>
               <Modal.Header closeButton>
                 <Modal.Title>Edit cover image for project<br></br>
-                “Untitled project”</Modal.Title>
+                {editableItem[0]?.ProTitle}</Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <div className="flex btw image-preview">
@@ -526,7 +527,8 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                           </div>
                           <div className="text-content">
                               <span className="icon" title="Web Developer">W</span>
-                              <h4>{proData.ProTitle}</h4>
+                              <h4>
+                                {proData.ProTitle}</h4>
                             <div>
                               <span className="status-icon"></span>
                               <span className="status-text">Created {proData.created_at}&nbsp;&nbsp;|&nbsp;&nbsp;{

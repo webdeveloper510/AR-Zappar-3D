@@ -11,6 +11,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 //
 
 const RegisterPage = () => {
+  document.title='Saybaz - SignUp'
   const navigate = useNavigate();
   //  First Name
   const [firstName, UserFirstName] = useState("");

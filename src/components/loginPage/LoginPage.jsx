@@ -11,6 +11,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
 const LoginPage =()=>{
+    document.title='Saybaz - Login'
 const navigate = useNavigate();
 //  Email Address
 const [email , userEmail] = useState('');

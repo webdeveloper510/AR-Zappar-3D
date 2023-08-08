@@ -25,6 +25,7 @@ import { contextObject } from "../ContextStore/ContextApi";
 
 
 const Project =()=>{
+  document.title='Saybaz - Peroject details'
   const navigate = useNavigate()
   const [imgProject , ProImg] = useState(null)
   const [titlePro , addTitle] = useState(null)

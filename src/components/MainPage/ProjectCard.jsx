@@ -9,6 +9,7 @@ handleCoverimageShow,
 EditHandle,
 handleDeleteShow,
 imageProfile,
+selectTitleFun
 }) => {
 
     const [ToggleButton,setToggleButton]=useState(false)
@@ -33,7 +34,9 @@ imageProfile,
             setToggleButton(false)
             } }>Edit cover image</li>
             <li className="disabled">Unpublish</li>
-            <li className="danger"  onClick={(e)=>{e.stopPropagation();handleDeleteShow(proData.id);setToggleButton(false)}}>
+            <li className="danger"  onClick={(e)=>{e.stopPropagation();handleDeleteShow(proData.id);
+                selectTitleFun('proData.ProTitle1234456')
+                setToggleButton(false)}}>
               Delete
             </li>
           </ul>

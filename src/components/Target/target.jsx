@@ -48,6 +48,7 @@ import { GLTFLoader } from '../../../node_modules/three/examples/jsm/loaders/GLT
 
 let firstTime = true;
 const Target = () => {
+  document.title = 'Saybaz - Design'
   const dispatch=useDispatch()
   // HANDLE GET USER-ID FROM LOCALSTORAGE ------------------------------------------------------------------------------------------------------------------
   const paramData = useParams();
@@ -1426,13 +1427,16 @@ const Target = () => {
     axios
       .delete(API.BASE_URL + "get-image-data/" +id+'/')
       .then(function (response) {
-        console.log('successfully deleted');
+        // setshowPopHandle(false);
+        toast.success('successfully deleted');
+        setselectedVideo(null);
+        setselectedFile(null);
         dispatch(sideBarContentAction.setContent(true))
         setrenderGetProjact((prev) => !prev);
         dispatch(sideBarContentAction.setcontentImgVdo(null))
         ctx.setContentImgVdo(null)
-        setselectedVideo(null);
-        setselectedFile(null);
+        // setselectedVideo(null);
+        // setselectedFile(null);
         setreRender((prev)=>!prev);
         setTimeout(()=>{ ctx.setloader(true)},0)
       })
@@ -1452,6 +1456,10 @@ const Target = () => {
       .delete(API.BASE_URL + "get-video-data/" + id +'/')
       .then(function (response) {
         console.log('Deleted video successfully');
+        // setshowPopHandle(false);
+        toast.success('successfully deleted');
+        setselectedVideo(null);
+        setselectedFile(null);
         dispatch(sideBarContentAction.setContent(true))
         setrenderGetProjact((prev) => !prev);
         dispatch(sideBarContentAction.setcontentImgVdo(null))
