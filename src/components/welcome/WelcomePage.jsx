@@ -16,7 +16,20 @@ const WelcomePage = () => {
     <div className="main">
       {targetImage?(
         <>
-          <img src={targetImage} alt={targetImage}/>
+          {/* <img src={targetImage} alt={targetImage}/> */}
+          <a-entity camera zappar-camera></a-entity>
+
+        <a-entity zappar-permissions-ui id="permissions">
+
+            <a-entity text="value: Please reload the page, accepting the camera permissions." position="0 0 -2"></a-entity>
+        </a-entity>
+        <a-entity camera zappar-camera="user-facing: true;"></a-entity>
+        <a-entity
+          camera zappar-camera="user-facing: true; user-camera-mirror-mode: poses">
+          </a-entity>
+          <a-scene zappar-environment-map>
+          </a-scene>
+          <a-sphere position="0 0 -5" environment-map metalness="1" roughness="0" radius="1"></a-sphere>
         </>):(
         <>
         <div className="container">

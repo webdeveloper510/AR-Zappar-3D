@@ -14,7 +14,7 @@ import MainTab from '../components/Projects/mainTab';
 import FirstTab from '../components/Projects/firsttTab';
 import SecondTab from '../components/Projects/secondTab';
 import WelcomePage from '../components/welcome/WelcomePage';
-
+import VerifyEmail from '../components/welcome/EmailVerifyWelcome';
 
 function Routing(){
     const token = localStorage.getItem('token');
@@ -40,6 +40,7 @@ function Routing(){
                 <Route path='/FirstTab' element={<FirstTab />} />
                 <Route path='/ar-web-view/:id/:v/' element={<WelcomePage />} />
                 <Route path="/" element={<LoginPage/>} />
+                <Route path="/verify-email" element={<VerifyEmail />} />
                 
                 
                 </>

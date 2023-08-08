@@ -19,6 +19,7 @@
     "@zappar/zappar-react-three-fiber": "^2.2.0",
     "@zappar/zapworks-cli": "^2.0.1",
     "ar.js": "^2.2.2",
+    "arjs-react": "^0.0.11",
     "artoolkit5-js": "^0.0.4",
     "axios": "^1.3.4",
     "bootstrap": "^5.2.3",

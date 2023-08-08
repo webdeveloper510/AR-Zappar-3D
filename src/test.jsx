@@ -248,7 +248,7 @@ const ModelAr =()=> {
                             texturedf.minFilter = THREE.LinearFilter;
                             texturedf.magFilter = THREE.LinearFilter;
                             const geometry = new THREE.BoxGeometry(getImage[i][0].image_transform.width, getImage[i][0].image_transform.height,1)
-                            const material = new THREE.MeshBasicMaterial({ map: texturedf, transparent: false })
+                            const material = new THREE.MeshBasicMaterial({ map: texturedf, transparent: true , opacity:1})
                             mesh = new THREE.Mesh(geometry, material);
                             plane.add(mesh);
                             mesh.position.set(Number(getImage[i][0].image_transform.position_x), Number(getImage[i][0].image_transform.position_y), Number(getImage[i][0].image_transform.position_d)+8)
@@ -332,9 +332,9 @@ const ModelAr =()=> {
                     // States for Text Featres ------------------------------------------------------------------------------------------------>
              
                     labelRenderer = new CSS3DRenderer();
-                    labelRenderer.domElement.style.top = '0px';
-                    labelRenderer.domElement.style.position = 'absolute';
-                    labelRenderer.domElement.style.pointerEvents = 'none';
+                    // labelRenderer.domElement.style.top = '0px';
+                    // labelRenderer.domElement.style.position = 'absolute';
+                    // labelRenderer.domElement.style.pointerEvents = 'none';
                     document.body.appendChild(labelRenderer.domElement);
 
                     // HTML CSS2DRENDERER ---------------------------------------------------------------->
@@ -372,7 +372,6 @@ const ModelAr =()=> {
                             transition_enterGet(getText[i][0].text_transition.transition_enter)
                             transition_exitGet(getText[i][0].text_transition.transition_exit)
 
-                            console.log(getText[i][0].button_name)
                             const p = document.createElement('h1');
                             p.innerHTML = getText[i][0].button_name;
                             p.style.color = getText[i][0].text_text.text_color;

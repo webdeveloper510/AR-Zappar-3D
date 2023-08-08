@@ -354,20 +354,15 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                               </li>
                               <hr/>
                               {/* <li><hr className="dropdown-divider"/></li> */}
+                              <div class="filter-labels">Labels
                               {
+
                                 ctx.allLabels?.map((itm,i)=>(
-                                  // <div key={i}>
-                                  <li key={i}>
-                                  <div class="form-check">
-                                  <input className="form-check-input border border-danger" type="checkbox" value="" id="flexCheckDefault" checked />
-                                  <label className="form-check-label" for="flexCheckDefault" >
-                                  {itm.project_label}
-                                  </label>
-                                </div>
-                                </li>
-                                // </div>
+                                   <li className="" title="Universal AR"><div className="field"><label><input type="checkbox" name="uar" value="uar"/>{itm.project_label}</label></div></li>
                                 ))
                               }
+                                </div>
+
                               <li className="create-labels" onClick={handleshowcreatelabel}><FontAwesomeIcon icon={faPlus} /> Create Labels</li>
                               </ul>
                               </div>

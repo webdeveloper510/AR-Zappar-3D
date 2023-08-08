@@ -3412,3 +3412,11 @@ ul .field {
     height: 100%;
     margin-bottom: 4px;
 }
+.filter-labels {
+    margin-left: 10px;
+}
+.verify-email-card {
+    width: 100%;
+    height: 100%;
+    margin-top: 22pc;
+}
