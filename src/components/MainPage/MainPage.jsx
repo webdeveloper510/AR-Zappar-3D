@@ -22,6 +22,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import defaultProjectImage from "../../assets/images/defaultProject.png"
 import { contextObject } from "../ContextStore/ContextApi";
 import { async } from "q";
+import ProjectCard from "./ProjectCard";
 
 
 const MainPage =()=>{
@@ -279,6 +280,11 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                                 width="40"
                                 height="40"
                                 viewBox="0 0 40 40"
+                                onClick={()=>{
+                                  if(seachTerm.trim()!==''){
+                                   setseachTerm('')
+                                  }
+                                }}
                               >
                                 <path
                                   fill="#344B60"
@@ -312,9 +318,29 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                                       </svg>
                                 </a>
                                 <ul className="dropdown-menu text-small shadow main-page-sort" id="fist-sort-listing">
-                                  <li><a className="dropdown-item" href="file:///C:/Users/USER/Downloads/Compressed/web-ar/project-list.html">By date created</a></li>
-                                  <li><a className="dropdown-item" href="file:///C:/Users/USER/Downloads/Compressed/web-ar/project-list.html">By date published</a></li>
-                                  <li><a className="dropdown-item" href="file:///C:/Users/USER/Downloads/Compressed/web-ar/project-list.html">By project name</a></li>
+                                  <li><a className="dropdown-item" href="file:///C:/Users/USER/Downloads/Compressed/web-ar/project-list.html" 
+                                  onClick={()=>{
+                                    const sortedProInfoDescending = proInfo.slice().sort((a, b) => {
+                                       return b.created_at.localeCompare(a.created_at);
+                                     })
+                                     console.log(sortedProInfoDescending,'sortedARRAY');
+                                     setProInfo(sortedProInfoDescending)
+                                    }}
+                                  >By date created</a></li>
+                                  <li
+                                  className="disabled"
+                                  disabled 
+                                  style={{cursor:'notAllowed'}}
+                                  ><a className="dropdown-item" href="file:///C:/Users/USER/Downloads/Compressed/web-ar/project-list.html" 
+                                  >By date published</a></li>
+                                  <li><a className="dropdown-item" href="file:///C:/Users/USER/Downloads/Compressed/web-ar/project-list.html" 
+                                  onClick={()=>{
+                                    const sortedProInfoDescending1 = proInfo.slice().sort((a, b) => {
+                                       return a.ProTitle.localeCompare(b.ProTitle);
+                                     })
+                                     setProInfo(sortedProInfoDescending1)
+                                    }}
+                                  >By project name</a></li>
                                 </ul>
                               </div>
 
@@ -422,67 +448,21 @@ const handleshowcreatelabel = () => setcreatelabel(true);
 
                 <div className="row col-md-12 pt-5" id="card-project-outer" >
                   {/* filtring by date */}
-                {console.log(proInfo,'ARRAY')}
-                {
-                  
-                //  (()=>{
-                //  const sortedProInfoDescending = proInfo.slice().sort((a, b) => {
-                //     return a.created_at.localeCompare(b.created_at);
-                //   })
-                //   console.log(sortedProInfoDescending,'sortedARRAY')
-                //  })()
-
-                 (()=>{
-                  const sortedProInfoDescending1 = proInfo.slice().sort((a, b) => {
-                     return a.ProTitle.localeCompare(b.ProTitle);
-                   })
-                   console.log(sortedProInfoDescending1,'ByNAMEsortedARRAY')
-                  })()
-                }
-                {
-                     (()=>{
-                 const sortedProInfoDescending = proInfo.slice().sort((a, b) => {
-                    return a.created_at.localeCompare(b.created_at);
-                  })
-                  console.log(sortedProInfoDescending,'sortedARRAY')
-                 })()
-                }
+              
                   {proInfo?.length>0?
                   (debouncedSearchTerm.trim()==='' ? proInfo?.map((proData, i) => {
                       return(
-                        <div className="card project-card-placeholder col-md-3 mb-4 mx-2 p-0 link-body" onClick={() => {handleProject(proData.id)}} >
-                          <div className="card-img-outer">
-                            <span className="badge text-bg-light">{proData.projectType}</span>
-                            <img src={proData.imagePro} className="card-img-top" alt="..."/>
-                            <div className="overlay dark">Open project</div>
-                            <div className="dropdown-menu-svg" direction="bottom-left">
-                              <button className="btn btn-dots" id="profile-dots" slot="toggle" onClick={ToggleButtonShow}>
-                                <svg xmlns="http://www.w3.org/2000/svg"  width="40"  height="40"  viewBox="0 0 40 40">
-                                <path  fillRule="evenodd"  d="M20 25a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0-6.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0-6.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"></path>
-                                </svg>
-                              </button>
-                              { ToggleButton && ( 
-                                <ul slot="body" className="profile-list">
-                                  <li className="edit-cover"  onClick={(e)=>{e.stopPropagation();handleCoverimageShow(proData.id);EditHandle(proData.id)} }>Edit cover image</li>
-                                  <li className="disabled">Unpublish</li>
-                                  <li className="danger"  onClick={(e)=>{e.stopPropagation();handleDeleteShow(proData.id)}}>
-                                    Delete
-                                  </li>
-                                </ul>
-                              )}
-                            </div>
-                          </div>
-                          <div className="card-body ">
-                              <img src={imageProfile} className="rounded-circle" width="36" height="36" alt="..."/>
-                            <h5 className="card-title">{proData.ProTitle}</h5>
-                            <p className="card-text"><small className="text-muted">Created {proData.created_at} | 
-                         {
-                          proData.publish_key ? 'Published' : 'Unpublished'
-                         }
-                            {/* Unpublished */}
-                            </small></p>
-                          </div>  
-                        </div>
+                        <ProjectCard 
+                        handleProject={handleProject}
+                         proData={proData}
+                         ToggleButtonShow={ToggleButtonShow}
+                        //  ToggleButton={ToggleButton} 
+                        handleCoverimageShow={handleCoverimageShow}
+                        EditHandle={EditHandle}
+                        handleDeleteShow={handleDeleteShow}
+                        imageProfile={imageProfile}
+
+                        />
                       )
                     }
                     
@@ -491,39 +471,17 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                   :
                   proInfo?.filter((itm)=>itm.ProTitle.toLowerCase().includes(debouncedSearchTerm.toLocaleLowerCase())).map((proData)=>{
                     return(
-                      <div className="card project-card-placeholder col-md-3 mb-4 mx-2 p-0 link-body" onClick={() => {handleProject(proData.id)}} >
-                        <div className="card-img-outer">
-                          <span className="badge text-bg-light">{proData.projectType}</span>
-                          <img src={proData.imagePro} className="card-img-top" alt="..."/>
-                          <div className="overlay dark">Open project</div>
-                          <div className="dropdown-menu-svg" direction="bottom-left">
-                            <button className="btn btn-dots" id="profile-dots" slot="toggle" onClick={ToggleButtonShow}>
-                              <svg xmlns="http://www.w3.org/2000/svg"  width="40"  height="40"  viewBox="0 0 40 40">
-                              <path  fillRule="evenodd"  d="M20 25a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0-6.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0-6.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"></path>
-                              </svg>
-                            </button>
-                            { ToggleButton && ( 
-                              <ul slot="body" className="profile-list">
-                                <li className="edit-cover"  onClick={(e)=>{e.stopPropagation();handleCoverimageShow(proData.id);EditHandle(proData.id)} }>Edit cover image</li>
-                                <li className="disabled">Unpublish</li>
-                                <li className="danger"  onClick={(e)=>{e.stopPropagation();handleDeleteShow(proData.id)}}>
-                                  Delete
-                                </li>
-                              </ul>
-                            )}
-                          </div>
-                        </div>
-                        <div className="card-body ">
-                            <img src={imageProfile} className="rounded-circle" width="36" height="36" alt="..."/>
-                          <h5 className="card-title">{proData.ProTitle}</h5>
-                          <p className="card-text"><small className="text-muted">Created {proData.created_at} | 
-                       {
-                        proData.publish_key ? 'Published' : 'Unpublished'
-                       }
-                          {/* Unpublished */}
-                          </small></p>
-                        </div>  
-                      </div>
+                      <ProjectCard 
+                      handleProject={handleProject}
+                       proData={proData}
+                       ToggleButtonShow={ToggleButtonShow}
+                      //  ToggleButton={ToggleButton} 
+                      handleCoverimageShow={handleCoverimageShow}
+                      EditHandle={EditHandle}
+                      handleDeleteShow={handleDeleteShow}
+                      imageProfile={imageProfile}
+
+                      />
                     )
                   })
                   ):
