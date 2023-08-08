@@ -332,10 +332,12 @@ return(
                               {
                                 ctx.allLabels?.map((itm,i)=>(
                                   // <div key={i}>
-                                  <li key={i}>
+                                  <li key={itm.id}>
                                   <div class="field">
                                   <label>
-                                    <input type="checkbox" value={itm.project_label} id="flexCheckDefault" />
+                                    <input type="checkbox" value={itm.project_label} id="flexCheckDefault"  onClick={()=>{
+                                      console.log(itm.id);
+                                    }} />
                                   {itm.project_label}
                                   </label>
                                 </div>

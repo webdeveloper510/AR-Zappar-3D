@@ -23,6 +23,7 @@ import defaultProjectImage from "../../assets/images/defaultProject.png"
 import { contextObject } from "../ContextStore/ContextApi";
 import { async } from "q";
 
+
 const MainPage =()=>{
   const navigate = useNavigate()
   const [show, setShow] = useState(false);
@@ -45,6 +46,19 @@ const MainPage =()=>{
   const ctx=useContext(contextObject);
   const {id} = useParams();
   const [labelName,setlabelName]=useState('');
+  const [reRender,setreRender]=useState(true);
+  const [seachTerm,setseachTerm]=useState('');
+  const [debouncedSearchTerm,setdebouncedSearchTerm]=useState('');
+
+
+  // seaching logic
+
+  useEffect(()=>{
+    const delay=500;
+    const timeOutId=setTimeout(()=>{
+      setdebouncedSearchTerm(seachTerm)
+    },delay)
+  },[seachTerm])
 
 
   // USE EFFFECTS FUNCTIONS ***************************************************************/
@@ -72,7 +86,7 @@ const MainPage =()=>{
       console.log(response.data,'Main.JSX INSIDE uSEEFFECT')
     }).catch(function(error){
     })
-  }, [])
+  }, [reRender])
 
   // CONST ES6 FUNCTIONS ***************************************************************/
 /***********creatlabelpopup***************************** */
@@ -197,6 +211,7 @@ const handleshowcreatelabel = () => setcreatelabel(true);
               'content-type': 'multipart/form-data' 
         }
       }).then(function(res){
+        setreRender((prev)=>!prev)
         toast.success("Cover Image Updated Successfully !")
         localStorage.removeItem("coverimage");
         setShowCover(false);
@@ -270,7 +285,10 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                                   d="M19 11a8 8 0 015.999 13.293l4.272 4.287a.5.5 0 01-.64.764l-.069-.058L24.292 25A8 8 0 1119 11zm0 1a7 7 0 104.848 12.049.412.412 0 01.085-.117.5.5 0 01.115-.086A6.96 6.96 0 0026 19a7 7 0 00-7-7z"
                                 ></path>
                               </svg>
-                                <input type="search" className="form-control main-serach-input" placeholder="Search projects" aria-label="Search"/>
+                                <input type="search" className="form-control main-serach-input" placeholder="Search projects" aria-label="Search" 
+                                value={seachTerm}
+                                onChange={(e)=>setseachTerm(e.target.value)}
+                                />
                               </form>
                               <div className="flex-shrink-0 dropdown sort-bar">
                                 <a href="#" className="main-page-sortbar d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -408,8 +426,34 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                   }
 
                 <div className="row col-md-12 pt-5" id="card-project-outer" >
-                  {proInfo?.length>0?(
-                     proInfo?.map((proData, i) => {
+                  {/* filtring by date */}
+                {console.log(proInfo,'ARRAY')}
+                {
+                  
+                //  (()=>{
+                //  const sortedProInfoDescending = proInfo.slice().sort((a, b) => {
+                //     return a.created_at.localeCompare(b.created_at);
+                //   })
+                //   console.log(sortedProInfoDescending,'sortedARRAY')
+                //  })()
+
+                 (()=>{
+                  const sortedProInfoDescending1 = proInfo.slice().sort((a, b) => {
+                     return a.ProTitle.localeCompare(b.ProTitle);
+                   })
+                   console.log(sortedProInfoDescending1,'ByNAMEsortedARRAY')
+                  })()
+                }
+                {
+                     (()=>{
+                 const sortedProInfoDescending = proInfo.slice().sort((a, b) => {
+                    return a.created_at.localeCompare(b.created_at);
+                  })
+                  console.log(sortedProInfoDescending,'sortedARRAY')
+                 })()
+                }
+                  {proInfo?.length>0?
+                  (debouncedSearchTerm.trim()==='' ? proInfo?.map((proData, i) => {
                       return(
                         <div className="card project-card-placeholder col-md-3 mb-4 mx-2 p-0 link-body" onClick={() => {handleProject(proData.id)}} >
                           <div className="card-img-outer">
@@ -445,7 +489,48 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                           </div>  
                         </div>
                       )
-                    })
+                    }
+                    
+                  
+                  )
+                  :
+                  proInfo?.filter((itm)=>itm.ProTitle.toLowerCase().includes(debouncedSearchTerm.toLocaleLowerCase())).map((proData)=>{
+                    return(
+                      <div className="card project-card-placeholder col-md-3 mb-4 mx-2 p-0 link-body" onClick={() => {handleProject(proData.id)}} >
+                        <div className="card-img-outer">
+                          <span className="badge text-bg-light">{proData.projectType}</span>
+                          <img src={proData.imagePro} className="card-img-top" alt="..."/>
+                          <div className="overlay dark">Open project</div>
+                          <div className="dropdown-menu-svg" direction="bottom-left">
+                            <button className="btn btn-dots" id="profile-dots" slot="toggle" onClick={ToggleButtonShow}>
+                              <svg xmlns="http://www.w3.org/2000/svg"  width="40"  height="40"  viewBox="0 0 40 40">
+                              <path  fillRule="evenodd"  d="M20 25a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0-6.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0-6.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"></path>
+                              </svg>
+                            </button>
+                            { ToggleButton && ( 
+                              <ul slot="body" className="profile-list">
+                                <li className="edit-cover"  onClick={(e)=>{e.stopPropagation();handleCoverimageShow(proData.id);EditHandle(proData.id)} }>Edit cover image</li>
+                                <li className="disabled">Unpublish</li>
+                                <li className="danger"  onClick={(e)=>{e.stopPropagation();handleDeleteShow(proData.id)}}>
+                                  Delete
+                                </li>
+                              </ul>
+                            )}
+                          </div>
+                        </div>
+                        <div className="card-body ">
+                            <img src={imageProfile} className="rounded-circle" width="36" height="36" alt="..."/>
+                          <h5 className="card-title">{proData.ProTitle}</h5>
+                          <p className="card-text"><small className="text-muted">Created {proData.created_at} | 
+                       {
+                        proData.publish_key ? 'Published' : 'Unpublished'
+                       }
+                          {/* Unpublished */}
+                          </small></p>
+                        </div>  
+                      </div>
+                    )
+                  })
                   ):
                   <>
                   <div className="home-screen-outer">
