@@ -50,13 +50,13 @@ const Project =()=>{
   axios.get(API.BASE_URL+'project-list/'+id+'/')
     .then(function(response){
       console.log(response,'from projectjsx');
-      setpublishedKey(response.data.publish_key)
-      ctx.setisPublish(response.data.publish_key)
+      setpublishedKey(response.data.project_details.publish_key)
+      ctx.setisPublish(response.data.project_details.publish_key)
       setisShowDot(true)
-      addTitle(response.data.ProTitle)
-      ProImg(response.data.imagePro.toString())
-      CreationDate(response.data.created_at)
-      ctx.setqrCode(response.data.qr_code_url)
+      addTitle(response.data.project_details.ProTitle)
+      ProImg(response.data.project_details.imagePro.toString())
+      CreationDate(response.data.project_details.created_at)
+      ctx.setqrCode(response.data.project_details.qr_code_url)
     })
     .catch(function(error){
     })
