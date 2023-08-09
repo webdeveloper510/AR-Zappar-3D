@@ -49,6 +49,7 @@ const Project =()=>{
   if(id?.length > 0){
   axios.get(API.BASE_URL+'project-list/'+id+'/')
     .then(function(response){
+      console.log(response,'from projectjsx');
       setpublishedKey(response.data.publish_key)
       ctx.setisPublish(response.data.publish_key)
       setisShowDot(true)
@@ -236,8 +237,8 @@ const handleshowcreatelabel = () => setcreatelabel(true);
       console.log(err)
     })
   },[])
-/********** End----Model State *************/
 
+ 
 
 
 
@@ -338,7 +339,8 @@ return(
                                   <label>
                                     <input type="checkbox" value={itm.project_label} id="flexCheckDefault"  onClick={()=>{
                                       console.log(itm.id);
-                                    }} />
+                                      ctx.updateLabel(itm.id,!itm.required)
+                                    }}  checked={itm.required}/>
                                   {itm.project_label}
                                   </label>
                                 </div>

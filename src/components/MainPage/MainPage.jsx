@@ -84,8 +84,8 @@ const MainPage =()=>{
   useEffect(() => {
     axios.get(API.BASE_URL+'projects/'+val+'/' )
     .then(function(response){
-      setProInfo(response.data)
-      console.log(response.data,'Main.JSX INSIDE uSEEFFECT')
+      setProInfo(response.data.projectlist)
+      console.log(response,'Main.JSX INSIDE uSEEFFECT')
     }).catch(function(error){
     })
   }, [reRender])
@@ -391,7 +391,12 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                               {
 
                                 ctx.allLabels?.map((itm,i)=>(
-                                   <li className="" title="Universal AR"><div className="field"><label><input type="checkbox" name="uar" value="uar"/>{itm.project_label}</label></div></li>
+                                   <li className="" title="Universal AR"><div className="field"><label><input type="checkbox" name="uar" value="uar" checked={itm.required}
+                                   onClick={()=>{
+                                    console.log(itm.id);
+                                    ctx.updateLabel(itm.id,!itm.required)
+                                  }}
+                                   />{itm.project_label}</label></div></li>
                                 ))
                               }
                                 </div>

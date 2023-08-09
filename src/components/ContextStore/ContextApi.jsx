@@ -42,14 +42,23 @@ const ContextProvider=(props)=>{
         try {
           const response= await axios.get(API.BASE_URL+"project_label_list/"+localStorage.getItem('id')+'/');
           console.log(response,'this is from GET all labels');
-          setallLabels(response.data.data);
-          console.log(allLabels,'this is from GET all labels121212121212121212');
-    
+          setallLabels(response.data.data);    
         } catch (err) {
           console.log(err,'this is error from GET all labels');
         }
       }
 
+      const updateLabel= async (id,bool)=>{
+        try {
+          const response = await axios.put(API.BASE_URL+"project_label_update/"+id+'/',{
+            required:bool
+          });
+          console.log(response);
+          getLabels();
+        } catch (err) {
+          
+        }
+      }
 
     
 
@@ -81,7 +90,8 @@ const ContextProvider=(props)=>{
         allLabels,
         setallLabels,
         createLabel,
-        getLabels
+        getLabels,
+        updateLabel
 
 
 
