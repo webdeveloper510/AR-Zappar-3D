@@ -61,6 +61,10 @@ useEffect(()=>{
     }
 },
 [])
+
+const navigateForgot=()=>{
+    navigate('/enter-forgot-email/')
+}
     return(
     <div className="login-page" id="login-page">
         <div className="container-fluid p-0 m-0">
@@ -71,7 +75,7 @@ useEffect(()=>{
                         <form className="login-pg-form">
                             <div className="mb-3 envelop-div">
                                 <label className="form-label fw-semibold" >Email</label>
-                                <input type="email" className="form-control" value={email} placeholder="Enter Your Email"  onChange={handleEmail} 
+                                <input type="text" className="form-control" value={email} placeholder="Enter Your Email"  onChange={handleEmail} 
                                 style={{
                                     border: emailErr ? '1px solid red' : ''
                                 }}
@@ -106,7 +110,7 @@ useEffect(()=>{
                             </div>
                             <div className="mb-3">
                                 <h3 className="forgot-div"> 
-                                    <a href="#" className="login-forgot">Forgot Password ?</a>
+                                    <a onClick={navigateForgot} className="login-forgot">Forgot Password ?</a>
                                 </h3>
                             </div>
                             <div className="or-text"><p>or</p></div>

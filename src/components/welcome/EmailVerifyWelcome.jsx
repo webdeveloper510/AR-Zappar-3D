@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useParams , useNavigate } from "react-router-dom";
 import { API } from "../../config/api";
 import axios from "axios";
+import { toast } from "react-toastify";
 const VerifyEmail =() =>{
       const navigate = useNavigate()
       const {id} = useParams()
@@ -12,14 +13,12 @@ const VerifyEmail =() =>{
           },
         })
         .then(function(res){
-          console.log(res)
-          localStorage.setItem('token',id)
-          localStorage.setItem('id',res.data.data.id)       
+          toast.success("Email verified Successfully !")
         }) 
         .catch(function(err){console.log(err)})
       },[])
       const homeNavigate=()=>{
-        navigate('/home')
+        navigate('/')
       }
 return(
   <div className="main">

@@ -15,7 +15,8 @@ import FirstTab from '../components/Projects/firsttTab';
 import SecondTab from '../components/Projects/secondTab';
 import WelcomePage from '../components/welcome/WelcomePage';
 import VerifyEmail from '../components/welcome/EmailVerifyWelcome';
-
+import ForgotEmail from '../components/ForgotPassword/EnterForgotEmail';
+import ForgotPassword from '../components/ForgotPassword/ForgotPassword';
 function Routing(){
     const token = localStorage.getItem('token');
     // if 
@@ -41,6 +42,8 @@ function Routing(){
                 <Route path='/ar-web-view/:id/:v/' element={<WelcomePage />} />
                 <Route path="/" element={<LoginPage/>} />
                 <Route path="/verify-email/:id" element={<VerifyEmail />} />
+                <Route path="/enter-forgot-email/" element={<ForgotEmail />} />
+                <Route path="/forgot-password/:id" element={<ForgotPassword />} />
                 
                 
                 </>

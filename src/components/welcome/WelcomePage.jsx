@@ -2,7 +2,12 @@ import { useParams } from "react-router-dom";
 import React, { useState } from 'react';
 import { API } from "../../config/api";
 import axios from "axios";
+import ARExperience from "../ARExperience/ARExperience";
+
+
 const WelcomePage = () => {
+
+  // FUNCTIONS ------------->
   const [targetImage,targetImageFound]=useState(null)
   const {id}= useParams();
   const openwebPage=()=>{
@@ -12,12 +17,14 @@ const WelcomePage = () => {
     })
     .catch(function(err){});
   }
+
+
   return (
     <div className="main">
       {targetImage?(
         <>
           {/* <img src={targetImage} alt={targetImage}/> */}
-          <a-entity camera zappar-camera></a-entity>
+          {/* <a-entity camera zappar-camera></a-entity>
 
         <a-entity zappar-permissions-ui id="permissions">
 
@@ -29,7 +36,9 @@ const WelcomePage = () => {
           </a-entity>
           <a-scene zappar-environment-map>
           </a-scene>
-          <a-sphere position="0 0 -5" environment-map metalness="1" roughness="0" radius="1"></a-sphere>
+          <a-sphere position="0 0 -5" environment-map metalness="1" roughness="0" radius="1"></a-sphere> */}
+
+          <ARExperience />
         </>):(
         <>
         <div className="container">
