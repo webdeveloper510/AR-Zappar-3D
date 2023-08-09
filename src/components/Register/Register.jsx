@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { API } from "../../config/api";
 import "../../App.css";
@@ -8,10 +8,12 @@ import loginright from "../../assets/images/login-banner.png";
 import { toast } from "react-toastify";
 import profileImg from "../../assets/images/profile.png";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { contextObject } from "../ContextStore/ContextApi";
 //
 
 const RegisterPage = () => {
   document.title='Saybaz - SignUp'
+  const ctx=useContext(contextObject);
   const navigate = useNavigate();
   //  First Name
   const [firstName, UserFirstName] = useState("");
@@ -171,6 +173,7 @@ const RegisterPage = () => {
       formData.append("password", password);
       formData.append("proffession", Proffession);
       formData.append("dateofbirth", selectedDate);
+      ctx.setloader(true);
       fetch(profileImg)
         .then((response) => response.blob())
         .then((blob) => {
@@ -205,7 +208,8 @@ const RegisterPage = () => {
               if (err.response.data.dateofbirth) {
                 setDOBError(true);
               }
-            });
+            })
+            .finally(()=> ctx.setloader(false));
         });
     }
   };
