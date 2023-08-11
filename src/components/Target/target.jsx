@@ -19,7 +19,7 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import "react-toastify/dist/ReactToastify.css";
 import previewimg from "../../assets/images/login-banner.png";
 import Modal from "react-bootstrap/Modal";
-import axios, { Axios } from "axios";
+// import axios from "axios";
 import ModelAr from "../../test";
 import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
@@ -43,12 +43,13 @@ import VideoDetail from "./VideoDetail";
 import ModalDetail from "./ModalDetail";
 import Applets from "./Applets";
 import { GLTFLoader } from '../../../node_modules/three/examples/jsm/loaders/GLTFLoader'
+import axios, { Axios } from "axios";
 
 // import Button from 'react-bootstrap/Button';
 
 let firstTime = true;
 const Target = () => {
-  document.title = 'Saybaz - Design'
+  document.title = 'Sayehbaz - Design'
   const dispatch=useDispatch()
   // HANDLE GET USER-ID FROM LOCALSTORAGE ------------------------------------------------------------------------------------------------------------------
   const paramData = useParams();

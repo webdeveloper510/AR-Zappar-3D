@@ -5,6 +5,7 @@ import { API } from "../../config/api";
 import { toast } from "react-toastify";
 
 const ForgotPassword =()=>{
+      document.title='Sayehbaz - Forgot Password'
       const navigate = useNavigate()
       const {id}= useParams()
       const [password,NewPassword] = useState(null)

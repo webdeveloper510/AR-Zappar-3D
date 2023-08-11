@@ -46,7 +46,7 @@ const Applets = ({
                   dispatch(sideBarContentAction.setContent(false));
                   setselectedText(null);
                   dispatch(sideBarContentAction.setcontentImgVdo(itm));
-                  ctx.setContentImgVdo(itm);
+                  ctx.setcontentImgVdo(itm);
                   dispatch(sideBarContentAction.settoUpdateDimensions());
                 }}
               >

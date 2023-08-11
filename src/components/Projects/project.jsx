@@ -25,7 +25,7 @@ import { contextObject } from "../ContextStore/ContextApi";
 
 
 const Project =()=>{
-  document.title='Saybaz - Peroject details'
+  document.title='Sayehbaz - Project details'
   const navigate = useNavigate()
   const [imgProject , ProImg] = useState(null)
   const [titlePro , addTitle] = useState(null)
@@ -40,6 +40,7 @@ const Project =()=>{
   const [isShowDot,setisShowDot]=useState(false)
   const [labelName,setlabelName]=useState('');
   // const [allLabels,setallLabels]=useState(null);
+  const [arrUsedLabel,setarrUsedLabel]=useState([]);
   const ctx=useContext(contextObject);
 
   
@@ -57,11 +58,14 @@ const Project =()=>{
       ProImg(response.data.project_details.imagePro.toString())
       CreationDate(response.data.project_details.created_at)
       ctx.setqrCode(response.data.project_details.qr_code_url)
+      setarrUsedLabel(response.data.project_details.project_label)
+      console.log(response.data.project_details.project_label,'All labels of a particular project');
     })
     .catch(function(error){
     })
   }
- },[imgProject])
+ },[imgProject,ctx.allLabels])
+//  project_label
 
  // USE EFFECT FOR USERNAME ------------------------------------------------------------------->
 
@@ -338,9 +342,11 @@ return(
                                   <div class="field">
                                   <label>
                                     <input type="checkbox" value={itm.project_label} id="flexCheckDefault"  onClick={()=>{
-                                      console.log(itm.id);
-                                      ctx.updateLabel(itm.id,!itm.required)
-                                    }}  checked={itm.required}/>
+                                      const bool=arrUsedLabel.find((i)=>i.project_label===itm.project_label) ? false : true
+                                      ctx.updateLabel(id,bool,itm.project_label)
+                                    }} 
+                                     checked={arrUsedLabel.find((item)=>item.project_label===itm.project_label) ? true : false}
+                                    />
                                   {itm.project_label}
                                   </label>
                                 </div>
@@ -376,7 +382,7 @@ return(
                       ctx.createLabel(id,labelName);
                     setcreatelabel(false);
                   }}>
-                   Create
+                   Create1234
                   </Button>
                 </Modal.Footer>
             </Modal>

@@ -15,7 +15,7 @@ const ContextProvider=(props)=>{
 
  
 
-    const [contentImgVdo, setcontentImgVdo] = useState(null);
+    const [contentImgVdo, setcontentImgVdo] = useState([]);
     const [fontselected, Selectedfont] = useState(null);
     const [titleOfProject,settitleOfProject]=useState('');
     const [qrCode,setqrCode]=useState(null);
@@ -48,15 +48,18 @@ const ContextProvider=(props)=>{
         }
       }
 
-      const updateLabel= async (id,bool)=>{
+      const updateLabel= async (projectId,bool,labelName)=>{
         try {
-          const response = await axios.put(API.BASE_URL+"project_label_update/"+id+'/',{
-            required:bool
+          const response = await axios.post(API.BASE_URL+"project-label/",{
+            project_id : projectId ,
+            project_label : labelName ,
+            user_id : localStorage.getItem('id') ,
+            required : bool ,
           });
-          console.log(response);
+          console.log(response,'from update label');
           getLabels();
         } catch (err) {
-          
+          console.log(err,'error to upload labels');
         }
       }
 

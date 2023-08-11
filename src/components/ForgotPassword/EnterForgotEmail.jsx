@@ -3,6 +3,7 @@ import axios from "axios";
 import { API } from "../../config/api";
 import { toast } from "react-toastify";
 const ForgotEmail =()=>{
+      document.title='Sayehbaz - Forgot Password'
 
       const [email, forgotEmail]= useState(null)
       const handleEnterEmail=(e)=>{

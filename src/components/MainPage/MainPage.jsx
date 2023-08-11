@@ -26,7 +26,7 @@ import ProjectCard from "./ProjectCard";
 
 
 const MainPage =()=>{
-  document.title = 'Saybaz - Projects';
+  document.title = 'Sayehbaz - Projects';
   const navigate = useNavigate()
   const [show, setShow] = useState(false);
   const [secondShow, setSecondShow] = useState(false);
@@ -51,6 +51,7 @@ const MainPage =()=>{
   const [reRender,setreRender]=useState(true);
   const [seachTerm,setseachTerm]=useState('');
   const [debouncedSearchTerm,setdebouncedSearchTerm]=useState('');
+ 
 
 
   // seaching logic
@@ -59,8 +60,12 @@ const MainPage =()=>{
     const delay=500;
     const timeOutId=setTimeout(()=>{
       setdebouncedSearchTerm(seachTerm)
-    },delay)
+    },delay);
+    return () => {
+      clearTimeout(timeOutId);
+    };
   },[seachTerm])
+
 
 
   // USE EFFFECTS FUNCTIONS ***************************************************************/
@@ -391,11 +396,13 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                               {
 
                                 ctx.allLabels?.map((itm,i)=>(
-                                   <li className="" title="Universal AR"><div className="field"><label><input type="checkbox" name="uar" value="uar" checked={itm.required}
-                                   onClick={()=>{
-                                    console.log(itm.id);
-                                    ctx.updateLabel(itm.id,!itm.required)
-                                  }}
+                                   <li className="" title="Universal AR"><div className="field"><label><input type="checkbox" name="uar" value="uar"
+                                    // checked={itm.required}
+                                  //  onClick={()=>{
+                                  //   console.log(itm.id);
+                                  //   ctx.updateLabel(itm.id,!itm.required)
+                                  // }}
+
                                    />{itm.project_label}</label></div></li>
                                 ))
                               }

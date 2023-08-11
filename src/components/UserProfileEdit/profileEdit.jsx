@@ -18,6 +18,7 @@ import axios from "axios";
 import { API } from "../../config/api";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 const UserProfile =()=>{
+  document.title='Sayehbaz - User Settings'
   const navigate = useNavigate()
 
 

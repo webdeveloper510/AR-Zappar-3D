@@ -12,7 +12,7 @@ import { contextObject } from "../ContextStore/ContextApi";
 //
 
 const RegisterPage = () => {
-  document.title='Saybaz - SignUp'
+  document.title='Sayehbaz - SignUp'
   const ctx=useContext(contextObject);
   const navigate = useNavigate();
   //  First Name
