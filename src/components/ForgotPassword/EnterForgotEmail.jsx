@@ -11,12 +11,15 @@ const ForgotEmail =()=>{
             forgotEmail(emailValue.trim());
       }
       const sendEmail=()=>{
+            
             axios.post(API.BASE_URL+'forget-password/', {email:email})
             .then(function(response){
             console.log(response)
-            toast.success("Email Sent Successfully!")
+            toast.success("Email Sent Successfully!",{autoClose:1000})
             })
-            .catch(function(error){console.log(error)})
+            .catch(function(error){console.log(error.response.data.message)
+            toast.error(error.response.data.message,{autoClose:1000})
+            });
       }
     return(
 

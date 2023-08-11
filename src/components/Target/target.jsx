@@ -1916,7 +1916,13 @@ const Target = () => {
     getSceneData(sceneId);
   },[useSelector((state)=>state.sideBarContentReducer.contentImgVdo)]);
 
-
+  const userProfile=()=>{
+    navigate('/user')
+    setTimeout(()=>{
+      window.location.reload();
+    },0)
+    localStorage.removeItem("ProjectContentID");
+  }
   
 
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
@@ -1977,12 +1983,12 @@ const Target = () => {
                   </a>
                   <ul className="dropdown-menu text-small shadow">
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item" onClick={userProfile}>
                         <i className="bi bi-gear-fill pe-1"></i>User Setting
                       </a>
                     </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
+                    <li className="disabled">
+                      <a className="dropdown-item">
                         <i className="bi bi-collection-play pe-1"></i>Media
                         Library
                       </a>

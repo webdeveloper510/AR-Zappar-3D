@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useParams , useNavigate } from "react-router-dom";
 import { API } from "../../config/api";
 import { toast } from "react-toastify";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
 
 const ForgotPassword =()=>{
       document.title='Sayehbaz - Forgot Password'
@@ -10,12 +12,24 @@ const ForgotPassword =()=>{
       const {id}= useParams()
       const [password,NewPassword] = useState(null)
       const [Conpassword,ConfirmPassword] = useState(null)
+      const [NewpasswordVisible,setNewpasswordVisible]=useState(false);
+      const [OldpasswordVisible,setOldpasswordVisible]=useState(false);
+      const [PasswodAlert , setPassWordAlert] = useState(null);
+
       const handleNewPassword=(e)=>{
-            NewPassword(e.target.value)
+            NewPassword(e.target.value.trim())
       }
       const handleConfirmPassword=(e)=>{
-            ConfirmPassword(e.target.value)
-      }
+            ConfirmPassword(e.target.value.trim())
+            if (password !== e.target.value.trim()) {
+                  setPassWordAlert("Password Does not match");
+            }
+            else{
+                  setPassWordAlert(null)
+            }
+     }
+
+      console.log(PasswodAlert)
       const submitForm=()=>{
             const formData = new FormData()
             formData.append("new_password", password)
@@ -26,7 +40,7 @@ const ForgotPassword =()=>{
                       },
             }).then(function(res){console.log(res)
             navigate('/')
-            toast.success("Passwrod Updated Successfully!")
+            toast.success("Password Updated Successfully!")
             })
             .catch(function(err){
                   console.log(err)
@@ -65,9 +79,18 @@ const ForgotPassword =()=>{
                   <div class="text-left pt-5 ps-5" style={{width: '100%',float: 'left',padding: '0',marginop: "30px"}}>
                         <h2 className="email-forgot-head">Reset Your Password</h2>
                         <p className="para-email"> That's okay. It happens! Enter your <u style={{color: "#ef0000"}}>New Password</u> and <u style={{color: "#ef0000"}}>Confirm Password</u>and Click on the button to Reset Password Email.</p>
-                        <input type="password" class="handel-email" placeholder="New Password" onChange={handleNewPassword}/>
-                        <input type="password" class="handel-email" placeholder="Confirm Password" onChange={handleConfirmPassword} />
+                        <input type={!NewpasswordVisible ? "password" : 'text'} className="handel-email" placeholder="New Password" value={password}  onChange={handleNewPassword} />
+                        <div style={{float:'left', width:'100%', margin: '-34px 15px -45px 56pc'}}onClick={()=>{setNewpasswordVisible((prev)=>!prev)}}>
+                             {NewpasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                        </div>
+                        {PasswodAlert ? (<><h5 style={{color: "rgb(255, 0, 0)",float: "left",width: "100%",margin: "17px 0 -30px 19pc",fontSize: "12px"}}>*{PasswodAlert}</h5></>):(<></>)}
+                        <input type={!OldpasswordVisible ? "password" : 'text'} className="handel-email" placeholder="Old Password" value={Conpassword} style={{ border: PasswodAlert ? "0.5px solid red" : ""}} onChange={handleConfirmPassword} />
+                        <div style={{float:'left', width:'100%', margin: '-34px 15px -45px 56pc'}}onClick={()=>{setOldpasswordVisible((prev)=>!prev)}}>
+                             {OldpasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                        </div>
+
                         <a class="btn-confirm" onClick={submitForm}>Update Password</a>
+
                   </div> 
                   </div>
             </div>
