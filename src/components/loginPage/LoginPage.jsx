@@ -71,8 +71,9 @@ const navigateForgot=()=>{
             <div className="row col-md-12 p-0 m-0 align-items-center login-bgg">
                 <div className="col-md-12 p-0 m-0 login-outer">
                     <div className="text-center login-up-pg-container-left">   
-                    <h2 className="top-logo"><img src={logoImage} /></h2>
+                   
                         <form className="login-pg-form">
+                        <h2 className="top-logo"><img src={logoImage} /></h2>
                             <div className="mb-3 envelop-div">
                                 <label className="form-label fw-semibold" >Email</label>
                                 <input type="text" className="form-control" value={email} placeholder="Enter Your Email"  onChange={handleEmail} 
@@ -124,7 +125,7 @@ const navigateForgot=()=>{
                         </form>
                     </div>
                         <div className="login-up-pg-container-right"> 
-                            <img className="login-pic" src={loginright} />
+                             <img className="login-pic" src={loginright} /> 
                         </div>  
                 </div>
             </div>     

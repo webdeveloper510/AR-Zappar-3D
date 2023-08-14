@@ -3,6 +3,7 @@ import { useParams , useNavigate } from "react-router-dom";
 import { API } from "../../config/api";
 import axios from "axios";
 import { toast } from "react-toastify";
+import thankyouimg from "../../assets/images/thank-you-png-icon.png";
 const VerifyEmail =() =>{
       const navigate = useNavigate()
       const {id} = useParams()
@@ -21,21 +22,24 @@ const VerifyEmail =() =>{
         navigate('/')
       }
 return(
-  <div className="main">
+  <div className="email-verification-main">
   <div className="container">
            <div className="row">
-             <div className="col-md-6 offset-md-3 mt-5">
-               <div className="card">
+             <div className="col-md-6 offset-md-3">
+               <div className="card verification-div">
                  <div className="card-body">
-                   <h1 className="card-title text-center">Welcome to our website!</h1>
-                   <p className="card-text text-center">
-                   Thank You for Verifying you Email. <br/> Your Email is successfully verified. <br/> Click Continue !
+                 <img src={thankyouimg} className="thank-you" alt="..."/>
+                  
+                   <h1 className="card-title text-center welcome-text">Welcome to our website!</h1>
+                   <p className="card-text text-center thank-you-email-text">
+                   Thank You for Verifying your Email. <br/> Your Email is successfully verified. <br/> Click below to Continue !
                    </p>
                  </div>
+                 <button className='continue-button' onClick={homeNavigate}>Continue</button>
                </div>
              </div>
            </div>
-           <button className='continue-button' onClick={homeNavigate}>Continue</button>
+           {/* <button className='continue-button' onClick={homeNavigate}>Continue</button> */}
          </div>
      </div>
 )

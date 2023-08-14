@@ -572,7 +572,7 @@ const handleshowcreatelabel = () => setcreatelabel(true);
                           </zpr-dropzone-icon>
                           <zpr-dropzone-msg className="help-text" hydrated="">
                             {
-                              !draggedImage && <span>Drag your cover image here or click to upload</span>
+                              !draggedImage && <span class="drag-your-cover">Drag your cover image here or click to upload</span>
                             }
                             {
                               draggedImage && <span>{imgName}</span>
