@@ -11,7 +11,13 @@ const ForgotEmail =()=>{
             forgotEmail(emailValue.trim());
       }
       const sendEmail=()=>{
-            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailRegex.test(email)) {
+              toast.error('Enter a valid email');
+              return;
+            }
+           else{
             axios.post(API.BASE_URL+'forget-password/', {email:email})
             .then(function(response){
             console.log(response)
@@ -20,6 +26,7 @@ const ForgotEmail =()=>{
             .catch(function(error){console.log(error.response.data.message)
             toast.error(error.response.data.message,{autoClose:1000})
             });
+           }
       }
     return(
 

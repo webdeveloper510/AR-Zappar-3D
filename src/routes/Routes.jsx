@@ -12,8 +12,7 @@ import Target from '../components/Target/target';
 import UserProfile from '../components/UserProfileEdit/profileEdit';
 import MainTab from '../components/Projects/mainTab';
 import FirstTab from '../components/Projects/firsttTab';
-import SecondTab from '../components/Projects/secondTab';
-import WelcomePage from '../components/welcome/WelcomePage';
+import ImageArTracker from '../components/ImageTrackingAR/ImageTracker';
 import VerifyEmail from '../components/welcome/EmailVerifyWelcome';
 import ForgotEmail from '../components/ForgotPassword/EnterForgotEmail';
 import ForgotPassword from '../components/ForgotPassword/ForgotPassword';
@@ -39,7 +38,7 @@ function Routing(){
                 <Route path="/user" element={<UserProfile/>} />
                 <Route path='/MainTab' element={<MainTab />} />
                 <Route path='/FirstTab' element={<FirstTab />} />
-                <Route path='/ar-web-view/:id/:v/' element={<WelcomePage />} />
+                <Route path='/ar-web-view/:id/:v/' element={<ImageArTracker />} />
                 <Route path="/" element={<LoginPage/>} />
                 <Route path="/verify-email/:id" element={<VerifyEmail />} />
                 <Route path="/enter-forgot-email/" element={<ForgotEmail />} />
