@@ -1914,15 +1914,6 @@ span.upload-target-img {
     margin: 0 auto;
     top: 4em;
 }
-.replace-hover-btn {
-    display: none;
-    position: relative;
-    width: 100%;
-    float: left;
-    height: auto;
-    background: #4f8cc6;
-    border-radius: 8px;
-}
 .replace-hover-btn button {
     color: #fff;
     text-align: center;
@@ -2192,4 +2183,31 @@ canvas#canvas {
 }
 .modelFileFields .modal-dialog {
     max-width: 90% !important;
+}
+.target-overview-cover-image img {
+    float: left;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.target-overview-cover-image:hover .replace-hover-btn {
+    display: block !important;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    cursor: pointer;
+}
+.replace-hover-btn {
+    display: none;
+    width: 80%;
+    float: left;
+    background: #4f8cc6;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.target-overview-cover-image:hover {
+    background-color: rgba(115,180,255,.2);
+    z-index: 1;
 }

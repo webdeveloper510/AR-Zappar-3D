@@ -4647,7 +4647,7 @@ const Target = () => {
                                   <div className="TitleContainer--2xD-b title-content">
                                     <Accordion.Item eventKey="2">
                                       <Accordion.Header>
-                                        Target Image
+                                        Target Imageeee
                                       </Accordion.Header>
                                       <Accordion.Body>
                                         <div
