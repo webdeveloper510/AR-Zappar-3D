@@ -44,6 +44,8 @@ import ModalDetail from "./ModalDetail";
 import Applets from "./Applets";
 import { GLTFLoader } from '../../../node_modules/three/examples/jsm/loaders/GLTFLoader'
 import axios, { Axios } from "axios";
+// import  ImageTraining  from "@zappar/imagetraining/lib/ImageTraining";
+// import { train } from "@zappar/imagetraining";
 
 // import Button from 'react-bootstrap/Button';
 
@@ -52,8 +54,8 @@ const Target = () => {
   document.title = 'Sayehbaz - Design'
   const dispatch=useDispatch()
   // HANDLE GET USER-ID FROM LOCALSTORAGE ------------------------------------------------------------------------------------------------------------------
-  const paramData = useParams();
-  const [id, setid] = useState(paramData.id);
+  const {id} = useParams();
+  // const [id, setid] = useState(paramData.id);
   const [show, setShow] = useState(false);
 
   // STATES for PROJECT DATA OF AN PROJECT ---------------------------------------------->
@@ -1618,9 +1620,11 @@ const Target = () => {
   };
 
   useEffect(()=>{
-    axios.get(API.BASE_URL + "scene_data_by_project/"+ id).then(function (response){
+    axios.get(API.BASE_URL + "scene_data_by_project/"+ id+'/').then(function (response){
+      console.log(response, "traget---------------------->")
       selectedTargetImage(response.data.project_content[0].target_image)
-    }).then(function (err){})
+    }).then(function (res){})
+    .catch((err)=>console.log(err))
   },[])
   // Create SCENE WHEN THE PROJECT IS LOADED :------------------------------------------------------------------------->
 
@@ -1667,9 +1671,23 @@ const Target = () => {
     }).then(function(res){
       console.log('image_uploaded', res)
       selectedTargetImage(res.data.data);
+      // trainFile(res.data.data);
   }).catch(function(err){console.log("error")});
   };
   
+  // const trainFile=(image)=>{
+
+  //   train(image, {}).then(res => {
+  //     console.log(res)
+      // res is a Uint8Array containing the target file data
+    // });
+    // ImageTraining(image).then((zpt) => {
+    //   const a = document.createElement("a");
+    //   a.href = URL.createObjectURL(new Blob([zpt], { type: "application/octet-stream" }));
+    //   document.body.appendChild(a);
+    //   console.log('image_uploaded------------------>',a)
+    // });
+  // }
   
   // USE-EFFECT FOR THE USER'S PROJECS LIST -----------------------------------------------------------------------------------------------------------------
 

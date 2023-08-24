@@ -12,7 +12,7 @@ import Target from '../components/Target/target';
 import UserProfile from '../components/UserProfileEdit/profileEdit';
 import MainTab from '../components/Projects/mainTab';
 import FirstTab from '../components/Projects/firsttTab';
-import ImageArTracker from '../components/ImageTrackingAR/ImageTracker';
+import ImageArTracker from '../components/ImageTrackingAR/Tracker';
 import VerifyEmail from '../components/welcome/EmailVerifyWelcome';
 import ForgotEmail from '../components/ForgotPassword/EnterForgotEmail';
 import ForgotPassword from '../components/ForgotPassword/ForgotPassword';

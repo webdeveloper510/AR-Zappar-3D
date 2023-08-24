@@ -308,10 +308,11 @@ const ModelAr =()=> {
                             const gltfContent =get3Dmodel[i][0].file_url
                             const loader = new GLTFLoader();
                             loader.load(gltfContent, (gltf) => {
+                                const loadedObject = gltf.scene;
+                                loadedObject.layers.set(0);
                                 // gltf.scene.position.set((positionX,positionY,positionD));
-                                scene.add(gltf.scene);
-                                // gltf.scene.scale.set(width,height,depth)
-                                gltf.scene.userData.name=get3Dmodel[i][0].file_url
+                                scene.add(loadedObject);
+                                loadedObject.userData.name=get3Dmodel[i][0].file_url
                             })
                         }
                     }
@@ -409,22 +410,22 @@ const ModelAr =()=> {
                         }
                     }
 
-                        // if (contentImgVdo1 && contentImgVdo1[0].image_url === mesh.userData.name){
-                        // control.attach(mesh)
-                        // }
-                        // else if(contentImgVdo1 && contentImgVdo1[0].video_url === Videomesh.userData.name){
-                        //     control.attach(Videomesh)
-                        // }
-                        if(contentImgVdo1 && contentImgVdo1[0].button_name === cPointLable.userData.name){
+                        if (contentImgVdo1 && contentImgVdo1[0].image_url === mesh.userData.name){
+                        control.attach(mesh)
+                        }
+                        else if(contentImgVdo1 && contentImgVdo1[0].video_url === Videomesh.userData.name){
                             control.attach(Videomesh)
                         }
+                        // else if(contentImgVdo1 && contentImgVdo1[0].button_name === cPointLable.userData.name){
+                        //     control.attach(Videomesh)
+                        // }
                         else{
                             console.log("Not Found")
                         }
                     
 
                    
-                   
+
 
         // Camera , Orbit Controls and Transform Controls extra Features -------------------------------------------------------------->  
                         
@@ -511,8 +512,49 @@ const ModelAr =()=> {
 
     //   }
         // Window Resize Functions -------------------------------------------------------------------------------------------------------->
+        
+        // function getMouseVector(event){
+        //     const mouse = new THREE.Vector2();
 
-                            
+        //     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+
+        //     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+        //     return mouse;
+        // }
+
+        // const raycaster = new THREE.Raycaster();
+
+        // (canvas || document).addEventListener('click', (event) => {
+        
+        //     const mouse = getMouseVector(event);
+        
+        //     raycaster.setFromCamera(mouse, cameraPersp);
+        
+        //     const intersects = raycaster.intersectObject(mesh, true);
+        //     console.log(intersects)
+
+        
+        //     const isObjectIntersecting = intersects.length > 0;
+        
+        //     if (isObjectIntersecting) {
+        
+        //         const [firstIntersected] = intersects;
+        
+        //         firstIntersected.object.traverse((object3D) => {
+        
+        //             const canExecuteCallback = object3D.isMesh ;
+                    
+        //             if (canExecuteCallback) {
+        //                 console.log(object3D)
+        //                 control.attach(object3D)
+        //             };
+        
+        //         });
+        
+        //     }
+        
+        // });
         function onWindowResize() {
             const aspect = window.innerWidth / window.innerHeight;
             cameraPersp.aspect = aspect;
@@ -572,7 +614,7 @@ const ModelAr =()=> {
                 lastRenderTime = currentTime;
                 onWindowResize();
                 renderer.render(scene, currentCamera);
-                updatetransform();
+                // updatetransform();
                 labelRenderer.render(scene, currentCamera); // Render the CSS3D labels
 
 

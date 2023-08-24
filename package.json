@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ar-js-org/ar.js": "^3.4.5",
+    "@ar-js-org/artoolkit5-js": "^0.3.0",
     "@fortawesome/fontawesome-free": "^6.4.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
@@ -14,22 +16,28 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@zappar/imagetraining": "^4.0.6",
     "@zappar/sharing": "^1.1.7",
     "@zappar/zappar": "^2.1.0",
     "@zappar/zappar-react-three-fiber": "^2.2.0",
+    "@zappar/zappar-threejs": "^2.4.4",
     "@zappar/zapworks-cli": "^2.0.1",
     "aframe": "^1.4.2",
     "aframe-ar": "^0.2.1-a",
+    "aframe-react": "^4.4.0",
     "ar.js": "^2.2.2",
     "arjs-react": "^0.0.11",
     "artoolkit5-js": "^0.0.4",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.3",
+    "crypto-browserify": "^3.12.0",
     "dat.gui": "^0.7.9",
     "file-saver": "^2.0.5",
+    "hooks": "^0.3.2",
     "konva": "^8.4.3",
     "mind-ar": "^1.2.0",
+    "path-browserify": "^1.0.1",
     "qrcode": "^1.5.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
@@ -48,7 +56,6 @@
     "react-web-ar": "^1.0.0-beta0",
     "redux": "^4.2.1",
     "stream-http": "^3.2.0",
-    "three": "^0.146.0",
     "three-gltf-loader": "^1.111.0",
     "three-js-editor-react-2": "^1.0.36",
     "threex": "^1.0.0",
@@ -79,5 +86,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "webpack-cli": "^5.1.4"
   }
 }
