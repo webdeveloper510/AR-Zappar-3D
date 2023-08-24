@@ -1662,6 +1662,7 @@ const Target = () => {
   const handlepublishshow = () => setshowpublish(true);
 
   //  HANDLE TARGET IMAGE FUNCTION ------------------------------------------------------------------------------------------------------------------------
+
   const projectContentID = localStorage.getItem('ProjectContentID');
   const TargetImage = (e) => {
     axios.put(API.BASE_URL+'project_content/'+projectContentID+'/',{target_image:e.target.files[0]},{
@@ -1669,11 +1670,30 @@ const Target = () => {
         "Content-Type": "multipart/form-data",
       },
     }).then(function(res){
-      console.log('image_uploaded', res)
+      toast.success("Target Image Uploaded Successfully!",(1000));
       selectedTargetImage(res.data.data);
-      // trainFile(res.data.data);
+      const formData = new FormData()
+      formData.append("image", e.target.files[0])
+        axios.post("http://3.109.213.210:5000/upload",formData,{
+        }).then(function(response) {
+          trainedImageUrl(response.data.path)
+          console.log("Image Trained Successfully !")
+        }).catch(function(err){
+          console.log("Not Got")
+        })
   }).catch(function(err){console.log("error")});
-  };
+};
+
+const trainedImageUrl=(url)=>{
+  const formData = new FormData()
+  formData.append("project_id" ,id)
+  formData.append("url" ,url)
+  axios.post(API.BASE_URL+"Add-zpt-file/",formData,{
+
+  }).then(function(res){
+    toast.success("Image Trained Successfully !")
+  }).catch(function(err){console.log("error")});
+}
   
   // const trainFile=(image)=>{
 
@@ -4674,7 +4694,7 @@ const Target = () => {
                                                       {targetImage? (<>
                                                       <img src={targetImage} />
                                                       <div className="replace-hover-btn">
-                                                          <button>Replace</button>
+                                                          <button >Replace</button>
                                                           <input
                                                             type="file"
                                                             accept="image/jpeg,image/png,.jpeg,.jpg,.png"

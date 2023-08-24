@@ -1,7 +1,6 @@
 import * as THREE from "../../../node_modules/three/build/three.module"
 import * as ZapparThree from "@zappar/zappar-threejs"
 import { GLTFLoader } from "../../../node_modules/three/examples/jsm/loaders/GLTFLoader"
-import Image from "../../../src/assets/images/Background.jpg"
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
@@ -10,13 +9,12 @@ const ArComponent=()=>{
 
   // VARIABLES
 
-  let plane , Videomesh , contentGroup2 , canvas
+  let plane , Videomesh  , canvas
 
   const {id} = useParams()
   
   // UseStates 
   const [targetImage, targetFileImage] = useState(null)
-  const [targetFile, trainImage]= useState(null)
   const [getButton , setButton] = useState(null)
   const [getText , setText] = useState(null)
   const [getImage , setImage] = useState(null)
@@ -28,9 +26,10 @@ const ArComponent=()=>{
   const [ThreeDModel, modelState] = useState(null);
 
   useEffect(()=>{
-    axios.get(API.BASE_URL+"get_targetimage_by_projectid/"+id+'/').then(function(response) {targetFileImage(response.data.data)})
+    axios.get(API.BASE_URL+"get-zpt-file/"+id+'/').then(function(response) {
+      targetFileImage(response.data.data)
+    })
     .catch(function(error) {console.log(error)})
-
     axios.get(API.BASE_URL+"scene_data_by_project/"+id+"/")
     .then(function(res){
       console.log(res.data.scenes[0].id);
@@ -38,18 +37,8 @@ const ArComponent=()=>{
     })
   },[])
 
-    const formData = new FormData()
-    formData.append("image", Image)
-    useEffect(()=>{
-      newFunc()
-    },[])
+console.log(targetImage , "--------------->")
 
-    const newFunc =()=>{
-      axios.post("http://localhost:5000/upload",formData,{
-      }).then(function(response) {
-        trainImage(response)
-      }).catch(function(err){console.log("Not Got")})
-    }
 
   function getSceneData (sceneID){
     axios.get(API.BASE_URL+"scene_details/"+sceneID+"/")
@@ -97,10 +86,15 @@ ZapparThree.permissionRequestUI().then((granted) => {
 ZapparThree.glContextSet(renderer.getContext());
 scene.background = camera.backgroundTexture;
 manager.onError = (url) => console.log(`There was an error loading ${url}`);
-const imageTracker = new ZapparThree.ImageTrackerLoader(manager).load(targetFile);
-const imageTrackerGroup = new ZapparThree.ImageAnchorGroup(camera, imageTracker);
+
+//if(targetImage){
+  const imageTracker = new ZapparThree.ImageTrackerLoader(manager).load(targetImage);
+  const imageTrackerGroup = new ZapparThree.ImageAnchorGroup(camera, imageTracker);
+
+  scene.add(imageTrackerGroup);
+//}
 const contentGroup = new THREE.Group();
-scene.add(imageTrackerGroup);
+
 
 
 

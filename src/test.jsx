@@ -614,13 +614,13 @@ const ModelAr =()=> {
                 lastRenderTime = currentTime;
                 onWindowResize();
                 renderer.render(scene, currentCamera);
-                // updatetransform();
+                updatetransform();
                 labelRenderer.render(scene, currentCamera); // Render the CSS3D labels
 
 
             }
 
-            // requestAnimationFrame(render);
+            requestAnimationFrame(render);
         }
     }
             setTimeout(()=>{
