@@ -382,7 +382,7 @@ return(
                       ctx.createLabel(id,labelName);
                     setcreatelabel(false);
                   }}>
-                   Create1234
+                   Create
                   </Button>
                 </Modal.Footer>
             </Modal>

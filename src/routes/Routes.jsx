@@ -16,6 +16,7 @@ import ImageArTracker from '../components/ImageTrackingAR/Tracker';
 import VerifyEmail from '../components/welcome/EmailVerifyWelcome';
 import ForgotEmail from '../components/ForgotPassword/EnterForgotEmail';
 import ForgotPassword from '../components/ForgotPassword/ForgotPassword';
+import FaceTracing from '../components/Facetesting/FaceTest';
 function Routing(){
     const token = localStorage.getItem('token');
     // if 
@@ -43,6 +44,7 @@ function Routing(){
                 <Route path="/verify-email/:id" element={<VerifyEmail />} />
                 <Route path="/enter-forgot-email/" element={<ForgotEmail />} />
                 <Route path="/forgot-password/:id" element={<ForgotPassword />} />
+                <Route path="/facetrace" element={<FaceTracing />} />
                 
                 
                 </>

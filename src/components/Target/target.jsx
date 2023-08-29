@@ -1695,19 +1695,7 @@ const trainedImageUrl=(url)=>{
   }).catch(function(err){console.log("error")});
 }
   
-  // const trainFile=(image)=>{
 
-  //   train(image, {}).then(res => {
-  //     console.log(res)
-      // res is a Uint8Array containing the target file data
-    // });
-    // ImageTraining(image).then((zpt) => {
-    //   const a = document.createElement("a");
-    //   a.href = URL.createObjectURL(new Blob([zpt], { type: "application/octet-stream" }));
-    //   document.body.appendChild(a);
-    //   console.log('image_uploaded------------------>',a)
-    // });
-  // }
   
   // USE-EFFECT FOR THE USER'S PROJECS LIST -----------------------------------------------------------------------------------------------------------------
 
