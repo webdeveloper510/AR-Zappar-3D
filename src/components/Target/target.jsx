@@ -212,6 +212,7 @@ const Target = () => {
   const contentImgVdo=useSelector((state)=>state.sideBarContentReducer.contentImgVdo)
   // const setcontentImgVdo=ctx.setcontentImgVdo;
   const contentImgVdoRef = useRef(contentImgVdo);
+  console.log(ctx.updateAfterGettingTargetImg);
   // const setcontentImgVdo =dispatch(sideBarContentAction.setcontentImgVdo())
 
 
@@ -619,7 +620,9 @@ const Target = () => {
     ctx.setloader(true)
     axios
       .get(API.BASE_URL + "scene_details/" + s_scene_id)
+
       .then(function (responseProject) {
+        console.log(responseProject, 'here')
         setButton(responseProject.data.data[0].button_data);
         setText(responseProject.data.data[0].text_data);
         setImage(responseProject.data.data[0].image_data);
@@ -1220,11 +1223,6 @@ const Target = () => {
     if (e.target.files[0].type !== "") {
       return;
     }
-    // const ModelDetails = new GLTFLoader()
-    // ModelDetails.load(e.target.files[0], (gltf)=>{
-    //   console.log(gltf.scale)
-    // })
-  // }
     formData.append("File", e.target.files[0]);
     formData.append("scene_id", s_scene_id);
     ctx.setloader(true)
@@ -1233,11 +1231,7 @@ const Target = () => {
       .then(function (response) {
         toast.success("Modal Uploaded !");
         console.log(response)
-        // ctx.setreRender(false);
-        // threeDmodelTransform(response.data.id);
-        // threeDmodelTransition(response.data.id);
-        // threeDmodelAction(response.data.id);
-        // setrenderGetProjact((prev) => !prev);
+
       })
       .catch(function (err) {
         console.log(err, "inside upload 3D model function");
@@ -1637,9 +1631,15 @@ const Target = () => {
   };
 
   // start range counter
+  const projectContentID = localStorage.getItem('ProjectContentID');
 
   const handleRangeValue = (event) => {
     A_opacity(event.target.value);
+    axios.put(API.BASE_URL + "project_content/"+projectContentID+'/',{opacity:event.target.value},{
+
+    }).then((response)=>{
+      console.log("Done")
+    }).catch((err)=>console.log(err))
   };
   // HANDLE BORDER VALUE
 
@@ -1663,26 +1663,64 @@ const Target = () => {
 
   //  HANDLE TARGET IMAGE FUNCTION ------------------------------------------------------------------------------------------------------------------------
 
-  const projectContentID = localStorage.getItem('ProjectContentID');
+
+
   const TargetImage = (e) => {
-    axios.put(API.BASE_URL+'project_content/'+projectContentID+'/',{target_image:e.target.files[0]},{
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }).then(function(res){
-      toast.success("Target Image Uploaded Successfully!",(1000));
-      selectedTargetImage(res.data.data);
-      const formData = new FormData()
-      formData.append("image", e.target.files[0])
-        axios.post("http://3.109.213.210:5000/upload",formData,{
-        }).then(function(response) {
-          trainedImageUrl(response.data.path)
-          console.log("Image Trained Successfully !")
-        }).catch(function(err){
-          console.log("Not Got")
-        })
-  }).catch(function(err){console.log("error")});
+    const imageFile = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const image = new Image();
+      image.src = event.target.result;
+
+      // Get the dimensions once the image has loaded
+      image.onload = () => {
+        const width = image.width;
+        const height = image.height;
+        const TargetFileWidth = width 
+        const TargetFileHeight = height 
+
+      axios.put(API.BASE_URL+'project_content/'+projectContentID+'/',{'target_image':imageFile , "dimensions_w" :TargetFileWidth ,"dimensions_h" :TargetFileHeight , "opacity":100},{
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }).then(function(res){
+        toast.success("Target Image Uploaded Successfully!",(1000));
+        setrenderAfterTarget(p=>!p)
+        selectedTargetImage(res.data.data);
+        const formData = new FormData()
+        formData.append("image", imageFile)
+          axios.post("http://3.109.213.210:5000/upload",formData,{
+          }).then(function(response) {
+            trainedImageUrl(response.data.path)
+            toast.success("Image Trained Successfully !")
+          }).catch(function(err){
+            console.log("Not Got")
+          })
+    }).catch(function(err){console.log("error")});
+      
+    } 
+  };
+    reader.readAsDataURL(imageFile);
 };
+
+const [GetTargetWidth , TargetWidth] = useState(null)
+const [GetTargetHeight , TargetHeight] = useState(null)
+const [GetTargetOpacity , TargetOpacity] = useState(null)
+const [renderAfterTarget , setrenderAfterTarget] = useState(false)
+useEffect(()=>{
+  axios.get(API.BASE_URL+"getproject_contentdata/"+projectContentID+'/')
+  .then((response)=>{
+    console.log(response.data.data[0].Project_Content[0])
+    TargetWidth(response.data.data[0].Project_Content[0].dimensions_w)
+    TargetHeight(response.data.data[0].Project_Content[0].dimensions_h)
+    TargetOpacity(response.data.data[0].Project_Content[0].opacity)
+  }).catch((err)=>{
+    console.log(err)
+  });
+},[renderAfterTarget])
+
+
+
 
 const trainedImageUrl=(url)=>{
   const formData = new FormData()
@@ -1879,16 +1917,6 @@ const trainedImageUrl=(url)=>{
       })
     } 
 
-  // useEffect(() => {
-    
-  //   return () => {
-  //     if(!firstTime){
-  //       setTimeout(()=>{
-  //         window.location.reload();
-  //       },0)
-  //     }
-  //   }
-  // }, [window.location.href.toString()]);
 
   const AddButton=(event)=>{
     const datafull = document.getElementById(selectedBtn)
@@ -4655,7 +4683,7 @@ const trainedImageUrl=(url)=>{
                                   <div className="TitleContainer--2xD-b title-content">
                                     <Accordion.Item eventKey="2">
                                       <Accordion.Header>
-                                        Target Imageeee
+                                        Target Image
                                       </Accordion.Header>
                                       <Accordion.Body>
                                         <div
@@ -4729,10 +4757,10 @@ const trainedImageUrl=(url)=>{
                                                     name="vol"
                                                     min="0"
                                                     max="100"
-                                                    value={value}
+                                                    value={GetTargetOpacity}
                                                     onChange={handleRangeValue}
                                                   />
-                                                  <p>{value}</p>
+                                                  <p>{GetTargetOpacity}</p>
                                                 </div>
                                               </div>
 
@@ -4831,7 +4859,7 @@ const trainedImageUrl=(url)=>{
                                                       <input
                                                         type="number"
                                                         data-testid="NumericalInput"
-                                                        value={dimensionHeight}
+                                                        value={GetTargetWidth}
                                                         onChange={(e) =>
                                                           setdimensionHeight(
                                                             e.target.value
@@ -4863,7 +4891,7 @@ const trainedImageUrl=(url)=>{
                                                       <input
                                                         type="number"
                                                         data-testid="NumericalInput"
-                                                        value={width}
+                                                        value={GetTargetHeight}
                                                         onChange={(e) =>
                                                           setwidth(
                                                             e.target.value

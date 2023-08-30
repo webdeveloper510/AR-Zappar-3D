@@ -381,7 +381,7 @@ return(
                   <Button variant="primary" class="btn-delete-popup" onClick={()=>{
                       ctx.createLabel(id,labelName);
                     setcreatelabel(false);
-                  }}>
+                  }}> 
                    Create
                   </Button>
                 </Modal.Footer>

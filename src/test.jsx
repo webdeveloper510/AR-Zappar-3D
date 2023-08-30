@@ -14,6 +14,7 @@ import { contextObject } from './components/ContextStore/ContextApi';
 import { CSS3DRenderer, CSS3DObject } from '../node_modules/three/examples/jsm/renderers/CSS3DRenderer'
 import { ViewHelper } from '../node_modules/three/examples/jsm/helpers/ViewHelper'
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 
 
@@ -21,6 +22,8 @@ let rendeR=true;
 
 const ModelAr =()=> {
     // UseStates In Initialization State ---------------------------------------------------------------------->
+        const paramObj = useParams()
+        const proId=paramObj.id
         const canvasRef = useRef(null); // Create a ref for the canvas element
         const [loaded, setLoaded] = React.useState(false);
         const [getWidth , setWidth] = useState(null)
@@ -73,7 +76,10 @@ const ModelAr =()=> {
         const [transitionID, transitionIDGet] = useState(null)
         const [transition_enter, transition_enterGet] = useState(null)
         const [transition_exit, transition_exitGet] = useState(null)
-
+        const [TargetImage , FoundTargetImage] = useState(null)
+        const [GetTargetWidth , TargetWidth] = useState(null)
+        const [GetTargetHeight , TargetHeight] = useState(null)
+        const [GetTargetOpacity , TargetOpacity] = useState(null)
   const contentImgVdo1=useSelector((state)=>state.sideBarContentReducer.contentImgVdo)
     // UseEffect Using ---------------------------------------------------------------------------------------->
 
@@ -93,12 +99,24 @@ const ModelAr =()=> {
                 return;
             }
             
+            const projectContentID = localStorage.getItem('ProjectContentID');
+
+            axios.get(API.BASE_URL+"getproject_contentdata/"+projectContentID+'/')
+            .then((response) => {
+                FoundTargetImage(response.data.data[0].Project_Content[0].target_image)
+                TargetWidth(response.data.data[0].Project_Content[0].dimensions_w)
+                TargetHeight(response.data.data[0].Project_Content[0].dimensions_h)
+                TargetOpacity(response.data.data[0].Project_Content[0].opacity)
+                ctx.setupdateAfterGettingTargetImg(p=>!p)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
     // boxModal Function Startes ------------------------------------------------------------------------------>
         const boxModal = () => {
-
             
         // Variables ------------------------------------------------------------------------------------------->
-            let cameraPersp, cameraOrtho, currentCamera, canvas ,labelRenderer
+            let cameraPersp, cameraOrtho, currentCamera, canvas ,labelRenderer , texture1 , geometry , material
             let scene, renderer, control, orbit , plane  , Videomesh ,mesh,Indecator , helper, clock ,viewHelper , cPointLable
             let lastRenderTime = 0;
             const frameRate = 60; // Limit the frame rate to 60 FPS
@@ -107,6 +125,8 @@ const ModelAr =()=> {
             render();
  
         function init() {
+            console.log(TargetImage , GetTargetWidth , GetTargetHeight , GetTargetOpacity )
+
             canvas = document.getElementById( 'canvas' );
             // Initialize The Project View Model---------------------------------------------------------------->
             // clock
@@ -140,11 +160,23 @@ const ModelAr =()=> {
           
 
             const textureLoader = new THREE.TextureLoader();
-            const texture1 = textureLoader.load(svgHere)
-            const geometry = new THREE.BoxGeometry(350, 350 ,8);
-            const material = new THREE.MeshBasicMaterial({map : texture1 , side : THREE.DoubleSide , transparent : false})           
+            if (TargetImage){
+                texture1 = textureLoader.load(TargetImage)
+                geometry = new THREE.PlaneGeometry(GetTargetWidth/10 , GetTargetHeight/10 );
+                material = new THREE.MeshBasicMaterial({map : texture1 , side : THREE.DoubleSide ,transparent : true ,opacity:GetTargetOpacity/100})           
+            }
+            else if (!TargetImage){
+                texture1 = textureLoader.load(svgHere)
+                geometry = new THREE.BoxGeometry(350, 350 ,8);
+                material = new THREE.MeshBasicMaterial({map : texture1 , side : THREE.DoubleSide , transparent : true , opacity:1})           
+            }
+            else{
+                
+            }
             plane = new THREE.Mesh(geometry,material );
-            material.needsUpdate = false;
+            if(material){
+                material.needsUpdate = false;
+            }
             scene.add(plane);
             plane.position.set(0, 0, 0);
             plane.rotation.y = Math.PI;
@@ -333,9 +365,9 @@ const ModelAr =()=> {
                     // States for Text Featres ------------------------------------------------------------------------------------------------>
              
                     labelRenderer = new CSS3DRenderer();
-                    // labelRenderer.domElement.style.top = '0px';
-                    // labelRenderer.domElement.style.position = 'absolute';
-                    // labelRenderer.domElement.style.pointerEvents = 'none';
+                    labelRenderer.domElement.style.top = '0px';
+                    labelRenderer.domElement.style.position = 'absolute';
+                    labelRenderer.domElement.style.pointerEvents = 'none';
                     document.body.appendChild(labelRenderer.domElement);
 
                     // HTML CSS2DRENDERER ---------------------------------------------------------------->
@@ -384,7 +416,6 @@ const ModelAr =()=> {
                             p.style.fontFamily = getText[i][0].text_text.text_font;
                             cPointLable = new CSS3DObject(p);
                             scene.add(cPointLable)
-                            // cPointLable.position.set(10,10, 10)
                             cPointLable.position.set(Number(getText[i][0].text_transform.position_x), Number(getText[i][0].text_transform.position_y), Number(getText[i][0].text_transform.position_d)+8)
                             cPointLable.rotation.x =getText[i][0].text_transform.Rotation_x
                             cPointLable.rotation.y =getText[i][0].text_transform.Rotation_y + Math.PI

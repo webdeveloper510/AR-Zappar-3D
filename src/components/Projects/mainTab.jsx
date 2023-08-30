@@ -40,7 +40,9 @@ const MainTab = () => {
 
       useEffect(()=>{
         axios.get(API.BASE_URL + 'project-list/'+id+'/').then((res)=>{
-                setprojectTitle(res.data.projectTitle)
+            setprojectTitle(res.data.project_details.projectTitle)
+
+
         }).catch((e)=>console.log(e))
 
       },[])

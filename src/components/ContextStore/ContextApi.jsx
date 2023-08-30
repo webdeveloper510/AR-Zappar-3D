@@ -21,6 +21,7 @@ const ContextProvider=(props)=>{
     const [qrCode,setqrCode]=useState(null);
     const [isPublish,setisPublish]=useState(false)
     const [allLabels,setallLabels]=useState(null);
+    const [updateAfterGettingTargetImg,setupdateAfterGettingTargetImg]=useState(false)
 
     const createLabel= async (id,labelName)=>{
         try {
@@ -94,7 +95,9 @@ const ContextProvider=(props)=>{
         setallLabels,
         createLabel,
         getLabels,
-        updateLabel
+        updateLabel,
+        updateAfterGettingTargetImg,
+        setupdateAfterGettingTargetImg
 
 
 
