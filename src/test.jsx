@@ -651,7 +651,7 @@ const ModelAr =()=> {
 
             }
 
-            requestAnimationFrame(render);
+            // requestAnimationFrame(render);
         }
     }
             setTimeout(()=>{

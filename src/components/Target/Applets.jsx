@@ -91,7 +91,7 @@ const Applets = ({
                   dispatch(sideBarContentAction.setcontentImgVdo(null));
                   setTimeout(() => {
                     dispatch(sideBarContentAction.setcontentImgVdo(itm));
-                    ctx.setContentImgVdo(itm);
+                    ctx.setcontentImgVdo(itm);
                     dispatch(sideBarContentAction.settoUpdateDimensions());
 
 

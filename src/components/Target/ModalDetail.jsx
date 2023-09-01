@@ -62,7 +62,7 @@ const ctx=useContext(contextObject);
     </div>
 
     <div className="row mt-3">
-      {ctx.selected3D.map((image, index) => (
+      {ctx.selected3D?.map((image, index) => (
         <div className="col-md-6" key={index}>
           <img
             src={image[0].file_url}

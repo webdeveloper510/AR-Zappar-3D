@@ -212,7 +212,7 @@ const Target = () => {
   const contentImgVdo=useSelector((state)=>state.sideBarContentReducer.contentImgVdo)
   // const setcontentImgVdo=ctx.setcontentImgVdo;
   const contentImgVdoRef = useRef(contentImgVdo);
-  console.log(ctx.updateAfterGettingTargetImg);
+  // console.log(ctx.updateAfterGettingTargetImg);
   // const setcontentImgVdo =dispatch(sideBarContentAction.setcontentImgVdo())
 
 
@@ -359,6 +359,8 @@ const Target = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [sceneId, setsceneId] = useState(null);
+  // for store opacity value
+  const [valOfOpacityForStore,setvalOfOpacityForStore]=useState(0)
 
   const widthImgVdo = useSelector((state)=>state.sideBarContentReducer.widthImgVdo);
   const heightImgVdo = useSelector((state)=>state.sideBarContentReducer.heightImgVdo);
@@ -761,6 +763,7 @@ const Target = () => {
   const [showbrowsemedia, setbrowsemedia] = useState(false);
   const [showvideomedia, setvideomedia] = useState(false);
   const [showthreedmodal, setthreedmodal] = useState(false);
+
   /***********createbrowsemediapopup***************************** */
 
   const handleDeleteClose = () => setbrowsemedia(false);
@@ -1634,13 +1637,34 @@ const Target = () => {
   const projectContentID = localStorage.getItem('ProjectContentID');
 
   const handleRangeValue = (event) => {
-    A_opacity(event.target.value);
-    axios.put(API.BASE_URL + "project_content/"+projectContentID+'/',{opacity:event.target.value},{
-
-    }).then((response)=>{
+    console.log('request send with :-',valOfOpacityForStore);
+    // A_opacity(event.target.value);
+    axios.put(API.BASE_URL + "project_content/"+projectContentID+'/',{opacity:valOfOpacityForStore})
+    .then((response)=>{
       console.log("Done")
+      setreRender(prev=>!prev)
     }).catch((err)=>console.log(err))
   };
+
+
+  useEffect(() => {
+    const delay = 500;
+
+    const timeoutId = setTimeout(() => {
+      setvalOfOpacityForStore(valueopacityborder);
+     
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [valueopacityborder]);
+
+  useEffect(() => {
+    handleRangeValue()
+  }, [valOfOpacityForStore])
+  
+
   // HANDLE BORDER VALUE
 
   const handleborderValue = (event) => {
@@ -1648,7 +1672,7 @@ const Target = () => {
   };
 
   const handleborderopacityValue = (event) => {
-    setborderopacityvalue(event.target.valueopacityborder);
+    setborderopacityvalue(event.target.value);
   };
 
   /********** Start----Model previw popup State *************/
@@ -1689,7 +1713,7 @@ const Target = () => {
         selectedTargetImage(res.data.data);
         const formData = new FormData()
         formData.append("image", imageFile)
-          axios.post("http://3.109.213.210:5000/upload",formData,{
+          axios.post(API.BASE_URL+"upload",formData,{
           }).then(function(response) {
             trainedImageUrl(response.data.path)
             toast.success("Image Trained Successfully !")
@@ -4750,7 +4774,7 @@ const trainedImageUrl=(url)=>{
                                                 <p className="opacity">
                                                   Opacity
                                                 </p>
-                                                <div>
+                                                {/* <div>
                                                   <input
                                                     type="range"
                                                     id="vol"
@@ -4761,7 +4785,23 @@ const trainedImageUrl=(url)=>{
                                                     onChange={handleRangeValue}
                                                   />
                                                   <p>{GetTargetOpacity}</p>
-                                                </div>
+                                                </div> */}
+
+                                      <div>
+                                        <input
+                                          type="range"
+                                          id="vol"
+                                          name="vol"
+                                          min="0"
+                                          max="100"
+                                          value={valueopacityborder}
+                                          onChange={
+                                            handleborderopacityValue
+                                          }
+                                        />
+                                        <p>{valueopacityborder}</p>
+                                      </div>
+                                      
                                               </div>
 
                                               <div className="row">
