@@ -63,7 +63,7 @@ const VideoDetail = ({setshowPopHandle,setuploadAll,inputCallingFunction}) => {
     </div>
 
     <div className="row mt-3">
-      {ctx.selectedVideos.map((video, index) => (
+      {ctx.selectedVideos?.map((video, index) => (
         <div className="col-md-12" key={index}>
           <video
             // controls

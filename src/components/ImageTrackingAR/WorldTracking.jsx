@@ -1,25 +1,21 @@
-import * as THREE from "../../../node_modules/three/build/three.module"
-import ZapparThree from "@zappar/zappar-threejs"
-import React from "react"
+import * as THREE from '../../../node_modules/three/build/three.module';
+import * as ZapparThree from '@zappar/zappar-threejs';
+import { GLTFLoader } from '../../../node_modules/three/examples/jsm/loaders/GLTFLoader';
+import model from "../../../src/assets/Box.glb"
 
 const WorldTracking=()=>{
       if (ZapparThree.browserIncompatible()) {
-            // The browserIncompatibleUI() function shows a full-page dialog that informs the user
             ZapparThree.browserIncompatibleUI();
-          
-            // If the browser is not compatible, we can avoid setting up the rest of the page
-          
             throw new Error('Unsupported browser');
           }
           
+          
           const manager = new ZapparThree.LoadingManager();
           
-          // Construct our ThreeJS renderer and scene as usual
           const renderer = new THREE.WebGLRenderer({ antialias: true });
           const scene = new THREE.Scene();
           document.body.appendChild(renderer.domElement);
           
-          // As with a normal ThreeJS scene, resize the canvas if the window resizes
           renderer.setSize(window.innerWidth, window.innerHeight);
           window.addEventListener('resize', () => {
             renderer.setSize(window.innerWidth, window.innerHeight);
@@ -28,12 +24,75 @@ const WorldTracking=()=>{
           // Create a Zappar camera that we'll use instead of a ThreeJS camera
           const camera = new ZapparThree.Camera();
           
-          // In order to use camera and motion data, we need to ask the users for permission
-          // The Zappar library comes with some UI to help with that, so let's use it
           ZapparThree.permissionRequestUI().then((granted) => {
-            if (granted) camera.start(true); // true parameter for user facing camera
+          
+            if (granted) camera.start();
             else ZapparThree.permissionDeniedUI();
           });
+          
+          // The Zappar component needs to know our WebGL context, so set it like this:
+          ZapparThree.glContextSet(renderer.getContext());
+          
+          
+          scene.background = camera.backgroundTexture;
+          
+          
+          const instantTracker = new ZapparThree.InstantWorldTracker();
+          const instantTrackerGroup = new ZapparThree.InstantWorldAnchorGroup(camera, instantTracker);
+          
+          // Add our instant tracker group into the ThreeJS scene
+          scene.add(instantTrackerGroup);
+          
+          
+          const gltfLoader = new GLTFLoader(manager);
+          
+          gltfLoader.load(model, (gltf) => {
+            // Now the model has been loaded, we can add it to our instant_tracker_group
+            instantTrackerGroup.add(gltf.scene);
+          }, undefined, () => {
+            console.log('An error ocurred loading the GLTF model');
+          });
+          
+          // Let's add some lighting, first a directional light above the model pointing down
+          const directionalLight = new THREE.DirectionalLight('white', 0.8);
+          directionalLight.position.set(0, 5, 0);
+          directionalLight.lookAt(0, 0, 0);
+          instantTrackerGroup.add(directionalLight);
+          
+          // And then a little ambient light to brighten the model up a bit
+          const ambientLight = new THREE.AmbientLight('white', 0.4);
+          instantTrackerGroup.add(ambientLight);
+          
+          // When the experience loads we'll let the user choose a place in their room for
+          // the content to appear using setAnchorPoseFromCameraOffset (see below)
+          // The user can confirm the location by tapping on the screen
+          let hasPlaced = false;
+          const placeButton = document.getElementById('tap-to-place') || document.createElement('div');
+          placeButton.addEventListener('click', () => {
+            hasPlaced = true;
+            placeButton.remove();
+          });
+          
+          // Use a function to render our scene as usual
+          function render() {
+            if (!hasPlaced) {
+              // If the user hasn't chosen a place in their room yet, update the instant tracker
+              // to be directly in front of the user
+              instantTrackerGroup.setAnchorPoseFromCameraOffset(0, 0, -5);
+            }
+          
+            // The Zappar camera must have updateFrame called every frame
+            camera.updateFrame(renderer);
+          
+            // Draw the ThreeJS scene in the usual way, but using the Zappar camera
+            renderer.render(scene, camera);
+          
+            // Call render() again next frame
+            requestAnimationFrame(render);
+          }
+          
+          // Start things off
+          render();
 
           
 }

@@ -93,8 +93,6 @@ const Applets = ({
                     dispatch(sideBarContentAction.setcontentImgVdo(itm));
                     ctx.setcontentImgVdo(itm);
                     dispatch(sideBarContentAction.settoUpdateDimensions());
-
-
                   }, 0);
                   console.log(itm, "from getVideo<---------------------");
                   setselectedText(null);

@@ -12,7 +12,6 @@ import svgHere from '../src/assets/images/svgviewer-output.svg'
 import svgHere2 from '../src/assets/images/Mediamodifier-Design.svg'
 import { contextObject } from './components/ContextStore/ContextApi';
 import { CSS3DRenderer, CSS3DObject } from '../node_modules/three/examples/jsm/renderers/CSS3DRenderer'
-import { ViewHelper } from '../node_modules/three/examples/jsm/helpers/ViewHelper'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -80,6 +79,8 @@ const ModelAr =()=> {
         const [GetTargetWidth , TargetWidth] = useState(null)
         const [GetTargetHeight , TargetHeight] = useState(null)
         const [GetTargetOpacity , TargetOpacity] = useState(null)
+
+        const [ModelViewState , setModelViewState] = useState(null)
   const contentImgVdo1=useSelector((state)=>state.sideBarContentReducer.contentImgVdo)
     // UseEffect Using ---------------------------------------------------------------------------------------->
 
@@ -112,11 +113,13 @@ const ModelAr =()=> {
             .catch((err)=>{
                 console.log(err)
             })
+
+            axios.get(API.BASE_URL+"scene_data_by_project/"+proId+"/").then((response) => {setModelViewState(response.data.scenes[0].FeaturedtrackerOption)}).catch((err)=>{});
     // boxModal Function Startes ------------------------------------------------------------------------------>
         const boxModal = () => {
             
         // Variables ------------------------------------------------------------------------------------------->
-            let cameraPersp, cameraOrtho, currentCamera, canvas ,labelRenderer , texture1 , geometry , material
+            let cameraPersp, cameraOrtho, currentCamera, canvas ,labelRenderer , texture1 , geometry , material ,textObject
             let scene, renderer, control, orbit , plane  , Videomesh ,mesh,Indecator , helper, clock ,viewHelper , cPointLable
             let lastRenderTime = 0;
             const frameRate = 60; // Limit the frame rate to 60 FPS
@@ -143,12 +146,13 @@ const ModelAr =()=> {
             // Camera SetUp For the Project View Model----------------------------------------------------------->
 
             const aspect = window.innerWidth / window.innerHeight;
-            cameraPersp = new THREE.PerspectiveCamera( 55, aspect, 0.11, 1000 );
+            cameraPersp = new THREE.PerspectiveCamera( 55, aspect, 0.11, 10000 );
+            
             const camera = new THREE.Camera( 30, aspect, 0.11, 1000 );
             cameraOrtho = new THREE.OrthographicCamera( - 600 * aspect, 600 * aspect, 600, - 600, 0.01, 3000 );
             currentCamera = cameraPersp;
             currentCamera.position.set(  0 , 0, -500);
-
+            cameraOrtho.position.set(0,0,200)
 
             // Creating Scene View ------------------------------------------------------------------------------->
 
@@ -158,44 +162,37 @@ const ModelAr =()=> {
 
             // Creating Plane For Tracker ------------------------------------------------------------------------>
           
+            if (ModelViewState==="ImageTracking"){
+                const textureLoader = new THREE.TextureLoader();
+                if (TargetImage){
+                    texture1 = textureLoader.load(TargetImage)
+                    geometry = new THREE.PlaneGeometry(GetTargetWidth/10 , GetTargetHeight/10 );
+                    material = new THREE.MeshBasicMaterial({map : texture1 , side : THREE.DoubleSide ,transparent : true ,opacity:GetTargetOpacity/100})           
+                }
+                else if (!TargetImage){
+                    texture1 = textureLoader.load(svgHere)
+                    geometry = new THREE.BoxGeometry(350, 350 ,8);
+                    material = new THREE.MeshBasicMaterial({map : texture1 , side : THREE.DoubleSide , transparent : true , opacity:1})           
+                }
+                else{
+                    
+                }
+                plane = new THREE.Mesh(geometry,material );
+                if(material){
+                    material.needsUpdate = false;
+                }
+                scene.add(plane);
+                plane.position.set(0, 0, 0);
+                plane.rotation.y = Math.PI;
+            }
 
-            const textureLoader = new THREE.TextureLoader();
-            if (TargetImage){
-                texture1 = textureLoader.load(TargetImage)
-                geometry = new THREE.PlaneGeometry(GetTargetWidth/10 , GetTargetHeight/10 );
-                material = new THREE.MeshBasicMaterial({map : texture1 , side : THREE.DoubleSide ,transparent : true ,opacity:GetTargetOpacity/100})           
-            }
-            else if (!TargetImage){
-                texture1 = textureLoader.load(svgHere)
-                geometry = new THREE.BoxGeometry(350, 350 ,8);
-                material = new THREE.MeshBasicMaterial({map : texture1 , side : THREE.DoubleSide , transparent : true , opacity:1})           
-            }
-            else{
-                
-            }
-            plane = new THREE.Mesh(geometry,material );
-            if(material){
-                material.needsUpdate = false;
-            }
-            scene.add(plane);
+            if (ModelViewState==="WorldTracking"){
+
+            plane = new THREE.GridHelper(200, 10 , 0x84adea , 0x84adea)
+            scene.add(plane)
             plane.position.set(0, 0, 0);
-            plane.rotation.y = Math.PI;
+            }
 
-
-            // Threjs Plane Helper for OrbitControler Indecator ------------------------------------------------->
-
-            // const boxorbitIndictor = new THREE.BoxGeometry(50,50,50);
-            // const IndecatorTexture = new THREE.TextureLoader();
-            // const IndecatorTextures = IndecatorImages.map(imageUrl => {
-            //     const texture = IndecatorTexture.load(imageUrl);
-            //     texture.minFilter = THREE.LinearFilter;
-            //     texture.magFilter = THREE.LinearFilter;
-            //     return texture;
-            //   });
-            // const materialorbitIndictor = IndecatorTextures.map(texture => new THREE.MeshBasicMaterial({ map: texture }));
-            // Indecator = new THREE.Mesh(boxorbitIndictor,materialorbitIndictor)
-            // scene.add(Indecator);
-            // Indecator.position.set(-300,-200,0 )
 
             
 
@@ -213,22 +210,6 @@ const ModelAr =()=> {
                 orbit.touches.ONE = THREE.TOUCH.PAN;
                 orbit.touches.TWO = THREE.TOUCH.DOLLY_ROTATE;
 
-// Helper function================================================================>
-
-                // viewHelper = new ViewHelper( currentCamera, renderer.domElement );
-                // viewHelper.orbit = orbit;
-                // console.log(viewHelper)
-                // const div = document.createElement( 'div' );
-                // div.id = 'viewHelper';
-                // div.style.position = 'absolute';
-                // div.style.right = '350px';
-                // div.style.bottom = 0;
-                // div.style.height = '128px';
-                // div.style.width = '128px';
-                
-                // document.body.appendChild( div );
-                
-                // div.addEventListener( 'pointerup', (event) => viewHelper.handleClick( event ) );
 
 
             // TransFormControls Added ----------------------------------------------------------------------------->
@@ -368,12 +349,13 @@ const ModelAr =()=> {
                     labelRenderer.domElement.style.top = '0px';
                     labelRenderer.domElement.style.position = 'absolute';
                     labelRenderer.domElement.style.pointerEvents = 'none';
+                    labelRenderer.setSize(window.innerWidth,window.innerHeight);
+                    labelRenderer.domElement.style.zIndex = 1;
                     document.body.appendChild(labelRenderer.domElement);
 
-                    // HTML CSS2DRENDERER ---------------------------------------------------------------->
+                    // // HTML CSS 2D RENDERER ---------------------------------------------------------------->
                     if (getText){
                         for (let i = 0; i < getText.length; i++){
-                            console.log(getText[i]);
                             text_nameget(getText[i][0].button_name)
                             text_actionGet(getText[i][0].text_action.text_action)
                             text_actionIDGet(getText[i][0].text_action.id)
@@ -404,7 +386,7 @@ const ModelAr =()=> {
                             transitionIDGet(getText[i][0].text_transition.id)
                             transition_enterGet(getText[i][0].text_transition.transition_enter)
                             transition_exitGet(getText[i][0].text_transition.transition_exit)
-
+                            
                             const p = document.createElement('h1');
                             p.innerHTML = getText[i][0].button_name;
                             p.style.color = getText[i][0].text_text.text_color;
@@ -423,20 +405,36 @@ const ModelAr =()=> {
                             cPointLable.userData.name=getText[i][0].button_name
                         }
                     }
+
+
+
+
+
                     // Button APIs ------------------------------------------------------------>
 
                     if (getButton){
                         for (let i = 0; i <getButton.length; i++){
+                            const WidthGet = getButton[i][0].button_transform.width/2
+                            const HeightGet = getButton[i][0].button_transform.height/2
+                            console.log(getButton[i][0].button_appearance.border_width +' '+ getButton[i][0].button_appearance.border_color)
                             const buttonEle = document.createElement('div')
-                            buttonEle.textContent = getButton[i][0].button_name
-                            buttonEle.style.backgroundColor = 'rgb(150, 191, 239)'
-                            buttonEle.style.width = '10px'
-                            buttonEle.style.height = '3.6px'
-                            buttonEle.style.color = 'white'
-                            buttonEle.style.alignItems = 'center'
-                            buttonEle.style.justifyContent = 'center'
+                            buttonEle.innerHTML = getButton[i][0].button_text.text
+                            buttonEle.style.backgroundColor = getButton[i][0].button_appearance.fill_Color
+                            buttonEle.style.width = WidthGet+'px'
+                            buttonEle.style.height = HeightGet+'px'
+                            buttonEle.style.color =  getButton[i][0].button_text.text_color
+                            buttonEle.style.fontSize =  getButton[i][0].button_text.text_size
+                            buttonEle.style.textAlign = getButton[i][0].button_text.alignment
+                            // buttonEle.style.justifyContent = 'center'
+                            buttonEle.style.display = "flex"
+                            buttonEle.style.border = getButton[i][0].button_appearance.border_width+' '+getButton[i][0].button_appearance.border_color
+                            buttonEle.style.borderRadius = getButton[i][0].button_appearance.corner_radius
                             const buttonpoint = new CSS3DObject(buttonEle)
+                            console.log(buttonEle)
                             scene.add(buttonpoint)
+                            buttonpoint.rotation.x =getButton[i][0].button_transform.Rotation_x
+                            buttonpoint.rotation.y =getButton[i][0].button_transform.Rotation_y + Math.PI
+                            buttonpoint.rotation.z =getButton[i][0].button_transform.Rotation_z
                             buttonpoint.position.set(0,0,8)
                         }
                     }
@@ -447,9 +445,9 @@ const ModelAr =()=> {
                         else if(contentImgVdo1 && contentImgVdo1[0].video_url === Videomesh.userData.name){
                             control.attach(Videomesh)
                         }
-                        // else if(contentImgVdo1 && contentImgVdo1[0].button_name === cPointLable.userData.name){
-                        //     control.attach(Videomesh)
-                        // }
+                        else if(contentImgVdo1 && contentImgVdo1[0].button_name === cPointLable.userData.name){
+                            control.attach(cPointLable)
+                        }
                         else{
                             console.log("Not Found")
                         }
@@ -638,18 +636,15 @@ const ModelAr =()=> {
         function render() {
 
 
-            const currentTime = performance.now();
-            const timeSinceLastRender = currentTime - lastRenderTime;
-
-            if (timeSinceLastRender >= 1000 / frameRate) {
-                lastRenderTime = currentTime;
-                onWindowResize();
-                renderer.render(scene, currentCamera);
-                updatetransform();
-                labelRenderer.render(scene, currentCamera); // Render the CSS3D labels
-
-
-            }
+            // const currentTime = performance.now();
+            // const timeSinceLastRender = currentTime - lastRenderTime;
+            onWindowResize();
+            renderer.render(scene, currentCamera);
+            updatetransform();
+            labelRenderer.render(scene, currentCamera); // Render the CSS3D labels
+            // if (timeSinceLastRender >= 1000 / frameRate) {
+                // lastRenderTime = currentTime;
+            // }
 
             // requestAnimationFrame(render);
         }

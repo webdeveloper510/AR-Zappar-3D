@@ -360,7 +360,7 @@ const Target = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [sceneId, setsceneId] = useState(null);
   // for store opacity value
-  const [valOfOpacityForStore,setvalOfOpacityForStore]=useState(0)
+  // const [valOfOpacityForStore,setvalOfOpacityForStore]=useState(100)
 
   const widthImgVdo = useSelector((state)=>state.sideBarContentReducer.widthImgVdo);
   const heightImgVdo = useSelector((state)=>state.sideBarContentReducer.heightImgVdo);
@@ -1637,9 +1637,9 @@ const Target = () => {
   const projectContentID = localStorage.getItem('ProjectContentID');
 
   const handleRangeValue = (event) => {
-    console.log('request send with :-',valOfOpacityForStore);
-    // A_opacity(event.target.value);
-    axios.put(API.BASE_URL + "project_content/"+projectContentID+'/',{opacity:valOfOpacityForStore})
+    // console.log('request send with :-',valOfOpacityForStore);
+    A_opacity(event.target.value);
+    axios.put(API.BASE_URL + "project_content/"+projectContentID+'/',{opacity:event.target.value})
     .then((response)=>{
       console.log("Done")
       setreRender(prev=>!prev)
@@ -1647,22 +1647,22 @@ const Target = () => {
   };
 
 
-  useEffect(() => {
-    const delay = 500;
+  // useEffect(() => {
+  //   const delay = 500;
 
-    const timeoutId = setTimeout(() => {
-      setvalOfOpacityForStore(valueopacityborder);
+  //   const timeoutId = setTimeout(() => {
+  //     setvalOfOpacityForStore(valueopacityborder);
      
-    }, delay);
+  //   }, delay);
 
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [valueopacityborder]);
+  //   return () => {
+  //     clearTimeout(timeoutId);
+  //   };
+  // }, [valueopacityborder]);
 
-  useEffect(() => {
-    handleRangeValue()
-  }, [valOfOpacityForStore])
+  // useEffect(() => {
+  //   handleRangeValue()
+  // }, [valOfOpacityForStore])
   
 
   // HANDLE BORDER VALUE
@@ -1887,6 +1887,7 @@ const trainedImageUrl=(url)=>{
       e.currentTarget.classList.add("selected");
     };
     const applyfont = (e) => {
+      console.log("applyfont")
       const fontStyle = fontselected.style.fontFamily
       const textVal = fontselected.textContent
       const formData = {
@@ -4774,7 +4775,7 @@ const trainedImageUrl=(url)=>{
                                                 <p className="opacity">
                                                   Opacity
                                                 </p>
-                                                {/* <div>
+                                                <div>
                                                   <input
                                                     type="range"
                                                     id="vol"
@@ -4785,9 +4786,9 @@ const trainedImageUrl=(url)=>{
                                                     onChange={handleRangeValue}
                                                   />
                                                   <p>{GetTargetOpacity}</p>
-                                                </div> */}
+                                                </div>
 
-                                      <div>
+                                      {/* <div>
                                         <input
                                           type="range"
                                           id="vol"
@@ -4800,7 +4801,7 @@ const trainedImageUrl=(url)=>{
                                           }
                                         />
                                         <p>{valueopacityborder}</p>
-                                      </div>
+                                      </div> */}
                                       
                                               </div>
 

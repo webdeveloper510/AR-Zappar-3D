@@ -11,22 +11,86 @@ const ButtonsDetail = ({imageObject,imageObject2}) => {
 
     const AddButton=(event)=>{
         const datafull = document.getElementById(selectedBtn)
+        console.log(datafull)
         const  text =datafull.innerHTML
         const BackColor = datafull.style.backgroundColor
-        const button_width = datafull.style.width
-        const height = datafull.style.height
+        const button_width = datafull.style.width.replace("px",'')
+        const height = datafull.style.height.replace("px",'')
         const color = datafull.style.color
         const align = datafull.style.alignItems
-        const justify = datafull.style.justifyContent
-        const formData = {
+        const border = datafull.style.border
+        const borderRadius = datafull.style.borderRadius
+        const borderComponents = border.split(" ");
+        const borderWidth = borderComponents[0];
+        const borderStyle = borderComponents[1];
+        const borderColor = borderComponents.slice(2).join(" ");
+
+
+        axios.post(API.BASE_URL + "buttons/", {
           'scene_id':ctx.scene_id,
           'Button_name': text
-        }
-        axios.post(API.BASE_URL + "buttons/",formData,{}).then(function (res){
-          console.log(res)
+        },{}).then(function (res){
+         buttonTransform(res.data.id  , button_width , height)
+         buttonTransition(res.data.id)
+         buttonText(res.data.id ,text, color , align )
+         buttonAppearance(res.data.id ,borderRadius , BackColor , borderWidth , borderStyle , borderColor)
+         buttonAction(res.data.id)
         }).catch(function(err){
           console.log(err)
-        })
+          })
+      }
+      const buttonTransform=(id , button_width ,height)=>{
+        axios.post(API.BASE_URL + "button_transform/", {
+          "button_Id":id,
+          "width":button_width,
+          "height":height,
+          "depth":0,
+          "position_x":0,
+          "position_y":0,
+          "position_d":0,
+          "Rotation_x":0,
+          "Rotation_y":0,
+          "Rotation_z":0,
+          "Mirror":null,
+        },{}).then((res) => {}).catch((err) => {})
+      }
+      const buttonTransition=(id)=>{
+        axios.post(API.BASE_URL + "button_transition/", {
+          "button_Id":id,
+          "transition_enter":null,
+          "transition_exit":null,
+          "height":0,
+          "duration":0,
+          "delay":0,
+        },{}).then((res) => {}).catch((err) => {})
+      }
+      const buttonText=(id ,text, color , align)=>{
+        axios.post(API.BASE_URL + "button_text/", {
+          "button_Id":id,
+          "text":text,
+          "text_size":"10px",
+          "text_font":"Arial",
+          "link":null,
+          "text_color":color,
+          "alignment":align,
+        },{}).then((res) => {}).catch((err) => {})
+      }
+
+      const buttonAppearance=(id ,borderRadius , BackColor , borderWidth , borderStyle , borderColor)=>{
+        axios.post(API.BASE_URL + "button_appearance/", {
+          "button_Id":id,
+          "corner_radius":borderRadius,
+          "fill_Color":BackColor,
+          "border_width":`${borderWidth} ${borderStyle}`,
+          "border_color":borderColor,
+        },{}).then((res) => {}).catch((err) => {})
+      }
+    
+      const buttonAction=(id)=>{
+        axios.post(API.BASE_URL + "button_action/", {
+          "button_Id":id,
+          "button_action":null,
+        },{}).then((res) => {}).catch((err) => {})
       }
 
   return (
@@ -255,7 +319,7 @@ const ButtonsDetail = ({imageObject,imageObject2}) => {
                         </div>
                       </div>
                       <div className="Grid--r1Nnn">
-                        {imageObject2.map((img2, i) => {
+                        {imageObject2?.map((img2, i) => {
                           return (
                             <div
                               className="96d04a62-6acd-454f-b9fc"
@@ -275,6 +339,7 @@ const ButtonsDetail = ({imageObject,imageObject2}) => {
                             ></div>
                           );
                         })}
+                        {/* <div id="787f30b6-85d7-43e6-ad38-1f06eb3d2215" style={{display: "flex", cursor: "pointer", backgroundRepeat: "no-repeat", backgroundPosition: "50% 50%", backgroundSize: "contain", marginRight: "auto", marginLeft: "auto", backgroundImage: "url(&quot;https://d1mfzu0xo6h6ih.cloudfront.net/designer/facebook-sqr-v1.svg&quot", width: "38px", height: "38px", marginTop: "0px"}}></div> */}
                       </div>
                     </div>
                     <img

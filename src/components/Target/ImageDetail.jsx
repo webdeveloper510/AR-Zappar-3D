@@ -66,7 +66,7 @@ const ImageDetail = ({setshowPopHandle,setuploadAll,inputCallingFunction}) => {
     </div>
 
     <div className="row mt-3">
-      {ctx.selectedImage.map((image, index) => (
+      {ctx.selectedImage?.map((image, index) => (
         <div className="col-md-6" key={index}>
           <img
             src={image[0].image_url}
