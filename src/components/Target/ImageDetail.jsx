@@ -59,7 +59,7 @@ const ImageDetail = ({setshowPopHandle,setuploadAll,inputCallingFunction}) => {
             type="file"
             id="img-upload"
             // onChange={handleImageInput}
-            onChange={inputCallingFunction}
+            onChange={(e)=>inputCallingFunction(e)}
           />
         </div>
       </div>

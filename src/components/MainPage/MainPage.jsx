@@ -103,6 +103,7 @@ const handleshowcreatelabel = () => setcreatelabel(true);
 
     const handleClose = () =>{
       setShow(false);
+      selectProjectType(null)
     } 
 
   /********** Start----SecondModel State *************/
@@ -126,7 +127,10 @@ const handleshowcreatelabel = () => setcreatelabel(true);
     setShowDelete(true);
     }
     const handleShow = () => setShow(true);
-    const handleSecondClose = () => setSecondShow(false);
+    const handleSecondClose = () => {
+      setSecondShow(false)
+      selectProjectType(null)
+    };
   
     /********** Start----Model Coverimage State *************/
     const handleCoverClose = () => setShowCover(false);

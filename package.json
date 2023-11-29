@@ -12,6 +12,7 @@
     "@google/model-viewer": "^3.2.1",
     "@material-ui/core": "^4.12.4",
     "@material/circular-progress": "^14.0.0",
+    "@react-three/drei": "^9.82.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -58,8 +59,10 @@
     "stream-http": "^3.2.0",
     "three-gltf-loader": "^1.111.0",
     "three-js-editor-react-2": "^1.0.36",
+    "three-orientation-gizmo": "^1.1.0",
     "threex": "^1.0.0",
     "threex.domevents": "^1.0.1",
+    "tweenjs": "^1.0.2",
     "web-vitals": "^2.1.4",
     "webfontloader": "^1.6.28"
   },

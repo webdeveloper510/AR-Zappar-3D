@@ -30,7 +30,7 @@ const VideoDetail = ({setshowPopHandle,setuploadAll,inputCallingFunction}) => {
               setuploadAll(true);
             }}
           >
-            Browse media library
+            Browse media library  
           </button>
         </div>
         <div className="upload-btn-outer">
@@ -56,7 +56,7 @@ const VideoDetail = ({setshowPopHandle,setuploadAll,inputCallingFunction}) => {
             class="video-upload"
             type="file"
             id="img-upload"
-            onChange={inputCallingFunction}
+            onChange={(e)=>inputCallingFunction(e)}
           />
         </div>
       </div>

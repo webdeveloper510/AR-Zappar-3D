@@ -14,7 +14,7 @@ const SideBar = () => {
       navigate('/home');
     } else if (page === 'Team') {
       navigate('/team');
-    }
+    } 
   };
 
   const selectedStyle = {
